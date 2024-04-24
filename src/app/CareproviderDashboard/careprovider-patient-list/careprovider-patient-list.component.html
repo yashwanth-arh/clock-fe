@@ -1,0 +1,208 @@
+<div
+  *ngIf="!loadCard"
+  class="noRecordsFound"
+  style="top: 0 !important; height: 30em"
+>
+  <!-- <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+</mat-progress-bar> -->
+  <app-loader [gifBackground]="'blueBg'"></app-loader>
+</div>
+<div
+  class="careprovider-list-div"
+  [ngClass]="userRole === 'CARECOORDINATOR' ? 'cellWidth' : ''"
+>
+  <div class="overlay" *ngIf="overlayOn"></div>
+  <div fxLayout="column" style="height: 20px">
+    <div class="refresh-btn">
+      <img
+        [src]="imgSrcSyncBtn"
+        *ngIf="loadCard"
+        class="sync-data"
+        (mouseover)="syncOver()"
+        (mouseout)="syncOut()"
+        (click)="syncData()"
+        title="Sync Data"
+      />
+    </div>
+  </div>
+
+  <div
+    class="patientStatus"
+    [ngClass]="patientTabCounts && loadCard ? 'addBorder' : 'removeBorder'"
+  >
+    <mat-tab-group
+      animationDuration="0ms"
+      #tabGroup
+      (selectedTabChange)="tabChanged($event)"
+      [selectedIndex]="videoState.activeTabIndex$ | async"
+      [disabled]="highAlertMatTab"
+      [ngClass]="osType === 'Win32' ? 'macOs' : 'winOs'"
+    >
+      <mat-tab
+        label="Tab 1"
+        class="tab-1"
+        *ngIf="patientTabCounts"
+        [disabled]="highAlertMatTab"
+      >
+        <ng-template mat-tab-label>
+          <img [src]="tabImg1" alt="" />
+          <!-- <mat-icon class="example-tab-icon">add_alert</mat-icon> -->
+          &nbsp;<span>
+            <div fxLayout="row" fxLayoutGap="5px" class="statusType">
+              <div class="status">High Alert</div>
+              <div class="counter">({{ patientTabCounts?.highAlert }})</div>
+            </div>
+          </span>
+        </ng-template>
+        <div class="example-table-container">
+          <app-high-alert
+            *ngIf="highAlertTab"
+            (disableOverlay)="getOverlay($event)"
+            (notesClick)="openNotesDrawer(drawer, $event)"
+            (messageClick)="openMessage($event)"
+            (videoCallClick)="startVideoCall($event)"
+            (audioCallClick)="startAudioCall($event)"
+            (scheduleCallClick)="
+              openScheduleCallDialog($event, $event.callType)
+            "
+            (imageUrl)="getImgUrl($event)"
+          >
+          </app-high-alert>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Tab 2" *ngIf="patientTabCounts" [disabled]="alertMatTab">
+        <ng-template mat-tab-label>
+          <img [src]="tabImg2" alt="" /> &nbsp;
+          <span>
+            <div fxLayout="row" fxLayoutGap="5px" class="statusType">
+              <div class="status">Alert</div>
+              <div class="counter">({{ patientTabCounts?.alert }})</div>
+            </div>
+          </span>
+        </ng-template>
+        <div class="example-table-container">
+          <app-zone-alert
+            *ngIf="alertTab"
+            (notesClick)="openNotesDrawer(drawer, $event)"
+            (messageClick)="openMessage($event)"
+            (videoCallClick)="startVideoCall($event)"
+            (audioCallClick)="startAudioCall($event)"
+            (scheduleCallClick)="
+              openScheduleCallDialog($event, $event.callType)
+            "
+          ></app-zone-alert>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Tab 3" *ngIf="patientTabCounts" [disabled]="goodMatTab">
+        <ng-template mat-tab-label>
+          <img [src]="tabImg3" alt="" /> &nbsp;
+          <span>
+            <div fxLayout="row" fxLayoutGap="5px" class="statusType">
+              <div class="status">Good</div>
+              <div class="counter">({{ patientTabCounts?.good }})</div>
+            </div>
+          </span>
+        </ng-template>
+        <div class="example-table-container">
+          <app-good
+            *ngIf="goodTab"
+            (notesClick)="openNotesDrawer(drawer, $event)"
+            (messageClick)="openMessage($event)"
+            (videoCallClick)="startVideoCall($event)"
+            (audioCallClick)="startAudioCall($event)"
+            (scheduleCallClick)="
+              openScheduleCallDialog($event, $event.callType)
+            "
+          ></app-good>
+        </div>
+      </mat-tab>
+
+      <mat-tab
+        label="Tab 4"
+        *ngIf="patientTabCounts"
+        [disabled]="nonAdherenceMatTab"
+      >
+        <ng-template mat-tab-label>
+          <img [src]="tabImg4" alt="" /> &nbsp;
+          <span>
+            <div fxLayout="row" fxLayoutGap="5px" class="statusType">
+              <div class="status">Non Adherence</div>
+              <div class="counter">
+                ({{ patientTabCounts?.noOfNonAderancePatient }})
+              </div>
+            </div>
+          </span>
+        </ng-template>
+        <div class="example-table-container" *ngIf="nonAdherenceTab">
+          <app-non-adherence
+            (notesClick)="openNotesDrawer(drawer, $event)"
+            (messageClick)="openMessage($event)"
+            (videoCallClick)="startVideoCall($event)"
+            (audioCallClick)="startAudioCall($event)"
+            (scheduleCallClick)="
+              openScheduleCallDialog($event, $event.callType)
+            "
+          ></app-non-adherence>
+        </div>
+      </mat-tab>
+      <div
+        *ngIf="!patientTabCounts"
+        class="noRecordsFound"
+        style="top: 0 !important; height: 30em"
+      >
+        <!-- <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+</mat-progress-bar> -->
+        <app-loader [gifBackground]="'blueBg'"></app-loader>
+      </div>
+    </mat-tab-group>
+    <mat-drawer-container
+      [class.drawer-opened]="drawer.opened"
+      class="example-container"
+    >
+      <mat-drawer
+        #drawer
+        [ngClass]="showNotes ? 'drawer' : showDialysis ? 'scheduledDrawer' : ''"
+        mode="side"
+        opened="false"
+        position="end"
+      >
+        <div class="contents">
+          <div class="comments-view" fxFlex="100%">
+            <!-- <app-notes [patientId]="cpid" (disableOverlay)="getOverlay($event)" [patientName]="cpName"
+                        [notesData]="noteList"[defaultTemplate]="defaultNoteList"
+                        (callNoteList)="triggeredNoteList($event)" [drawerToggle]="drawer"
+                        (editedNoteData)="viewEditedNote($event)" (addedTemplateFromNote)="viewTemplate($event)"
+                        *ngIf="showNotes">
+                    </app-notes> -->
+            <app-notes-and-care-plans
+              [patientId]="cpid"
+              (disableOverlay)="getOverlay($event)"
+              [patientName]="cpName"
+              [notesData]="noteList"
+              [defaultTemplate]="defaultNoteList"
+              (callNoteList)="triggeredNoteList($event)"
+              [drawerToggle]="drawer"
+              (editedNoteData)="viewEditedNote($event)"
+              (addedTemplateFromNote)="viewTemplate($event)"
+              *ngIf="showNotes"
+            ></app-notes-and-care-plans>
+          </div>
+        </div>
+      </mat-drawer>
+    </mat-drawer-container>
+    <div id="overlay"></div>
+  </div>
+  <div
+    style="cursor: pointer"
+    class="high-alert-btn"
+    id="floating-bot-right-btn"
+    fxLayout="row"
+    *ngIf="showHighAlertFloating && userRole === 'CAREGIVER'"
+    (click)="getHighAlertInfo()"
+  >
+    <img class="alert-image" src="assets/gif/Alert-Icon-Gif.gif" />
+    <div class="highAlert-text">Patient Red Alert</div>
+  </div>
+</div>

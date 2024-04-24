@@ -1,0 +1,47 @@
+<div class="rpm-module-management">
+  <app-navigation-bar
+    *ngIf="selectedTabName === 'ICD Codes'"
+    (clickEvent)="openIcdCodes(selectedTabName)"
+  ></app-navigation-bar>
+  <app-navigation-bar
+    *ngIf="selectedTabName === 'Specialities'"
+    (clickEvent)="openIcdCodes(selectedTabName)"
+  ></app-navigation-bar>
+  <app-navigation-bar
+    *ngIf="selectedTabName === 'Doctor Identity'"
+    (clickEvent)="openIcdCodes(selectedTabName)"
+  ></app-navigation-bar>
+  <app-navigation-bar
+    *ngIf="selectedTabName === 'Hospital Identity'"
+    (clickEvent)="openIcdCodes(selectedTabName)"
+  ></app-navigation-bar>
+
+  <div class="configuaration-tabs" id="configuaration">
+    <mat-tab-group
+      animationDuration="0ms"
+      dynamicHeight
+      class="mat-tabs"
+      (selectedTabChange)="getTabDetails($event.tab.textLabel)"
+      mat-align-tabs="start"
+    >
+      <mat-tab label="ICD Codes"
+        ><app-diesease *ngIf="selectedTabName === 'ICD Codes'"></app-diesease
+      ></mat-tab>
+      <mat-tab label="Specialities"
+        ><app-speciality-list
+          *ngIf="selectedTabName === 'Specialities'"
+        ></app-speciality-list
+      ></mat-tab>
+      <mat-tab label="Doctor Identity"
+        ><app-doctor-identity
+          *ngIf="selectedTabName === 'Doctor Identity'"
+        ></app-doctor-identity
+      ></mat-tab>
+      <mat-tab label="Hospital Identity"
+        ><app-hospital-identity
+          *ngIf="selectedTabName === 'Hospital Identity'"
+        ></app-hospital-identity
+      ></mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

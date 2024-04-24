@@ -1,0 +1,18 @@
+<!-- <mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation" style="width: 250px">
+    <app-sidenav-list (closeSidenav)="sidenav.close()" [name]="caregiverName" [branchName]="branch"></app-sidenav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+  
+  </mat-sidenav-content>
+</mat-sidenav-container> -->
+
+<app-header [name]="username" [role]="userRole" [branchName]="branch" [notificationCountData]="countNotification" (notificationCountTrigger)="getUpdatedCount($event)"
+  style="height: 30%;">
+</app-header>
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+
+<!-- <div id="mask" onclick="document.location='#';"></div> -->

@@ -1,0 +1,108 @@
+<div>
+  <!-- <app-navigation-bar
+    [logCount]="
+      (dataSource.totalElemObservable | async) < 0
+        ? 0
+        : (dataSource.totalElemObservable | async)
+    "
+  ></app-navigation-bar> -->
+  <!-- <form [formGroup]="logForm" style="margin-top: 17px">
+    <div fxLayout="column">
+      <div>
+        <mat-form-field appearance="legacy">
+          <mat-label>Search</mat-label>
+          <input
+            formControlName="searchQuery"
+            matInput
+            (keyup)="isEnableGlobalSearchFunc()"
+          /> -->
+  <!-- <mat-icon matSuffix>search</mat-icon> -->
+  <!-- <mat-hint>Global Search</mat-hint> -->
+  <!-- </mat-form-field>
+        <mat-icon
+          style="font-size: 17px; cursor: pointer"
+          (click)="unselectGlobalSearch()"
+          *ngIf="isEnableGlobalSearch"
+        >
+          close</mat-icon
+        >
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+    </div>
+  </form> -->
+  <div>
+    <div class="example-container mat-elevation-z8 notAdmin">
+      <mat-table #table matSort matTableResponsive [dataSource]="dataSource">
+        <ng-container matColumnDef="userId">
+          <mat-header-cell fxFlex="25%" *matHeaderCellDef disableClear>
+            User Id
+          </mat-header-cell>
+          <mat-cell fxFlex="25%" *matCellDef="let element">
+            {{ element.userId }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="username">
+          <mat-header-cell fxFlex="25%" *matHeaderCellDef disableClear>
+            User Name
+          </mat-header-cell>
+          <mat-cell fxFlex="25%" *matCellDef="let element">
+            {{ element.username }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <mat-header-cell fxFlex="25%" *matHeaderCellDef>
+            Role
+          </mat-header-cell>
+          <mat-cell fxFlex="25%" *matCellDef="let element">
+            {{ element.userRole ? element.userRole : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="loggedTime">
+          <mat-header-cell fxFlex="25%" *matHeaderCellDef>
+            Loggedin Time
+          </mat-header-cell>
+          <mat-cell fxFlex="25%" *matCellDef="let element">
+            {{
+              element.loginTime ? (element.loginTime | date : "medium") : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ipAddress">
+          <mat-header-cell fxFlex="25%" *matHeaderCellDef>
+            IP Address
+          </mat-header-cell>
+          <mat-cell fxFlex="25%" *matCellDef="let element">
+            {{ element.ip ? element.ip : "-" }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="location">
+          <mat-header-cell fxFlex="25%" *matHeaderCellDef>
+            Location
+          </mat-header-cell>
+          <mat-cell fxFlex="25%" *matCellDef="let element">
+            {{ element.ip ? element.ip : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="loggedInHeaders"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: loggedInHeaders"></mat-row>
+      </mat-table>
+      <div class="noRecordsFound" *ngIf="!dataSource">No Records Found!</div>
+      <mat-paginator
+        [ngClass]="
+          (dataSource.totalElemObservable | async) < 10
+            ? 'hide-pagination-element'
+            : 'show-pagination'
+        "
+        [length]="dataSource.totalElemObservable | async"
+        [pageSizeOptions]="[10, 25, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

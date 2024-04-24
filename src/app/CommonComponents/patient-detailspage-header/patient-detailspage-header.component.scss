@@ -1,0 +1,401 @@
+$primary-color: #006595;
+$warning-color: #f44336;
+$success-color: #4caf50;
+$alert-color: #ff8c00;
+
+.main-div {
+  box-sizing: border-box;
+  width: 100%;
+  height: 85px;
+  background: #1a5eba;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  gap: 32px;
+  overflow: auto;
+}
+
+.clinicBpDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.fullName-dev {
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  min-width: fit-content;
+}
+
+.patientHeaderMain {
+  position: relative;
+  margin: 0 16px 0 16px;
+  // width: 99vw;
+}
+
+.profile-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50% !important;
+  background: #c4c4c4;
+  border: 2px solid #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  position: relative;
+  left: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.facility-name {
+  padding: 5px;
+}
+
+::ng-deep .mat-expansion-panel-content {
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  border: 1px solid #c2ffe4;
+}
+
+.comments-drawer {
+  left-border: 1px solid $primary-color;
+  overflow: hidden;
+}
+
+.patientDrawer {
+  position: fixed;
+  margin-top: 9.1vh;
+  height: 91vh;
+  margin-left: -9em;
+  min-width: 290px;
+  box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.05);
+  // width: 290px;
+  border-radius: 0px 16px 16px 0px;
+  // border: 1px solid $primary-color;
+  max-width: 10%;
+
+  // background-color: #f4f9fe;
+  .patientCard {
+    background-color: #ecfffa;
+    color: #424242;
+    padding: 20px 25px;
+    font-size: 12px;
+    padding: 20px;
+
+    mat-icon {
+      font-size: 19px;
+    }
+  }
+
+  .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+    // box-shadow: none;
+    border-radius: 0;
+  }
+
+  .provider-name {
+    color: var(--primary-text-2, #424242);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+
+    li {
+      list-style: none;
+    }
+  }
+
+  .specialization-text {
+    background-color: #ecfffa;
+    padding: 5px 5px 5px 25px;
+    overflow: auto;
+    max-height: 113px;
+    color: var(--primary-text-2, #424242);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+  }
+
+  .details {
+    position: relative;
+    bottom: 2vh;
+    background: linear-gradient(288.78deg, #0b8564 -16.87%, #1c5ac4 145.46%);
+
+    .name {
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 18px;
+      color: #ffffff;
+      margin-top: -3px;
+    }
+
+    .arrow {
+      position: relative;
+      top: 6vh;
+      cursor: pointer;
+    }
+
+    .patient-icon {
+      padding: 50px 34px 0px 34px;
+      width: 82%;
+
+      .rounded-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50% !important;
+        background: #c4c4c4;
+        border: 2px solid #ffffff;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+        position: relative;
+        left: 3px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.example-container {
+
+  // z-index: 1006;
+  .drawer {
+    position: fixed;
+    height: 100vh;
+    min-width: 65%;
+    border-radius: 20px 0px 0px 0px;
+    max-width: 40%;
+    background: #ecfffa;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  scrollbar-width: auto;
+
+  .drawer .contents {
+    // padding: 16px;
+    background-color: #ecfffa !important;
+    height: 930px !important;
+  }
+
+  .container {
+    z-index: 1005;
+  }
+}
+
+.mat-drawer-container {
+  z-index: 1000 !important;
+}
+
+::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+
+.patientDrawer .header {
+  position: absolute;
+  // right: 0;
+  justify-content: space-between;
+  width: 100%;
+  height: 500px;
+  z-index: 1000 !important;
+}
+
+::ng-deep .mat-drawer.mat-drawer-side {
+  z-index: 1000 !important;
+}
+
+.profile-side-drawer-texts {
+  color: #424242;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.clinical-bold-text {
+  color: #424242;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.clinical-normal-text {
+  word-wrap: break-word;
+  width: 60px;
+  color: #424242;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.profile-main-div {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 18px;
+}
+
+.name-div {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.patient-det {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+}
+
+.second-div-line {
+  width: 40px;
+  height: 0px;
+  border: 1px solid #95bdd2;
+  transform: rotate(-90deg);
+  background: #95bdd2;
+  margin-top: 26px;
+  margin-left: 20px;
+}
+
+.bp-main-div {
+  align-items: center;
+  width: 140px;
+}
+
+.box-div {
+  // width: 370px;
+  // height: 58px;
+  background: #0a4ca5;
+  border-radius: 10px;
+  margin-left: 42px;
+  position: relative;
+}
+
+.box-inside-div {
+  // padding-left: 19px;
+  // padding-top: 10px;
+  width: max-content;
+}
+
+.clinic-det-doc {
+  width: 28px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.clinic-det-care {
+  width: 28px;
+  right: 0;
+  position: absolute;
+  top: 0%;
+  cursor: pointer;
+}
+
+.clinic-det-doc-fire {
+  width: 28px;
+  position: fixed;
+  left: 67.9%;
+  top: 13%;
+  cursor: pointer;
+}
+
+.clinic-det-care-fire {
+  width: 28px;
+  // position: fixed;
+  // left: 67.2%;
+  // top: 13%;
+  cursor: pointer;
+  // margin-top: -15.2vh;
+  // margin-left: 39.4vh;
+}
+
+.img-xp-div {
+  position: relative;
+  margin-left: 18px;
+}
+
+.xp-div {
+  box-sizing: border-box;
+  width: 17vh;
+  min-width: fit-content;
+  padding: 12px;
+  height: 36px;
+  background: #003987;
+  border-radius: 0 18px 18px 0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #ffc73e;
+  margin-left: -3vh;
+  margin-top: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.xp-count {
+  margin-left: 10px;
+}
+
+.md-sereen-action-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(239, 239, 255, 0.6);
+  border-radius: 10px;
+  width: 210px;
+  height: 58px;
+  padding: 10px;
+  margin-left: 15px;
+}
+
+//Put your CSS here for 768px to 1024px width devices(covers all width between 768px to 1024px //
+// @media only screen and (min-width: 768px) and (max-width: 992px) {
+//   .main-div {
+//     gap: 27px;
+//     overflow-x: auto;
+//     overflow-y: hidden;
+//   }
+
+//   .name-div {
+//     font-size: 12px;
+//     line-height: 15px;
+//   }
+
+//   .patient-det {
+//     font-size: 12px;
+//     line-height: 15px;
+//   }
+// }
+
+@media (min-width: 1600px) and (max-width: 1800px) {
+  .example-container {
+    margin-top: 10px;
+    max-height: 600px;
+    display: contents;
+    z-index: 1000;
+  }
+  .name-div {
+    width: 10vw;
+  }
+  // .main-div {
+  //   gap: unset;
+  // }
+  .patientDrawer {
+    margin-top: 7.1vh;
+    margin-left: 13em;
+    min-width: 26em;
+
+  }
+}

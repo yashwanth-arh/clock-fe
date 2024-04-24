@@ -1,0 +1,35 @@
+<div fxLayout="column" class="main-toggle">
+  <div class="toggleTitle">
+    {{ data.title }}
+  </div>
+  <div class="toggleMessage" mat-dialog-content>
+    {{ data.content }}
+    <!-- <span style="font-weight: bold">“Inactive”</span> to
+    <span style="font-weight: bold">“Active”</span> for medicine
+    <span style="font-weight: bold">“Atorvastatin”</span>. Please Confirm. -->
+  </div>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="end center"
+    fxLayoutGap="10px"
+    style="margin-top: 10px"
+  >
+    <button
+      mat-button
+      mat-dialog-close
+      class="buttons cancelBtn"
+      (click)="dialogRef.close(false)"
+    >
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="confirmBtn"
+      mat-dialog-close
+      (click)="dialogRef.close(true)"
+    >
+      Confirm
+    </button>
+  </div>
+</div>

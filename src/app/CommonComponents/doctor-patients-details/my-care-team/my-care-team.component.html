@@ -1,0 +1,64 @@
+<div class="add-edit-org">
+  <div class="fixed-section">
+    <span class="close-button" title="Close" (click)="dialogRef.close()">
+      <img src="assets/svg/cancel.svg" alt="" />
+    </span>
+    <span mat-dialog-title class="module-form-title">{{ "Care Team" }}</span>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="content-div">
+    <div fxLayout="row">
+      <div
+        class="name"
+        *ngIf="data.careproviderRole === 'DOCTOR'"
+        [title]="data.title"
+      >
+        Dr.
+        {{
+          data.title.length > 18
+            ? (data.title | slice : 0 : 18) + "..."
+            : (data.title | titlecase)
+        }}
+      </div>
+      <div
+        class="name"
+        *ngIf="data.careproviderRole !== 'DOCTOR'"
+        [title]="data.title"
+      >
+        {{
+          data.title.length > 18
+            ? (data.title | slice : 0 : 18) + "..."
+            : (data.title | titlecase)
+        }}
+      </div>
+      <div class="primary-img">
+        <img src="../../../../assets/svg/primary-physician.svg" />
+      </div>
+    </div>
+    <mat-divider style="border-top-color: #c2ffe4 !important"></mat-divider>
+
+    <div *ngFor="let a of careTeam">
+      <div class="name">
+        <div [title]="getPhysicianName(a)">
+          <ng-container *ngIf="a.role === 'DOCTOR'; else notDoctor">
+            Dr.
+            {{
+              getPhysicianName(a).length > 30
+                ? (getPhysicianName(a) | slice : 0 : 30) + "..."
+                : getPhysicianName(a)
+            }}
+          </ng-container>
+        </div>
+        <div [title]="getPhysicianName(a)">
+          <ng-template #notDoctor>
+            {{  getPhysicianName(a).length > 30
+              ? (getPhysicianName(a) | slice : 0 : 30) + "..."
+              : getPhysicianName(a) }}
+          </ng-template>
+        </div>
+      </div>
+      <mat-divider style="border-top-color: #c2ffe4 !important"></mat-divider>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+.close-button{
+    cursor: pointer;
+}
+// .rpm-save-button{
+//     margin-right: 35px;
+//     margin-top: 27px;
+// }
+.toggle-cls{
+    margin-left: 35px;
+}
+::ng-deep.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: green !important;
+}
+.mat-form-field{
+    margin-left: 0px;
+   
+    padding-left: 0px;
+   
+   
+}
+.mat-error {
+ 
+    line-height: 10px !important;
+    
+  }

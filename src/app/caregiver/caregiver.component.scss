@@ -1,0 +1,67 @@
+@import "../../variables";
+
+.hide-pagination {
+  display: none;
+}
+
+mat-icon {
+  position: relative;
+  left: 1px;
+  bottom: 2px;
+}
+
+.example-container.mat-elevation-z8 {
+  overflow: auto;
+  height: 504px;
+  box-shadow: none;
+}
+
+.valid-text {
+  margin-top: -23px;
+  margin-left: 11px;
+}
+
+
+button:focus {
+  outline: 0;
+}
+
+@media only screen and (min-device-width: 1280px) and (max-device-width: 1280px) and (orientation: landscape) {
+  // .example-container.mat-elevation-z8 {
+  //   height: 420px;
+  //   box-shadow: none;
+  // }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  // .example-container.mat-elevation-z8 {
+  //   height: 490px;
+  // }
+}
+
+@media only screen and (min-device-width: 1679px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .example-container.mat-elevation-z8 {
+    height: 605px;
+  }
+}
+
+@media only screen and (min-device-width: 1290px) and (max-device-width: 1440px) and (orientation: landscape) {
+  .fontSm {
+    font-size: 10px;
+  }
+}
+
+@media only screen and (min-device-width: 1800px) and (max-device-width: 1920px) and (orientation: landscape) {
+  .example-container.mat-elevation-z8 {
+    overflow-x: auto;
+    // margin-top: 35px;
+    max-height: 1000px !important;
+    height: 820px !important;
+    // overflow-y: scroll;
+    // overflow-x: scroll;
+  }
+
+  .show-pagination {
+    width: 86.5% !important;
+  }
+}

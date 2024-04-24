@@ -1,0 +1,157 @@
+<div class="rpm-module-management">
+  <app-navigation-bar></app-navigation-bar>
+  <div class="">
+
+
+    <div class="rpm-module-table-container tableSection">
+      <div class="profile-settings">
+        <div class="profile-image example-container mat-elevation-z8" fxFlex="20%">
+          <mat-toolbar>
+            <button mat-icon-button>
+              <mat-icon>image</mat-icon>
+            </button>
+            <span>Profile Image</span>
+            <span class="rpm-spacer"></span>
+          </mat-toolbar>
+          <!-- <app-image-upload></app-image-upload> -->
+        </div>
+        <div class="account-settings example-container mat-elevation-z8" fxFlex="40%">
+          <mat-toolbar>
+            <button mat-icon-button>
+              <mat-icon>person</mat-icon>
+            </button>
+            <span>Account Details</span>
+            <span class="rpm-spacer"></span>
+            <button mat-icon-button (click)="toggleEditMode()">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </mat-toolbar>
+          <form [formGroup]="profile" [class.error]="!profile.valid && profile.touched" (ngSubmit)="onSubmit()">
+
+            <mat-form-field appearance="outline" class="fieldWidth" [appearance]="editMode ? 'outline':'standard'">
+              <mat-label>Name</mat-label>
+              <input matInput autocomplete=off formControlName="name" required>
+              <mat-error>Name is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth" [appearance]="editMode ? 'outline':'standard'">
+              <mat-label>Email Id</mat-label>
+              <input matInput autocomplete=off formControlName="emailId" required>
+              <mat-error>email Id is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth" [appearance]="editMode ? 'outline':'standard'"
+              *ngIf="selectedRole === userRoles.RPM_ADMIN">
+              <mat-label>Contact Number</mat-label>
+              <input appNumberCustomValidation matInput autocomplete=off formControlName="contactNumber" required>
+              <mat-error *ngIf="!profile.controls['contactNumber'].valid && profile.controls['contactNumber'].touched">
+                {{ getErrorContactNo() }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth" [appearance]="editMode ? 'outline':'standard'"
+              *ngIf="selectedRole === userRoles.CAREPROVIDER">
+              <mat-label>Home Number</mat-label>
+              <input appNumberCustomValidation matInput autocomplete=off formControlName="homeNumber" required>
+              <mat-error *ngIf="!profile.controls['homeNumber'].valid && profile.controls['homeNumber'].touched">
+                {{ getErrorHomeNo() }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth" [appearance]="editMode ? 'outline':'standard'"
+              *ngIf="selectedRole === userRoles.CAREPROVIDER">
+              <mat-label>Cell Number</mat-label>
+              <input appNumberCustomValidation matInput autocomplete=off formControlName="cellNumber" required>
+              <mat-error *ngIf="!profile.controls['cellNumber'].valid && profile.controls['cellNumber'].touched">
+                {{ getErrorCellNo() }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth" [appearance]="editMode ? 'outline':'standard'"
+              *ngIf="selectedRole === userRoles.CAREPROVIDER">
+              <mat-label>Address</mat-label>
+              <input autocomplete="off" matInput placeholder="Address" formControlName="addressLine" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth" [appearance]="editMode ? 'outline':'standard'"
+              *ngIf="selectedRole === userRoles.CAREPROVIDER">
+              <mat-label>State</mat-label>
+              <mat-select formControlName="state" (valueChange)="onStateSelection($event)" required>
+                <mat-option *ngFor="let stateData of state" [value]="stateData">
+                  {{ stateData }}
+                </mat-option>
+              </mat-select>
+              <mat-error>State is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth" [appearance]="editMode ? 'outline':'standard'"
+              *ngIf="selectedRole === userRoles.CAREPROVIDER">
+              <mat-label>City</mat-label>
+              <input appAlphabetSpaceOnly type="text" placeholder="Pick one" matInput formControlName="city"
+                [matAutocomplete]="autoCity" required />
+              <mat-icon matSuffix>arrow_drop_down</mat-icon>
+              <mat-autocomplete autoActiveFirstOption #autoCity="matAutocomplete">
+                <mat-option *ngFor="let city of CityFilteredOptions | async" [value]="city">
+                  {{ city }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error>City is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth" [appearance]="editMode ? 'outline':'standard'"
+              *ngIf="selectedRole === userRoles.CAREPROVIDER">
+              <mat-label>Zip Code</mat-label>
+              <input autocomplete="disabled" appNumberCustomValidation matInput maxlength="5" formControlName="zipCode"
+                required />
+              <mat-error *ngIf="!profile.controls['zipCode'].valid && profile.controls['zipCode'].touched">
+                {{ getErrorZipCode() }}</mat-error>
+            </mat-form-field>
+
+
+
+            <div class="button-container">
+              <button mat-flat-button class="rpm-nav-button" [disabled]="!profile.valid">
+                <mat-icon>save</mat-icon>
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="password-settings example-container mat-elevation-z8" fxFlex="30%">
+          <mat-toolbar>
+            <button mat-icon-button>
+              <mat-icon>password</mat-icon>
+            </button>
+            <span>Reset Password</span>
+
+          </mat-toolbar>
+          <form [formGroup]="resetForm" [class.error]="!resetForm.valid && resetForm.touched"
+            (ngSubmit)="onResetPassword()">
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Old Password</mat-label>
+              <input type="password" matInput autocomplete=off formControlName="existingPassword" required>
+              <mat-error>Old password is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>New Password</mat-label>
+              <input type="password" matInput autocomplete=off formControlName="newPassword" required>
+              <mat-error>New password is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Confirm Password</mat-label>
+              <input type="password" matInput autocomplete=off formControlName="confirmPassword" required>
+              <mat-error *ngIf="confirmPassowrd?.errors?.required">Confirm password is required</mat-error>
+              <mat-error *ngIf="confirmPassowrd?.errors?.NoMatch">Confirm password should match</mat-error>
+            </mat-form-field>
+            <div class="button-container">
+              <button mat-flat-button class="rpm-nav-button" [disabled]="!resetForm.valid">
+                <mat-icon>save</mat-icon>
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

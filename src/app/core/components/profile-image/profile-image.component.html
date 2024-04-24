@@ -1,0 +1,11 @@
+<!-- <img [src]="profileImage" [ngClass]="shapeOfImage==='Rounded' ? 'rounded-image' : 'square-image'" /> -->
+<img
+  [src]="showImage()"
+  style="
+    width: 42px !important;
+    height: 42px !important;
+    border: 2px solid #fff;
+    padding: 0px;
+  "
+  [ngClass]="shapeOfImage === 'Rounded' ? 'rounded-image' : 'square-image'"
+/>

@@ -1,0 +1,50 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data.add && data.add === "add" ? "New Speciality" : "Update Speciality"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+<div class="main-div">
+  <mat-card-content
+    fxLayout
+    fxLayout.xs="column"
+    fxLayoutAlign="center"
+    fxLayoutGap="10px"
+  >
+    <form [formGroup]="specialtyForm" (ngSubmit)="submitSpecialty()">
+      <mat-dialog-content [formGroup]="specialtyForm" style="margin-top: 10px">
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label> Name</mat-label>
+          <input
+            type="text"
+            appAlphabetSpaceOnly
+            appNoFirstSpace
+            matInput
+            formControlName="specialityName"
+            minlength="3"
+            maxlength="50"
+            required
+          />
+          <!-- <mat-error>Enter minimum 3 characters</mat-error> -->
+          <mat-error
+            *ngIf="
+              !specialtyForm.controls['specialityName'].valid &&
+              specialtyForm.controls['specialityName'].touched
+            "
+            >{{ specNameErr() }}</mat-error
+          >
+        </mat-form-field>
+        <button
+          style="float: right"
+          mat-flat-button
+          class="rpm-save-button"
+         
+          [disabled]="!specialtyForm.valid || isSubmitted"
+        >
+          {{ data.add && data.add === "add" ? "Submit" : "Update" }}
+        </button>
+      </mat-dialog-content>
+    </form>
+  </mat-card-content>
+</div>

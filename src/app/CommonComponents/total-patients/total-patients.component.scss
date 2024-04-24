@@ -1,0 +1,507 @@
+* {
+  font-family: helveticaneueregular;
+}
+
+$primary-color: #01cd74;
+$secondary-color: white;
+$warning-color: #f44336;
+$success-color: #4caf50;
+
+body {
+  font-family: helveticaneueregular;
+}
+
+.totalPatientMain {
+  height: 91vh;
+
+  .mat-elevation-z8 {
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .mat-table {
+    min-height: 529px !important;
+    max-height: 529px !important;
+  }
+
+  .mat-header-cell,
+  .mat-cell {
+    max-width: 307px !important;
+    min-width: 307px !important;
+  }
+
+  .mat-table,
+  .mat-header-row {
+    background: none !important;
+  }
+
+  .mat-header-row {
+    background: linear-gradient(225deg, #e8eff9 0%, #e7f2f0 100%) !important;
+  }
+
+  .mat-row {
+    height: 76px !important;
+    background: #fff !important;
+    // border: 1px solid #B9CCE8 !important;
+  }
+
+  .mat-paginator {
+    background: linear-gradient(225deg, #e8eff9 0%, #e7f2f0 100%) !important;
+  }
+
+  .search {
+    gap: 24px;
+  }
+
+  .new-btn {
+    // position: relative;
+    // top: 8vh;
+    // right: 1.5vw;
+    text-align: center;
+    padding-bottom: 7px;
+    color: #ffffff;
+
+    width: 124px;
+    height: 37px;
+
+    background: #01cd74;
+    border-radius: 6px;
+  }
+
+  .box {
+    width: 173px;
+    height: 24px;
+
+    background: #fff7dd;
+    border: 0.5px solid #cf9b00;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+
+    color: #cf9b00;
+  }
+
+  .search-field {
+    position: relative;
+    right: 124px;
+  }
+
+  // .mat-table {
+  //   background: #e7f3fe !important;
+  //   background: #ffffff !important;
+  // }
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    border-radius: 8px;
+  }
+
+  .hide-pagination-element {
+    display: none;
+  }
+
+  .search-container button {
+    float: right;
+    padding: 6px 10px;
+    // margin-top: 8px;
+    margin-right: 16px;
+    background: #01cd74;
+    font-size: 31.5px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    img {
+      width: 26px;
+    }
+  }
+
+  .close-search {
+    position: fixed;
+    /* left: 64px; */
+    right: 439px;
+    bottom: 612px;
+  }
+
+  input[type="text"] {
+    padding: 6px;
+    // margin-top: 8px;
+    width: 412px;
+    height: 38px;
+    font-size: 17px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    outline: none;
+    border: 1px solid #01cd74;
+    padding-inline-start: 24px;
+  }
+
+  .patient-count {
+    outline: none;
+    cursor: pointer;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center space-around;
+    align-items: center;
+    position: relative;
+    left: 13vw;
+  }
+
+  .spinner {
+    position: relative;
+    top: 250px;
+    margin-left: 40%;
+  }
+
+  // .border-left {
+  //   background: linear-gradient(to left, #ECFFFA 85%, #006595 15%);
+  // }
+
+  .title {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 18px;
+    color: #424242;
+    position: relative;
+    // top: 2vh;
+  }
+
+  mat-tooltip-component {
+    display: none !important;
+  }
+
+  .readings {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    cursor: pointer;
+  }
+
+  .date {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .rounded-circle {
+    border-radius: 50% !important;
+    position: relative;
+    // top: -1.8px;
+    right: 5px;
+    width: 52.05px;
+    height: 52.05px;
+    margin-right: 3px;
+    border: 2px solid #fff;
+  }
+
+  .outer-rounded-circle {
+    border-radius: 50% !important;
+    position: relative;
+    top: -1.8px;
+    right: 5px;
+    width: 52.05px;
+    height: 52.05px;
+    margin-right: 3px;
+    // border: 2px solid #fff;
+  }
+
+  .patientBio {
+    // margin-left: 33px;
+    // margin-top: 4px;
+
+    .patient-info {
+      position: relative;
+      top: 0.5vh;
+    }
+
+    cursor: pointer;
+  }
+
+  .flag-div {
+    padding-top: 10px;
+    padding-right: 10px;
+  }
+
+  .gender-age {
+    font-size: 16px;
+    line-height: 19px;
+    color: #5f6368;
+  }
+
+  .name {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+    color: #343434;
+  }
+
+  .patientText {
+    width: 260px;
+    font-size: 12px;
+  }
+
+  // .tot-pagination {
+  //   bottom: 3vw;
+  //   z-index: 10;
+  //   height: 1px;
+  //   width: 100%;
+  //   position: fixed;
+  // }
+
+  .con-add {
+    width: 137px;
+    padding-left: 5px;
+    padding-right: 1vw;
+    font-size: 16px;
+    line-height: 19px;
+    color: #424242;
+    font-weight: 500;
+    // text-align: center;
+  }
+
+  .centerText {
+    // text-align: center;
+  }
+
+  .activeStatus {
+    color: #4caf50;
+  }
+
+  .inactiveStatus {
+    color: #f44336;
+  }
+
+  // .mat-row {
+  //   position: relative;
+  //   top: -2vh;
+  // }
+
+  // .mat-row:hover {
+  //   border-radius: 10px;
+  //   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+  //   transform: scale(1);
+  //   transform: 0.2s;
+  // }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    overflow-y: scroll;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #a1a1a1;
+    border-radius: 10px;
+  }
+
+  // .pagination {
+  //   position: fixed;
+  //   top: -4vh;
+  //   float: right;
+  //   right: 1vw;
+  // }
+
+  .example-container.mat-elevation-z8 {
+    box-shadow: none;
+  }
+
+  .spinner-div {
+    //    margin-left: 40vw;
+    margin-top: 10vh;
+  }
+
+  .fieldWidth {
+    width: 280px !important;
+    border-radius: 8px !important;
+    // top: 1vh;
+    // left: -0.5vw;
+  }
+
+  // .right-elements {
+  //   height: 0px;
+  //   position: relative;
+  //   left: 1vw;
+  //   top: -1.5vw;
+  // }
+  .download-btn {
+    position: relative;
+    left: -3vw;
+    top: 3.2vh;
+    cursor: pointer;
+    outline: none;
+  }
+
+  // @media only screen and (min-device-width: 769px) and (max-device-width: 1024px) {
+  //   table {
+  //     // top: -6vh;
+  //   }
+
+  //   .tot-pagination {
+  //     bottom: 5vw !important;
+  //   }
+
+  //   .mat-header-cell {
+  //     font-size: 14px;
+  //   }
+
+  //   .no-records-found-text {
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     text-align: center;
+  //     margin-top: 10vh;
+  //     font-size: 16px;
+  //     font-weight: 400;
+  //   }
+
+  //   .outer-rounded-circle {
+  //     margin-right: -19px;
+  //   }
+
+  //   .search-btn {
+  //     margin-left: -5px !important;
+  //   }
+
+  //   .rounded-circle {
+  //     top: 6px;
+  //     right: 10px;
+  //     width: 40px;
+  //     height: 40px;
+  //   }
+
+  //   .patientBio .patient-info {
+  //     position: relative;
+  //     top: 0.8vh;
+  //     cursor: pointer;
+  //   }
+
+  //   td.mat-cell {
+  //     height: 85px;
+  //   }
+
+  //   .name,
+  //   .con-add,
+  //   .activeStatus,
+  //   .inactiveStatus {
+  //     font-size: 14px;
+  //     line-height: 18px;
+  //   }
+
+  //   .gender-age {
+  //     font-size: 12px;
+  //     line-height: 12px;
+  //   }
+
+  //   .example-container {
+  //     margin-top: 25px;
+  //     height: 67vh;
+  //   }
+
+  //   // .pagination {
+  //   //   position: relative;
+  //   //   top: -7vh;
+  //   // }
+  //   // .pagination {
+  //   //   top: 4vh;
+  //   // }
+  // }
+
+  .total-patients {
+    margin-bottom: 24px;
+  }
+
+  // ::ng-deep .mat-paginator .mat-paginator-range-actions {
+  //   justify-content: flex-end !important;
+  // }
+
+  // .tot-pagination {
+  //   bottom: 3vw;
+  //   z-index: 10;
+  //   height: 1px;
+  //   width: 100%;
+
+  //   ::ng-deep .mat-paginator-container {
+  //     background-color: #ffffff;
+  //     display: inline-block;
+  //   }
+
+  //   ::ng-deep .mat-paginator-page-size {
+  //     display: flex;
+  //     align-items: baseline;
+  //     float: flex-end;
+  //   }
+
+  //   ::ng-deep .mat-paginator-range-actions {
+  //     justify-content: flex-end;
+  //     margin-top: 10px;
+  //     position: relative;
+  //     left: -0.5vw;
+  //     top: -1vh;
+  //   }
+
+  //   ::ng-deep .mat-icon-button {
+  //     padding: 0;
+  //     min-width: 0;
+  //     width: 40px;
+  //     height: 40px;
+  //     flex-shrink: 0;
+  //     line-height: 40px;
+  //     border-radius: 9%;
+  //     // background-color: #fff;
+  //     outline: none;
+  //   }
+  // }
+
+  // }
+  @media only screen and (min-width: 1692px) and (max-device-width: 1800px) and (orientation: landscape) {
+    .rpm-module-table-container {
+      margin-top: 50px;
+      // height: 65vh !important;
+      overflow: auto;
+    }
+
+    .mat-table {
+      min-height: 47em !important;
+      max-height: 47em !important;
+    }
+
+    .mat-header-cell,
+    .mat-cell {
+      max-width: 25em !important;
+      min-width: 25em !important;
+    }
+
+    .example-container {
+      margin-top: 50px;
+      height: 80vh;
+    }
+  }
+
+  // @media only screen and (min-device-width: 1279px) and (max-device-width: 1280px) and (orientation: landscape) {
+  //   .example-container.mat-elevation-z8 {
+  //     max-height: 460px;
+  //     height: 460px;
+  //   }
+
+  //   .example-container {
+  //     margin-top: 20px;
+  //     height: 55vh;
+  //     overflow: auto;
+  //   }
+
+  //   .tot-pagination {
+  //     bottom: 4vw;
+  //   }
+  // }
+
+  // @media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+  //   .tot-pagination {
+  //     bottom: 4vw !important;
+  //     position: sticky;
+  //     z-index: 10;
+  //     height: 1px;
+  //     width: 99%;
+  //   }
+  // }
+}

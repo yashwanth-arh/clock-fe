@@ -1,0 +1,452 @@
+.title {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 21px;
+  color: #424242;
+  position: relative;
+  top: 0.7vh;
+  left: -0.4vw;
+}
+
+.horizontal-line {
+  border-bottom: 1px rgba(192, 192, 192, 1) solid;
+}
+
+.observationList {
+  margin-top: 22px;
+
+  table {
+    width: 100%;
+    padding: 0px 16px 11px 16px;
+    // border-radius: 10px;
+    // border: 1.5px solid #E7F3FE;
+    background-color: transparent;
+    margin-top: 2vh;
+    position: relative;
+    top: -2vh;
+  }
+
+  ::ng-deep .mat-icon-button {
+    outline: none;
+  }
+
+  tr.mat-header-row {
+    height: 0px;
+  }
+
+  .lg-pagination {
+    display: block;
+  }
+
+  .pagi-align {
+    position: relative;
+    left: 22px;
+  }
+
+  td.mat-cell {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    color: #424242;
+    background-color: #ECFFFA;
+  }
+
+  .example-container {
+    height: 46vh;
+    max-width: 100%;
+    overflow: auto;
+    border-radius: 10px;
+    border: 1.5px solid #e7f3fe;
+    box-shadow: none;
+    margin-top: 15px;
+    scrollbar-width: auto;
+  }
+
+  .table-top {
+    position: relative;
+    top: 2vh;
+  }
+
+  .header {
+    // width: 52vw;
+    margin-top: -4.9vh;
+    // position: fixed;
+    // width: 52vw;
+    background: white;
+    z-index: 1;
+  }
+
+  .no-record {
+    font-size: 18px;
+  }
+
+  .title-container {
+    margin-top: -6vh;
+  }
+
+  .pagination {
+    position: relative;
+    left: 10vw;
+  }
+
+  .pagination2 {
+    position: relative;
+    left: 11vw;
+  }
+
+  // observationBSHistoryList.length
+
+  .title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: #424242;
+    position: relative;
+    top: 2.7vh;
+  }
+
+  .titleLeft {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: #424242;
+    position: relative;
+    top: 2.7vh;
+    left: -6px;
+  }
+
+  .titleBgCenter {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: #424242;
+    position: relative;
+    top: 2vh;
+    left: 9.5vw;
+  }
+
+  .titleWtCenter {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: #424242;
+    position: relative;
+    top: 2vh;
+    left: 10.7vw;
+  }
+
+  .mat-header-cell {
+    background-color: #fff;
+    font-size: 16px;
+    line-height: 19px;
+    color: #5f6368;
+    border-bottom: transparent;
+  }
+
+  .textInputWidth {
+    font-size: 10px;
+    width: 12vw;
+    top: -1vh;
+    // margin-bottom: -2vh;
+  }
+
+  .mat-table {
+    border-collapse: separate !important;
+    border-spacing: 0 8px !important;
+  }
+
+  .icon-red {
+    border-left: 10px solid #f44336;
+  }
+
+  .icon-green {
+    border-left: 10px solid #4caf50;
+  }
+
+  .icon-orange {
+    border-left: 10px solid #ff8c00;
+  }
+
+  .readings {
+    width: 535px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .bpSymptoms {
+    width: 535px;
+  }
+
+  .date {
+    width: 321px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  // ::ng-deep .mat-paginator-container {
+  //   display: none;
+  // }
+
+  pagination-controls {
+    position: relative;
+    left: -23vw;
+    font-size: 10px;
+    top: 2vh;
+  }
+
+  ::-webkit-scrollbar {
+    height: 4px;
+    overflow-x: scroll;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #a1a1a1;
+    border-radius: 10px;
+  }
+}
+
+.pagi-align {
+  mat-paginator {
+    position: relative;
+    width: 250px;
+    bottom: 1px;
+    height: 30px;
+    right: 25px;
+    background: transparent;
+  }
+}
+
+// .ngx-pagination .pagination-previous a::before,
+// .ngx-pagination .pagination-previous.disabled::before,
+// .ngx-pagination .pagination-next a::after,
+// .ngx-pagination .pagination-next.disabled::after {
+//   content: '' !important;
+// }
+
+// ::ng-deep .ngx-pagination a, .ngx-pagination button {
+//     color: #0a0a0a !important;
+//     display: none !important;
+//     padding: 0.1875rem 0.625rem !important;
+//     border-radius: 0 !important;
+// }
+@media only screen and (min-device-width: 1112px) and (max-device-width: 1112px) and (orientation: landscape) {
+  .observationList {
+    table {
+      top: 0vh;
+      margin-top: 0px;
+    }
+  }
+}
+
+.hide-pagination {
+  display: none !important;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .title {
+    font-size: 14px;
+  }
+
+  .observationList {
+    margin-top: 31px;
+
+    .example-container {
+      height: 39vh;
+      top: 0vh;
+    }
+
+    .tab-pagination {
+      margin-top: 35px;
+      position: relative;
+      left: -27vw;
+    }
+
+    .table-top {
+      height: 300px !important;
+      margin-top: 47px;
+      top: 0vh;
+    }
+
+    table {
+      top: 0vh;
+      margin-top: 0px;
+    }
+
+    .pagi-align {
+      position: relative;
+      left: 2vw;
+    }
+
+    ::ng-deep .mat-paginator-range-label {
+      width: 79px;
+      margin: 0px;
+    }
+
+    td.mat-cell {
+      font-size: 12px;
+    }
+
+    .mat-header-cell {
+      font-size: 14px;
+      line-height: 16px;
+    }
+
+    .title {
+      position: relative;
+      left: 1vw;
+    }
+
+    .titleBgCenter {
+      left: 9.5vw;
+    }
+
+    .titleWtCenter {
+      left: 2.2vw;
+      top: 2.7vh;
+    }
+
+    tr.mat-row,
+    tr.mat-footer-row {
+      height: 42px;
+      position: relative;
+      top: -4vh;
+    }
+
+    .textInputWidth {
+      width: 17vw;
+    }
+
+    pagination-controls {
+      position: relative;
+      left: -6vw;
+      font-size: 10px;
+      top: 12px;
+    }
+
+    ::ng-deep .ngx-pagination .current {
+      padding: 0px 7px;
+      background: #2199e8;
+      color: #fefefe;
+      cursor: default;
+      border-radius: 50%;
+      margin: -4px;
+    }
+
+    .date {
+      padding-right: 0px;
+    }
+
+    .bloodPressure {
+      width: 130px;
+    }
+
+    .observationDate {
+      width: 110px;
+    }
+
+    .bpSymptoms {
+      text-align: center;
+    }
+
+    th.mat-header-cell:last-of-type,
+    td.mat-cell:last-of-type,
+    td.mat-footer-cell:last-of-type {
+      padding-right: 0px;
+    }
+
+    th.mat-header-cell:first-of-type,
+    td.mat-cell:first-of-type,
+    td.mat-footer-cell:first-of-type {
+      padding-left: 10px;
+    }
+  }
+}
+
+::ng-deep .mat-paginator-range-label {
+  margin: 0 27px 0 23px !important;
+}
+
+// .mat-paginator {
+//   display: none;
+// }
+
+@media only screen and (min-device-width: 1280px) and (max-device-width: 1280px) and (orientation: landscape) {
+  .bpSymptoms {
+    width: 210px !important;
+  }
+
+  .example-container {
+    margin-top: 15px !important;
+  }
+
+  mat-paginator {
+    position: relative;
+    width: 180px;
+    // bottom: 55px;
+    height: 30px;
+    background: transparent;
+  }
+}
+
+@media only screen and (min-device-width: 1279px) and (max-device-width: 1280px) and (orientation: landscape) {
+  .observationList {
+    .example-container {
+      height: 280px !important;
+      top: 0vh;
+    }
+
+    ::ng-deep .mat-paginator-range-label {
+      width: 110px;
+      margin: 0px;
+    }
+
+    .tab-pagination {
+      margin-top: 35px;
+      position: relative;
+      left: -13vw;
+    }
+
+    .table-top {
+      height: 300px !important;
+      margin-top: 47px;
+      top: 0vh;
+    }
+  }
+}
+
+@media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+  .date {
+    width: 190px;
+  }
+
+  .observationList .example-container {
+    height: 41vh;
+    max-width: 100%;
+    overflow: auto;
+    border-radius: 10px;
+    border: 1.5px solid #e7f3fe;
+    box-shadow: none;
+    margin-top: 15px;
+  }
+}
+
+@media only screen and (min-device-width: 1670px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .observationList {
+    margin-top: 31px;
+
+    .example-container {
+      height: 47vh !important;
+    }
+  }
+}
+
+// .bpSymptoms {
+//     width: 30%;
+// }
+// .bloodPressure {
+//     width: 45%;
+// }
+// .weightSymptoms {
+//     width: 35%;
+// }

@@ -1,0 +1,48 @@
+@import "../../../../variables";
+
+section.patient-info {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	// background-color: $primary-color;
+	// color: #ffffff;
+	flex-wrap: wrap;
+	color: #433f7d;
+	div {
+		flex: 1;
+		vertical-align: middle;
+		h4 {
+			// font-weight: 800;
+			// margin: 10px;
+			word-spacing: 1px;
+			letter-spacing: 1px;
+		}
+	}
+
+	.profile-icon {
+		text-align: center;
+	}
+	.profile-name {
+		font-weight: bolder;
+		font-size: 16px;
+		text-align: center;
+	}
+	.profile-age {
+		font-size: 14px;
+		text-align: center;
+	}
+	.address-text {
+		font-size: 13px;
+		text-align: center;
+	}
+	.profile-phone {
+		text-align: center;
+		display: flex;
+		padding-left: 25%;
+	}
+}
+.phone-num {
+	padding-left: 5px;
+	font-size: 14px;
+	font-weight: normal;
+}

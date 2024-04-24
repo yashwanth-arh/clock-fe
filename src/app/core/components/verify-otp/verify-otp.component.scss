@@ -1,0 +1,49 @@
+@import "../../../../variables";
+
+.otp-verification-container {
+  font-family: "Open Sans" sans-serif;
+  text-align: center;
+  margin: 20px;
+  padding: 20px;
+
+  .input-section {
+    margin: 10px;
+  }
+  .action-section {
+    margin: 10px;
+    button {
+      width: 100%;
+    }
+  }
+}
+p,
+h2,
+h3 {
+  font-family: "Open Sans" sans-serif;
+}
+
+.dialog-title {
+  .mat-icon {
+    vertical-align: middle;
+  }
+}
+
+.txt4 {
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: $medium-font-size;
+  line-height: 18px;
+  color: $primary-color;
+  display: block;
+  text-decoration: none;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.about-border {
+  display: block;
+  width: 146px;
+  height: 3px;
+  background: $primary-color;
+  margin: 10px auto;
+}

@@ -1,0 +1,46 @@
+<span class="close-button" title="Close"(click)="dialogRef.close()">
+    <mat-icon class="material-icons icon" color="black">close</mat-icon>
+</span>
+<span mat-dialog-title class="module-form-title">Edit Details</span>
+
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px">
+    <form [formGroup]="profile" [class.error]="!profile.valid && profile.touched" fxLayout fxLayout.xs="column"
+        fxLayoutAlign="center" fxLayoutGap="10px">
+
+        <h2 mat-dialog-title></h2>
+        <mat-dialog-content [formGroup]="profile">
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+                <mat-label>Name</mat-label>
+                <input matInput autocomplete=off formControlName="name" required>
+                <mat-error>Name is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+                <mat-label>Email Id</mat-label>
+                <input matInput autocomplete=off formControlName="emailid" required>
+                <mat-error>email Id is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+                <mat-label>Contact No</mat-label>
+                <input matInput autocomplete=off formControlName="contactno" required>
+                <mat-error>Contact Number is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+                <mat-label>Role</mat-label>
+                <input matInput autocomplete=off formControlName="role" required>
+                <mat-error>role is required is required</mat-error>
+            </mat-form-field>
+
+           
+        </mat-dialog-content>
+        
+    </form>
+</mat-card-content>
+<div fxLayout="row" fxLayoutGap="10px" class="divbutton" mat-dialog-actions>
+    <button mat-flat-button class="rpm-nav-button">Save</button>
+</div>

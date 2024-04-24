@@ -1,0 +1,102 @@
+<div class="rpm-module-management">
+	<app-navigation-bar></app-navigation-bar>
+	<div class="rpm-module-table-view">
+		<div class="rpm-module-filter-container"></div>
+		<div class="rpm-module-table-container example-container mat-elevation-z8">
+			<mat-table [dataSource]="dataSource" matSort>
+				<ng-container matColumnDef="roomName">
+					<mat-header-cell fxFlex="20%" *matHeaderCellDef>
+						Room
+					</mat-header-cell>
+					<mat-cell fxFlex="20%" *matCellDef="let element">
+						{{ element.roomName }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="sender">
+					<mat-header-cell fxFlex="20%" *matHeaderCellDef>
+						Caller
+					</mat-header-cell>
+					<mat-cell fxFlex="20%" *matCellDef="let element">
+						{{ element.sender }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="reciever">
+					<mat-header-cell fxFlex="20%" *matHeaderCellDef
+						>Receiver
+					</mat-header-cell>
+					<mat-cell fxFlex="20%" *matCellDef="let element">
+						{{ element.reciever }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="senderCallDuration">
+					<mat-header-cell fxFlex="20%" *matHeaderCellDef>
+						Sender Duration
+					</mat-header-cell>
+					<mat-cell fxFlex="20%" *matCellDef="let element">
+						{{ element.senderCallDuration }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="recieverCallDuration">
+					<mat-header-cell fxFlex="20%" *matHeaderCellDef>
+						Reciever Duration
+					</mat-header-cell>
+					<mat-cell fxFlex="20%" *matCellDef="let element">
+						{{ element.recieverCallDuration }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="typeOfCall">
+					<mat-header-cell fxFlex="8%" *matHeaderCellDef>
+						Call Type
+					</mat-header-cell>
+					<mat-cell fxFlex="8%" *matCellDef="let element">{{
+						element.typeOfCall
+					}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="patientName">
+					<mat-header-cell fxFlex="18%" *matHeaderCellDef
+						>Patient</mat-header-cell
+					>
+					<mat-cell fxFlex="18%" *matCellDef="let element">
+						{{ element.patientName }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="status">
+					<mat-header-cell fxFlex="10%" *matHeaderCellDef>
+						Status
+					</mat-header-cell>
+					<mat-cell fxFlex="10%" *matCellDef="let element">
+						{{ element.status }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="scheduleDate">
+					<mat-header-cell fxFlex="10%" *matHeaderCellDef>
+						Date
+					</mat-header-cell>
+					<mat-cell fxFlex="10%" *matCellDef="let element">
+						{{ element.scheduleDate }}
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<div
+				class="noDataFoundText"
+				*ngIf="messageSuccess !== undefined && !messageSuccess">
+				No Records Found!
+			</div>
+			<mat-paginator
+				[ngClass]="
+					(dataSource.totalElemObservable | async) < 10
+						? 'hide-pagination-element'
+						: 'show-pagination'
+				"
+				[length]="dataSource.totalElemObservable | async"
+				[pageSizeOptions]="[10, 25, 100]"
+				showFirstLastButtons>
+			</mat-paginator>
+		</div>
+	</div>
+</div>

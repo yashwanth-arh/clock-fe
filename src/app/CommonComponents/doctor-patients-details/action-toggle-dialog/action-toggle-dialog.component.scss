@@ -1,0 +1,58 @@
+.main-toggle {
+    height: 100%;
+    justify-content: space-evenly;
+
+    .confirmBtn {
+        width: 98px;
+        height: 37px;
+        background: #52B204;
+        color: #fff;
+        border: 0.5px solid #52B204;
+        border-radius: 6px;
+        box-shadow: 0px 0px 30px rgba(4, 31, 86, 0.05);
+
+    }
+
+    .toggleTitle {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 24px;
+        letter-spacing: 0.03em;
+        color: #424242;
+    }
+
+    .cancelBtn {
+        width: 98px;
+        height: 37px;
+        background: none; // border: 0.5px solid #52B204;
+        color: #52B204;
+        border-radius: 6px;
+        // box-shadow: 0px 0px 30px rgba(4, 31, 86, 0.05);
+        outline: none !important;
+
+        // transform: matrix(-1, 0, 0, 1, 0, 0);
+
+    }
+
+    ::ng-deep .mat-button .mat-button-focus-overlay {
+        opacity: 0;
+    }
+
+    .toggleMessage {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+        text-align: left;
+        color: #676767;
+        letter-spacing: 0.01em;
+        width: 370px;
+        overflow-wrap: anywhere;
+    }
+
+    ::-webkit-scrollbar {
+        width: 4px !important;
+        height: 4px !important;
+    }
+}

@@ -1,0 +1,462 @@
+<div class="device-comp-main">
+  <!-- <app-navigation-bar
+    (clickEvent)="createDevice('add')"
+    (bulkEvent)="openBulkDialog()"
+  ></app-navigation-bar> -->
+  <div class="adminDevice">
+    <div *ngIf="userRole === 'RPM_ADMIN'">
+      <div
+        class="example-container mat-elevation-z8"
+        [ngClass]="userRole === 'RPM_ADMIN' ? 'notAdmin' : ''"
+      >
+        <mat-table #table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="deviceCode">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.deviceModelName && element?.deviceModelName.length > 15
+                  ? element?.deviceModelName
+                  : ''
+              "
+            >
+              {{
+                element?.deviceModelName && element?.deviceModelName.length > 15
+                  ? (element?.deviceModelName | slice : 0 : 15) + "..."
+                  : element?.deviceModelName
+                  ? element?.deviceModelName
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="category">
+            <mat-header-cell *matHeaderCellDef> Device Type </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.deviceType && element?.deviceType.length > 15
+                  ? element?.deviceType
+                  : ''
+              "
+            >
+              {{
+                element?.deviceType && element?.deviceType.length > 15
+                  ? (element?.deviceType | slice : 0 : 15) + "..."
+                  : element?.deviceType
+                  ? element?.deviceType
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="deviceVersion">
+            <mat-header-cell *matHeaderCellDef> Version </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.deviceVersion ? element.deviceVersion : "-" }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="vendorName">
+            <mat-header-cell *matHeaderCellDef> Vendor Name </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.vendorName && element?.vendorName.length > 15
+                  ? element?.vendorName
+                  : ''
+              "
+            >
+              {{
+                element?.vendorName && element?.vendorName.length > 15
+                  ? (element?.vendorName | slice : 0 : 15) + "..."
+                  : element?.vendorName
+                  ? element?.vendorName
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="imei">
+            <mat-header-cell *matHeaderCellDef>
+              IMEI / Serial No.
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.imeinumber && element?.imeinumber.length > 15
+                  ? element?.imeinumber
+                  : ''
+              "
+            >
+              {{
+                element?.imeinumber && element?.imeinumber.length > 15
+                  ? (element?.imeinumber | slice : 0 : 15) + "..."
+                  : element?.imeinumber
+                  ? element?.imeinumber
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="connectivity">
+            <mat-header-cell *matHeaderCellDef> Connectivity </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{
+                element.connectivity ? (element.connectivity | titlecase) : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="currency">
+            <mat-header-cell *matHeaderCellDef> Currency </mat-header-cell>
+            <mat-cell *matCellDef="let element"
+              >{{ element?.currency ? element?.currency : "-" }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element?.price ? element?.price : "-" }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="procurementDate">
+            <mat-header-cell *matHeaderCellDef> Date Procured </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{
+                element?.procurementDate
+                  ? (formatDate(element.procurementDate) | date : "dd/MM/yyyy")
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="assignedTo">
+            <mat-header-cell *matHeaderCellDef> Assigned To </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.hospitalName && element?.hospitalName.length > 15
+                  ? element?.hospitalName
+                  : ''
+              "
+            >
+              {{
+                element?.hospitalName && element?.hospitalName.length > 15
+                  ? (element?.hospitalName | slice : 0 : 15) + "..."
+                  : element?.hospitalName
+                  ? element?.hospitalName
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="dateAssigned">
+            <mat-header-cell *matHeaderCellDef> Last Updated </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{
+                element?.assignStatus == "AVAILABLE_CH"
+                  ? "-"
+                  : (element.lastUpdatedAt | date : "dd/MM/yyyy")
+              }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="assignStatus">
+            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <mat-hint
+                [ngClass]="
+                  element.assignStatus == 'ASSIGNED_HOS' ||
+                  element.assignStatus == 'ASSIGNED_PAT'
+                    ? 'assign'
+                    : element.assignStatus == 'AVAILABLE_CH'
+                    ? 'available'
+                    : element.assignStatus == 'DAMAGED' ||
+                      element.assignStatus == 'RETURNED'
+                    ? 'damage'
+                    : 'unassign'
+                "
+                >{{
+                  element.assignStatus == "ASSIGNED_HOS" ||
+                  element.assignStatus == "ASSIGNED_PAT"
+                    ? "Assigned"
+                    : element.assignStatus == "DAMAGED"
+                    ? "Damaged"
+                    : element.assignStatus == "RETURNED"
+                    ? "Returned"
+                    : element.assignStatus == "AVAILABLE_CH"
+                    ? "Available"
+                    : "-"
+                }}
+              </mat-hint>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Action">
+            <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="editDevice(element)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item disabled (click)="logBook(element)">
+                  <mat-icon>person_add</mat-icon>
+                  <span>View Log book</span>
+                </button>
+              </mat-menu>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="deviceHeaders"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: deviceHeaders"></mat-row>
+        </mat-table>
+        <div
+          class="noRecordsFound"
+          *ngIf="
+            !(dataSource.loadingObservable | async) &&
+            messageSuccess !== undefined &&
+            !messageSuccess
+          "
+        >
+          No Records Found!
+        </div>
+        <mat-paginator
+          [ngClass]="
+            (dataSource.totalElemObservable | async) < 10 && !messageSuccess
+              ? 'hide-pagination-element'
+              : (dataSource.totalElemObservable | async) == undefined
+              ? 'hide-pagination-element'
+              : 'show-pagination'
+          "
+          [length]="dataSource.totalElemObservable | async"
+          [pageSizeOptions]="[10, 25, 100]"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+  <div class="deviceForm">
+    <div *ngIf="userRole === 'HOSPITAL_USER' || userRole === 'FACILITY_USER'">
+      <div
+        class="example-container mat-elevation-z8"
+        [ngClass]="userRole === 'RPM_ADMIN' ? '' : 'notAdminDecive'"
+      >
+        <mat-table
+          #table
+          matSort
+          matTableResponsive
+          [dataSource]="dataSourceList"
+        >
+          <ng-container matColumnDef="deviceCode">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.deviceModelName && element?.deviceModelName.length > 15
+                  ? element?.deviceModelName
+                  : ''
+              "
+            >
+              {{
+                element?.deviceModelName && element?.deviceModelName.length > 15
+                  ? (element?.deviceModelName | titlecase | slice : 0 : 15) +
+                    "..."
+                  : element?.deviceModelName
+                  ? (element?.deviceModelName | titlecase)
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="category">
+            <mat-header-cell *matHeaderCellDef> Device Type </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.deviceType && element?.deviceType.length > 15
+                  ? element?.deviceType
+                  : ''
+              "
+            >
+              {{
+                element?.deviceType && element?.deviceType.length > 15
+                  ? (element?.deviceType | titlecase | slice : 0 : 15) + "..."
+                  : element?.deviceType
+                  ? (element?.deviceType | titlecase)
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="deviceVersion">
+            <mat-header-cell *matHeaderCellDef> Version </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element?.deviceVersion ? element?.deviceVersion : "-" }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="vendorName">
+            <mat-header-cell *matHeaderCellDef> Vendor Name </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.vendorName && element?.vendorName.length > 15
+                  ? element?.vendorName
+                  : ''
+              "
+            >
+              {{
+                element?.vendorName && element?.vendorName.length > 15
+                  ? (element?.vendorName | titlecase | slice : 0 : 15) + "..."
+                  : element?.vendorName
+                  ? (element?.vendorName | titlecase)
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="imei">
+            <mat-header-cell *matHeaderCellDef>
+              IMEI / Serial No.
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.imeinumber && element?.imeinumber.length > 15
+                  ? element?.imeinumber
+                  : ''
+              "
+            >
+              {{
+                element?.imeinumber && element?.imeinumber.length > 15
+                  ? (element?.imeinumber | titlecase | slice : 0 : 15) + "..."
+                  : element?.imeinumber
+                  ? (element?.imeinumber | titlecase)
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="connectivity">
+            <mat-header-cell *matHeaderCellDef> Connectivity </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{
+                element?.connectivity ? (element.connectivity | titlecase) : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="patientName">
+            <mat-header-cell *matHeaderCellDef> Patient Name </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.patientName && element?.patientName.length > 15
+                  ? element?.patientName
+                  : ''
+              "
+            >
+              {{
+                element?.patientName && element?.patientName.length > 15
+                  ? (element?.patientName | titlecase | slice : 0 : 15) + "..."
+                  : element?.patientName
+                  ? (element?.patientName | titlecase)
+                  : "-"
+              }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="dateAssigned">
+            <mat-header-cell *matHeaderCellDef> Last Updated </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <!-- {{
+                element?.lastUpdatedAt
+                  ? (element.lastUpdatedAt | date : "dd/MM/yyyy")
+                  : "-"
+              }} -->
+              {{
+                element?.assignStatus == "ASSIGNED_HOS"
+                  ? "-"
+                  : (element.lastUpdatedAt | date : "dd/MM/yyyy")
+              }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="assignStatus">
+            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <mat-hint
+                [ngClass]="
+                  element.assignStatus == 'ASSIGNED_PAT'
+                    ? 'assign'
+                    : element.assignStatus == 'ASSIGNED_HOS'
+                    ? 'available'
+                    : element.assignStatus == 'DAMAGED' ||
+                      element.assignStatus == 'RETURNED'
+                    ? 'damage'
+                    : 'unassign'
+                "
+                >{{
+                  element.assignStatus == "ASSIGNED_PAT"
+                    ? "Assigned"
+                    : element.assignStatus == "ASSIGNED_HOS"
+                    ? "Available"
+                    : element.assignStatus == "DAMAGED"
+                    ? "Damaged"
+                    : element.assignStatus == "RETURNED"
+                    ? "Returned"
+                    : "-"
+                }}
+              </mat-hint>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Action">
+            <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button
+                  mat-menu-item
+                  (click)="unAssignDevice(element)"
+                  *ngIf="
+                    element?.assignStatus !== 'ASSIGNED_HOS' &&
+                    adminAccess == 'true'
+                  "
+                >
+                  <mat-icon>person_add</mat-icon>
+                  <span>Unassign</span>
+                </button>
+                <button mat-menu-item disabled (click)="logBook(element)">
+                  <mat-icon>redo</mat-icon>
+                  <span>View log book</span>
+                </button>
+              </mat-menu>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row
+            *matHeaderRowDef="deviceHeadersDevice"
+          ></mat-header-row>
+          <mat-row *matRowDef="let row; columns: deviceHeadersDevice"></mat-row>
+        </mat-table>
+        <div class="noRecordsFound" *ngIf="length <= 0">No Records Found!</div>
+        <mat-paginator
+          [ngClass]="
+            length < 10 ? 'hide-pagination-element' : 'show-pagination'
+          "
+          [pageIndex]="pageIndex"
+          (page)="handlePageEvent($event)"
+          [length]="length"
+          [pageSizeOptions]="[10, 25, 100]"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="main-device rpm-module-management">
+  <div>
+    <div *ngIf="showDevice">
+      <app-navigation-bar
+        (clickEvent)="createDevice('add')"
+        (bulkEvent)="openBulkDialog()"
+        #navigationBar
+        *ngIf="role === 'RPM_ADMIN'"
+      ></app-navigation-bar>
+      <app-navigation-bar *ngIf="role !== 'RPM_ADMIN'"></app-navigation-bar>
+    </div>
+    <div *ngIf="showDeviceType">
+      <app-navigation-bar (clickEvent)="addDeviceType()"></app-navigation-bar>
+    </div>
+    <div *ngIf="showDeviceModel">
+      <app-navigation-bar
+        (clickEvent)="addDeviceModel('add')"
+      ></app-navigation-bar>
+    </div>
+    <div *ngIf="showVendor">
+      <app-navigation-bar
+        (clickEvent)="openVendorDialog('add')"
+      ></app-navigation-bar>
+    </div>
+  </div>
+  <div class="device-info-tabs">
+    <mat-tab-group
+      animationDuration="0ms"
+      dynamicHeight
+      class="mat-tabs"
+      (selectedTabChange)="getTabDetails($event)"
+      mat-align-tabs="start"
+      *ngIf="role === 'RPM_ADMIN'"
+    >
+      <mat-tab label="Devices">
+        <app-device *ngIf="showDevice" #devices></app-device>
+      </mat-tab>
+      <mat-tab label="Device Types"
+        ><app-device-type-list *ngIf="showDeviceType"></app-device-type-list
+      ></mat-tab>
+      <mat-tab label="Device Models"
+        ><app-device-model-list *ngIf="showDeviceModel"></app-device-model-list
+      ></mat-tab>
+      <mat-tab label="Vendors"
+        ><app-vendors-list *ngIf="showVendor"></app-vendors-list
+      ></mat-tab>
+    </mat-tab-group>
+    <app-device
+      *ngIf="role === 'HOSPITAL_USER' || role === 'FACILITY_USER'"
+    ></app-device>
+  </div>
+</div>

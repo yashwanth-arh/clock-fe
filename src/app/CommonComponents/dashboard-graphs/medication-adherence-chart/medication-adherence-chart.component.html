@@ -1,0 +1,10 @@
+<div *ngIf="showData && !showGraph">
+    <app-loader [gifBackground]="'whiteBg'"></app-loader>
+</div>
+
+<div *ngIf="showGraph && !showData">
+    <div id="medicationChart" #medicationChart class="adherenceBar"></div>
+</div>
+<div class="no-data" *ngIf="!showGraph && !showData">
+    <span>No Records Found!</span>
+</div>

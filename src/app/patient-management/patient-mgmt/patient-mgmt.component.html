@@ -1,0 +1,486 @@
+<div class="rpm-module-management">
+  <app-navigation-bar
+    (backEvent)="viewAllProviders()"
+    (clickEvent)="openAddPatientDialog()"
+    (bulkEvent)="openBulkDialog()"
+  ></app-navigation-bar>
+
+  <!-- <div class="rpm-module-filter-container">
+      <form [formGroup]="filterRow">
+        <div fxLayout="column">
+          <div>
+            <mat-form-field appearance="legacy">
+              <mat-label>Search</mat-label>
+              <input
+                matInput
+                [formControl]="searchquery"
+                matInput
+                (keyup)="isEnableGlobalSearchFunc()"
+              />
+            </mat-form-field>
+            <mat-icon
+              style="font-size: 17px; cursor: pointer"
+              (click)="unselectGlobalSearch()"
+              *ngIf="isEnableGlobalSearch"
+            >
+              close
+            </mat-icon>
+          </div>
+          <div class="valid-text" *ngIf="showValidTextMessage">
+            <mat-error>Enter valid text</mat-error>
+          </div>
+        </div>
+        <mat-form-field
+          appearance="legacy"
+          *ngIf="selectedRole === userRoles.RPM_ADMIN"
+        >
+          <mat-label>Clinics</mat-label>
+          <mat-select
+            formControlName="branch"
+            (selectionChange)="onBranchSelection($event.value)"
+            (valueChange)="isEnableClinicFunc()"
+          >
+            <mat-option
+              *ngFor="let clinicData of clinicList"
+              [value]="clinicData.id"
+            >
+              {{ clinicData.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Clinics is required</mat-error>
+        </mat-form-field>
+        <mat-icon
+          style="font-size: 17px; cursor: pointer"
+          (click)="unselectClinic()"
+          *ngIf="isEnableClinic"
+        >
+          close
+        </mat-icon>
+        <mat-form-field
+          appearance="legacy"
+          *ngIf="selectedRole === userRoles.RPM_ADMIN && !docId"
+        >
+          <mat-label>Primary Physician</mat-label>
+          <mat-select
+            formControlName="provider"
+            (valueChange)="isEnablePrimaryPhysicianFunc()"
+          >
+            <mat-option
+              *ngFor="let providerData of provider"
+              [value]="providerData"
+            >
+              {{ providerData.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Primary physician is required</mat-error>
+        </mat-form-field>
+        <mat-icon
+          style="font-size: 17px; cursor: pointer"
+          (click)="unselectPrimaryPhysicain()"
+          *ngIf="isEnablePrimaryPhysician"
+        >
+          close
+        </mat-icon>
+        <button
+          mat-icon-button
+          class="rpm-search-button"
+          (click)="onPatientFilter()"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+      </form>
+    </div> -->
+
+  <div class="example-container mat-elevation-z8 patientMainClass">
+    <mat-table #table matSort matTableResponsive [dataSource]="dataSource">
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element" [title]="getFullName(element)">
+          <!-- <a [routerLink]="'report/'+element.id" class="patient-name"> -->
+          {{
+            getFullName(element).length > 25
+              ? (getFullName(element) | slice : 0 : 25) + "..."
+              : getFullName(element)
+              ? getFullName(element)
+              : "-"
+          }}
+          <!-- {{
+              element.patientFirstName
+                ? (element.patientFirstName | titlecase )
+                : ""
+            }}
+            {{
+            element.patientmiddleName
+            ? element.patientmiddleName
+            ? (element.patientmiddleName | titlecase)
+            : ""
+            : ""
+            }}
+            {{
+            element.patientLastName
+            ? (element.patientLastName | titlecase)
+            : ""
+            }}
+       -->
+          <!-- </a> -->
+        </mat-cell>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="age">
+          <mat-header-cell fxFlex="9%" *matHeaderCellDef> Age </mat-header-cell>
+          <mat-cell fxFlex="9%" *matCellDef="let element">
+            {{ element.age ? element.age : "-" }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="gender">
+          <mat-header-cell fxFlex="10%" *matHeaderCellDef>
+            Gender
+          </mat-header-cell>
+          <mat-cell fxFlex="10%" *matCellDef="let element">
+            {{ element.gender === "TRANSGENDER" ? "OTHERS" : element.gender }}
+          </mat-cell>
+        </ng-container> -->
+
+      <ng-container matColumnDef="contactNumber">
+        <mat-header-cell *matHeaderCellDef> Contact Number </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.cellNumber }}
+          <div [matMenuTriggerFor]="levelOne" #levelOneTrigger="matMenuTrigger">
+            <span
+              *ngIf="element['homeNumber']"
+              style="color: #01cd74; cursor: pointer; padding-left: 5px"
+            >
+              + 1</span
+            >
+          </div>
+          <mat-menu #levelOne="matMenu">
+            <div class="location-box" style="padding: 10px">
+              <div class="loc-title">
+                Secondary Contact Number : {{ element.homeNumber }}
+              </div>
+            </div>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="branch">
+          <mat-header-cell fxFlex="10%" *matHeaderCellDef>
+            Facility
+          </mat-header-cell>
+          <mat-cell fxFlex="10%" *matCellDef="let element">
+            {{ element.branch == null ? "-" : element.branch.name }}
+          </mat-cell>
+        </ng-container> -->
+
+      <ng-container matColumnDef="personalEmail">
+        <mat-header-cell *matHeaderCellDef> Email</mat-header-cell>
+        <mat-cell *matCellDef="let element" [title]="element.personalEmail">
+          <!-- {{ element.personalEmail }} -->
+          {{
+            element?.personalEmail.length > 27
+              ? (element?.personalEmail | slice : 0 : 27) + "..."
+              : element?.personalEmail
+              ? element?.personalEmail
+              : "-"
+          }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="gender">
+        <mat-header-cell *matHeaderCellDef>Gender</mat-header-cell>
+        <mat-cell *matCellDef="let element" [title]="getGender(element)">
+          {{
+            getGender(element).length > 17
+              ? (getGender(element) | slice : 0 : 17) + "..."
+              : getGender(element)
+          }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="dob">
+        <mat-header-cell *matHeaderCellDef>DOB (age)</mat-header-cell
+        >careProviders
+        <mat-cell *matCellDef="let element">
+          {{ element.dob | date : "dd/MM/yyyy" }} ({{ element.age }})
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="primaryPhysician">
+        <mat-header-cell *matHeaderCellDef>Primary Consultant</mat-header-cell>
+        <mat-cell
+          *matCellDef="let element"
+          [title]="
+            element['careProviders'] && element['careProviders'].length
+              ? getPhysicianName(element['careProviders'][0])
+              : ''
+          "
+        >
+          {{
+            element &&
+            element["careProviders"] &&
+            element["careProviders"].length &&
+            element["careProviders"][0]?.role == "DOCTOR" &&
+            getPhysicianName(element["careProviders"][0]).length > 18
+              ? "Dr. " +
+                (getPhysicianName(element["careProviders"][0])
+                  | slice : 0 : 18) +
+                "..."
+              : element["careProviders"][0]?.role == "DOCTOR" &&
+                getPhysicianName(element["careProviders"][0]).length < 19
+              ? "Dr. " + getPhysicianName(element["careProviders"][0])
+              : getPhysicianName(element["careProviders"][0]).length > 18
+              ? (getPhysicianName(element["careProviders"][0])
+                  | slice : 0 : 18) + "..."
+              : getPhysicianName(element["careProviders"][0]).length < 19
+              ? getPhysicianName(element["careProviders"][0])
+              : "-"
+          }}
+
+          <div [matMenuTriggerFor]="levelOne" #levelOneTrigger="matMenuTrigger">
+            <span
+              *ngIf="
+                element['careProviders'] &&
+                element['careProviders'].length &&
+                element['careProviders'].length > 1
+              "
+              style="color: #01cd74; cursor: pointer; padding-left: 5px"
+            >
+              + {{ element["careProviders"].length - 1 }}</span
+            >
+          </div>
+          <mat-menu #levelOne="matMenu">
+            <div class="location-box">
+              <span
+                *ngIf="
+                  element['careProviders'] &&
+                  element['careProviders'].length &&
+                  element['careProviders'][0] !== null
+                "
+              >
+                <div
+                  class="loc-title"
+                  *ngFor="let a of element['careProviders']; let i = index"
+                >
+                  <span mat-menu-item *ngIf="i != 0 && i != a?.length - 1">
+                    {{
+                      getName(a, element["careProviders"][0]) &&
+                      getName(a, element["careProviders"][0]).length > 15
+                        ? (getName(a, element["careProviders"][0])
+                            | slice : 0 : 15) + "..."
+                        : getName(a, element["careProviders"][0])
+                        ? getName(a, element["careProviders"][0])
+                        : ""
+                    }}
+                  </span>
+                </div>
+              </span>
+            </div>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="facility">
+        <mat-header-cell *matHeaderCellDef> Facility </mat-header-cell>
+        <mat-cell
+          *matCellDef="let element"
+          [title]="getFacilityName(element['facilities'][0])"
+        >
+          <!-- {{
+            element["facilities"] && element["facilities"].length
+              ? (element["facilities"][0]?.name | titlecase)
+              : ''
+          }}-->
+          {{
+            getFacilityName(element["facilities"][0]) &&
+            getFacilityName(element["facilities"][0]).length > 15
+              ? (getFacilityName(element["facilities"][0]) | slice : 0 : 15) +
+                "..."
+              : getFacilityName(element["facilities"][0])
+              ? getFacilityName(element["facilities"][0])
+              : ""
+          }}
+
+          <div [matMenuTriggerFor]="levelOne" #levelOneTrigger="matMenuTrigger">
+            <span
+              *ngIf="element['facilities'].length > 1"
+              style="color: #01cd74; cursor: pointer; padding-left: 5px"
+            >
+              + {{ element["facilities"].length - 1 }}</span
+            >
+          </div>
+          <mat-menu #levelOne="matMenu">
+            <div class="location-box">
+              <div
+                class="loc-title"
+                *ngFor="let a of element['facilities']; let i = index"
+              >
+                <span
+                  mat-menu-item
+                  *ngIf="i != 0 && i != a.length - 1"
+                  [title]="getFacilityNameSub(a, element['facilities'][0])"
+                >
+                  <!-- {{
+                    a.name !== element["facilities"][0]?.name
+                      ? (a?.name | titlecase)
+                      : ""
+                  }} -->
+                  {{
+                    getFacilityNameSub(a, element["facilities"][0]) &&
+                    getFacilityNameSub(a, element["facilities"][0]).length > 15
+                      ? (getFacilityNameSub(a, element["facilities"][0])
+                          | slice : 0 : 15) + "..."
+                      : getFacilityNameSub(a, element["facilities"][0])
+                      ? getFacilityNameSub(a, element["facilities"][0])
+                      : ""
+                  }}
+                </span>
+              </div>
+            </div>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="occupation">
+        <mat-header-cell *matHeaderCellDef> Occupation </mat-header-cell>
+        <mat-cell *matCellDef="let element" [title]="element.occupation">
+          {{
+            element.occupation.length > 17
+              ? (element.occupation | titlecase | slice : 0 : 17) + "..."
+              : (element.occupation | titlecase)
+          }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="diagnosis">
+          <mat-header-cell *matHeaderCellDef> ICD Codes </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.diagnosisCodes }}
+          </mat-cell>
+        </ng-container> -->
+
+      <ng-container matColumnDef="userStatus">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="fontSm">
+          <mat-hint
+            style="cursor: pointer"
+            [ngClass]="element.userStatus == 'ACTIVE' ? 'active' : 'inactive'"
+          >
+            {{ element.userStatus == "ACTIVE" ? "Active" : "Inactive" }}
+          </mat-hint>
+          <!-- <mat-icon
+              matSuffix
+              style="position: relative; top: -2px; cursor: pointer"
+              [matMenuTriggerFor]="menu"
+              #menuTrigger
+              >arrow_drop_down</mat-icon
+            > -->
+          <!-- <mat-menu #menu="matMenu" class="mat-menu-panel myMenu">
+              <div
+                (click)="statusChange(element.personalEmail, 'ACTIVE')"
+                style="padding-left: 30px; cursor: pointer"
+              >
+                ACTIVE
+              </div>
+              <mat-divider></mat-divider>
+              <div
+                (click)="statusChange(element.personalEmail, 'INACTIVE')"
+                style="padding-left: 30px; padding-top: 7px; cursor: pointer"
+              >
+                INACTIVE
+              </div>
+            </mat-menu> -->
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Action">
+        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <!-- <button mat-menu-item (click)="openClaimsDialog(element)">
+                <mat-icon>dns</mat-icon>
+                <span>Add Claim</span>
+              </button> -->
+            <button
+              mat-menu-item
+              class="action-btn"
+              (click)="openEditPatientDialog(element)"
+              *ngIf="adminAccess == 'true'"
+            >
+              <img src="assets/svg/Edit Icon.svg" />
+              <span style="padding-left: 3px">Edit</span>
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="patientStatusChange(element)"
+              *ngIf="adminAccess == 'true'"
+            >
+              <span style="color: #52b204">{{
+                element.userStatus == "ACTIVE" ? "Inactive" : "Active"
+              }}</span>
+            </button>
+            <ng-container *appPermission="addDevicePermission; let isAllowed">
+              <ng-container *ngIf="isAllowed">
+                <button mat-menu-item (click)="goToPatientDevice(element)">
+                  <!-- <mat-icon>book_online</mat-icon> -->
+                  <span>View Devices</span>
+                </button>
+              </ng-container>
+            </ng-container>
+            <button mat-menu-item (click)="viewCareTeam(element)">
+              <span>View Care Team</span>
+            </button>
+            <button
+              mat-menu-item
+              (click)="uploadConsentForm(element)"
+              *ngIf="userRole === 'BRANCH_USER' && !element.consentFormExists"
+            >
+              <img src="assets/svg/Consent Form.svg" class="consent-form-img" />
+              <span class="consent-form-text">Upload Consent Form</span>
+            </button>
+            <button
+              mat-menu-item
+              (click)="downloadPatientConsentForm(element)"
+              *ngIf="userRole === 'BRANCH_USER' && element.consentFormExists"
+            >
+              <img
+                src="assets/svg/Download Consent.svg"
+                class="download-consent-form-img"
+              />
+              <span class="consent-form-text">Download Form</span>
+            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <!-- <div class="noDataFoundText" *ngIf="!(dataSource.totalElemObservable | async)">No Records Found!</div> -->
+    <div
+      class="noRecordsFound"
+      *ngIf="messageSuccess !== undefined && !messageSuccess"
+    >
+      No Records Found!
+      <!-- <div class="noDataFoundText" *ngIf="!(dataSource.totalElemObservable|async)">No Records Found! -->
+    </div>
+    <mat-paginator
+      [ngClass]="
+        !messageSuccess || (dataSource.totalElemObservable | async) < 10
+          ? 'hide-pagination'
+          : 'show-pagination'
+      "
+      [length]="dataSource.totalElemObservable | async"
+      [pageSizeOptions]="[10, 25, 100]"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+</div>

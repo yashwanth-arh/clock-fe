@@ -1,0 +1,28 @@
+<div class="medical-tabs">
+  <mat-tab-group
+    animationDuration="0ms"
+    dynamicHeight
+    class="mat-tabs"
+    [(selectedIndex)]="selectedTabIndex"
+    (selectedTabChange)="getTabDetails($event.tab.textLabel)"
+    mat-align-tabs="start"
+  >
+    <mat-tab label="Prescription"
+      ><app-prescription *ngIf="selectedTabIndex == 0"></app-prescription
+    ></mat-tab>
+    <mat-tab label="Medication"><app-medication *ngIf="selectedTabIndex == 1"></app-medication></mat-tab>
+    <mat-tab label="Adherence"
+      ><app-adherence *ngIf="selectedTabIndex == 2"></app-adherence
+    ></mat-tab>
+    <mat-tab label="Health Parameters"><app-diagnostic *ngIf="selectedTabIndex == 3"></app-diagnostic></mat-tab>
+    <mat-tab label="EMR Reports" disabled></mat-tab>
+  </mat-tab-group>
+  <div
+    class="diagnostic"
+    *ngIf="diagnostic === 'Health Parameters'"
+  >
+    <a  mat-flat-button type="button" (click)="addDiagnostic()" class="rpm-save-button vitalButton" style="text-decoration: none;">
+      Add Health Parameters
+    </a>
+  </div>
+</div>

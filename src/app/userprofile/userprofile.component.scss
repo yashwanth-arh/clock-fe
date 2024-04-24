@@ -1,0 +1,37 @@
+@import "../../variables";
+
+.profile-settings,
+.profile-image-settings {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  div {
+    flex: 1;
+    margin: 0px 5px;
+    background-color: #ffffff;
+    flex-wrap: wrap;
+    flex-direction: column;
+    position: relative;
+  }
+}
+
+
+.rpm-spacer {
+  flex: 1 1 auto;
+}
+
+form > div.button-container {
+  margin: 0px 10px;
+  position: absolute;
+  right: 20px;
+}
+.app-drawer-container {
+  flex: 1;
+}
+
+.app-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}

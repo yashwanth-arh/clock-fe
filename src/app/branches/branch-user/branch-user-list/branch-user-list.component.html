@@ -1,0 +1,157 @@
+<div class="rpm-module-management branchUserList">
+  <app-navigation-bar
+    *ngIf="!hideNav"
+    (backEvent)="viewBranch()"
+    (clickEvent)="createUser()"
+    [Headername]="hospitalName"
+    #navigationBar
+  ></app-navigation-bar>
+  <div>
+    <div
+      class="example-container mat-elevation-z8"
+      [ngClass]="
+        userRole === 'RPM_ADMIN' || userRole === 'HOSPITAL_USER'
+          ? ''
+          : 'notAdmin'
+      "
+    >
+      <mat-table #table matSort matTableResponsive [dataSource]="dataSource">
+        <ng-container matColumnDef="firstName">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              getFullName(element) && getFullName(element).length > 13
+                ? getFullName(element)
+                : ''
+            "
+          >
+            {{
+              getFullName(element).length > 13
+                ? (getFullName(element) | slice : 0 : 13) + "..."
+                : getFullName(element)
+            }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="gender">
+          <mat-header-cell *matHeaderCellDef>Gender</mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              getGender(element) && getGender(element).length > 14
+                ? getGender(element)
+                : ''
+            "
+            >{{
+              getGender(element)
+                ? getGender(element).length > 14
+                  ? (getGender(element) | titlecase | slice : 0 : 14) + "..."
+                  : (getGender(element) | titlecase)
+                : "-"
+            }}</mat-cell
+          >
+        </ng-container>
+        <ng-container matColumnDef="designation">
+          <mat-header-cell *matHeaderCellDef> Designation </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.designation && element?.designation.length > 16
+                ? element?.designation
+                : ''
+            "
+            >{{
+              element?.designation && element?.designation.length > 16
+                ? (element?.designation | slice : 0 : 16) + "..."
+                : element?.designation
+                ? element?.designation
+                : "-"
+            }}</mat-cell
+          >
+        </ng-container>
+
+        <ng-container matColumnDef="emailId">
+          <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.emailId && element?.emailId.length > 16
+                ? element?.emailId
+                : ''
+            "
+            >{{
+              element?.emailId.length > 16
+                ? (element?.emailId | slice : 0 : 16) + "..."
+                : element?.emailId
+                ? element?.emailId
+                : "-"
+            }}</mat-cell
+          >
+        </ng-container>
+
+        <ng-container matColumnDef="contactNumber">
+          <mat-header-cell *matHeaderCellDef> Contact Number </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{
+            element.contactNumber ? element.contactNumber : "N/A"
+          }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-hint
+              [ngClass]="element.userStatus == 'ACTIVE' ? 'active' : 'inactive'"
+              >{{ element.userStatus == "ACTIVE" ? "Active" : "Inactive" }}
+            </mat-hint>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell class="w-40" *matHeaderCellDef
+            >Action</mat-header-cell
+          >
+          <mat-cell class="w-40" *matCellDef="let element">
+            <button
+              *ngIf="userId !== element.userId"
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                mat-menu-item
+                class="action-btn"
+                (click)="editUserRecord(element)"
+              >
+                <img src="assets/svg/Edit Icon.svg" />
+                <span style="padding-left: 3px;">Edit</span>
+              </button>
+              <button
+                mat-menu-item
+                (click)="updateStatus(element)"
+                *ngIf="element?.userId !== userId"
+              >
+                <!-- <mat-icon>person_add</mat-icon> -->
+                <span style="color: #52b204">{{
+                  element.userStatus == "ACTIVE" ? "Inactive" : "Active"
+                }}</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="userColumnHeaders"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: userColumnHeaders"></mat-row>
+      </mat-table>
+      <div class="noRecordsFound" *ngIf="length === 0">No Records Found!</div>
+      <mat-paginator
+        [ngClass]="length < 10 ? 'hide-pagination-element' : 'show-pagination'"
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageSizeOptions]="pageSizeOptions"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

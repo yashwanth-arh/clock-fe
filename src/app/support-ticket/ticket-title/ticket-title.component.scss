@@ -1,0 +1,190 @@
+// .mat-tab-class {
+//   margin-top: 10px;
+//   margin-left: 14px;
+// }
+// .mat-tab-group.mat-primary .mat-ink-bar,
+// .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+//   background-color: white;
+// }
+// ::ng-deep.mat-tab-header {
+//   border-bottom: none !important;
+// }
+// ::ng-deep .mat-ink-bar {
+//   background-color: transparent !important;
+// }
+// ::ng-deep.mat-tab-label {
+//   padding: 0px 0px !important;
+//   margin-left: -23px;
+//   color: #7a7a7a;
+//   font-weight: 400;
+//   // opacity: 0.2;
+// }
+.ticketTitle {
+  .notAdmin {
+    border-radius: 0px !important;
+    padding: 0 !important;
+
+    .mat-table {
+      border-top-left-radius: 0px !important;
+      border-top-right-radius: 0px !important;
+      max-height: 518px !important;
+      min-height: 518px !important;
+    }
+
+    .mat-header-cell,
+    .mat-cell {
+      max-width: 401px !important;
+      min-width: 401px !important;
+    }
+  }
+
+  .tickets-box {
+    width: 693px;
+    height: 110px;
+    background: #efefff;
+    opacity: 0.6;
+    border: 1px solid #efefff;
+    border-radius: 10px;
+    margin-left: 23px;
+    margin-top: 5px;
+    padding: 16px;
+    cursor: pointer;
+  }
+
+  //   .mat-drawer-content{
+
+  //     height: 65vh !important;
+  // }
+
+  .ticketSummary {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 21px;
+    /* or 286% */
+
+    color: #424242;
+  }
+
+  .search-form {
+    position: fixed;
+    margin-left: 32.5%;
+  }
+
+  .hide-pagination {
+    display: none;
+  }
+
+  .ticketDescription {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 151.19%;
+    display: flex;
+    align-items: center;
+    color: #676767;
+    padding-top: 7px;
+  }
+
+  .Ticket-Id {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 151.19%;
+    color: #7a7a7a;
+    padding-top: 9px;
+  }
+
+  .rpm-module-management[_ngcontent-ng-cli-universal-c600] {
+    overflow: hidden;
+  }
+
+  .Ticket-Id-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .tickets-box-main-div {
+    overflow: auto;
+    height: 500px;
+    overflow-x: hidden;
+  }
+
+  // .tickets-box-main-div-1{
+
+  //     display: flex;
+  //     flex-direction: row;
+  // }
+  .ticket-description-box {
+    width: 527px;
+    height: 515px;
+    background: #ffffff;
+    border: 1px solid #efefff;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .selected {
+    background-color: #ffffff;
+  }
+
+  .selected1 {
+    margin-left: 424px;
+  }
+
+  .formsearch {
+    margin-left: 75px;
+  }
+
+  .desciption-heading {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 151.19%;
+    color: #7a7a7a;
+  }
+
+  // ::ng-deep.mat-tab-label.mat-tab-label-active {
+  //   // font-weight: 900;
+  //   color: #424242;
+  //   font-weight: bold;
+  //   opacity: 1 !important;
+  // }
+
+  .desciption-heading {
+    line-break: anywhere;
+  }
+
+  .no-records {
+    text-align: center;
+    padding-top: 55px;
+    font-size: 18px;
+  }
+}
+@media only screen and (min-device-width: 1660px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .ticketTitle {
+    .notAdmin {
+      .mat-table {
+        max-height: 45em !important;
+        min-height: 45em !important;
+      }
+    }
+  }
+}
+
+@media only screen and (min-device-width: 1800px) and (max-device-width: 1920px) and (orientation: landscape) {
+  .ticketTitle {
+    .tickets-box-main-div {
+      overflow: auto;
+      height: 915px !important;
+      overflow-x: hidden;
+    }
+
+    .ticket-description-box {
+      width: 920px;
+      height: 915px;
+    }
+  }
+}

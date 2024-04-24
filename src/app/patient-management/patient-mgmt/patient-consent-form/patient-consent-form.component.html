@@ -1,0 +1,34 @@
+<div class="rpm-module-management">
+  <app-navigation-bar
+    (backEvent)="goToEnrollments()"
+    (downloadclickEvent)="downloadPatientConsentForm()"
+    (clickEvent)="openAddPatientConsentDialog()"
+  ></app-navigation-bar>
+  <div class="no-rpm-module-table-view" *ngIf="false">
+    <div fxLayout="column" class="consent" fxLayoutGap="15px">
+      <img src="assets/svg/CF.svg" />
+      <div fxLayout="row">No consent form available</div>
+    </div>
+  </div>
+
+  <div
+    class="rpm-module-table-view"
+    fxLayout="row"
+    fxLayoutAlign="space-between start"
+  >
+    <div class="consent">Consent Form</div>
+    <div *ngFor="let form of consentForms" class="consent" fxLayoutGap="15px">
+      <a [href]="imageUrl + form.fileDownloadUrl" target="_blank">
+        <img
+          *ngIf="form.fileDownloadUrl?.includes('.pdf')"
+          class="image"
+          src="assets/img/pdf.png"
+        />
+      </a>
+    </div>
+
+    <div>
+      <img class="delete-consent" src="assets/svg/Delete Consent.svg" />
+    </div>
+  </div>
+</div>

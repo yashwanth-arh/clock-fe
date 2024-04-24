@@ -1,0 +1,30 @@
+.piGraph {
+  height: 91vh;
+  width: 100%;
+  position: relative;
+  left: -25vh;
+  top: -18vh;
+}
+
+.bpTime {
+  position: relative;
+  height: 60vh;
+  top: 5vh;
+  width: 62%;
+  margin-top: 24px;
+  // left: 24px;
+}
+
+.hide-bp {
+  display: none;
+}
+
+.header-top {
+  position: relative;
+  //  top: 5vh;
+}
+
+.no-record {
+  margin-top: 36px;
+  text-align: center;
+}

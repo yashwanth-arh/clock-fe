@@ -1,0 +1,143 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data ? "Update CH Admin" : "Add CH Admin"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content>
+  <form
+    [formGroup]="adminForm"
+    (ngSubmit)="submitCHAdmin()"
+    class="org-form-div"
+  >
+    <mat-dialog-content
+      [formGroup]="adminForm"
+      class="contents"
+      fxLayoutGap="20px"
+    >
+      <div class="form-div">
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>First Name</mat-label>
+          <input
+            type="text"
+            minlength="3"
+            appAlphabetSpaceOnly
+            maxlength="50"
+            matInput
+            formControlName="firstname"
+            required
+          />
+          <mat-error> {{ getErrorfirstName() }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Middle Name</mat-label>
+          <input
+            type="text"
+            appNoFirstSpace
+            appAlphabetSpaceOnly
+            maxlength="50"
+            matInput
+            formControlName="middlename"
+          />
+          <mat-error *ngIf="middlename.errors?.minlength"
+            >Middle Name must be atleast 3 characters</mat-error
+          >
+          <mat-error *ngIf="middlename.errors?.pattern"
+            >Only alphabets,space are allowed</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Last Name</mat-label>
+          <input
+            type="text"
+            minlength="1"
+            appAlphabetSpaceOnly
+            maxlength="50"
+            matInput
+            formControlName="lastname"
+            required
+          />
+          <mat-error> {{ getErrorlastName() }}</mat-error>
+          <!-- <mat-error *ngIf="lastname.errors?.required"
+          >Last Name is required</mat-error
+        >
+        <mat-error *ngIf="lastname.errors?.minlength"
+          >Last Name must be atleast 1 character</mat-error
+        > -->
+          <!-- <mat-error *ngIf="lastname.errors?.pattern">
+          Only alphabets,space are allowed,first character cannot be space
+        </mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Email</mat-label>
+          <!-- <input
+          *ngIf="!data"
+          matInput
+          autocomplete="disabled"
+          maxlength="50"
+          formControlName="emailId"
+          required
+        /> -->
+          <input
+            matInput
+            autocomplete="disabled"
+            maxlength="50"
+            (keyup)="getEmail()"
+            formControlName="emailId"
+            [readonly]="checkUserLoggedIn"
+            required
+          />
+
+          <mat-error
+            *ngIf="
+              !adminForm.controls['emailId'].valid &&
+              adminForm.controls['emailId'].touched
+            "
+          >
+            {{ getErrorEmail() }}
+          </mat-error>
+          <mat-error *ngIf="emailId.errors?.emailTaken">
+            This email already exists.
+          </mat-error>
+          <mat-hint *ngIf="checkUserLoggedIn">
+            Cannot update email as user is already logged in!
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Contact Number</mat-label>
+          <input
+            type="text"
+            appNumberCustomValidation
+            matInput
+            autocomplete="disabled"
+            formControlName="contactnumber"
+            required
+            maxlength="10"
+          />
+          <mat-error
+            *ngIf="
+              !adminForm.controls['contactnumber'].valid &&
+              adminForm.controls['contactnumber'].touched
+            "
+          >
+            {{ getErrorContactNo() }}</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+
+    <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+      <button
+        mat-flat-button
+        [disabled]="!adminForm?.valid || submitted"
+        class="rpm-save-button"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</mat-card-content>

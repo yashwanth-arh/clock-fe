@@ -1,0 +1,164 @@
+<div
+  style="
+    background-image: url('assets/img/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <div
+    *ngIf="!enableOtpPage"
+    class="glassFilter"
+    style="
+      display: flex;
+      padding: 2rem 9rem;
+      justify-content: center;
+      gap: 20px;
+    "
+  >
+    <div *ngIf="showLoader" class="loader" style="align-self: center">
+      <!-- <app-loader [gifBackground]="'blueBg'"></app-loader> -->
+      <img
+        src="assets/gif/loader.gif"
+        style="border-radius: 50%"
+        class="clockGif"
+      />
+    </div>
+    <form
+      [formGroup]="loginForm"
+      *ngIf="!showLoader"
+      class="flex flex-col w-full"
+      style="text-align: center; gap: 10px"
+    >
+      <div class="self-center">
+        <img src="assets/svg/SECT-logo.svg" width="100" />
+      </div>
+      <div style="margin-bottom: 0.75rem; text-align: center">
+        <span
+          style="
+            font-size: 1.875rem;
+            line-height: 2.25rem;
+            color: #fff;
+            font-weight: 500;
+          "
+          >Sign-In</span
+        >
+      </div>
+
+      <div class="example-container">
+        <mat-form-field>
+          <mat-label>Email:</mat-label>
+          <input matInput formControlName="username" required />
+
+          <mat-error>{{ getErrorEmail() }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="example-container">
+        <mat-form-field>
+          <mat-label>Password:</mat-label>
+          <input matInput formControlName="password" required />
+
+          <mat-error>{{ getErrorPassword() }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <a
+        style="
+          cursor: pointer;
+          color: #bae4ff;
+          line-height: 0.75rem;
+          align-self: flex-end;
+        "
+        routerLink="/forgot-password"
+        >Forgot password</a
+      >
+      <div style="text-align: center">
+        <button type="submit" (click)="onLogin($event)" class="otp-btn">
+          Sing In
+        </button>
+      </div>
+    </form>
+  </div>
+  <div
+    *ngIf="enableOtpPage"
+    class="glassFilter flex-col"
+    style="
+      display: flex;
+      padding: 2rem 9rem;
+      justify-content: center;
+      gap: 20px;
+    "
+  >
+    <div *ngIf="showLoader" class="loader" style="align-self: center">
+      <!-- <app-loader [gifBackground]="'blueBg'"></app-loader> -->
+      <img
+        src="assets/gif/loader.gif"
+        style="border-radius: 50%"
+        class="clockGif"
+      />
+    </div>
+    <img
+      src="assets/img/Back.png"
+      width="25"
+      class="back-btn"
+      (click)="goToLogin()"
+    />
+    <form
+      *ngIf="!showLoader"
+      class="flex flex-col w-full"
+      style="text-align: center; gap: 10px"
+    >
+      <div class="self-center">
+        <img src="assets/svg/SECT-logo.svg" width="100" />
+      </div>
+      <div class="otp-text">
+        <span
+          >We have sent an OTP to your registered email. Please enter OTP to
+          authenticate and proceed to login
+        </span>
+      </div>
+
+      <ng-otp-input
+        appNumberCustomValidation
+        type="number"
+        [config]="{ length: 6 }"
+        class="text-center"
+        (onInputChange)="otp($event)"
+      ></ng-otp-input>
+      <div class="hrLine"></div>
+      <div class="otp-bottom flex justify-between">
+        <div class="otp-timmer">
+          {{ display + " " + "Sec" }}
+        </div>
+        <button
+          mat-button
+          type="button"
+          [ngStyle]="{ opacity: !enableResendOTP ? '0.5' : '1' }"
+          [disabled]="!enableResendOTP"
+          class="txt4"
+          (click)="onLogin($event)"
+        >
+          Resend OTP
+        </button>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" (click)="onLoginValidOtp($event)" class="otp-btn">
+          Validate Otp
+        </button>
+      </div>
+    </form>
+  </div>
+  <div
+    *ngIf="!showLoader && !enableOtpPage"
+    style="position: absolute; bottom: 0"
+  >
+    <div style="color: #fff; font-size: 12px; font-weight: 400">
+      Powered By:
+    </div>
+    <img src="assets/svg/Clock Health Logo.svg" width="125" />
+  </div>
+</div>

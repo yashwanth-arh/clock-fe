@@ -1,0 +1,39 @@
+.existDiagnosis {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+
+    .save-btn {
+        display: inline-flex;
+        height: 37px;
+        padding: 10px 24px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        background: #01cd74;
+        color: #fff;
+        border: none;
+    }
+
+    .cancel-button {
+        display: inline-flex;
+        height: 37px;
+        padding: 10px 24px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        background: #fff;
+        border: 1px solid #01cd74;
+        box-sizing: border-box;
+        color: #01cd74;
+        box-shadow: 0px 0px 10px rgba(1, 0, 102, 0.1);
+        outline: none;
+    }
+}

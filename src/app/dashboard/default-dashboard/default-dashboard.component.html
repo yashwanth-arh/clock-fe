@@ -1,0 +1,272 @@
+<div class="rpm-module-management">
+  <!-- <app-navigation-bar></app-navigation-bar> -->
+  <div class="dashboard-title">Dashboard</div>
+  <div class="mainDashboard">
+    <div class="rpm-module-filter-container grid-align">
+      <mat-card class="card-design" *ngIf="userRole === 'RPM_ADMIN'">
+        <mat-card-content class="card-content">
+          <div class="home-overview">
+            <h2
+              style="cursor: pointer; border-bottom: 2.5px solid #ffffff"
+              routerLink="/home/hospitals"
+            >
+              {{ cardDataList?.hospital }}
+            </h2>
+            <p>Total Hospitals</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-design" *ngIf="userRole === 'HOSPITAL_USER'">
+        <mat-card-content class="card-content">
+          <div class="home-overview">
+            <h2
+              style="cursor: pointer; border-bottom: 2.5px solid #ffffff"
+              routerLink="/home/facilities"
+            >
+              {{ cardDataList?.facility }}
+            </h2>
+            <p>Total Facilities</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="card-design">
+        <mat-card-content class="card-content">
+          <div class="home-overview">
+            <h2
+              *ngIf="
+                userRole === 'FACILITY_USER' || userRole === 'HOSPITAL_USER'
+              "
+              routerLink="/home/patients"
+              style="cursor: pointer; border-bottom: 2.5px solid #ffffff"
+            >
+              {{ cardDataList?.patient }}
+            </h2>
+            <h2 *ngIf="userRole === 'RPM_ADMIN'">
+              {{ cardDataList?.patient }}
+            </h2>
+            <p>Total Patients</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="card-design">
+        <mat-card-content class="card-content">
+          <div class="home-overview">
+            <h2
+              routerLink="/home/users"
+              *ngIf="
+                userRole === 'FACILITY_USER' || userRole === 'HOSPITAL_USER'
+              "
+              style="cursor: pointer; border-bottom: 2.5px solid #ffffff"
+            >
+              {{ cardDataList?.careProvider }}
+            </h2>
+            <h2 *ngIf="userRole === 'RPM_ADMIN'">
+              {{ cardDataList?.careProvider }}
+            </h2>
+            <p>Total Care Providers</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- <mat-grid-list cols="3" class="card-group-home">
+       
+       
+      
+        <mat-grid-tile class="Card-title">
+          
+        </mat-grid-tile>
+      </mat-grid-list> -->
+    </div>
+
+    <div class="graph-content">
+      <mat-card class="graph-card" *ngIf="showGraph">
+        <div class="Onboardin-maing-div">
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="30px">
+            <div class="Onboarding-text">Onboarding Rate</div>
+            <div class="tabs-div">
+              <mat-tab-group
+                animationDuration="0ms"
+                class="tabs-div"
+                (selectedTabChange)="onTabChange($event)"
+              >
+                <mat-tab
+                  *ngIf="userRole === 'RPM_ADMIN'"
+                  label="Hospitals"
+                ></mat-tab>
+                <mat-tab
+                  *ngIf="userRole === 'HOSPITAL_USER'"
+                  label="Facilities"
+                ></mat-tab>
+                <mat-tab label="Patients"></mat-tab>
+                <mat-tab label="Care Providers"></mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div class="dropdown-div">
+              <mat-form-field style="width: 136px" appearance="outline">
+                <!-- <mat-label>Select</mat-label> -->
+                <mat-select
+                  ngModel="Monthly"
+                  (selectionChange)="getFilterData($event)"
+                >
+                  <mat-option value="Monthly">Monthly</mat-option>
+                  <mat-option value="Quarterly">Quarterly</mat-option>
+                  <mat-option value="Yearly">Yearly</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <app-charts
+          class="bar-chart"
+          [chartData]="chartData"
+          [selectedFilter]="selectedFilter"
+        ></app-charts>
+      </mat-card>
+      <div *ngIf="false">
+        <div class="total-patient-div">
+          <div class="total-patient">Top 10 Patients - Points Earned</div>
+        </div>
+        <div>
+          <div
+            class="rpm-module-table-container example-container mat-elevation-z8"
+          >
+            <mat-table
+              matSort
+              #table
+              matTableResponsive
+              [dataSource]="dataSource"
+            >
+              <ng-container matColumnDef="patientName">
+                <mat-header-cell fxFlex="60%" *matHeaderCellDef>
+                  Patient Name
+                </mat-header-cell>
+                <mat-cell fxFlex="60%" *matCellDef="let element">
+                  {{ element.firstName }} {{ element.lastName }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="totalPoints">
+                <mat-header-cell fxFlex="40%" *matHeaderCellDef>
+                  Total Points
+                </mat-header-cell>
+                <mat-cell fxFlex="40%" *matCellDef="let element">
+                  {{ getTotalPoints(element) }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <mat-header-cell fxFlex="20%" *matHeaderCellDef>
+                  Action
+                </mat-header-cell>
+                <mat-cell fxFlex="20%" *matCellDef="let element">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="Example icon-button with a menu"
+                  >
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="gotoDetails(element)">
+                      <mat-icon>task_alt</mat-icon>
+                      <span>View</span>
+                    </button>
+                  </mat-menu>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row
+                *matHeaderRowDef="displayedColumns"
+              ></mat-header-row>
+              <mat-row
+                *matRowDef="let row; columns: displayedColumns"
+              ></mat-row>
+            </mat-table>
+            <div
+              class="noRecordsFound"
+              *ngIf="
+                !(dataSource.loadingObservable | async) &&
+                messageSuccess !== undefined &&
+                !messageSuccess
+              "
+            >
+              No Records Found!
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <mat-card class="ticket-card">
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <div class="list-content">
+                <div>
+                  <p class="ticket-heading">TIC0000001</p>
+                  <p class="ticket-para">patient enrolment is not working</p>
+                </div>
+                <div>
+                  <button mat-button color="black" class="btnstyle">New</button>
+                </div>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <div class="list-content">
+                <div class="list-details">
+                  <p class="ticket-heading">TIC0000001</p>
+                  <p class="ticket-para">patient enrolment is not working</p>
+                </div>
+                <div>
+                  <button mat-button color="black" class="btnstyle">New</button>
+                </div>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <p class="ticket-heading">TIC0000001</p>
+              <div class="list-content">
+                <p class="ticket-para">patient enrolment is not working</p>
+                <button mat-button color="black" class="btnstyle">New</button>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <p class="ticket-heading">TIC0000001</p>
+              <div class="list-content">
+                <p class="ticket-para">patient enrolment is not working</p>
+                <button mat-button color="black" class="btnstyle">New</button>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <p class="ticket-heading">TIC0000001</p>
+              <div class="list-content">
+                <p class="ticket-para">patient enrolment is not working</p>
+                <button mat-button color="black" class="btnstyle">New</button>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <p class="ticket-heading">TIC0000001</p>
+              <div class="list-content">
+                <p class="ticket-para">patient enrolment is not working</p>
+                <button mat-button color="black" class="btnstyle">New</button>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card> -->
+    </div>
+  </div>
+</div>

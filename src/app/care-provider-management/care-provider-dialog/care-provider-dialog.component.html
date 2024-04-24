@@ -1,0 +1,252 @@
+<span class="close-button" title="Close" (click)="dialogRef.close(false)">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data.mode === "EDIT" ? "Update Care Provider" : "Add Care Provider"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content
+  fxLayout
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+  style="overflow-x: hidden"
+>
+  <form
+    [formGroup]="doctorsDialog"
+    (ngSubmit)="onSubmit(doctorsDialog.value)"
+    [class.error]="!doctorsDialog.valid && doctorsDialog.touched"
+    class="org-form-div"
+  >
+    <mat-dialog-content [formGroup]="doctorsDialog" style="margin-top: 10px">
+      <div class="form-div">
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>First Name</mat-label>
+          <input
+            appAlphabetSpaceOnly
+            autocomplete="disabled"
+            minlength="3"
+            maxlength="50"
+            matInput
+            formControlName="firstName"
+            required
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['firstName'].valid &&
+              doctorsDialog.controls['firstName'].touched
+            "
+          >
+            {{ getErrorName() }}</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Middle Name</mat-label>
+          <input
+            appAlphabetSpaceOnly
+            appNoFirstSpace
+            autocomplete="disabled"
+            maxlength="50"
+            matInput
+            formControlName="middleName"
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['middleName'].valid &&
+              doctorsDialog.controls['middleName'].touched
+            "
+          >
+            {{ getErrorMiddleName() }}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Last Name</mat-label>
+          <input
+            appAlphabetSpaceOnly
+            autocomplete="disabled"
+            minlength="1"
+            maxlength="50"
+            matInput
+            formControlName="lastName"
+            required
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['lastName'].valid &&
+              doctorsDialog.controls['lastName'].touched
+            "
+          >
+            {{ getLastErrorName() }}</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Role</mat-label>
+          <mat-select
+            formControlName="role"
+            (selectionChange)="changeRole()"
+            required
+          >
+            <mat-option *ngFor="let list of roleList" [value]="list.value">
+              {{ list.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['role'].valid &&
+              doctorsDialog.controls['role'].touched
+            "
+          >
+            Role is required</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Contact Number </mat-label>
+          <input
+            appNumberCustomValidation
+            autocomplete="off"
+            matInput
+            formControlName="cellNumber"
+            maxlength="10"
+            required
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['cellNumber'].valid &&
+              doctorsDialog.controls['cellNumber'].touched
+            "
+          >
+            {{ getErrorCellNo() }}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            autocomplete="disabled"
+            maxlength="50"
+            formControlName="emailId"
+            [readonly]="checkUserLoggedIn"
+            required
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['emailId'].valid &&
+              doctorsDialog.controls['emailId'].touched
+            "
+          >
+            {{ getErrorEmail() }}
+          </mat-error>
+          <mat-hint *ngIf="checkUserLoggedIn">
+            Cannot update email as user is already logged in!
+          </mat-hint>
+          <mat-error *ngIf="emailid?.errors?.emailTaken">
+            This email already exists.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="fieldWidth"
+          *ngIf="doctorsDialog.controls['role'].value === 'DOCTOR'"
+        >
+          <mat-label>Specializations</mat-label>
+          <mat-select formControlName="specialties" multiple required>
+            <mat-option
+              *ngFor="let specialityData of specialityList"
+              [value]="specialityData.id"
+            >
+              {{ specialityData.specialityName }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Specializations is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          class="fieldWidth"
+          *ngIf="userRole === 'HOSPITAL_USER'"
+        >
+          <mat-label>Facility</mat-label>
+          <mat-select
+            formControlName="facilityId"
+            multiple
+            [disabled]="this.data.mode === 'EDIT' ? true : false"
+            required
+          >
+            <mat-option
+              *ngFor="let facility of facilityList"
+              [value]="facility.id"
+            >
+              {{ facility.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Facility Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          class="fieldWidth"
+          *ngIf="doctorsDialog.controls['role'].value === 'DOCTOR'"
+        >
+          <mat-label>Provider NPI</mat-label>
+          <input
+            appNumberCustomValidation
+            matInput
+            formControlName="providerNPI"
+            maxlength="10"
+            minlength="10"
+            (paste)="onPaste($event)"
+          />
+          <!-- <mat-error *ngIf="doctorsDialog.controls['providerNPI'].errors?.required">Doc NPI is required</mat-error> -->
+          <mat-error
+            *ngIf="doctorsDialog.controls['providerNPI'].errors?.minlength"
+            >Enter 10 digit Provider NPI</mat-error
+          >
+          <mat-error
+            *ngIf="
+              doctorsDialog.controls['providerNPI'].hasError('docNPITaken')
+            "
+          >
+            Provider NPI already exists.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox
+          class="example-margin"
+          color="primary"
+          *ngIf="
+            doctorsDialog.controls['role'].value === 'NURSE' ||
+            doctorsDialog.controls['role'].value === 'OTHERS'
+          "
+          (change)="getMedicationCheckedValue($event)"
+          formControlName="medication"
+          >Add Medication</mat-checkbox
+        >
+        <mat-checkbox
+          class="example-margin"
+          color="primary"
+          formControlName="notes"
+          (change)="getNotesCheckedValue($event)"
+          *ngIf="
+            doctorsDialog.controls['role'].value === 'NURSE' ||
+            doctorsDialog.controls['role'].value === 'OTHERS'
+          "
+          >Add Notes</mat-checkbox
+        >
+      </div>
+    </mat-dialog-content>
+    <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+      <button
+        mat-flat-button
+        type="submit"
+        class="rpm-save-button"
+        [disabled]="submitted || !doctorsDialog.valid"
+      >
+        <span>{{ data.mode === "EDIT" ? "Update" : "Save" }}</span>
+      </button>
+    </div>
+  </form>
+</mat-card-content>

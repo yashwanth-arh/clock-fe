@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Connection Status</h1>
+<div mat-dialog-content>
+  <p>Please check your internet connection!</p>
+  <p>It seems you are <strong>{{ status }}</strong></p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onOkClick()" cdkFocusInitial [disabled]="!isOnline">Ok</button>
+</div>

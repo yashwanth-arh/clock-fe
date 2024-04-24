@@ -1,0 +1,66 @@
+<app-devices *ngIf="hasPermissions === false" (closeDialog)="close()"></app-devices>
+<div class="video-call-section" *ngIf="hasPermissions === true">
+  <div class="expand-collapse-section">
+    <button mat-icon-button (click)="toggleSize()" class="minimize-icon" style="">
+      <mat-icon *ngIf="compress">fullscreen</mat-icon>
+      <mat-icon *ngIf="!compress">fullscreen_exit</mat-icon>
+    </button>
+  </div>
+  <div class="video-call-grid">
+    <div class="participant-section">
+      <div class="timer-section" [style.display]="compress ? 'none':'block'">
+        <div class="remote-user-data">
+          <p>
+            {{ this.videoStateService.remoteParticipantName$ | async }}
+          </p>
+          <span>
+            <app-timer [start]="startTimer || !this.participants.isAlone" [showTimerControls]="false" #timer>
+            </app-timer>
+          </span>
+        </div>
+      </div>
+      <div *ngIf="(this.audioStateService.audioRoomState$ | async) === 'INITIATED'" class="intiated">
+        <div class="alone-info-flex">
+          <div class="alone-text" [fxHide]="compress">
+            <h3>Please wait while the audio call is getting {{ this.audioStateService.audioRoomState$ | async |
+              titlecase}}
+            </h3>
+          </div>
+          <div class="alone-text" [fxHide]="compress">
+            <span>Waiting for the meeting room!</span>
+          </div>
+        </div>
+      </div>
+      <div [fxHide]="!compress" style="width: 150px;">
+        <p style="width: 275px;">
+          <span style="padding: 16px;">
+            <app-timer [start]="startTimer || !this.participants.isAlone" #timer [showTimerControls]="false">
+            </app-timer>
+          </span>
+          <span class="remote-patientName">{{ this.videoStateService.remoteParticipantName$ | async }}</span>
+        </p>
+      </div>
+      <app-participants #participants (leaveRoom)="onLeaveRoom($event)"
+        (participantsChanged)="onParticipantsChanged($event)" [style.display]="!!activeRoom ? 'block' : 'none'"
+        [activeRoomName]="!!activeRoom ? activeRoom.name : null" [compressed]="compress"></app-participants>
+      <div [ngClass]="compress?'compresses-btn':'participant-section-toolbar'">
+        <div class="action-button">
+          <button mat-fab class="primary-btns" (click)="muteAndUnmuteAudio()"
+            *ngIf="!this.participants.isAlone">
+            <mat-icon *ngIf="!muteAudio" title="Mute">mic</mat-icon>
+            <mat-icon *ngIf="muteAudio" title="Unmute">mic_off</mat-icon>
+          </button>
+
+          <button mat-fab class="secondary-btn" (click)="onLeaveRoom(true)">
+            <mat-icon title="End call">call_end</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="preview-section" [style.display]="compress ? 'none':'block'">
+        <app-audio-settings #settings>
+        </app-audio-settings>
+      </div>
+    </div>
+
+  </div>
+</div>

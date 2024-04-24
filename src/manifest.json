@@ -1,0 +1,13 @@
+{
+  "name": "CLOCKHEALTH",
+  "short_name": "CHC",
+  "theme_color": "#1976d2",
+  "background_color": "#fafafa",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "gcm_sender_id": "48655718171",
+  "incognito": "spanning",
+  "offline_enabled": true,
+  "description": "CHC"
+}

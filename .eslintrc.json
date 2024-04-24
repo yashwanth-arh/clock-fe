@@ -1,0 +1,104 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json",
+          "e2e/tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "no-console": "error",
+        "no-debugger": "error",
+        "no-duplicate-imports": "error",
+        "valid-typeof": "error",
+        // variables
+        "no-shadow": "error",
+        "no-unused-vars": "off",
+        "curly": "warn",
+        "no-alert": "error",
+        "max-lines": [
+          "error",
+          {
+            "max": 2600,
+            "skipComments": true,
+            "skipBlankLines": true
+          }
+        ],
+        "no-multiple-empty-lines": [
+          "error",
+          {
+            "max": 2,
+            "maxEOF": 2,
+            "maxBOF": 1
+          }
+        ],
+        "prefer-const": "warn",
+        "no-const-assign": "warn",
+        "no-useless-return": "error",
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "prefix": "app",
+            "style": "kebab-case",
+            "type": "element"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "prefix": "app",
+            "style": "camelCase",
+            "type": "attribute"
+          }
+        ],
+        "import/no-unresolved": [
+          2,
+          {
+            "caseSensitive": false
+          }
+        ]
+      },
+      "settings": {
+        "import/resolver": {
+          "typescript": {}
+        }
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "plugin:import/recommended"
+      ],
+      "settings": {
+        "import/resolver": {
+          "webpack": {
+            "config": {
+              "resolve": {
+                "modules": [
+                  "node_modules"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "rules": {}
+    }
+  ]
+}

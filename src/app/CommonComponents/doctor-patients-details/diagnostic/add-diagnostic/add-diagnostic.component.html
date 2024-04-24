@@ -1,0 +1,595 @@
+<div>
+  <span
+    class="close-button"
+    style="cursor: pointer"
+    title="Close"
+    (click)="dialogRef.close(false)"
+  >
+    <img src="assets/svg/cancel.svg" alt="" />
+  </span>
+  <span mat-dialog-title class="module-form-title">{{
+    data.mode === "ADD" ? "Add Health Parameters" : "Edit Health Parameters"
+  }}</span>
+  <hr class="module-divider" />
+  <div>
+    <form [formGroup]="diagnosticDialog" class="org-form-div">
+      <mat-dialog-content [formGroup]="diagnosticDialog">
+        <div class="form-div">
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Select date</mat-label>
+            <input
+              matInput
+              formControlName="date"
+              [(ngModel)]="default"
+              [owlDateTime]="dt1"
+              [owlDateTimeTrigger]="dt1"
+              [max]="today"
+              [min]="minDate"
+              (ngModelChange)="fromDateChange($event)"
+              [readonly]="true"
+            />
+            <owl-date-time #dt1 [startAt]="today"></owl-date-time>
+            <img
+              class="calendar-img"
+              src="assets/svg/Calendar Grey.svg"
+              alt=""
+            />
+            <mat-error>Date is required</mat-error>
+          </mat-form-field>
+          <!-- <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Select date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickers"
+              [max]="today"
+              formControlName="date"
+              (dateChange)="fromDateChange($event)"
+              required
+              [min]="minDate"
+              [max]="maxDate"
+              [disabled]="data?.mode === 'edit'"
+              readonly
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="pickers"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #pickers></mat-datepicker>
+            <mat-error
+              *ngIf="diagnosticDialog?.controls?.date?.errors?.required"
+              >Date is required</mat-error
+            >
+          </mat-form-field> -->
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Baseline Systolic</mat-label>
+            <!-- <input appAlphabetSpaceOnly autocomplete="disabled" matInput formControlName="baselineSystolic" required /> -->
+            <input
+              matInput
+              appNumberCustomValidation
+              autocomplete="disabled"
+              min="30"
+              max="500"
+              (keypress)="
+                limitKeypress(
+                  $event,
+                  diagnosticDialog.get('baselineSystolic').value,
+                  3
+                )
+              "
+              formControlName="baselineSystolic"
+              required
+            />
+            <mat-error
+              *ngIf="
+                diagnosticDialog.controls.baselineSystolic.hasError('required')
+              "
+              >Baseline Systolic is required</mat-error
+            >
+            <mat-error
+              *ngIf="diagnosticDialog.controls.baselineSystolic.hasError('min')"
+              >Baseline Systolic cannot be lesser than 30</mat-error
+            >
+            <mat-error
+              *ngIf="diagnosticDialog.controls.baselineSystolic.hasError('max')"
+              >Baseline Systolic cannot be greater than 500</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Baseline Diastolic</mat-label>
+            <input
+              appNumberCustomValidation
+              autocomplete="disabled"
+              matInput
+              maxlength="3"
+              formControlName="baselineDiastolic"
+              required
+            />
+            <mat-error
+              *ngIf="
+                diagnosticDialog.controls.baselineDiastolic.hasError('required')
+              "
+              >Baseline Diastolic is required</mat-error
+            >
+            <mat-error
+              *ngIf="
+                diagnosticDialog.controls.baselineDiastolic.hasError('min')
+              "
+              >Baseline Diastolic cannot be lesser than 30</mat-error
+            >
+            <mat-error
+              *ngIf="
+                diagnosticDialog.controls.baselineDiastolic.hasError('max')
+              "
+              >Baseline Diastolic cannot be greater than 500</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Height (cms)</mat-label>
+            <input
+              matInput
+              appNumberCustomValidation
+              maxlength="3"
+              (input)="validateTextHeight($event)"
+              autocomplete="disabled"
+              formControlName="height"
+              min="50"
+              max="250"
+              required
+            />
+            <!-- <input appAlphabetSpaceOnly autocomplete="disabled" matInput formControlName="Height" required /> -->
+            <mat-hint>Hint:165 (cms)</mat-hint>
+            <mat-error
+              *ngIf="diagnosticDialog?.controls?.height?.hasError('required')"
+              >Height is required</mat-error
+            >
+            <mat-error
+              *ngIf="diagnosticDialog?.controls?.height?.hasError('max')"
+              >Height should be between 50 to 250cms.</mat-error
+            >
+            <mat-error
+              *ngIf="diagnosticDialog?.controls?.height?.hasError('min')"
+              >Height should be between 50 to 250cms.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Weight (Kg)</mat-label>
+            <!-- <input appAlphabetSpaceOnly autocomplete="disabled" matInput formControlName="Weight" required /> -->
+            <input
+              type="tel"
+              matInput
+              appNumberCustomValidation
+              maxlength="3"
+              (input)="validateTextWeight($event)"
+              autocomplete="disabled"
+              formControlName="weight"
+              max="800"
+              required
+            />
+            <mat-hint>Hint:40 (kg)</mat-hint>
+            <mat-error
+              *ngIf="diagnosticDialog?.controls?.weight?.errors?.required"
+              >Weight is required</mat-error
+            >
+            <mat-error
+              *ngIf="diagnosticDialog?.controls?.weight?.hasError('min')"
+              >weight cannot be lesser than 30 Kgs</mat-error
+            >
+            <mat-error
+              *ngIf="diagnosticDialog?.controls?.weight?.hasError('max')"
+              >Weight cannot be greater than 800 Kgs</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Clinic Blood Pressure (mmHg)</mat-label>
+            <!-- <input appAlphabetSpaceOnly autocomplete="disabled" matInput formControlName="clinicBloodPressure" required /> -->
+            <input
+              matInput
+              autocomplete="disabled"
+              (input)="validateTextBP()"
+              (keypress)="onInput($event)"
+              formControlName="clinicBloodPressure"
+              required
+            />
+            <mat-hint>Hint:120/80</mat-hint>
+            <mat-error>
+              {{ getErrorBP() }}
+            </mat-error>
+            <!-- <mat-error *ngIf="diagnosticDialog?.controls?.clinicBloodPressure?.hasError('zeros')">Only zero is not
+              allowed.</mat-error> -->
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Clinic Pulse Rate (bpm)</mat-label>
+            <input
+              matInput
+              autocomplete="disabled"
+              appNumberCustomValidation
+              min="1"
+              (keypress)="
+                limitKeypress(
+                  $event,
+                  diagnosticDialog.get('clinicPulseRate').value,
+                  3
+                )
+              "
+              formControlName="clinicPulseRate"
+              required
+            />
+            <mat-hint>Hint:85 bpm</mat-hint>
+
+            <mat-error
+              *ngIf="
+                diagnosticDialog.controls.clinicPulseRate.hasError('required')
+              "
+              >Clinic Pulse Rate is required</mat-error
+            >
+            <mat-error
+              *ngIf="diagnosticDialog.controls.clinicPulseRate.hasError('max')"
+              >Clinic Pulse Rate cannot be greater than 200</mat-error
+            >
+            <mat-error
+              *ngIf="diagnosticDialog.controls.clinicPulseRate.hasError('min')"
+              >Clinic Pulse Rate cannot be lesser than 10</mat-error
+            >
+          </mat-form-field>
+
+          <!-- <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Patient Under Medication</mat-label>
+            <mat-select formControlName="patientUnderMedication" required>
+              <mat-option
+                *ngFor="let val of patUnderMedications"
+                [value]="val.value"
+              >
+                {{ val.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Patient Under Medication is required</mat-error>
+          </mat-form-field> -->
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Random Sugar (mg/dL)</mat-label>
+            <!-- <input appAlphabetSpaceOnly autocomplete="disabled" matInput formControlName="randomSugar" /> -->
+            <input
+              matInput
+              appNumberCustomValidation
+              appNoFirstZero
+              autocomplete="disabled"
+              min="1"
+              maxlength="3"
+              formControlName="randomSugar"
+            />
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.randomSugar?.hasError('minlength')
+              "
+              >Enter minimum 2 characters
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.randomSugar?.hasError('min') &&
+                !diagnosticDialog?.controls?.randomSugar?.hasError('minlength')
+              "
+              >Random Sugar cannot be lesser than 10
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.randomSugar?.hasError('zeros') &&
+                !diagnosticDialog?.controls?.randomSugar?.hasError('min') &&
+                !diagnosticDialog?.controls?.randomSugar?.hasError('minlength')
+              "
+              >Only zero is not allowed.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Diagnosis</mat-label>
+            <input
+              appAlphabetSpaceOnly
+              [matAutocomplete]="auto"
+              autocomplete="disabled"
+              matInput
+              class="diagnosis-input"
+              maxlength="50"
+              (keyup)="filterDiagnosis()"
+              formControlName="diagnosislist"
+            />
+            <img
+              src="../../../../assets/svg/SearchIcon.svg"
+              style="margin-left: 15px"
+              alt="search"
+            />
+            <mat-autocomplete
+              autoActiveFirstOption
+              #auto="matAutocomplete"
+              [displayWith]="dispdia()"
+            >
+              <mat-option *ngFor="let icdName of vitalsList" [value]="icdName">
+                {{ icdName.icdName }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error
+              *ngIf="
+                !diagnosticDialog.controls['diagnosislist'].valid &&
+                diagnosticDialog.controls['diagnosislist'].touched
+              "
+              >{{ DiagnosisErr() }}</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>HbA1C (%)</mat-label>
+            <input
+              matInput
+              type="number"
+              autocomplete="off"
+              (keypress)="onlyNumbersDecimal($event)"
+              formControlName="hba1c"
+              maxlength="4"
+            />
+            <mat-hint>Hint:7 %</mat-hint>
+            <!-- <mat-error *ngIf="diagnosticDialog?.controls?.hba1c?.errors"
+            >Give valid HbA1C (Percent)</mat-error
+          > -->
+            <mat-error>
+              {{ getErrorHba1c() }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Cholesterol Levels (mg/dL)</mat-label>
+            <input
+              matInput
+              appNumberCustomValidation
+              appNoFirstZero
+              autocomplete="disabled"
+              min="1"
+              maxlength="3"
+              formControlName="cholestralLevels"
+            />
+            <!-- <mat-error
+              *ngIf="diagnosticDialog?.controls?.cholestralLevels?.touched"
+              >Give valid Cholesterol Levels (mg/dL)</mat-error
+            > -->
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.cholestralLevels?.hasError(
+                  'zeros'
+                ) &&
+                !diagnosticDialog?.controls?.cholestralLevels?.hasError(
+                  'minlength'
+                ) &&
+                !diagnosticDialog?.controls?.cholestralLevels?.hasError('min')
+              "
+              >Only zero is not allowed.</mat-error
+            >
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.cholestralLevels?.hasError(
+                  'minlength'
+                )
+              "
+              >Enter minimum 2 characters
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.cholestralLevels?.hasError('min') &&
+                !diagnosticDialog?.controls?.cholestralLevels?.hasError(
+                  'minlength'
+                )
+              "
+              >Cholesterol levels cannot be lesser than 10
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Triglyceride levels (mg/dL)</mat-label>
+            <!-- <input appAlphabetSpaceOnly autocomplete="disabled" matInput formControlName="triglycerideLevels" /> -->
+            <input
+              matInput
+              appNumberCustomValidation
+              appNoFirstZero
+              autocomplete="disabled"
+              min="1"
+              maxlength="3"
+              formControlName="triglycerideLevels"
+            />
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.triglycerideLevels?.hasError(
+                  'minlength'
+                )
+              "
+              >Enter minimum 2 characters
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.triglycerideLevels?.hasError(
+                  'min'
+                ) &&
+                !diagnosticDialog?.controls?.triglycerideLevels?.hasError(
+                  'minlength'
+                )
+              "
+              >Triglyceride levels cannot be lesser than 10
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.triglycerideLevels?.hasError(
+                  'zeros'
+                ) &&
+                !diagnosticDialog?.controls?.triglycerideLevels?.hasError(
+                  'minlength'
+                ) &&
+                !diagnosticDialog?.controls?.triglycerideLevels?.hasError('min')
+              "
+              >Only zero is not allowed.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>HDL levels (mg/dL)</mat-label>
+            <!-- <input appAlphabetSpaceOnly autocomplete="disabled" matInput formControlName="HDLlevels" /> -->
+            <input
+              matInput
+              appNumberCustomValidation
+              appNoFirstZero
+              autocomplete="disabled"
+              min="1"
+              maxlength="3"
+              formControlName="hdlLevels"
+            />
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.hdlLevels?.hasError('minlength')
+              "
+              >Enter minimum 2 characters
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.hdlLevels?.hasError('min') &&
+                !diagnosticDialog?.controls?.hdlLevels?.hasError('minlength')
+              "
+              >HDL levels cannot be lesser than 10
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.hdlLevels?.hasError('pattern') &&
+                !diagnosticDialog?.controls?.hdlLevels?.hasError('min') &&
+                !diagnosticDialog?.controls?.hdlLevels?.hasError('minlength')
+              "
+              >Only zero is not allowed.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>LDL levels (mg/dL)</mat-label>
+            <!-- <input appAlphabetSpaceOnly autocomplete="disabled" matInput formControlName="LDLlevels" /> -->
+            <input
+              matInput
+              appNumberCustomValidation
+              appNoFirstZero
+              autocomplete="disabled"
+              min="1"
+              maxlength="3"
+              formControlName="ldlLevels"
+            />
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.ldlLevels?.hasError('minlength')
+              "
+              >Enter minimum 2 characters
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.ldlLevels?.hasError('min') &&
+                !diagnosticDialog?.controls?.ldlLevels?.hasError('minlength')
+              "
+              >LDL levels cannot be lesser then 10
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.ldlLevels?.hasError('zeros') &&
+                !diagnosticDialog?.controls?.ldlLevels?.hasError('minlength') &&
+                !diagnosticDialog?.controls?.ldlLevels?.hasError('min')
+              "
+              >Only zero is not allowed.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Fasting Sugar (mg/dL)</mat-label>
+            <!-- <input appAlphabetSpaceOnly autocomplete="disabled" matInput formControlName="fastingSugar" /> -->
+            <input
+              matInput
+              appNumberCustomValidation
+              appNoFirstZero
+              autocomplete="disabled"
+              min="1"
+              maxlength="3"
+              formControlName="fastingSugar"
+            />
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.fastingSugar?.hasError('minlength')
+              "
+              >Enter minimum 2 characters
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.fastingSugar?.hasError('min') &&
+                !diagnosticDialog?.controls?.fastingSugar?.hasError('minlength')
+              "
+              >Fasting Sugar cannot be lesser than 10
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.fastingSugar?.hasError('zeros') &&
+                !diagnosticDialog?.controls?.fastingSugar?.hasError('min') &&
+                !diagnosticDialog?.controls?.fastingSugar?.hasError('minlength')
+              "
+              >Only zero is not allowed.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Postprandial Sugar (mg/dL)</mat-label>
+            <!-- <input appAlphabetSpaceOnly autocomplete="disabled" matInput formControlName="postPrandial" /> -->
+            <input
+              matInput
+              appNumberCustomValidation
+              appNoFirstZero
+              autocomplete="disabled"
+              min="1"
+              maxlength="3"
+              formControlName="postPrandial"
+            />
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.postPrandial?.hasError('min') &&
+                !diagnosticDialog?.controls?.postPrandial?.hasError('minlength')
+              "
+              >Postprandial Sugar cannot be lesser than 10
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.postPrandial?.hasError('minlength')
+              "
+              >Enter minimum 2 characters
+            </mat-error>
+            <mat-error
+              *ngIf="
+                diagnosticDialog?.controls?.postPrandial?.hasError('zeros') &&
+                !diagnosticDialog?.controls?.postPrandial?.hasError('min') &&
+                !diagnosticDialog?.controls?.postPrandial?.hasError('minlength')
+              "
+              >Only zero is not allowed.</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </mat-dialog-content>
+      <div fxLayout="row" fxLayoutGap="5px" class="divbutton">
+        <button
+          type="button"
+          mat-flat-button
+          class="cancel-button"
+          (click)="closeDiagnostic()"
+        >
+          Cancel
+        </button>
+        <button
+          class="save-btn"
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="!diagnosticDialog.valid || submitted"
+        >
+          <span>{{ data.mode === "edit" ? "Update" : "Save" }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

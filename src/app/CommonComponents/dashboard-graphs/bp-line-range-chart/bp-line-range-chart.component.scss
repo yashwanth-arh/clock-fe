@@ -1,0 +1,127 @@
+* {
+  font-family: helveticaneueregular;
+  overflow: hidden;
+}
+
+.textInputWidth {
+  font-size: 12px;
+  width: 13vw;
+  margin-bottom: 2vh;
+  margin-top: 2vh;
+  position: relative;
+  left: -16px;
+}
+
+.totalCountTitle {
+  position: relative;
+  top: -1.5vh;
+  left: 1vh;
+  color: #424242;
+}
+
+.no-data {
+  // text-align: center;
+  // /* margin-top: 31px; */
+  // position: relative;
+  // top: 164px;
+  // font-size: 20px;
+  // height: 50vh;
+  font-size: 20px;
+  height: 55vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bpTime {
+  height: 50vh;
+  position: relative;
+  top: 4vh;
+  width: 92%;
+  left: 24px;
+}
+
+.bpTimeDoc {
+  height: 50vh;
+  position: relative;
+  top: 5vh;
+  width: 92%;
+  left: 24px;
+}
+
+.chart-id {
+  height: 26rem;
+  // height: 70vh;
+}
+
+// @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+//   .textInputWidth {
+//     width: 20vw;
+//   }
+
+//   .bpTime {
+//     position: relative;
+//     height: 45vh;
+//     top: 3vh;
+//     width: 92%;
+//     left: 24px;
+//   }
+
+//   .bpTimeDoc {
+//     position: relative;
+//     height: 45vh;
+//     top: 3vh;
+//     width: 92%;
+//     left: 24px;
+//   }
+// }
+
+// @media only screen and (min-device-width: 1278px) and (max-device-width: 1280px) and (orientation: landscape) {
+//   .chart-id {
+//     height: 50vh;
+//   }
+
+//   .bpTime {
+//     position: relative;
+//     height: 43vh;
+//     top: 3vh;
+//     width: 92%;
+//     left: 24px;
+//   }
+
+//   .bpTimeDoc {
+//     position: relative;
+//     height: 43vh;
+//     top: 3vh;
+//     width: 92%;
+//     left: 24px;
+//   }
+
+//   .no-data {
+//     height: 30vh;
+//   }
+
+//   ::ng-deep .canvasjs-chart-canvas {
+//     height: 35vh;
+//     width: 85vw;
+//   }
+// }
+
+// @media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+//   .bpTimeDoc {
+//     height: 40vh;
+//     position: relative;
+//     top: 10vh;
+//     width: 96%;
+//     left: 24px;
+//   }
+// }
+@media only screen and (min-device-width: 1660px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .no-data {
+    height: 61vh;
+  }
+  .chart-id {
+    height: 35rem;
+    // height: 70vh;
+  }
+}

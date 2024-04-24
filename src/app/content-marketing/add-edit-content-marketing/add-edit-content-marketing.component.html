@@ -1,0 +1,185 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data.mode === "add" ? "Create New Content" : "Update Content"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+<div class="content-main">
+  <form [formGroup]="contentForm">
+    <div fxLayout="row" fxLayoutAlign="space-between baseline">
+      <div>Content Title*</div>
+      <div>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            formControlName="title"
+            autocomplete="off"
+            type="text"
+            placeholder="Start Typing Here..."
+            maxlength="50"
+            minlength="3"
+            required
+          />
+          <mat-error
+            *ngIf="
+              !contentForm.get('title').valid &&
+              contentForm.get('title').touched
+            "
+            >{{ contentTitleError() }}</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div>Description*</div>
+      <div>
+        <mat-form-field appearance="outline">
+          <textarea
+            formControlName="description"
+            matInput
+            placeholder="Start Typing Here..."
+            rows="7"
+            maxlength="5000"
+            minlength="5"
+            required
+          ></textarea>
+          <mat-error
+            *ngIf="
+              !contentForm.get('description').valid &&
+              contentForm.get('description').touched
+            "
+            >{{ contentdescriptionError() }}</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div>Cover Image / Video*</div>
+      <div style="margin: 0px 12px 0px 0px">
+        <div class="upload-bulk-div">
+          <div class="upload-box">
+            <div fxLayout="column" class="upload-box-content">
+              <!-- <div>
+                  <img src="assets/svg/file-text.svg" />
+                </div>
+                <div class="select-file-text">
+                  {{ fileName ? fileName : "Please select excel file" }}
+                </div> -->
+              <label
+                for="file"
+                fxLayout="column"
+                fxLayoutGap="10px"
+                class="pres-upload-label"
+              >
+                <div class="click-browser-text">
+                  <mat-icon>attachment</mat-icon> Upload Cover Image / Video
+                </div>
+              </label>
+              <input
+                type="file"
+                id="file"
+                class="file"
+                (change)="onFileSelected($event)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="selectedFile !== null"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <div>Image / Video for Content</div>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxFlex="76%"
+        style="padding: 10px"
+      >
+        <div>
+          <img
+            width="70px"
+            height="70px"
+            *ngIf="selectedFile.type.startsWith('image')"
+            src="assets/svg/Jpg.svg"
+            alt="Preview"
+          />
+          <img
+            width="70px"
+            height="70px"
+            *ngIf="selectedFile.type.startsWith('video')"
+            src="assets/svg/Mp4.svg"
+            alt="Preview"
+          />
+        </div>
+        <div>{{ selectedFile?.name }}</div>
+        <div>
+          <mat-icon (click)="removeSelectedFile()" style="cursor: pointer"
+            >close</mat-icon
+          >
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="data?.mode === 'edit' && editFilePath !== ''"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <div>Image / Video for Content</div>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxFlex="76%"
+        style="padding: 10px"
+      >
+        <div>
+          <img
+            width="70px"
+            height="70px"
+            *ngIf="editFilePath?.type === 'image'"
+            src="assets/svg/Jpg.svg"
+            alt="Preview"
+          />
+          <img
+            width="70px"
+            height="70px"
+            *ngIf="editFilePath?.type === 'video'"
+            src="assets/svg/Mp4.svg"
+            alt="Preview"
+          />
+        </div>
+        <div>{{ editFilePath !== "" ? getFileName(editFilePath) : "" }}</div>
+        <div>
+          <mat-icon (click)="removeSelectedFile()" style="cursor: pointer"
+            >close</mat-icon
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="button-div">
+      <!-- <div
+        type="submit"
+        mat-flat-button
+        class="rpm-upload-button"
+        (click)="onUpload(contentForm.value)"
+        
+      >
+        Upload
+      </div> -->
+      <button
+        type="submit"
+        mat-flat-button
+        class="rpm-save-button"
+        [disabled]="submitted"
+        (click)="onUpload(contentForm.value)"
+      >
+        Upload
+      </button>
+    </div>
+  </form>
+</div>

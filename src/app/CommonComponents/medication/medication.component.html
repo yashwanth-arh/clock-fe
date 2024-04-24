@@ -1,0 +1,512 @@
+<div class="medication-container">
+  <!-- <div>
+    <div *ngIf="userRole == 'DOCTOR'" fxLayout="row">
+      <img
+        src="assets/svg/DashboardIcons/AddMedication.svg"
+        (click)="openAddMedication('add')"
+        class="add-medication show-btn"
+        alt=""
+        style="margin-left: 23px; margin-top: 10px"
+      />
+    </div>
+  </div> -->
+  <div fxLayout="row" style="gap: 15px">
+    <div
+      class="example-container mat-elevation-z8"
+      [ngClass]="
+        userRole == 'DOCTOR'
+          ? 'example-container doctor-table-div'
+          : 'example-container-careDiv'
+      "
+      *ngIf="!loadRes"
+      [fxFlex]="addPermission === 'false' ? '100%' : '67%'"
+      class="table-outer-div"
+    >
+      <!-- <div
+        *ngIf="!medicationHistoryList.length"
+        [ngClass]="userRole == 'DOCTOR' ? 'doc-no-record' : 'care-no-record'"
+      >
+        No Records Found!
+      </div> -->
+
+      <mat-table
+        [ngClass]="userRole == 'DOCTOR' ? 'docTable' : 'careTable'"
+        [dataSource]="
+          medicationDataSource
+            | paginate
+              : {
+                  itemsPerPage: size,
+                  currentPage: p,
+                  id: 'p',
+                  totalItems: medicationHistoryList.length
+                }
+        "
+        matSort
+        matSortActive="created"
+        matSortDisableClear
+        matSortDirection="desc"
+      >
+        <ng-container matColumnDef="date">
+          <mat-header-cell *matHeaderCellDef>Date </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div fxLayout="row">
+              <div class="doc-Icon">
+                <img
+                  [src]="
+                    element.userRole == 'DOCTOR' || element.userRole == 'NURSE'
+                      ? 'assets/svg/Updated by Doctor.svg'
+                      : 'assets/img/patient-icon-new.svg'
+                  "
+                  style="cursor: pointer"
+                  [title]="
+                    element.userRole == 'DOCTOR'
+                      ? 'It was uploaded by the Dr.' + element?.createdByName
+                      : 'It was uploaded by the' + ' ' + element?.createdByName
+                  "
+                  alt=""
+                />
+                <!-- <img
+                  src="assets/img/patient-icon-new.svg"
+                  style="cursor: pointer"
+                  [title]="
+                    'It was uploaded by the' + ' ' + element?.createdByName
+                  "
+                  *ngIf="element.userRole !== 'DOCTOR'"
+                  alt=""
+                /> -->
+              </div>
+              <div style="align-self: center;">
+                {{ element.medicationStartDate | date : "dd-MM-yyyy" }}
+              </div>
+            </div>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="medicineName">
+          <mat-header-cell *matHeaderCellDef>Medicine</mat-header-cell>
+          <mat-cell *matCellDef="let element" [title]="element.medicineName">
+            {{
+              element.medicineName.length > 6
+                ? (element.medicineName | slice : 0 : 6) + "..."
+                : element.medicineName
+            }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="medicineDose/unit">
+          <mat-header-cell *matHeaderCellDef>Dose</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.medicineDose }} {{ element.medicineUnit }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="frequency">
+          <mat-header-cell *matHeaderCellDef>Frequency</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.frequency ? element.frequency : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="route">
+          <mat-header-cell *matHeaderCellDef>Route</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.route ? element.route : "-" }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="duration">
+          <mat-header-cell *matHeaderCellDef>Duration</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.duration ? element.duration : "-" }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+          <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.quantity ? element.quantity : "-" }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="formulation">
+          <mat-header-cell *matHeaderCellDef>Formulation</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.formulation ? element.formulation : "-" }}
+          </mat-cell>
+        </ng-container>
+        <!-- <ng-container matColumnDef="duration">
+          <th mat-header-cell *matHeaderCellDef>Duration</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="userRole == 'DOCTOR' ? '' : 'action'"
+          >
+            {{ element.duration ? element.duration : "-" }} Days
+          </td>
+        </ng-container> -->
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef class="action"
+            >Action</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element" class="action">
+            <div fxLayout="row">
+              <span fxLayout="row">
+                <!-- <mat-icon
+                  (click)="editMedication(element)"
+                  class="btn_color showBig"
+                >
+                  create_outline
+                </mat-icon>
+                <mat-icon
+                  (click)="openAddMedication(element)"
+                  class="btn_color showSmall"
+                >
+                  create_outline
+                </mat-icon>
+                <mat-icon (click)="confirmDialog(element)" class="btn_color">
+                  delete_outline
+                </mat-icon> -->
+                <mat-slide-toggle
+                  *ngIf="
+                    element.createdBy == userId && addPermission === 'true'
+                  "
+                  [checked]="element.medicationStatus === 'ACTIVE'"
+                  (toggleChange)="actionToggleChange(element)"
+                ></mat-slide-toggle>
+                <div
+                  *ngIf="
+                    element.createdBy !== userId || addPermission === 'false'
+                  "
+                  [ngClass]="
+                    element.medicationStatus === 'ACTIVE'
+                      ? 'statusActive'
+                      : 'statusInactive'
+                  "
+                >
+                  {{
+                    element.medicationStatus === "ACTIVE"
+                      ? "Active"
+                      : "Inactive"
+                  }}
+                </div>
+              </span>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div
+        *ngIf="!medicationHistoryList.length"
+        class="noRecordsFound"
+        style="top: -9em !important"
+      >
+        No Records Found!
+      </div>
+      <!-- [fxHide.md]="userRole == 'DOCTOR'" -->
+      <div class="paginate">
+        <pagination-controls
+          *ngIf="medicationHistoryList.length"
+          (pageChange)="p = $event"
+          id="p"
+        ></pagination-controls>
+      </div>
+    </div>
+    <div *ngIf="loadRes" class="loader-1">
+      <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+    </div>
+    <!-- *ngIf="userRole == 'DOCTOR' && !loadRes && !loadResAddEditMedication" -->
+    <div
+      *ngIf="addPermission === 'true' && medicationDataSource"
+      fxLayoutAlign="center center"
+      class="outer-div add-medication-div"
+      fxFlex="31%"
+    >
+      <div *ngIf="loadResAddEditMedication">
+        <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+      </div>
+      <div class="form-container" *ngIf="!loadResAddEditMedication">
+        <form [formGroup]="medicationForm">
+          <div fxLayout="column" fxLayoutGap="15px" style="margin-bottom: 24px">
+            <div class="title" *ngIf="!showEdit">Add Medication</div>
+            <div class="title" *ngIf="showEdit">Edit Medication</div>
+            <div fxLayout="row" class="textField date-field">
+              <mat-form-field appearance="outline">
+                <mat-label>Start Date</mat-label>
+
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [min]="minDate"
+                  [max]="maxdate"
+                  formControlName="medicationStartDate"
+                  required
+                />
+
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error
+                  *ngIf="
+                    !medicationForm.controls['medicationStartDate'].valid &&
+                    medicationForm.controls['medicationStartDate'].touched
+                  "
+                  >Start Date is required</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field appearance="outline" class="textField">
+                <mat-label>Medicine</mat-label>
+
+                <input
+                  type="text"
+                  matInput
+                  formControlName="medicineName"
+                  [matAutocomplete]="auto"
+                  (keyup)="medicationNames($event)"
+                  required
+                />
+                <mat-error
+                  *ngIf="
+                    !medicationForm.controls['medicineName'].valid &&
+                    medicationForm.controls['medicineName'].touched
+                  "
+                  >{{ medicineNameErr() }}</mat-error
+                >
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  <mat-option *ngFor="let mname of medicine" [value]="mname['madicinename']">
+                    {{ mname['madicinename'] }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="10px">
+              <mat-form-field
+                appearance="outline"
+                class="mat-inpts"
+                fxFlex="206px"
+              >
+                <mat-label>Dose</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  autocomplete="disabled"
+                  appNoFirstZero
+                  matInput
+                  min="1"
+                  max="365"
+                  maxlength="3"
+                  formControlName="medicineDose"
+                  required
+                />
+                <mat-error
+                  *ngIf="
+                    !medicationForm.controls['medicineDose'].valid &&
+                    medicationForm.controls['medicineDose'].touched
+                  "
+                  >{{ medicationErr() }}</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field
+                appearance="outline"
+                class="mat-inpts"
+                fxFlex="206px"
+              >
+                <mat-label>Days</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  appNoFirstZero
+                  min="1"
+                  max="3"
+                  autocomplete="disabled"
+                  formControlName="duration"
+                  required
+                />
+                <mat-error
+                  *ngIf="
+                    !medicationForm.controls['duration'].valid &&
+                    medicationForm.controls['duration'].touched
+                  "
+                  >{{ daysErr() }}</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px">
+              <mat-form-field
+                appearance="outline"
+                class="mat-inpts"
+                fxFlex="206px"
+              >
+                <mat-label>Units</mat-label>
+                <mat-select formControlName="medicineUnit" required>
+                  <mat-option
+                    *ngFor="let unit of medicineUnits"
+                    [value]="unit"
+                    >{{ unit }}</mat-option
+                  >
+                  <!-- <mat-option value="mg"> mg </mat-option>
+                    <mat-option value="gm"> gm </mat-option>
+                    <mat-option value="mcg"> mcg </mat-option>
+                    <mat-option value="ml"> ml </mat-option>
+                    <mat-option value="oz"> oz </mat-option>
+                    <mat-option value="IU"> IU </mat-option> -->
+                </mat-select>
+                <mat-error
+                  *ngIf="
+                    !medicationForm.controls['medicineUnit'].valid &&
+                    medicationForm.controls['medicineUnit'].touched
+                  "
+                  >Units is required</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field
+                class="color1 dropActions"
+                appearance="outline"
+                class="mat-inpts"
+                fxFlex="206px"
+              >
+                <mat-label>Route</mat-label>
+                <mat-select required formControlName="route">
+                  <mat-option *ngFor="let item of route" [value]="item">{{
+                    item
+                  }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="
+                    !medicationForm.controls['route'].valid &&
+                    medicationForm.controls['route'].touched
+                  "
+                  >Route is required</mat-error
+                >
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="10px">
+              <mat-form-field
+                class="color1 dropActions"
+                appearance="outline"
+                class="mat-inpts"
+                fxFlex="206px"
+              >
+                <mat-label>Formulation</mat-label>
+                <mat-select formControlName="formulation" required>
+                  <mat-option *ngFor="let item of formulation" [value]="item">{{
+                    item
+                  }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="
+                    !medicationForm.controls['formulation'].valid &&
+                    medicationForm.controls['formulation'].touched
+                  "
+                  >Formulation is required</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field
+                class="color1 dropActions"
+                appearance="outline"
+                class="mat-inpts"
+                fxFlex="206px"
+              >
+                <mat-label>Frequency</mat-label>
+                <mat-select formControlName="frequency" required>
+                  <mat-option *ngFor="let item of frequency" [value]="item">{{
+                    item
+                  }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="
+                    !medicationForm.controls['frequency'].valid &&
+                    medicationForm.controls['frequency'].touched
+                  "
+                  >Frequency is required</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px">
+              <div>
+                <mat-form-field
+                  appearance="outline"
+                  class="mat-inpts"
+                  fxFlex="206px"
+                >
+                  <mat-label>Quantity</mat-label>
+                  <input
+                    type="number"
+                    matInput
+                    min="1"
+                    autocomplete="disabled"
+                    formControlName="quantity"
+                    required
+                  />
+                  <mat-error
+                    *ngIf="
+                      !medicationForm.controls['quantity'].valid &&
+                      medicationForm.controls['quantity'].touched
+                    "
+                    >{{ quntityErr() }}</mat-error
+                  >
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!-- <div> -->
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            fxLayoutAlign="end"
+            style="padding: 15px 0"
+            class="butts"
+          >
+            <button
+              mat-flat-button
+              class="cancel-button"
+              type="button"
+              (click)="openMedicationForm()"
+            >
+              Cancel
+            </button>
+
+            <button
+              *ngIf="!updateMedication"
+              (click)="
+                createMedication(
+                  medicationForm.valid,
+                  medicationForm.value,
+                  'add'
+                )
+              "
+              [disabled]="!medicationForm.valid || isSubmitted"
+              mat-flat-button
+              class="rpm-save-button"
+              type="submit"
+            >
+              Save
+            </button>
+
+            <button
+              mat-flat-button
+              class="save-button"
+              *ngIf="updateMedication"
+              (click)="
+                createMedication(
+                  medicationForm.valid,
+                  medicationForm.value,
+                  'edit'
+                )
+              "
+              [disabled]="!medicationForm.valid || isSubmitted"
+            >
+              Update
+            </button>
+          </div>
+          <!-- </div> -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="table-2">
+  <table>
+    <tr>
+      <th>S.No</th>
+      <th>Systolic BP</th>
+      <th>Diastolic BP</th>
+      <!-- <th>HEART RATE</th> -->
+      <th>Recorded On</th>
+    </tr>
+    <!-- <div *ngIf="bpReport?.vitalData?.bloodPressure?.length"> -->
+    <tr
+      *ngFor="let bpVitals of bpReport?.vitalData?.bloodPressure; let i = index"
+    >
+      <td>{{ i + 1 }}</td>
+      <td>{{bpDataSys(bpVitals.BP) }}</td>
+      <td>{{bpDataDia(bpVitals.BP) }}</td>
+      <td>{{getRecorded(bpVitals["Recorded On"]) | date:'dd-MM-yyyy hh:mm a' }}</td>
+      <!-- <span class="page-break" *ngIf="i%5===0"></span> -->
+
+      <!-- <td>Col</td> -->
+    </tr>
+    <!-- </div> -->
+    <!-- <div *ngIf="!bpReport?.vitalData?.bloodPressure?.length" class="no-record">No Records Found!found</div> -->
+  </table>
+  <span class="page-break"></span>
+</div>
+<div>
+  <div class="header-container">
+    <div class="sub-header-1">BLOOD PRESSURE GRAPHS</div>
+    <div class="sub-header-2">BP vs Time Graph</div>
+  </div>
+  <!-- <div *ngIf="bpReport?.vitalData?.bloodPressure?.length"> -->
+  <div
+    id="bpMgmt"
+    [ngClass]="
+      bpReport?.vitalData?.bloodPressure?.length ? 'bpTime' : 'hide-bp'
+    "
+  ></div>
+  <!-- </div> -->
+  <div *ngIf="!bpReport?.vitalData?.bloodPressure?.length" class="no-record">
+    No Records Found!
+  </div>
+  <div class="header-container header-top">
+    <div class="sub-header-2">BP Trend Graph</div>
+  </div>
+  <div id="bpTrend" class="piGraph"></div>
+  <span class="page-break"></span>
+</div>

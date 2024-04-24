@@ -1,0 +1,131 @@
+@import "../../../../variables";
+
+.hide-pagination-element {
+  display: none;
+}
+
+.noDataFoundTextD {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 300px;
+}
+
+
+
+.status {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+
+
+  color: #52B204 !important;
+}
+
+.active {
+  cursor: pointer;
+  padding: 4px 10px;
+  background: #01CD74;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+}
+
+.inactive {
+  cursor: pointer;
+  padding: 4px 10px;
+  // width: 85px;
+  // height: 25px;
+  background: #9AA5AF;
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+}
+
+.specialityList {
+
+
+
+  .eliBtn {
+    outline: none;
+    outline-style: none;
+    border-radius: 0px;
+    cursor: pointer;
+
+    &:hover {
+      background: #ECFFFA;
+    }
+
+  }
+
+  .mat-menu-item {
+    outline: none !important;
+  }
+
+
+
+  button:focus {
+    outline: 0;
+  }
+
+  .valid-text {
+    margin-top: -23px;
+    margin-left: 11px;
+  }
+
+  .notAdmin {
+    border-radius: 0px !important;
+    padding: 0 !important;
+
+
+    ::ng-deep .mat-table {
+      border-top-left-radius: 0px !important;
+      border-top-right-radius: 0px !important;
+      max-height: 518px !important;
+      min-height: 518px !important;
+    }
+
+    ::ng-deep .mat-header-cell,
+    .mat-cell {
+      max-width: 385px !important;
+      min-width: 385px !important;
+    }
+  }
+
+  @media only screen and (min-device-width: 1660px) and (max-device-width: 1800px) and (orientation: landscape) {
+    .notAdmin {
+      ::ng-deep .mat-table {
+        max-height: 45em !important;
+        min-height: 45em !important;
+      }
+    }
+  }
+
+  // @media only screen and (min-device-width: 1800px) and (max-device-width: 1920px) and (orientation: landscape) {
+  //   .example-container.mat-elevation-z8 {
+  //     overflow-x: auto;
+  //     // margin-top: 35px;
+  //     max-height: 1000px !important;
+  //     height: 820px !important;
+  //     // overflow-y: scroll;
+  //     // overflow-x: scroll;
+  //   }
+
+  //   .show-pagination {
+  //     width: 86.5% !important;
+  //   }
+  // }
+
+  // @media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+  //   .example-container.mat-elevation-z8 {
+  //     height: 461px;
+  //   }
+  // }
+}

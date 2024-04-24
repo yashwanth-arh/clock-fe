@@ -1,0 +1,47 @@
+<div class="overlay" *ngIf="overlayOn"></div>
+<div class="patientDetails" fxFlex="100%" fxLayout="row" fxLayoutGap.md="32px">
+  <div
+    fxFlex="100%"
+    fxFlex.md="100%"
+    fxFlex.lg="100%"
+    fxLayout="column"
+    id="main-container"
+    class="scroll-content"
+  >
+    <app-patient-detailspage-header></app-patient-detailspage-header>
+    <app-patient-details-sub-header></app-patient-details-sub-header>
+
+    <div class="patient-observations">
+      <mat-tab-group
+        animationDuration="0ms"
+        dynamicHeight
+        class="mat-tabs"
+        [(selectedIndex)]="selectedTabIndex"
+        (selectedTabChange)="getTabDetails($event)"
+        mat-align-tabs="start"
+      >
+        <mat-tab label="Vital History">
+          <div fxLayout="row" fxFlex="100%" *ngIf="selectedTabIndex == 0">
+            <div class="observation-table" style="flex: 1 0 50%">
+              <app-patient-observation></app-patient-observation>
+            </div>
+            <div class="vital-history" style="flex: 1 0 30%">
+              <app-vitals-history></app-vitals-history>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Trends">
+          <app-bp-line-range-chart
+            *ngIf="showBPTimeGraph"
+          ></app-bp-line-range-chart>
+        </mat-tab>
+        <mat-tab label="Records">
+          <app-medical-records
+            *ngIf="selectedTabIndex == 2"
+          ></app-medical-records>
+        </mat-tab>
+      </mat-tab-group>
+      <!-- <app-patient-observation></app-patient-observation> -->
+    </div>
+  </div>
+</div>

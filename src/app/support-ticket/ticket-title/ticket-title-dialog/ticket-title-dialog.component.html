@@ -1,0 +1,70 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data === "add" ? "Create Default Issue" : "Edit Default Issue"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content>
+  <form [formGroup]="deviceTypeForm" (ngSubmit)="createTicketTitle()">
+    <mat-dialog-content [formGroup]="deviceTypeForm">
+      <div fxLayout="row">
+        <div class="form-div">
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Default Issue</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="supportTicketQuestions"
+              required
+            />
+            <mat-error>{{ defaultErr() }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- <mat-form-field class="device-width" appearance="outline">
+				<mat-label>Vendor</mat-label>
+				<input type="text" matInput formControlName="vendor"  required />
+				<mat-error>Vendor is required</mat-error>
+			</mat-form-field> -->
+
+        <!-- <mat-form-field class="device-width" appearance="outline">
+				<mat-label>Version</mat-label>
+				<input type="text" matInput formControlName="version"  required />
+				<mat-error>Version is required</mat-error>
+			</mat-form-field> -->
+
+        <!-- <mat-form-field class="device-width" appearance="outline">
+				<mat-label>Device Description</mat-label>
+				<input type="text" matInput formControlName="deviceDescription"  required />
+				<mat-error>Device description is required</mat-error>
+			</mat-form-field> -->
+        <div>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>User Permission</mat-label>
+            <mat-select formControlName="userPermissions" multiple required>
+              <mat-option
+                *ngFor="let specialityData of specialityList"
+                [value]="specialityData.id"
+              >
+                {{ specialityData.permissions }}
+              </mat-option>
+            </mat-select>
+            <mat-error>User Permission required</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-dialog-content>
+
+    <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+      <button
+        mat-flat-button
+        class="rpm-save-button"
+        [disabled]="!deviceTypeForm.valid || isSubmitted"
+      >
+        {{ data === "add" ? "Save" : "Update" }}
+      </button>
+    </div>
+  </form>
+</mat-card-content>

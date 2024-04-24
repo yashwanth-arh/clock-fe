@@ -1,0 +1,90 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <mat-icon class="material-icons icon" color="black">close</mat-icon>
+</span>
+<span mat-dialog-title class="module-form-title">Edit Clinic BP</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content style="margin-top: 18px">
+  <form [formGroup]="deviceTypeForm" (ngSubmit)="createDeviceType()">
+    <mat-dialog-content [formGroup]="deviceTypeForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Clinic Systolic BP</mat-label>
+        <input
+        min="30"
+           max="500"
+          type="number"
+          onKeyPress="getValidNoSys()"
+          matInput
+          formControlName="sysBp"
+          required
+        />
+        <!-- <mat-error> {{ getErrorBP() }}</mat-error> -->
+        <mat-error
+				*ngIf="deviceTypeForm.controls.sysBp.hasError('required')"
+				>Clinic Systolic is required</mat-error
+			  >
+			  <mat-error
+			  *ngIf="deviceTypeForm.controls.sysBp.hasError('min')"
+			  >Clinic Systolic cannot be lesser than 30</mat-error
+			>
+			<mat-error
+			*ngIf="deviceTypeForm.controls.sysBp.hasError('max')"
+			>Clinic Systolic cannot be greater than 500</mat-error
+		  >
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Clinic Diastolic BP</mat-label>
+        <input
+        min="30"
+        max="500"
+          type="number"
+          matInput
+          formControlName="diaBp"
+		  onKeyPress="getValidNoDia()"
+          required
+        />
+        <!-- <mat-error> {{ getErrorBP() }}</mat-error> -->
+        <mat-error
+				*ngIf="deviceTypeForm.controls.diaBp.hasError('required')"
+				>Clinic Diastolic is required</mat-error
+			  >
+			  <mat-error
+			  *ngIf="deviceTypeForm.controls.diaBp.hasError('min')"
+			  >Clinic Diastolic cannot be lesser than 30</mat-error
+			>
+			<mat-error
+			*ngIf="deviceTypeForm.controls.diaBp.hasError('max')"
+			>Clinic Diastolic cannot be greater than 500</mat-error
+		  >
+      </mat-form-field>
+
+      <!-- <mat-form-field class="device-width" appearance="outline">
+				<mat-label>Vendor</mat-label>
+				<input type="text" matInput formControlName="vendor"  required />
+				<mat-error>Vendor is required</mat-error>
+			</mat-form-field> -->
+
+      <!-- <mat-form-field class="device-width" appearance="outline">
+				<mat-label>Version</mat-label>
+				<input type="text" matInput formControlName="version"  required />
+				<mat-error>Version is required</mat-error>
+			</mat-form-field> -->
+
+      <!-- <mat-form-field class="device-width" appearance="outline">
+				<mat-label>Baseline BP Diastolic</mat-label>
+				<input type="text" matInput formControlName="baseLineDia"  required />
+				<mat-error>Baseline BP Diastolic is required</mat-error>
+			</mat-form-field> -->
+    </mat-dialog-content>
+
+    <div fxLayout="row"  class="divbutton">
+      <button
+        mat-flat-button
+        class="rpm-save-button"
+        [disabled]="!deviceTypeForm.valid"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</mat-card-content>

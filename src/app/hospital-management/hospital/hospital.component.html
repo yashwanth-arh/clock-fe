@@ -1,0 +1,262 @@
+<div class="rpm-module-management hospitalMain">
+  <app-navigation-bar
+    (clickEvent)="createhospital()"
+    #navigationBar
+  ></app-navigation-bar>
+  <div>
+    <div class="example-container mat-elevation-z8">
+      <mat-table
+        #table
+        matSort
+        matTableResponsive
+        [dataSource]="dataSource"
+        matSortActive="name"
+        matSortDisableClear
+        matSortDirection="asc"
+      >
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef disableClear>
+            <span class="header-name">Name</span>
+          </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.name && element?.name.length > 13 ? element?.name : ''
+            "
+          >
+            {{
+              element?.name && element?.name.length > 13
+                ? (element.name | titlecase | slice : 0 : 13) + "..."
+                : element?.name
+                ? (element.name | titlecase)
+                : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="contactNumber">
+          <mat-header-cell *matHeaderCellDef>
+            <span class="header-contact"> Contact Number</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.contactNumber ? element.contactNumber : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="emailId">
+          <mat-header-cell style="flex: 0 0 250px" *matHeaderCellDef>
+            <span class="header-email">Email</span>
+          </mat-header-cell>
+          <mat-cell
+            style="flex: 0 0 250px"
+            *matCellDef="let element"
+            [title]="
+              element?.emailId && element?.emailId.length > 15
+                ? element?.emailId
+                : ''
+            "
+          >
+            {{
+              element?.emailId && element?.emailId.length > 15
+                ? (element?.emailId | slice : 0 : 15) + "..."
+                : element?.emailId
+                ? element?.emailId
+                : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="address.state">
+          <mat-header-cell fxFlex="35%" *matHeaderCellDef>
+            State/Zip
+          </mat-header-cell>
+          <mat-cell fxFlex="35%" *matCellDef="let element">
+            {{ element.address ? element.address.state : "-" }}-{{
+            element.address ? element.address.zipCode : "-"
+            }}
+          </mat-cell>
+        </ng-container> -->
+
+        <ng-container matColumnDef="city">
+          <mat-header-cell *matHeaderCellDef>
+            <span class="header-city">City</span>
+          </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.address && element?.address.city.length > 13
+                ? element.address.city
+                : ''
+            "
+          >
+            {{
+              element?.address && element?.address.city.length > 13
+                ? (element?.address.city | slice : 0 : 13) + "..."
+                : element?.address
+                ? element.address.city
+                : "-"
+            }}
+
+            <div
+              [matMenuTriggerFor]="levelOne"
+              #levelOneTrigger="matMenuTrigger"
+              class="location-img"
+            >
+              <img src="../../../../assets/svg/locationImg.svg" alt="" />
+            </div>
+            <mat-menu #levelOne="matMenu">
+              <div class="location-box">
+                <div
+                  class="loc-title"
+                  [title]="
+                    element?.name && element?.name?.length > 15
+                      ? element?.name
+                      : ''
+                  "
+                >
+                  {{
+                    (element.name | titlecase) && element.name.length > 15
+                      ? (element.name | titlecase | slice : 0 : 15) + ".."
+                      : (element.name| titlecase)
+                      ? (element.name | titlecase)
+                      : " "
+                  }}
+                </div>
+                <div
+                  class="loc-addes"
+                  [title]="
+                    element?.address?.addressLine &&
+                    element?.address?.addressLine?.length > 15
+                      ? element?.address?.addressLine
+                      : ''
+                  "
+                >
+                  {{
+                    element?.address?.addressLine &&
+                    element?.address?.addressLine.length > 15
+                      ? (element?.address?.addressLine | slice : 0 : 15) + ".."
+                      : element?.address?.addressLine
+                      ? element?.address?.addressLine
+                      : " "
+                  }}, {{ element?.address?.city }},
+                  {{ element?.address?.state }}-{{ element?.address?.zipCode }}.
+                </div>
+                <div class="loc-subTitle">
+                  <div class="contact-title">
+                    Contact Number:
+                    <span class="loc-addes">{{
+                      element?.contactNumber ? element?.contactNumber : "-"
+                    }}</span>
+                  </div>
+                </div>
+
+                <!-- <div class="loc-subTitle">
+                <div class="loc-contNo">
+                  Contact Person: &nbsp;&nbsp;<div>
+                    <div class="person-nam">Ram Parameshwar</div>
+                    <div class="person-nam">080 - 2678 8888 <img src="../../../../assets/svg/cell.svg" alt="" /></div>
+                  </div>
+                </div>
+             
+              </div> -->
+              </div>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="address.addressLine">
+          <mat-header-cell fxFlex="8%" *matHeaderCellDef>
+            Address
+          </mat-header-cell>
+          <mat-cell fxFlex="8%" *matCellDef="let element">
+            {{
+            element.address && element.address.addressLine
+            ? element.address.addressLine
+            : "-"
+            }}
+          </mat-cell>
+        </ng-container> -->
+
+        <ng-container matColumnDef="practiceNPI">
+          <mat-header-cell *matHeaderCellDef>
+            <span class="header-npi">NPI</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.hospitalNPI? element.hospitalNPI: '-'}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef>
+            <span class="header-status">Status</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-hint
+              style="width: auto"
+              [ngClass]="element.status === 'ACTIVE' ? 'active' : 'inactive'"
+              >{{ element.status | titlecase }}
+            </mat-hint>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Action">
+          <mat-header-cell *matHeaderCellDef>
+            <span class="header-action">Action</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                mat-menu-item
+                class="action-btn"
+                (click)="edithospitalRecord(element)"
+              >
+                <img src="assets/svg/Edit Icon.svg" />
+                <span style="padding-left: 15px;">Edit</span>
+              </button>
+
+              <button
+                mat-menu-item
+                (click)="goToUserPage(element)"
+                [disabled]="element.status !== 'ACTIVE'"
+              >
+                <mat-icon>person_add</mat-icon>
+                <span>Admins</span>
+              </button>
+              <button mat-menu-item (click)="goToDevicesPage(element)">
+                <!-- <mat-icon>person_add</mat-icon> -->
+                <span>View Devices</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="hospitalHeaders"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: hospitalHeaders"></mat-row>
+      </mat-table>
+      <div
+        class="noRecordsFound"
+        *ngIf="messageSuccess !== undefined && !messageSuccess"
+      >
+        No Records Found!
+      </div>
+      <mat-paginator
+        [ngClass]="
+          (dataSource.totalElemObservable | async) < 10
+            ? 'hide-pagination-element'
+            : 'show-pagination'
+        "
+        [length]="dataSource.totalElemObservable | async"
+        [pageSizeOptions]="[10, 25, 100]"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

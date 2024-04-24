@@ -1,0 +1,152 @@
+@import "../../../_variables.scss";
+
+.video-call-section {
+  position: relative;
+  // background-image: url("../../../assets/img/Loginbg.jpg");
+  background-size: 100%;
+  background-size: cover;
+  width: auto;
+  height: 100%;
+  padding: 0;
+  background-position: 50% 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.expand-collapse-section {
+  width: 100%;
+  position: absolute;
+
+  // background-color: $twilio-background;
+  button {
+    float: right;
+    color: white;
+  }
+}
+
+.minimize-icon {
+  outline: none;
+  position: relative;
+  top: 22px;
+  right: 15px;
+}
+
+.remote-patientName {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #676767;
+}
+
+.video-call-grid {
+  background: linear-gradient(180deg, #CBFFE8 0%, #D2FBEE 53.12%, #E8EEFF 100%);
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+.timer-section {
+  .remote-user-data {
+    color: #676767;
+    padding: 20px;
+    font-family: inherit;
+  }
+}
+
+.participant-section {
+  position: relative;
+
+  .participant-section-toolbar {
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .action-button>button {
+      color: white;
+      margin: 0px 10px;
+      outline: none;
+    }
+  }
+
+  .compresses-btn {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    left: 8vw;
+    top: 16vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .action-button>button {
+      color: white;
+      margin: 0px 10px;
+      outline: none;
+    }
+  }
+}
+
+div.intiated {
+  position: absolute;
+  text-align: center;
+
+  .alone-info-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 15vh;
+
+    .alone-text h3 {
+      color: #676767;
+      font-size: 24px;
+    }
+
+    .alone-text span {
+      color: #479E99;
+      font-size: 18px;
+    }
+
+    .alone-spinner {
+      padding: 20px 0px;
+
+      .mat-spinner {
+        margin-left: 45%;
+      }
+    }
+  }
+}
+
+.primary-btns {
+  outline: none;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(220.79deg, #01CD74 -6.26%, #1A5187 90.51%);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+}
+
+.secondary-btn {
+  outline: none;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(214.82deg, #DC3545 10.43%, #B91A29 92.03%);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+  ;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .action-button {
+    position: relative;
+    top: 6vh;
+  }
+}

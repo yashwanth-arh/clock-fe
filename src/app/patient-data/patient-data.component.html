@@ -1,0 +1,170 @@
+<div class="rpm-module-management" layout-gt-sm="row" tdMediaToggle="gt-sm">
+  <div class="rpm-module-management-header">
+    <button mat-icon-button (click)="viewPatient()">
+      <mat-icon>keyboard_backspace</mat-icon>
+    </button>
+    <span class="rpm-page-title">Patient Data</span>
+  </div>
+  <div class="rpm-module-table-view">
+    <div class="rpm-module-filter-container">
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab>
+          <ng-template mat-tab-label> Blood Pressure </ng-template>
+          <div
+            class="rpm-module-table-container example-container mat-elevation-z8"
+          >
+            <mat-table
+              class="mat-table"
+              matSort
+              matTableResponsive
+              [dataSource]="bpDataSource"
+            >
+              <ng-container matColumnDef="BPL">
+                <mat-header-cell *matHeaderCellDef> BPL </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.BPL }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="HP">
+                <mat-header-cell *matHeaderCellDef> HP </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.HP }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="HR">
+                <mat-header-cell *matHeaderCellDef> HR </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.HR }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="LP">
+                <mat-header-cell *matHeaderCellDef> LP </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.LP }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="measurement_time">
+                <mat-header-cell *matHeaderCellDef>
+                  Measurement Time
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.measurement_time }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="time_zone">
+                <mat-header-cell *matHeaderCellDef> Time Zone </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.time_zone }}
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="bpHeaders"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: bpHeaders"></mat-row>
+            </mat-table>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label> Weight </ng-template>
+          <div
+            class="rpm-module-table-container example-container mat-elevation-z8"
+          >
+            <mat-table
+              class="mat-table"
+              matSort
+              matTableResponsive
+              [dataSource]="weightDataSource"
+            >
+              <ng-container matColumnDef="BMI">
+                <mat-header-cell *matHeaderCellDef> BMI </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.BMI }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="WeightValue">
+                <mat-header-cell *matHeaderCellDef>
+                  WeightValue
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.WeightValue }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="measurement_time">
+                <mat-header-cell *matHeaderCellDef>
+                  Measurement Time
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.measurement_time }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="time_zone">
+                <mat-header-cell *matHeaderCellDef> Time Zone</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.time_zone }}
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="weightHeaders"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: weightHeaders"></mat-row>
+            </mat-table>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label> Blood Glucose </ng-template>
+          <div
+            class="rpm-module-table-container example-container mat-elevation-z8"
+          >
+            <mat-table
+              class="mat-table"
+              matSort
+              matTableResponsive
+              [dataSource]="boDataSource"
+            >
+              <ng-container matColumnDef="BO">
+                <mat-header-cell *matHeaderCellDef> BO </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.BO }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="HR">
+                <mat-header-cell *matHeaderCellDef> HR </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.HR }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="measurement_time">
+                <mat-header-cell *matHeaderCellDef>
+                  Measurement Time
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.measurement_time }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="time_zone">
+                <mat-header-cell *matHeaderCellDef> Time Zone</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.time_zone }}
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="boHeaders"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: boHeaders"></mat-row>
+            </mat-table>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

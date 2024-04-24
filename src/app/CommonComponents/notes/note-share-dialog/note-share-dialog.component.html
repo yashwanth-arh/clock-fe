@@ -1,0 +1,67 @@
+<span class="close-button" title="Close" (click)="dialogRef.close(false)">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">Select care provider</span>
+<mat-divider class="module-divider"></mat-divider>
+<div fxLayout="row" class="mainNotes">
+  <div class="caregiver-div">
+    <!-- <mat-form-field appearance="outline" class="textInputWidth">
+      <mat-label>Caregivers & Doctors</mat-label>
+      <mat-select [(ngModel)]="selectedOptions" multiple required>
+        <mat-option *ngFor="let list of caregiverLists" [value]="list">
+          {{ list?.firstName + " " + list?.lastName }}
+        </mat-option>
+      </mat-select>
+      <mat-error>Caregiver is required</mat-error>
+    </mat-form-field> -->
+    <mat-checkbox
+      [checked]="areAllSelected()"
+      [disabled]="!caregiverLists.length"
+      (change)="toggleSelectAll()"
+    >
+      Select All
+    </mat-checkbox>
+    <div style="width: 100px" *ngFor="let checkboxItem of caregiverLists">
+      <mat-checkbox
+        [checked]="isSelected(checkboxItem)"
+        (change)="toggleCheckbox(checkboxItem)"
+        [title]="
+          getName(checkboxItem) && getName(checkboxItem).length > 30
+            ? getName(checkboxItem)
+            : ''
+        "
+      >
+        {{
+          getName(checkboxItem) && getName(checkboxItem).length > 30
+            ? (getName(checkboxItem) | titlecase | slice : 0 : 30) + "..."
+            : getName(checkboxItem)
+            ? (getName(checkboxItem) | titlecase)
+            : "-"
+        }}
+      </mat-checkbox>
+    </div>
+  </div>
+  <div
+    class="noRecordsFound"
+    style="top: 0 !important"
+    *ngIf="!caregiverLists.length"
+  >
+    No records found!
+  </div>
+</div>
+<div style="float: right" *ngIf="!personAdded">
+  <button
+    mat-flat-button
+    class="rpm-save-button"
+    (click)="saveAndShareNote()"
+    [disabled]="!this.selectedIds.length"
+  >
+    Add
+  </button>
+</div>
+<div style="float: right; position: relative; right: 22px">
+  <span *ngIf="personAdded">
+    <img src="assets/svg/Tick Mark.svg" class="btn_img" alt="" /> People added
+    succesfully</span
+  >
+</div>

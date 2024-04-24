@@ -1,0 +1,11 @@
+<!-- <mat-progress-bar class="example-margin" color="warn" mode="indeterminate"></mat-progress-bar> -->
+<div fxLayoutAlign="center center" style="background: none">
+  <!-- <img src="assets/img/Loader.gif" class="vizzhyGif" alt="" *ngIf="gifBackground==='blueBg'">
+    <img src="assets/img/LoaderWhite.gif" class="vizzhyGif" alt="" *ngIf="gifBackground==='whiteBg'"> -->
+  <img
+    src="assets/gif/loader.gif"
+    style="border-radius: 50%"
+    [ngClass]="routerUrl === 'login' ? 'clockgifLogin' : 'clockGif'"
+    alt=""
+  />
+</div>

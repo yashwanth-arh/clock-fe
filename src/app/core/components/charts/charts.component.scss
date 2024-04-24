@@ -1,0 +1,55 @@
+div.canvas-container {
+  position: relative;
+  // height: 50vh;
+  height: 350px;
+  width: 100%;
+  margin: auto;
+}
+
+canvas {
+  // width:1000px !important;
+  height: 380px !important;
+  position: relative;
+  top: -6vh;
+}
+.no-records {
+  display: flex;
+  justify-content: center;
+  margin-top: 20vh;
+  font-size: 16px;
+}
+.textInputWidth {
+  font-size: 12px;
+  width: 21vw;
+  margin-bottom: 4vh;
+}
+.barChart {
+  margin-top: 4px;
+}
+.barchart {
+  height: 400px;
+  width: 100%;
+  margin-top: 30px;
+}
+.graphType {
+  position: relative;
+  top: -2vh;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1280px) and (orientation: landscape) {
+  .barchart {
+    height: 300px;
+    width: 100%;
+    margin-top: 30px;
+  }
+}
+@media only screen and (min-device-width: 1366px) and (max-device-width: 1400px) and (orientation: landscape) {
+  .barChart {
+    margin-top: -8px !important;
+  }
+}
+@media only screen and (min-device-width: 1669px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .barChart {
+    margin-top: 5em;
+  }
+}

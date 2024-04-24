@@ -1,0 +1,77 @@
+<div fxLayout="row" fxLayoutAlign="space-between start" class="header">
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div class="title">Upload Patient Consent Form</div>
+    </div>
+    <div (click)="dialogRef.close(false)" style="cursor: pointer">
+      <img src="assets/svg/cancel.svg" alt="" />
+    </div>
+  </div>
+  <div>
+    <!-- <div fxLayout="row">
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Title</mat-label>
+        <input
+          type="text"
+          matInput
+          minlength="3"
+          maxlength="30"
+          [(ngModel)]="imageTitle"
+          required
+        />
+      </mat-form-field>
+    </div> -->
+    <!-- <div class="title-error" *ngIf="imageTitle && imageTitle?.length >=2 && imageTitle?.length < 3">
+      <mat-error
+        >Title min character is 3</mat-error
+      >
+    </div> -->
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div class="file-input">
+        <input
+          type="file"
+          id="file"
+          accept=".pdf,.png,.jpg,.jpeg"
+          (change)="uploadImage($event)"
+          class="file"
+        />
+        <label
+          for="file"
+          fxLayout="column"
+          fxLayoutGap="10px"
+          class="pres-upload-label"
+        >
+          <div class="img-div">
+            <img src="assets/svg/Upload.svg" alt="" />
+          </div>
+          <div class="upld-pres">Upload</div>
+        </label>
+      </div>
+      <div *ngIf="imageSrc" class="view-images">
+        <img id="preview" [src]="imageSrc" class="preview-image" />
+        <img
+          src="assets/svg/Remove Minus Icon.svg"
+          class="minus-icon"
+          (click)="removeSelectedFile()"
+        />
+      </div>
+      <div *ngIf="pdfimageSrc" class="view-images">
+        <img id="preview" [src]="pdfimageSrc" class="preview-image" />
+        <img
+          src="assets/svg/Remove Minus Icon.svg"
+          class="minus-icon"
+          (click)="removeSelectedFile()"
+        />
+      </div>
+    </div>
+    <div class="btn-div">
+      <button
+        mat-flat-button
+        class="rpm-save-button"
+        (click)="saveForm()"
+        [disabled]="isSubmitted"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+  

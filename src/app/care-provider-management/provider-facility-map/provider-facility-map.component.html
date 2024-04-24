@@ -1,0 +1,127 @@
+<span
+  class="close-button"
+  style="cursor: pointer"
+  title="Close"
+  (click)="dialogRef.close()"
+>
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">Map Facilities</span>
+<mat-divider class="module-divider"></mat-divider>
+<mat-card-content
+  fxLayout
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <div fxLayout="column" class="heading-left-section">Add Facilities</div>
+  <div fxLayout="column" class="heading-right-section">Facilities Added</div>
+</mat-card-content>
+<mat-card-content
+  fxLayout
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <div fxLayout="row" fxLayoutGap="10px">
+    <div fxLayout="column" class="left-section">
+      <div></div>
+      <div>
+        <div class="search-div" fxLayout="row" fxLayoutAlign="center center">
+          <div class="global-search">
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <input
+                placeholder="Search Facility"
+                maxlength="50"
+                [(ngModel)]="facility"
+                matInput
+                (keyup)="searchFacility()"
+              />
+              <img
+                *ngIf="showSearch"
+                src="../../../../assets/svg/SearchIcon.svg"
+                style="padding-right: 10px"
+                alt="search"
+              />
+              <img
+                *ngIf="showCancel"
+                (click)="removeFacility()"
+                style="padding-right: 10px"
+                class="close-icon"
+                src="assets/svg/Unmap.svg"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div
+            class="facility-names"
+            fxLayout="row"
+            *ngFor="let list of clinicList"
+          >
+            <div fxFlex="50">
+              <span class="doc-name" [title]="list?.name">
+                {{
+                  list?.name?.length > 30
+                    ? (list?.name | titlecase | slice : 0 : 30) + "..."
+                    : list?.name
+                    ? (list?.name | titlecase)
+                    : "-"
+                }}</span
+              >
+            </div>
+            <div fxFlex="50" fxLayoutAlign="end end">
+              <span
+                (click)="addFacility(list)"
+                class="add-action"
+                *ngIf="!list?.added && adminAccess == 'true'"
+                >Add</span
+              >
+              <img
+                class="tick-icon"
+                src="assets/svg/Added.svg"
+                *ngIf="list?.added"
+              />
+            </div>
+          </div>
+          <div *ngIf="!clinicList?.length" class="no-records">
+            No Records Found!
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="column" class="right-section">
+      <div></div>
+      <div>
+        <div fxLayout="row" *ngFor="let list of mappedFacilities">
+          <span
+            class="selected-facility-names"
+            *ngIf="list.Status === 'ACTIVE'"
+          >
+            <div fxFlex="50">
+              <span class="doc-name" [title]="list?.facilityName">{{
+                list?.facilityName?.length > 20
+                  ? (list?.facilityName | titlecase | slice : 0 : 20) + "..."
+                  : list?.facilityName
+                  ? (list?.facilityName | titlecase)
+                  : "-"
+              }}</span>
+            </div>
+            <div
+              fxFlex="50"
+              fxLayoutAlign="end end"
+              *ngIf="adminAccess == 'true'"
+              (click)="unmapFacility(list)"
+            >
+              <img src="assets/svg/Unmap.svg" class="un-map" />
+            </div>
+          </span>
+        </div>
+        <div *ngIf="!mappedFacilities?.length" class="no-mapped">
+          No Mapped Facility!
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card-content>

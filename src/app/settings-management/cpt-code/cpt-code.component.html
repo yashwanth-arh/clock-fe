@@ -1,0 +1,65 @@
+<div class="rpm-module-management">
+  <app-navigation-bar (clickEvent)="openAddCPTCodeDialog()"></app-navigation-bar>
+  <div class="rpm-module-table-view">
+    <div class="rpm-module-filter-container">
+      <form [formGroup]="cptfilter">
+
+        <mat-form-field appearance="legacy">
+          <mat-label>Search</mat-label>
+          <input formControlName="searchQuery" matInput (keyup)="isEnableGlobalSearchFunc()" />
+          <!-- <mat-icon matSuffix>search</mat-icon> -->
+          <!-- <mat-hint>Global Search</mat-hint> -->
+        </mat-form-field>
+        <mat-icon style="font-size: 17px;cursor:pointer" (click)="unselectGlobalSearch()" *ngIf="isEnableGlobalSearch">
+          close
+        </mat-icon>
+        <button mat-icon-button class="rpm-search-button" (click)="onCptFilter()" matTooltip='Search'
+          matTooltipPosition='below' [matTooltipClass]="{'rpm-tooltip': true}">
+          <mat-icon title="Search">search</mat-icon>
+        </button>
+      </form>
+    </div>
+
+    <div class="rpm-module-table-container example-container mat-elevation-z8">
+      <mat-table matSort matTableResponsive [dataSource]="dataSource">
+        <ng-container matColumnDef="id">
+          <mat-header-cell fxFlex="20%" *matHeaderCellDef> Code </mat-header-cell>
+          <mat-cell fxFlex="20%" *matCellDef="let element">{{ element.id }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <mat-header-cell fxFlex="50%" *matHeaderCellDef> Description </mat-header-cell>
+          <mat-cell fxFlex="50%" *matCellDef="let element">{{ element.description }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <mat-header-cell fxFlex="20%" *matHeaderCellDef> Amount </mat-header-cell>
+          <mat-cell fxFlex="20%" *matCellDef="let element">{{ element.amount }} </mat-cell>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="Actions">
+					<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+							<mat-icon>more_vert</mat-icon>
+						</button>
+						<mat-menu #menu="matMenu">
+							<button mat-menu-item (click)="openEditCPTCodeDialog(element)">
+								<mat-icon>edit</mat-icon>
+								<span>Edit</span>
+							</button>
+						</mat-menu>
+					</mat-cell>
+				</ng-container> -->
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div class="noDataFoundText" *ngIf="messageSuccess!==undefined && !messageSuccess">No Records Found!</div>
+      <mat-paginator [ngClass]="(dataSource.totalElemObservable|async)<10?'hide-pagination-element':'show-pagination'"
+        [length]="dataSource.totalElemObservable | async" [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

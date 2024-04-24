@@ -1,0 +1,21 @@
+<div class="jumbotron" [style.display]="isPreviewing ? 'block' : 'none'">
+  <!-- <h5 class="display-4"><i class="fas fa-cogs"></i> Settings</h5> -->
+  <form class="form">
+    <div class="form-group" *ngIf="hasAudioInputOptions">
+      <app-device-select [key]="'audioInputId'" [kind]="'audioinput'" [label]="'Audio Input Source'" [devices]="devices"
+        (settingsChanged)="onSettingsChanged($event)"></app-device-select>
+    </div>
+    <div class="form-group" *ngIf="hasAudioOutputOptions">
+      <app-device-select [key]="'audioOutputId'" [kind]="'audiooutput'" [label]="'Audio Output Source'"
+        [devices]="devices" (settingsChanged)="onSettingsChanged($event)"></app-device-select>
+    </div>
+    <div class="form-group" *ngIf="hasVideoInputOptions">
+      <app-device-select [key]="'videoInputId'" [kind]="'videoinput'" #videoSelect [label]="'Video Input Source'"
+        [devices]="devices" (settingsChanged)="onSettingsChanged($event)"></app-device-select>
+    </div>
+  </form>
+</div>
+<div style="position: absolute;bottom: 0vh;"
+  [style.display]="(!(this.stateService.isAlone$ | async)  && (this.stateService.callType$ | async) ==='video') ? 'block' : 'none'">
+  <app-camera #camera></app-camera>
+</div>

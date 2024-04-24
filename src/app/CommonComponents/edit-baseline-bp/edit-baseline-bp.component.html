@@ -1,0 +1,63 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+	<mat-icon class="material-icons icon" color="black">close</mat-icon>
+</span>
+<span mat-dialog-title class="module-form-title">Edit Baseline BP</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content style="margin-top:18px">
+	<form [formGroup]="deviceTypeForm" (ngSubmit)="createDeviceType()">
+		<mat-dialog-content  [formGroup]="deviceTypeForm">
+			<mat-form-field  appearance="outline">
+				<mat-label>Baseline BP Systolic</mat-label>
+				<input type="number" matInput formControlName="baseLineSys" min="30" max="500" required />
+				<mat-error
+				*ngIf="deviceTypeForm.controls.baseLineSys.hasError('required')"
+				>Baseline Systolic is required</mat-error
+			  >
+			  <mat-error
+			  *ngIf="deviceTypeForm.controls.baseLineSys.hasError('min')"
+			  >Baseline Systolic cannot be lesser than 30</mat-error
+			>
+			<mat-error
+			*ngIf="deviceTypeForm.controls.baseLineSys.hasError('max')"
+			>Baseline Systolic cannot be greater than 500</mat-error
+		  >
+
+				
+			</mat-form-field>
+			
+			<!-- <mat-form-field class="device-width" appearance="outline">
+				<mat-label>Vendor</mat-label>
+				<input type="text" matInput formControlName="vendor"  required />
+				<mat-error>Vendor is required</mat-error>
+			</mat-form-field> -->
+
+			<!-- <mat-form-field class="device-width" appearance="outline">
+				<mat-label>Version</mat-label>
+				<input type="text" matInput formControlName="version"  required />
+				<mat-error>Version is required</mat-error>
+			</mat-form-field> -->
+
+			<mat-form-field class="device-width" appearance="outline">
+				<mat-label>Baseline BP Diastolic</mat-label>
+				<input type="number" matInput formControlName="baseLineDia" min="30" max="500"  required />
+				<mat-error
+				*ngIf="deviceTypeForm.controls.baseLineDia.hasError('required')"
+				>Baseline Diastolic is required</mat-error
+			  >
+			  <mat-error
+			  *ngIf="deviceTypeForm.controls.baseLineDia.hasError('min')"
+			  >Baseline Diastolic cannot be lesser than 30</mat-error
+			>
+			<mat-error
+			*ngIf="deviceTypeForm.controls.baseLineDia.hasError('max')"
+			>Baseline Diastolic cannot be greater than 500</mat-error
+		  >
+			</mat-form-field>
+		</mat-dialog-content>
+
+		<div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+			<button mat-flat-button class="rpm-save-button" [disabled]="!deviceTypeForm.valid">Save</button>
+		</div>
+	</form>
+</mat-card-content>

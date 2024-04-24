@@ -1,0 +1,15 @@
+<section class="img-upload-section">
+  <!-- <div class="account-details-text">
+    <p>Account Details</p>
+  </div> -->
+  <img [src]="imagePath" alt="profile-image" class="rounded-image" />
+  <div class="upload upload-button" (click)="imageInput.click()">
+    <mat-icon  style="margin-top:66px">camera_alt</mat-icon>
+    <input class="input" #imageInput type="file" accept="image/*" (change)="processFile(imageInput)">
+  </div>
+  <br /><br />
+  <!-- <div *ngIf="selectedFile">
+    <div *ngIf="selectedFile.status === 'ok'" class="alert alert-success"> Image Uploaded Succesfuly!</div>
+    <div *ngIf="selectedFile.status === 'fail'" class="alert alert-danger"> Image Upload Failed!</div>
+  </div> -->
+</section>

@@ -1,0 +1,45 @@
+// .device-info-tabs {
+//   padding: 21px;
+// }
+#support {
+  padding: 0 18px;
+
+  mat-tab-body-content {
+    overflow: hidden !important;
+  }
+
+  .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+    color: white;
+    background-color: #006595;
+    opacity: 1;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    width: 98px;
+    height: 36px;
+  }
+
+  .mat-tab-list .mat-tab-labels {
+    width: max-content;
+    height: 36px;
+    left: 217px;
+    top: 143px;
+    background: #D4E1F6;
+    /* border-radius: 6px 6px 0px 6px; */
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+  }
+
+  .mat-tab-label {
+    width: 98px;
+    height: 36px;
+  }
+
+  .mat-tab-group.mat-primary .mat-ink-bar,
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: transparent;
+  }
+}
+
+// ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
+//   background-color: transparent;
+// }

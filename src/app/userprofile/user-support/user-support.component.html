@@ -1,0 +1,568 @@
+<!-- <div class="main-container">
+  <div fxLayout="row">
+    <div class="header-div" (click)="back()">
+      <img
+        class="setting-icon"
+        src="assets/svg/DashboardIcons/Support Back.svg"
+        alt=""
+      />
+    </div>
+    <div class="heading">Support History</div>
+  </div>
+  <div fxLayout="row" class="content-div" fxLayoutGap="50px">
+    <div class="cont-sub-div">
+      <div>
+        <mat-form-field appearance="outline" class="search-input-div">
+          <input
+            matInput
+            [(ngModel)]="searchTicket"
+            (keyup)="isEnableGlobalSearchFunc()"
+            placeholder="Search"
+          />
+        </mat-form-field>
+        <mat-icon
+          class="close-icon"
+          style="font-size: 17px; cursor: pointer"
+          (click)="unselectSearch()"
+          *ngIf="isEnableSearch"
+          >close
+        </mat-icon>
+      </div>
+      <div class="card-div">
+        <div class="card-content" *ngFor="let ticket of ticketLists">
+          <div fxLayoutAlign="space-between center">
+            <p class="head-title" title="{{ ticket.tickeSummary }}">
+              {{
+                ticket.ticketSummary?.length > 19
+                  ? (ticket.ticketSummary | slice : 0 : 19) + "..."
+                  : ticket.ticketSummary
+              }}
+            </p>
+            <div>
+              <p class="ticket-date">
+                {{ ticket.createdAt | date : "short" }}
+              </p>
+              <img
+                class="edit-ticket"
+                (click)="updateTicket(ticket)"
+                src="assets/svg/Edit Button.svg"
+                title="Edit Ticket"
+                style="cursor: pointer"
+                alt=""
+              />
+            </div>
+          </div>
+          <p class="head-description" title="{{ ticket.ticketDescription }}">
+            {{
+              ticket.ticketDescription?.length > 80
+                ? (ticket.ticketDescription | slice : 0 : 80) + "..."
+                : ticket.ticketDescription
+            }}
+          </p>
+          <div
+            fxLayout="row"
+            class="ticket-id-div"
+            fxLayoutAlign="space-between center"
+          >
+            <p class="ticket-id">Issue ID: {{ ticket.id }}</p>
+            <p
+              [class]="
+                ticket.applicationTicketStatus === 'COMPLETED'
+                  ? 'ticket-status-completed'
+                  : ticket.applicationTicketStatus === 'ASSIGNED'
+                  ? 'ticket-status-assigned'
+                  : 'ticket-status-pending'
+              "
+            >
+              {{ ticket.applicationTicketStatus }}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="loadRes" class="loader-1">
+          <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+        </div>
+
+        <div class="no-tickets" *ngIf="!ticketLists.length && !loadRes">
+          No Issues found!
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="ticketForm">
+      <div class="create-support">
+        <div class="new-ticket-text">
+          {{ ticketId ? "Edit Ticket" : "Create New Ticket" }}
+        </div>
+        <mat-form-field appearance="outline" class="ticket-title">
+          <mat-select
+            (selectionChange)="getSummary()"
+            formControlName="ticketSummary"
+            placeholder="Issue Summary *"
+          >
+            <mat-option
+              *ngFor="let defaultSupports of defaultSupport"
+              [value]="defaultSupports.supportTicketQuestions"
+            >
+              {{ defaultSupports.supportTicketQuestions }}
+            </mat-option>
+            <mat-option value="Others"> Others </mat-option>
+          </mat-select>
+          <mat-error>Issue Summary is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ticket-desc">
+          <mat-label>{{ description }}</mat-label>
+          <textarea
+            style="resize: none; height: 80px"
+            type="text"
+            placeholder="Issue Description"
+            matInput
+            autocomplete="disabled"
+            maxlength="500"
+            formControlName="ticketDescription"
+          ></textarea>
+          <mat-error>Issue Description is required</mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="20px">
+          <div class="file-input">
+            <input
+              type="file"
+              id="files"
+              accept=".pdf,.png,.jpg,.jpeg"
+              (change)="uploadImage($event)"
+              multiple
+              class="file"
+            />
+            <label
+              for="files"
+              fxLayout="column"
+              fxLayoutGap="10px"
+              class="pres-upload-label"
+            >
+              <div class="img-div">
+                <img src="assets/svg/Upload.svg" alt="" />
+              </div>
+              <div class="upld-pres">Upload</div>
+            </label>
+          </div>
+          <div *ngIf="imageSrc.length">
+            <span *ngFor="let img of imageSrc; let i = index">
+              <img
+                id="preview"
+                [src]="img.url ? img.url :img"
+                (click)="imagePreview()"
+                class="preview-image"
+              />
+              <img
+                src="assets/svg/Remove Minus Icon.svg"
+                class="minus-icon"
+                (click)="removeSelectedFile(i,img,'image')"
+              />
+            </span>
+          </div>
+          <div *ngIf="pdfimageSrc.length">
+            <span *ngFor="let img of pdfimageSrc; let i = index">
+              <img id="preview" [src]="img.url ? img.url :img" class="preview-image" />;
+              <img src="assets/svg/Remove Minus Icon.svg" class="minus-icon"
+              (click)="removeSelectedFile(i,img,'pdf')" />
+            </span>
+          </div>
+        </div>
+        <div fxLayout="row" class="buttons" fxLayoutGap="30px">
+          <button mat-flat-button class="cancel-button" (click)="cancel()">
+            Cancel
+          </button>
+          <button
+            [disabled]="!ticketForm.valid"
+            mat-flat-button
+            class="save-button"
+            (click)="submitSupportTickets()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div> -->
+<div class="user-support-main">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    style="padding: 15px 0 5px 0"
+  >
+    <div fxLayout="row">
+      <div style="cursor: pointer" (click)="goBack()">
+        <img src="/assets/img/back-button.png" />
+      </div>
+      <div class="ticket-title">Tickets</div>
+    </div>
+    <div fxLayout="row" style="margin-right: 5vh">
+      <form [formGroup]="organizationList">
+        <div class="deviceStatus">
+          <mat-form-field appearance="outline">
+            <mat-select
+              formControlName="status"
+              (selectionChange)="isEnableHospitalStatusFunc()"
+            >
+              <mat-option value="Open"> Open </mat-option>
+              <mat-option value="Closed">Close </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+      <div (click)="addeditTicket()" class="new-btn">New Ticket</div>
+    </div>
+  </div>
+
+  <div class="userSupport-module-management">
+    <!-- <div class="rpm-module-table-view">
+        <div class="rpm-module-filter-container">
+         
+        </div>
+    
+  
+        
+      </div> -->
+    <div fxLayout="row">
+      <!-- <app-support-tab></app-support-tab> -->
+      <!-- <div class="mat-tab-class" *ngIf="showTabBoolean">
+        <mat-tab-group
+          (selectedTabChange)="getSupportTicket1($event)"
+          [selectedIndex]=selIndex
+        >
+          <mat-tab label="Support Ticket"></mat-tab>
+         
+          <mat-tab label="Default Issues"><app-ticket-title></app-ticket-title></mat-tab>
+        </mat-tab-group>
+      </div> -->
+      <!-- <div>
+      <form [formGroup]="searchGroup" class="formsearch">
+        <div class="search-container">
+          <input (input)="isEnableGlobalSearchFunc1($event)" type="text" placeholder="Search" class="search-field">
+        </div>
+        
+      </form>
+    </div> -->
+    </div>
+    <div
+      class="tickets-box-main-div-1"
+      fxLayout="row"
+      fxLayoutGap="16px"
+      *ngIf="supportTicketResopnse?.length != 0"
+    >
+      <div
+        *ngIf="supportTicketResopnse"
+        style="flex: 1 0 55%"
+        class="tickets-box-main-div"
+        #myDiv
+        fxLayout="column"
+      >
+        <div
+          [ngStyle]="
+            userRole == 'RPM_ADMIN' ? { height: '468px' } : { height: '520px' }
+          "
+        >
+          <div
+            *ngFor="let element of supportTicketResopnse"
+            class="tickets-box"
+            [ngClass]="{ selected: element === selectedItem }"
+            (click)="ticketdetails(element)"
+          >
+            <div fxLayout="row">
+              <!-- <div [ngClass]="{ selected2: element == selectedItem }"></div> -->
+              <div style="width: 100%">
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <!-- <div   [ngClass]="{ selected2: element == selectedItem }">
+           
+            </div> -->
+                  <!-- <span  [ngClass]="{ selected2: element == selectedItem }"></span> -->
+                  <div class="ticketSummary">
+                    {{
+                      element.ticketSummary.length > 70
+                        ? (element.ticketSummary | slice : 0 : 70) + "..."
+                        : element.ticketSummary
+                    }}
+                  </div>
+                  <div>
+                    {{ element.createdAt | date }}
+                  </div>
+                  <!-- <div  ">
+              lll
+            </div> -->
+                </div>
+                <div class="ticketDescription">
+                  {{
+                    element.ticketDescription?.length > 81
+                      ? (element.ticketDescription | slice : 0 : 81) + "..."
+                      : element.ticketDescription
+                  }}
+                </div>
+
+                <div class="Ticket-Id-div">
+                  <div class="Ticket-Id">
+                    Issue Id:
+                    <span style="color: #424242">{{ element.id }}</span>
+                  </div>
+                  <div class="Ticket-Id">
+                    Status:
+                    <span style="color: #424242">{{
+                      getStatus(element) | titlecase
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="secondnddivbox"
+        style="flex: 1 0 40%"
+        #mydiv
+        fxLayout="column"
+      >
+        <div
+          [ngClass]="
+            userRole == 'RPM_ADMIN' ? 'ticket-hig' : 'ticket-hig-nonadmin'
+          "
+        >
+          <div class="ticket-description-box" *ngIf="supportTicketResopnse">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="desciption-heading">
+                Ticket Id:<span style="color: #424242; padding-left: 10px">{{
+                  ticketId
+                }}</span>
+              </div>
+              <div class="desciption-heading">
+                <span style="color: #424242; padding-left: 10px">{{
+                  createdDate | date
+                }}</span>
+                <!-- <img style="padding-left:12px;cursor:pointer" (click)="editTicket()" *ngIf="scopeId === patiendId" src="../../assets/img/edit-support.svg"> -->
+              </div>
+            </div>
+            <div fxLayout="row" style="margin-top: 12px">
+              <div style="padding-top: 1px" class="desciption-heading">
+                Status:
+              </div>
+              <div class="status-box" style="color: #424242">
+                {{ status | titlecase }}
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div
+              class="desciption-heading"
+              style="padding-top: 16px; padding-bottom: 13px"
+            >
+              Raised By:<span style="color: #424242; padding-left: 10px">{{
+                patientName
+              }}</span>
+            </div>
+            <div class="desciption-heading" style="padding-bottom: 16px">
+              User ID:<span style="color: #424242; padding-left: 10px">{{
+                patiendId
+              }}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div
+              class="desciption-heading"
+              style="padding-top: 16px; padding-bottom: 13px"
+            >
+              Issue Title:<br /><span style="color: #424242">{{ title }}</span>
+            </div>
+            <div
+              class="desciption-heading"
+              style="padding-top: 16px; padding-bottom: 13px"
+            >
+              Issue Description:<br /><span style="color: #424242">{{
+                description
+              }}</span>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div
+              class="desciption-heading"
+              style="padding-top: 16px; padding-bottom: 10px"
+              *ngIf="attachment?.length"
+            >
+              Attachment
+              <div
+                class="download-file-name"
+                *ngFor="let element of attachment"
+                fxLayout="row"
+                fxLayoutAlign="space-between center"
+              >
+                <div>
+                  {{ element.documentName }}
+                </div>
+
+                <div>
+                  <img
+                    class="pres-download"
+                    title="Download"
+                    (click)="imagePreview(element.documentPath)"
+                    src="../../assets/img/download-button.png"
+                    style="cursor: pointer"
+                  />
+                </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div
+              fxLayout="row"
+              style="padding-top: 16px"
+              fxLayoutGap="10px"
+              fxLayoutAlign="end end"
+            >
+              <!-- <div
+        class="desciption-heading"
+        style="padding-top: 8px; padding-bottom: 13px"
+      >
+        Change Status:
+        </div> -->
+
+              <div
+                *ngIf="
+                  userRole !== 'RPM_ADMIN' &&
+                  patiendId !== scopeId &&
+                  status !== 'CLOSED' &&
+                  status !== 'REASSIGNED'
+                "
+                class="close-ticket-btn"
+                (click)="escalateTicket(ticketId)"
+              >
+                Escalate
+              </div>
+              <div
+                *ngIf="status !== 'CLOSED' && patiendId !== scopeId"
+                class="escalate-btn"
+                (click)="closeTicket(ticketId)"
+              >
+                Close Ticket
+              </div>
+
+              <div
+                style="width: 131px"
+                *ngIf="patiendId === scopeId && status === 'CLOSED'"
+                class="escalate-btn"
+                (click)="reOpenTicket(ticketId)"
+              >
+                Re-open Ticket
+              </div>
+              <!-- <form [formGroup]="statusGroup" class="status-choice" >
+          <mat-form-field appearance="outline"  >
+            <mat-label>Select Status</mat-label>
+            <mat-select
+              formControlName="status"
+              (selectionChange)="statusChange($event, ticketId)"
+            >
+              <mat-option *ngFor="let sts of changeStatus" [value]="sts">
+                {{ sts }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form> -->
+
+              <!-- <div id="prodoneid" class="prodcls" *ngIf="attachment" style="margin-top:66px">
+        Download Attachment: 
+        <img  *ngFor="let element of attachment"
+        class="pres-download"
+        title="Download"
+        (click)="imagePreview(element.documentPath)"
+        src="assets/svg/Prescription Download.svg"
+        style="cursor:pointer"
+      />
+    </div>
+     -->
+            </div>
+          </div>
+
+          <div
+            class="ticket-description-box-grey"
+            *ngIf="supportTicketResopnse"
+          >
+            <p class="ticketSummary">Activity:</p>
+            <div class="activity-box" *ngFor="let activities of activity">
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="row">
+                  <img
+                    class="activity-img"
+                    src="../../assets/svg/activity-profile-pic.svg"
+                  />
+                  <div style="padding-left: 10px">
+                    <div class="ticketSummary"   [title]="
+                    getFullName(activities) &&
+                    getFullName(activities).length > 50
+                      ? getFullName(activities)
+                      : ''
+                  ">
+                  {{
+                    getFullName(activities).length > 50
+                      ? (getFullName(activities) | slice : 0 : 50) + "..."
+                      : getFullName(activities)
+                  }}
+                      <!-- {{
+                        activities?.firstName &&
+                        activities?.firstName.length > 1
+                          ? (activities?.firstName | slice : 0 : 1) + "..."
+                          : activities?.firstName
+                      }} -->
+                    </div>
+                    <div>{{ activities?.userRole }}</div>
+                  </div>
+                </div>
+                <div>
+                  <p>
+                    {{ activities.lastUpdatedAt | date : "dd/M/yyyy, h:mm a" }}
+                  </p>
+                </div>
+              </div>
+              <div
+                span
+                style="color: #424242; padding-top: 10px"
+                class="desciption-heading"
+                [title]="activities.ticketDescription.length > 75 ?activities.ticketDescription : '' "
+              >
+              {{ activities.ticketDescription.length > 75 ? (activities.ticketDescription | slice : 0 : 75) + "... " :activities.ticketDescription  }}
+              </div>
+            </div>
+
+            <!-- <div>
+          <form [formGroup]="commentGroup"  fxLayout="row" fxLayoutGap="10px">
+            <div class="global-search">
+              <input
+                placeholder="Add Comment"
+                formControlName="comment"
+                matInput
+                
+              />
+            </div>
+          </form>
+        </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-records" *ngIf="supportTicketResopnse?.length === 0">
+      No Records Found!
+    </div>
+
+    <mat-paginator
+      [ngClass]="
+        length < 10
+          ? 'hide-pagination'
+          : !length
+          ? 'hide-pagination'
+          : 'show-pagination'
+      "
+      (page)="handlePageEvent($event)"
+      [length]="length"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="pageIndex"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+</div>

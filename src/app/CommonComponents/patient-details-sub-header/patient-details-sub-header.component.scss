@@ -1,0 +1,238 @@
+.main-div {
+  width: 100%;
+  height: 65px;
+  background: #d4e1f6;
+  border-radius: 10px 10px 0px 0px;
+  margin-top: 16px;
+  /* margin-bottom: -10px; */
+  /* margin-left: 20px; */
+}
+
+.care-main-div {
+  width: 100%;
+  height: 65px;
+  background: #d4e1f6;
+  border-radius: 10px 10px 0px 0px;
+  margin-top: 18px;
+  margin-bottom: -10px;
+}
+
+.adherence-box {
+  width: 14px;
+  height: 14px;
+  left: 5px;
+  margin-top: 1.5%;
+  position: relative;
+  background: #5acb00;
+  border-radius: 3px;
+}
+
+.chart-id {
+  overflow: hidden;
+}
+
+// .mat-form-field-appearance-outline .mat-form-field-suffix {
+// top: 0.50em !important;
+// }
+
+.select-date-text {
+  margin-top: 0%;
+  padding-left: 630px;
+}
+
+.date-div {
+  // margin-top: 1.7rem;
+  height: 65px;
+  align-items: center;
+}
+
+.main-div-row {
+  //   padding-top: 25px;
+  height: 65px;
+
+  .piGraph {
+    height: 10vh;
+    width: 5%;
+    margin-top: -0.3%;
+    //   position: relative;
+    //   top: -13vh;
+  }
+
+  .count-div {
+    display: flex;
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    width: 500px;
+  }
+
+  .date-filter-div {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    width: 70%;
+  }
+}
+
+.adherence-text {
+  padding-left: 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  /* identical to box height, or 100% */
+  margin-top: 2%;
+  color: #424242;
+}
+
+.adherence-text-val {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 14px;
+  /* identical to box height, or 88% */
+  color: #5acb00;
+}
+
+.adherence-line {
+  width: 14px;
+  height: 0px;
+  left: 366px;
+  margin-top: 2.4%;
+  border: 1px solid #95bdd2;
+  transform: rotate(-90deg);
+  background: #95bdd2;
+  margin-left: 14px;
+}
+
+.date-field {
+  // .mat-form-field {
+  //   margin-top: -28px;
+  // }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    background: #e1edff;
+    border: 1px solid #d1d1e1;
+    border-radius: 6px;
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+  }
+}
+
+// @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+//   .date-field {
+//     .mat-form-field {
+//       margin-top: 0;
+//     }
+
+//     ::ng-deep .mat-date-range-input-container {
+//       display: flex;
+//       justify-content: center;
+//       align-items: flex-start !important;
+//     }
+
+//     ::ng-deep .mat-date-range-input-separator {
+//       margin: 2px 4px !important;
+//     }
+//   }
+
+//   .date-div {
+//     margin-top: 0;
+//     display: flex;
+//     align-items: center;
+//   }
+
+//   .main-div {
+//     width: 99%;
+//     margin-bottom: -1px;
+//   }
+
+//   .select-date-text {
+//     padding-left: 15rem;
+//     margin-top: -3%;
+//   }
+
+//   .adherence-box {
+//     margin-top: 3%;
+//   }
+
+//   .adherence-text {
+//     margin-top: 3%;
+//   }
+
+//   .adherence-line {
+//     margin-top: 4%;
+//   }
+// }
+
+@media screen and (min-width: 1670px) and (max-device-width: 1800px) {
+  .select-date-text {
+    padding-left: 46rem;
+    margin-top: 0;
+  }
+}
+
+// @media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+//   .select-date-text {
+//     margin-top: 0px !important;
+//     padding-left: 483px !important;
+//   }
+
+//   .paginate {
+//     left: -12vw !important;
+//   }
+
+//   .main-div {
+//     width: 100%;
+//     margin-top: 1px;
+//     margin-bottom: 6px;
+//   }
+
+//   .adherence-text {
+//     margin-top: 2%;
+//   }
+
+//   .adherence-box {
+//     margin-top: 2%;
+//   }
+
+//   .adherence-line {
+//     margin-top: 2.5%;
+//   }
+
+//   .piGraph {
+//     top: 2px;
+//   }
+// }
+
+// @media only screen and (min-device-width: 1280px) and (max-device-width: 1280px) and (orientation: landscape) {
+//   .main-div {
+//     margin-bottom: 26px;
+//     margin-top: 0px;
+//   }
+
+//   .care-main-div {
+//     margin-bottom: -9px;
+//     margin-top: 0px;
+//   }
+
+//   .select-date-text {
+//     margin-top: 0px;
+//     // padding-left: 386px;
+//   }
+
+//   .adherence-text {
+//     margin-top: 2.5%;
+//   }
+
+//   .adherence-box {
+//     margin-top: 2.5%;
+//     margin-left: 12px;
+//   }
+
+//   .adherence-line {
+//     margin-top: 3%;
+//   }
+// }

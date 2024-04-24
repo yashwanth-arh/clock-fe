@@ -1,0 +1,66 @@
+<div class="ticketTitle">
+  <!-- <app-navigation-bar  (backEvent)="goToTickets()" (clickEvent)="addeditTicketTitle('add')"></app-navigation-bar>; -->
+  <div>
+    <div
+      class="example-container mat-elevation-z8"
+      [ngClass]="userRole === 'RPM_ADMIN' ? 'notAdmin' : ''"
+    >
+      <mat-table class="default-table" #table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>
+            Support Ticket Question
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" [title]="
+          element.supportTicketQuestions
+            ? element.supportTicketQuestions
+            : ''
+        ">
+            {{ element.supportTicketQuestions.length > 41?(element.supportTicketQuestions| slice : 0 : 41) + "...":element.supportTicketQuestions}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="user">
+          <mat-header-cell *matHeaderCellDef> User Permission </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.userPermissionName }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="addeditTicketTitle(element)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div class="noDataFoundText" *ngIf="lengths === 0">No Records Found!</div>
+      <mat-paginator
+        [ngClass]="
+          length < 10
+            ? 'hide-pagination'
+            : !length
+            ? 'hide-pagination'
+            : 'show-pagination'
+        "
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

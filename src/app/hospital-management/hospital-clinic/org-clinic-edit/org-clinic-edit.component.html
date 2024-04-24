@@ -1,0 +1,99 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+	<mat-icon class="material-icons icon" color="black">close</mat-icon>
+</span>
+<span mat-dialog-title class="module-form-title">{{ data.add && data.add === "add" ? "Create Clinic" : "Edit Clinic" }}</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px">
+	<form [formGroup]="orgBranchForm" (ngSubmit)="submitBranch()">
+		<mat-dialog-content [formGroup]="orgBranchForm">
+			<mat-form-field appearance="outline" class="fieldWidth">
+				<mat-label> Name</mat-label>
+				<input appAlphabetSpaceOnly type="text" matInput formControlName="name" required />
+				<mat-error>Name is required</mat-error>
+			</mat-form-field>
+			<!--
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Email</mat-label>
+          <input  type="email" matInput formControlName="emailId" required />
+          <mat-error *ngIf="!orgBranchForm.controls['emailId'].valid && orgBranchForm.controls['emailId'].touched"> {{
+            getErrorEmail() }}</mat-error>
+        </mat-form-field>
+   -->
+			<mat-form-field appearance="outline" class="fieldWidth">
+				<mat-label>Primary Contact Number</mat-label>
+				<input appNumberCustomValidation type="text" matInput formControlName="primaryContactNumber" maxlength="10" required />
+				<mat-error *ngIf="!orgBranchForm.controls['primaryContactNumber'].valid && orgBranchForm.controls['primaryContactNumber'].touched">
+					{{ getErrorPrimaryContactNo() }}</mat-error
+				>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="fieldWidth">
+				<mat-label>Emergency Contact Number</mat-label>
+				<input appNumberCustomValidation type="text" matInput formControlName="emergencyContactNumber" maxlength="10" />
+				<mat-error
+					*ngIf="!orgBranchForm.controls['emergencyContactNumber'].valid && orgBranchForm.controls['emergencyContactNumber'].touched"
+				>
+					{{ getErrorEmerContactNo() }}</mat-error
+				>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="fieldWidth">
+				<mat-label>State</mat-label>
+				<mat-select autocomplete="disabled" formControlName="state" (valueChange)="onStateSelection($event)" required>
+					<mat-option *ngFor="let stateData of state" [value]="stateData">
+						{{ stateData }}
+					</mat-option>
+				</mat-select>
+				<mat-error>State is required</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="fieldWidth">
+				<mat-label>City</mat-label>
+				<input type="text"  matInput formControlName="city" [matAutocomplete]="autoCity" required />
+				<mat-icon matSuffix>arrow_drop_down</mat-icon>
+				<mat-autocomplete autoActiveFirstOption #autoCity="matAutocomplete">
+					<mat-option *ngFor="let city of CityFilteredOptions | async" [value]="city">
+						{{ city }}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error>City is required</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="fieldWidth">
+				<mat-label>Address</mat-label>
+				<input type="text" matInput formControlName="addressLine" />
+				<mat-error>Address is required</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="fieldWidth">
+				<mat-label>Zip Code</mat-label>
+				<input  autocomplete="disabled" appNumberCustomValidation matInput maxlength="5" formControlName="zipCode" required />
+				<mat-error *ngIf="!orgBranchForm.controls['zipCode'].valid && orgBranchForm.controls['zipCode'].touched">
+					{{ getErrorZipCode() }}</mat-error
+				>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="fieldWidth">
+				<mat-label>Clinic NPI</mat-label>
+				<input  type="text" matInput formControlName="clinicNPI" required appNumberCustomValidation />
+				<mat-error>Clinic NPI is required</mat-error>
+				<mat-error *ngIf="orgBranchForm.controls['clinicNPI'].errors?.required">Clinic NPI is required</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="fieldWidth" *ngIf="orgBranchForm.controls['status']">
+				<mat-label>Status</mat-label>
+				<mat-select formControlName="status" required>
+					<mat-option *ngFor="let statusSelected of status" [value]="statusSelected">{{ statusSelected }}</mat-option>
+				</mat-select>
+				<mat-error>Status is required</mat-error>
+			</mat-form-field>
+		</mat-dialog-content>
+
+		<div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+			<button mat-flat-button class="rpm-save-button" [disabled]="!orgBranchForm.valid">
+				{{ data.add && data.add === "add" ? "Save" : "Update" }}
+			</button>
+		</div>
+	</form>
+</mat-card-content>

@@ -1,0 +1,262 @@
+<div class="add-edit-org">
+  <span class="close-button" title="Close" (click)="dialogRef.close()">
+    <img src="assets/svg/cancel.svg" alt="" />
+  </span>
+  <span mat-dialog-title class="module-form-title">{{
+    data.mode === "ADD" ? "Add Hospital" : "Update Hospital"
+  }}</span>
+  <mat-divider class="module-divider"></mat-divider>
+
+  <form
+    [formGroup]="addEdithospital"
+    (ngSubmit)="onSubmit()"
+    [class.error]="!addEdithospital.valid && addEdithospital.touched"
+    class="org-form-div"
+  >
+    <h2 mat-dialog-title></h2>
+    <div class="form-div" mat-dialog-content [formGroup]="addEdithospital">
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Hospital Name</mat-label>
+        <input
+          matInput
+          type="text"
+          appAlphabetSpaceOnly
+          autocomplete="disabled"
+          maxlength="50"
+          formControlName="name"
+          required
+        />
+        <mat-error
+          *ngIf="
+            !addEdithospital.controls['name'].valid &&
+            addEdithospital.controls['name'].touched
+          "
+        >
+          {{ getErrorName() }}</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Email</mat-label>
+        <input
+          *ngIf="data.mode !== 'EDIT'"
+          matInput
+          autocomplete="disabled"
+          maxlength="50"
+          formControlName="emailId"
+          required
+        />
+        <input
+          *ngIf="data.mode === 'EDIT'"
+          matInput
+          autocomplete="disabled"
+          maxlength="50"
+          formControlName="emailId"
+          required
+        />
+
+        <mat-error
+          *ngIf="
+            !addEdithospital.controls['emailId'].valid &&
+            addEdithospital.controls['emailId'].touched
+          "
+        >
+          {{ getErrorEmail() }}
+        </mat-error>
+        <mat-error *ngIf="emailid?.errors?.emailTaken">
+          This email already exists.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Contact Number</mat-label>
+        <input
+          type="text"
+          appNumberCustomValidation
+          matInput
+          autocomplete="disabled"
+          formControlName="contactNumber"
+          required
+          maxlength="10"
+        />
+        <mat-error
+          *ngIf="
+            !addEdithospital.controls['contactNumber'].valid &&
+            addEdithospital.controls['contactNumber'].touched
+          "
+        >
+          {{ getErrorContactNo() }}</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Country</mat-label>
+        <mat-select
+          formControlName="country"
+          (selectionChange)="getCountry($event)"
+          required
+        >
+          <mat-option value="India"> India </mat-option>
+          <mat-option value="USA"> USA </mat-option>
+        </mat-select>
+        <mat-error>Country is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Zip Code</mat-label>
+        <input
+          matInput
+          appNumberCustomValidation
+          autocomplete="off"
+          formControlName="zipCode"
+          (input)="changeZipcode()"
+         
+          [readonly]="!addEdithospital.controls['country'].value"
+          required
+        />
+        <mat-error *ngIf="!addEdithospital.valid && addEdithospital.touched">{{
+          getZipCodeError()
+        }}</mat-error>
+
+        <!-- <mat-hint>Enter valid zipcode</mat-hint> -->
+      </mat-form-field>
+      <!-- <span class="zipCodeStyle">
+        
+      </span> -->
+
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Address*</mat-label>
+        <input
+          autocomplete="disabled"
+          matInput
+          maxlength="500"
+          formControlName="addressLine"
+        />
+        <mat-error
+          *ngIf="
+            !addEdithospital.controls['addressLine'].valid &&
+            addEdithospital.controls['addressLine'].touched
+          "
+        >
+          {{ getErrorAddress() }}</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="fieldWidth stateField">
+        <mat-label>State</mat-label>
+        <input
+          appAlphabetSpaceOnly
+          type="text"
+          matInput
+          formControlName="state"
+          required
+          [readonly]="state.length ? true : false"
+        />
+        <mat-error
+        *ngIf="
+          !addEdithospital.controls['state'].valid &&
+          addEdithospital.controls['state'].touched
+        "
+      >
+        {{ getErrorState() }}</mat-error
+      >
+        <!-- <mat-error *ngIf="addEdithospital.controls['state'].errors?.required"
+          >State is required</mat-error
+        >
+        <mat-error *ngIf="addEdithospital.controls['state'].errors?.pattern"
+          >Only alphabets,space are allowed, first character cannot be space
+        </mat-error>
+
+        <mat-error *ngIf="addEdithospital.controls['state'].errors?.minlength"
+          >Enter minimum 3 characters
+        </mat-error>
+
+        <mat-error *ngIf="addEdithospital.controls['state'].errors?.maxlength"
+          >Max length is 20 characters
+        </mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>City</mat-label>
+        <input
+          appAlphabetSpaceOnly
+          type="text"
+          matInput
+          formControlName="city"
+          required
+          [readonly]="state.length ? true : false"
+        />
+        <mat-error
+        *ngIf="
+          !addEdithospital.controls['city'].valid &&
+          addEdithospital.controls['city'].touched
+        "
+      >
+        {{ getErrorCity() }}</mat-error
+      >
+        <!-- <mat-error *ngIf="addEdithospital.controls['city'].errors?.required"
+          >City is required</mat-error
+        >
+        <mat-error *ngIf="addEdithospital.controls['city'].errors?.pattern"
+          >Only alphabets,space are allowed,first character cannot be
+          space</mat-error
+        >
+        <mat-error *ngIf="addEdithospital.controls['city'].errors?.minlength"
+          >Enter minimum 3 characters
+        </mat-error>
+
+        <mat-error *ngIf="addEdithospital.controls['city'].errors?.maxlength"
+          >Max length is 30 characters
+        </mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Hospital NPI</mat-label>
+        <input
+          appNumberCustomValidation
+          maxlength="10"
+          minlength="10"
+          matInput
+          formControlName="hospitalNPI"
+          
+        />
+        <!-- <mat-error
+          *ngIf="addEdithospital.controls['hospitalNPI'].errors?.required"
+          >Hospital NPI is required
+        </mat-error> -->
+        <mat-error
+          *ngIf="addEdithospital.controls['hospitalNPI'].errors?.minlength"
+          >Enter 10 digit hospital NPI
+        </mat-error>
+        <mat-error *ngIf="hospitalNPI?.hasError('hospitalNPITaken')">
+          This Hospital NPI is already exists.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- <mat-form-field
+        appearance="outline"
+        class="fieldWidth"
+        *ngIf="addEdithospital.controls['status']"
+      >
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" required>
+          <mat-option *ngFor="let statusValue of status" [value]="statusValue">
+            {{ statusValue }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Status is required</mat-error>
+      </mat-form-field> -->
+    </div>
+    <div class="divbutton">
+      <button
+        *ngIf="addEdithospital"
+        [disabled]="!addEdithospital.valid || submitted"
+        mat-flat-button
+        class="rpm-save-button"
+      >
+        {{ data.mode === "ADD" ? "Save" : "Update" }}
+      </button>
+      <!-- <button mat-flat-button class="rpm-save-button">Save</button> -->
+    </div>
+  </form>
+</div>

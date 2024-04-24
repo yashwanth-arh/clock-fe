@@ -1,0 +1,103 @@
+.message-dialog {
+    overflow: hidden;
+    .toolbar-heading {
+        width: 455px;
+        position: relative;
+        left: -2vw;
+        top: -2.2vh;
+        background-color: #fff;
+        border-bottom: 0.5px solid #C0C0C0;
+    }
+    .title {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 21px;
+        color: #424242;
+        position: relative;
+        left: 10px;
+        top: 0.4vh;
+    }
+    ::ng-deep .mat-dialog-container {
+        border-radius: 10px;
+    }
+    .container {
+        margin-left: 3px;
+    }
+    
+    .card-content {
+        overflow: hidden;
+    }
+    
+    
+    .textField {
+    width: 390px;
+    height: 139px;
+    position: relative;
+    top: -1vh;
+    }
+    
+    .textArea {
+    background-color: white;
+    height: 90px;
+    position: relative;
+    }
+    
+    .cancel-button {
+    background-color: white;
+    color: #52B204
+;
+    // border: 1px solid #2196F3;
+    border: #52B204
+ 1px solid;
+    border-radius: 10px;
+    font-size: 12px;
+    outline: none;
+    width: 5vw;
+    height: 5vh;
+    }
+    
+    .save-button {
+    background-color: #52B204;
+    color: white;
+    // border: 1px solid #2196F3;
+    border-radius: 10px;
+    font-size: 12px;
+    outline: none;
+    width: 5vw;
+    height: 5vh;
+    }
+    
+    .btn-grp {
+    position: relative;
+    left: -1.5vh;
+    float: right;
+    }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1279px) and (orientation: landscape) {
+    .close-btn {
+        position: relative;
+        top: -0.5vh;
+        left: -3vw;
+    }
+}
+
+@media only screen and (min-device-width: 1279px) and (max-device-width: 1280px) and (orientation: landscape) {
+    .message-dialog {
+        .cancel-button{
+            width: 70px;
+            height: 38px;
+        }
+        .save-button {
+            height: 38px;
+        }
+    }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    .message-dialog {
+        .cancel-button{
+            width: 70px;
+        }
+    }
+}

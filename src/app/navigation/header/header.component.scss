@@ -1,0 +1,920 @@
+$primary-color: #01cd74;
+
+.user-detail {
+  width: 100px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge {
+  position: relative;
+  top: 20px;
+}
+
+.careLogo {
+  // position: relative;
+  // left: -0.6vw;
+  // width: 150px;
+  height: 55px;
+}
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.18);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.drawer {
+  position: fixed;
+  height: 100vh;
+  // margin-right: 1vw;
+  min-width: 75%;
+  z-index: 1000;
+  border-radius: 20px 0px 0px 0px;
+  // border: 1px solid $primary-color;
+  max-width: 40%;
+  background-color: #ecfffa !important;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.example-container {
+  margin-top: 10px;
+  max-height: 600px;
+  display: contents;
+  z-index: 1000;
+}
+
+// .drawer .header {
+//   position: absolute;
+//   z-index: 1000;
+//   justify-content: space-between;
+//   width: 100%;
+//   height: 500px;
+// }
+
+::ng-deep .mat-drawer.mat-drawer-side {
+  z-index: 1000;
+}
+
+.drawer .contents {
+  // padding: 16px;
+  background-color: #ecfffa !important;
+}
+
+::ng-deep mat-menu-panel {
+  position: relative !important;
+  top: 10px !important;
+}
+
+.icon-inside-drawer {
+  font-size: 20px;
+  position: relative;
+  top: 5px;
+  color: #52b204;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: left;
+}
+
+#t01 {
+  width: 100%;
+  background-color: #f1f1c1;
+}
+
+.mat-card {
+  position: relative;
+  top: 80px;
+}
+
+.dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 8.255em;
+  margin-top: -17px;
+  vertical-align: 167.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+
+.profile-container ::ng-deep .cdk-overlay-connected-position-bounding-box {
+  top: 60 !important;
+  right: 0 !important;
+}
+
+.example-container {
+  width: 500px;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.user-detail .details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-detail__username {
+  display: block;
+  float: right;
+  font-size: 15px;
+  font-weight: 300;
+  position: relative;
+  top: 15px;
+}
+
+.profile-container {
+  padding: 11px;
+  align-items: baseline;
+}
+
+.user-detail__role {
+  margin: 0;
+  display: block;
+  font-size: 12px;
+  line-height: 13px;
+  font-weight: 200;
+  margin-left: 88px;
+  position: relative;
+  bottom: 20px;
+}
+
+.container-menu {
+  position: relative;
+  top: 10px !important;
+}
+
+.users-avatar {
+  display: inline-block;
+  margin: 20px 15px 10px 30px;
+  border-radius: 50%;
+}
+
+.app-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
+
+  // margin: 5px;
+  img {
+    margin: 0px 10px;
+  }
+}
+
+.comments-view {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.proButton {
+  position: relative;
+  left: -34px;
+}
+
+.dropBotton {
+  outline: none;
+  width: 202px;
+  height: 55px;
+  margin-right: 10px;
+  margin-left: -28px;
+  position: relative;
+  left: -34px;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+  border: 2px solid white;
+}
+
+.profile-circle {
+  width: 75px;
+  height: 75px;
+  border-radius: 50% !important;
+  background: #c4c4c4;
+  border: 2px solid #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  position: relative;
+  left: 3px;
+  cursor: pointer;
+}
+
+.media-body {
+  flex: 1;
+  text-align: left;
+  width: 15%;
+}
+
+.title-div {
+  // width: 180px;
+  // height: 10vh;
+  padding: 20px;
+  // margin-left: 3vw;
+  color: white;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.noHover {
+  pointer-events: none !important;
+}
+
+.font-16 {
+  font-size: 12px;
+}
+
+.text-muted {
+  color: #96a2b4 !important;
+  font-size: 13px;
+}
+
+.toolbar {
+  height: 60px;
+  // position: fixed;
+  width: 100%;
+  z-index: 9;
+  padding-top: 0px;
+  // margin-top: -23px;
+  background: linear-gradient(355.95deg, #0b8564 1.99%, #002e7c 98.36%);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+
+  .menu-button {
+    outline: none;
+  }
+}
+
+.example-header-image {
+  background-image: url("../../../assets/img/doc.png");
+  background-size: cover;
+  height: 50px;
+  width: 50px;
+}
+
+.menu-icon {
+  font-size: 40px;
+  color: $primary-color;
+  margin-left: -3px;
+}
+
+.right-content {
+  position: relative;
+  height: 60px;
+  // left: -6.5vw;
+}
+
+.mac-right-content {
+  position: relative;
+  // left: -12.5vw;
+}
+
+.right-content,
+.mac-right-content {
+  // width: 19vw;
+
+  .call-schedule-btn {
+    width: auto;
+    height: auto;
+    position: relative;
+    top: -2.2vh;
+  }
+
+  .notification-btn {
+    width: auto;
+    height: auto;
+    position: relative;
+    // top: 0.4vh;
+    display: flex;
+
+    .notification-counter {
+      margin-right: -20px;
+      position: relative;
+      left: 2vw;
+      top: 1.5vh;
+      z-index: 3;
+      background-color: #fae100;
+      color: black;
+      /* border-radius: 50%; */
+      height: 50%;
+      width: 20px;
+      border-radius: 50%;
+
+      .count-number {
+        text-align: center;
+        font-size: 9px;
+      }
+    }
+  }
+
+  .logout-btn {
+    width: auto;
+    height: auto;
+    position: relative;
+    top: -0.1vh;
+
+    img {
+      width: 68px;
+    }
+  }
+
+  .icon-space {
+    padding: 18px 24px;
+  }
+
+  .call-schedule-btn:hover,
+  .notification-btn:hover,
+  .logout-btn:hover,
+  .menu :hover,
+  .profile-container:hover,
+  .profile-container:focus {
+    // height: 60px;
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+  }
+}
+
+.current-date-time {
+  position: relative;
+  left: 0.5vw;
+  top: 0.3vh;
+  font-size: 16px;
+  line-height: 19px;
+  color: #bababa;
+}
+
+.navigation-items {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 15px;
+
+      p {
+        font-size: xx-small;
+        margin: auto 0;
+      }
+    }
+  }
+}
+
+.cdk-overlay-connected-position-bounding-box {
+  top: 60px;
+}
+
+li {
+  mat-icon {
+    margin-top: 15px;
+  }
+}
+
+.media-body {
+  flex: 1;
+}
+
+.media-body,
+.text-job {
+  font-size: x-small;
+}
+
+.search {
+  width: 21rem;
+  //   font-size: 12px;
+}
+
+::ng-deep .mat-form-field-infix {
+  margin-block: -5px;
+  margin-block-start: -11px;
+}
+
+.home {
+  border-right: dotted;
+  padding-right: 30px;
+  border-color: $primary-color;
+
+  mat-icon {
+    text-align: center;
+    color: $primary-color;
+  }
+}
+
+.schedule-icon {
+  font-size: 20px;
+  color: $primary-color;
+}
+
+.date {
+  color: $primary-color;
+}
+
+.total-patients {
+  mat-icon {
+    font-size: 35px;
+    color: $primary-color;
+  }
+
+  span {
+    font-size: 20px;
+    color: $primary-color;
+  }
+
+  p {
+    font-size: small;
+    color: $primary-color;
+  }
+}
+
+.tool-avatar {
+  span {
+    font-size: small;
+  }
+
+  p {
+    font-size: smaller;
+  }
+}
+
+.icon {
+  margin-right: 25px;
+  font-size: 20px;
+}
+
+// ::ng-deep .chc-tooltip {
+//     background-color: $primary-color;
+//     color: blue;
+//     position: relative;
+//     top: 0px;
+// }
+
+.mat-divider {
+  height: 30px;
+  margin-right: 8px;
+  position: relative;
+  top: 5px;
+}
+
+.notification {
+  outline: none;
+  position: relative;
+  left: 0.5vw;
+  z-index: 1;
+  top: 1.5vh;
+  cursor: pointer;
+}
+
+.scheduler {
+  position: relative;
+  top: 19px;
+}
+
+::ng-deep .mySettings {
+  min-width: 112px !important;
+  max-width: 300px !important;
+  width: 300px;
+  height: 300px;
+  left: 2.37vw;
+  position: relative;
+  border-radius: 0px 0px 0px 10px;
+}
+
+::ng-deep .settings {
+  min-width: 112px !important;
+  max-width: 300px !important;
+  width: 300px;
+  height: 600px;
+  left: 2.37vw;
+  position: relative;
+  border-radius: 0px 0px 0px 10px;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+.menu-container {
+  overflow-x: hidden;
+
+  .camera-icon {
+    background-color: #fae100;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+    width: 27px;
+    height: 27px;
+    display: flex;
+    position: relative;
+    top: 7vh;
+    left: -1vw;
+  }
+
+  .content-1 {
+    padding: 16px 0px 10px 16px;
+
+    .bio-content {
+      position: relative;
+      top: 2vh;
+      left: -1vw;
+
+      .name {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 20px;
+        color: #424242;
+        width: 150px !important;
+        word-wrap: break-word;
+      }
+
+      .branch {
+        font-size: 15px;
+        line-height: 19px;
+        color: #5f6368;
+        font-weight: 400;
+        word-break: break-word;
+      }
+    }
+  }
+
+  .content-2 {
+    padding: 18px 0px 18px 16px;
+
+    .setting-type {
+      position: relative;
+      top: 4px;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 17px;
+      color: #424242;
+      font-weight: 400;
+    }
+
+    .setting-icon {
+      padding: 0px 10px;
+      width: 40px;
+    }
+  }
+
+  ::ng-deep .mat-expansion-panel:hover {
+    background-color: #ecfffa;
+  }
+
+  .hover-bg {
+    // border-top: 1px solid #ECFFFA;
+    border-top: 1px solid #c2ffe4;
+
+    ::ng-deep .mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb {
+      background-color: #01cd74;
+    }
+
+    ::ng-deep .mat-slide-toggle-thumb {
+      box-shadow: none;
+      background-color: #bbbbbb;
+    }
+
+    ::ng-deep .mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-bar {
+      background-color: #c2ffe4;
+    }
+
+    ::ng-deep .mat-slide-toggle-bar {
+      background-color: #e7e7e7;
+    }
+  }
+
+  .hover-bg :hover {
+    background-color: #ecfffa;
+    cursor: pointer;
+  }
+}
+
+mat-expansion-panel-header {
+  height: 60px;
+}
+
+.dropBotton :hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.dropButton {
+  background: linear-gradient(355.95deg, #0b8564 1.99%, #002e7c 200.36%);
+  outline: none;
+  position: relative;
+  left: 0vh;
+  top: 0vh;
+  height: 9vh;
+  width: 250px;
+}
+
+.media-title {
+  color: white;
+}
+
+button {
+  outline: none;
+}
+
+.username {
+  color: #ffffff;
+  width: 8rem;
+  height: 17px;
+  display: flex;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  // padding-top: 19px;
+  padding-left: 9px;
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 768px) {
+  .toolbar {
+    height: 7vh;
+  }
+
+  .search {
+    width: 10rem;
+  }
+
+  .date {
+    font-size: 12px;
+  }
+
+  .home {
+    mat-icon {
+      font-size: 20px;
+      margin-left: 8px;
+      margin-right: -20px;
+      padding: 0px;
+    }
+  }
+
+  .total-patients {
+    mat-icon {
+      font-size: 40px;
+    }
+
+    .patient-count {
+      margin-left: -10px;
+
+      span {
+        font-size: 14px;
+      }
+
+      p {
+        font-size: 11px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-device-width: 769px) and (max-device-width: 1024px) {
+  .current-date-time {
+    left: 0.5vw;
+    top: 0.15vh;
+    font-size: 12px;
+  }
+
+  .title-div {
+    font-size: 14px;
+  }
+
+  .drawer {
+    min-width: 95%;
+    max-width: 40%;
+    border-radius: 15px 0px 0px 0px;
+  }
+
+  .profile-circle {
+    width: 65px;
+    height: 65px;
+  }
+
+  .menu-container {
+    .camera-icon {
+      top: 5.5vh;
+      left: -1.5vw;
+    }
+
+    .content-1 .bio-content {
+      left: -2vw;
+    }
+
+    .content-1 .bio-content .name {
+      font-size: 14px;
+      line-height: 17px;
+    }
+
+    .content-1 .bio-content .branch {
+      font-size: 13px;
+      line-height: 17px;
+    }
+  }
+
+  .app-list {
+    position: relative;
+    left: -1vw;
+    top: -0.15vh;
+  }
+
+  ::ng-deep .mySettings {
+    // max-width: 333px !important;
+    // height: 245px;
+    left: 1vw;
+    top: -0.5vh;
+    // position: relative;
+    // border-radius: 0px 0px 0px 10px;
+  }
+
+  .right-content {
+    // left: -22vw;
+    // width: 23vw;
+    height: 60px;
+
+    .notification-btn .notification-counter {
+      height: 16px;
+      width: 16px;
+      position: relative;
+      left: 2.5vw;
+
+      .count-number {
+        text-align: center;
+        font-size: 10px;
+      }
+    }
+
+    .call-schedule-btn:hover,
+    .notification-btn:hover,
+    .logout-btn:hover,
+    .menu :hover {
+      background: none;
+      cursor: pointer;
+    }
+
+    .call-schedule-btn {
+      height: 52px;
+    }
+
+    .notification-btn {
+      height: 49px;
+    }
+
+    margin-right: -5px;
+  }
+
+  .toolbar {
+    height: 50px;
+  }
+
+  .careLogo {
+    height: 44px;
+    // width: 150px;
+  }
+
+  .icon-space {
+    width: 66px;
+    height: 61px;
+  }
+
+  .sm-icon {
+    position: relative;
+    left: 0px;
+  }
+
+  .search {
+    width: 20rem;
+  }
+
+  .date {
+    font-size: 12px;
+  }
+
+  .dropButton {
+    height: 49px;
+    margin-top: 9px;
+    margin-left: 18px;
+    top: -0.5vh;
+  }
+
+  .home {
+    mat-icon {
+      font-size: 20px;
+      margin-left: 8px;
+      margin-right: -20px;
+      padding: 0px;
+    }
+  }
+
+  .notification {
+    top: 3vh;
+    cursor: pointer;
+    font-size: 26px;
+  }
+
+  .total-patients {
+    .patient-count {
+
+      // margin-left: 15px !important;
+      span {
+        font-size: 18px;
+        text-align: left;
+      }
+
+      p {
+        font-size: 11px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-device-width: 1279px) and (max-device-width: 1280px) and (orientation: landscape) {
+  .navigation-items {
+    position: relative;
+    // left: -3vw;
+  }
+
+  .title-div {
+    width: 186px;
+  }
+}
+
+@media only screen and (min-device-width: 1660px) and (max-device-width: 1800px) {
+  .dropButton {
+    height: 8vh;
+  }
+
+  .menu-container {
+    .camera-icon {
+      top: 6vh !important;
+    }
+  }
+
+  .title-div {
+    height: 8vh;
+  }
+
+  .careLogo {
+    // width: 166px;
+    height: 68px;
+  }
+
+  .navigation-items {
+    position: relative;
+    left: -3vw;
+  }
+
+  .right-content {
+    // left: -1vw;
+  }
+
+  .profile-container {
+    margin-right: -3.4em;
+  }
+}
+
+@media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+  .dropButton {
+    background-color: #0b8564;
+    outline: none;
+    position: relative;
+    left: -2vh;
+    top: 0vh;
+    height: -webkit-fill-available;
+    width: 180px;
+  }
+
+  .title-div {
+    // width: 180px;
+    height: 12vh;
+    padding: 29px;
+    margin-left: 3vw;
+    color: white;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  // mat-paginator {
+  //   bottom: 7vw !important;
+  //   position: sticky;
+  //   z-index: 10;
+  //   height: 1px;
+  //   width: 99%;
+  // }
+}

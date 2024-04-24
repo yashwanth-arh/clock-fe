@@ -1,0 +1,58 @@
+.chAdmin {
+
+  .active {
+    cursor: pointer;
+    padding: 4px 10px;
+    background: #01CD74;
+    border-radius: 4px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+  }
+
+  .inactive {
+    cursor: pointer;
+    padding: 4px 10px;
+    // width: 85px;
+    // height: 25px;
+    background: #9AA5AF;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+  }
+
+  .hide-pagination-element {
+    display: none;
+  }
+
+  .status-color {
+    color: #01CD74 !important;
+  }
+
+  ::ng-deep .mat-header-cell,
+  .mat-cell {
+    max-width: 215px !important;
+    min-width: 215px !important;
+  }
+
+
+
+  button:focus {
+    outline: 0;
+  }
+
+  .hide-pagination-element {
+    display: none;
+  }
+  @media only screen and (min-device-width: 1679px) and (max-device-width: 1800px) and (orientation: landscape) {
+    ::ng-deep .mat-header-cell,
+    .mat-cell {
+      max-width: 255px !important;
+    }
+  }
+
+}

@@ -1,0 +1,198 @@
+.allFilters {
+  .global-search {
+    width: 243px;
+    height: 37px;
+    margin-top: 4px;
+    background: #d4e1f6;
+    border: 1px solid #c2d2ec;
+    border-radius: 8px;
+  }
+
+  ::ng-deep .mat-error {
+    font-size: 10px;
+    margin-left: 10px;
+  }
+
+  .owl-Date-pick {
+    input {
+      border-radius: 8px;
+      padding: 0 16px;
+      border: 1px solid #A1A1A1;
+      width: 237px;
+    }
+
+    .calIcon {
+      position: absolute;
+      right: 28px;
+      top: 20px;
+      height: 25px;
+
+      mat-icon {
+        color: #52B204;
+      }
+    }
+  }
+
+  .date-filter-container {
+    display: flex;
+    align-items: end;
+    // width: 72vw;
+    justify-content: end;
+
+    .date-container {
+      ::ng-deep {
+        margin-bottom: 0;
+        padding-bottom: 0;
+
+        input {
+          margin-left: 0px;
+        }
+
+        .mat-button-wrapper {
+          position: relative;
+          top: -3px;
+        }
+
+        .mat-select-arrow-wrapper {
+          position: relative;
+          top: 4px;
+          right: 8px;
+        }
+
+        ::ng-deep *,
+        *:focus,
+        *:hover {
+          outline: none !important;
+        }
+
+        .mat-form-field-appearance-outline .mat-form-field-infix {
+          margin-top: -3px;
+        }
+
+        .mat-form-field {
+          font-size: 14px;
+          height: 38px;
+          // width: 295px;
+          margin-bottom: 30px;
+          // margin: 5px 8px 10px 0px;
+        }
+
+        .mat-form-field-wrapper {
+          padding-bottom: 0;
+        }
+
+        .mat-select {
+          font-size: 14px;
+          position: absolute;
+          top: 5px;
+        }
+
+        .mat-date-range-input-container {
+          position: relative;
+          top: -8px;
+        }
+
+        .mat-form-field-appearance-outline .mat-form-field-flex {
+          height: 45px;
+          // width: 295px;
+        }
+
+        .mat-form-field-prefix,
+        .mat-form-field-suffix {
+          top: 0px !important;
+        }
+
+        .mat-form-field-appearance-outline .mat-form-field-outline {
+          border-radius: 8px;
+          border: 1px solid #A1A1A1;
+          background-color: white !important;
+        }
+
+        .mat-button-ripple.mat-ripple,
+        .mat-button-focus-overlay {
+          top: -6px;
+          left: -2px;
+          right: -2px;
+          bottom: 5px;
+        }
+
+        .mat-sort-header-content {
+          text-align: center;
+          display: flex;
+          align-items: center;
+          color: #424242;
+        }
+
+        .mat-date-range-input {
+          padding-left: 17px;
+        }
+      }
+    }
+  }
+
+  .deviceStatus {
+    ::ng-deep .mat-form-field {
+      height: 40px;
+      font-size: 14px;
+      padding: 0px;
+    }
+
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+      height: 40px;
+    }
+
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+      background: #d4e1f6;
+      border-radius: 5px;
+    }
+  }
+
+  .close-icon {
+    width: 16.7px;
+    height: 16.7px;
+    cursor: pointer;
+    // margin-left: 12px;
+  }
+
+  .status-search {
+    width: 178px;
+    height: 37px;
+    background: #d4e1f6;
+    border: 1px solid #c2d2ec;
+    border-radius: 8px;
+  }
+
+  // .status-search-device {
+  //   width: 120px;
+  //   height: 37px;
+  //   background: #d4e1f6;
+  //   border: 1px solid #c2d2ec;
+  //   border-radius: 8px;
+
+  //   mat-select {
+  //     width: 100px;
+  //   }
+  // }
+
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  input,
+  mat-select {
+    // margin-left: 10px;
+    font-size: 14px;
+    margin-top: 2px;
+  }
+
+  input {
+    margin-left: 16px;
+    width: 195px;
+  }
+
+  mat-select {
+    width: 160px;
+  }
+}

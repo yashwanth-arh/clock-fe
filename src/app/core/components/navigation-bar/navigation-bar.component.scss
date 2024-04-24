@@ -1,0 +1,75 @@
+@import "../../../../variables";
+
+.rpm-navigation-bar {
+  position: relative;
+  width: 100%;
+  top: 0px !important;
+  z-index: 998;
+  // background: linear-gradient(225deg, #E8EFF9 0%, #E7F2F0 100%);
+}
+
+.device-dropdown {
+  ::ng-deep .mat-select-placeholder {
+    color: white;
+  }
+}
+
+.rpm-button-div {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+
+  // margin-right: 20px;
+  // margin-top: 6px;
+  .rpm-toolbar-button {
+    color: #ffffff !important;
+    // margin-left: 10%;
+    background-color: $primary-color;
+    min-width: 12em;
+    max-width: fit-content;
+  }
+}
+
+.username {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: #1569a0;
+  padding-top: 19px;
+  padding-left: 9px;
+}
+
+.rpm-bulk-upload-button {
+  color: #ffffff !important;
+  // margin-left: 10%;
+  background-color: $secondary-color;
+  margin-right: 25px;
+  margin-top: 6px;
+}
+
+.rpm-toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.rpm-toolbar-right {
+  left: 0px;
+  margin-right: 18px;
+
+  .rpm-date-range-picker {
+    font-size: small;
+    margin-top: 10px;
+    width: 190px;
+    color: $tertiary-color;
+    background-color: transparent;
+  }
+}
+
+.rpm-menu-btn {
+  margin-right: 10px;
+  color: $extra-color;
+}
+
+button {
+  outline: none;
+}

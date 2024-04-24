@@ -1,0 +1,125 @@
+<div class="icdCodes-main">
+  <!-- <app-navigation-bar
+    (clickEvent)="openAddDiseaseDialog()"
+  ></app-navigation-bar> -->
+  <div>
+    <div
+      class="example-container mat-elevation-z8"
+      [ngClass]="userRole === 'RPM_ADMIN' ? 'notAdmin' : ''"
+    >
+      <mat-table #table matSort matTableResponsive [dataSource]="dataSource">
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> Code </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.icdCode && element?.icdCode.length > 32
+                ? element?.icdCode
+                : ''
+            "
+            >{{
+              element?.icdCode.length > 32
+                ? (element?.icdCode | slice : 0 : 32) + "..."
+                : element?.icdCode
+            }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.icdName && element?.icdName.length > 32
+                ? element?.icdName
+                : ''
+            "
+            >{{
+              element?.icdName.length > 32
+                ? (element?.icdName | slice : 0 : 32) + "..."
+                : element?.icdName
+            }}</mat-cell
+          >
+        </ng-container>
+
+        <ng-container matColumnDef="Status">
+          <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-hint
+              [ngClass]="
+                element.configurationStatus == 'ACTIVE' ? 'active' : 'inactive'
+              "
+              >{{
+                element.configurationStatus == "ACTIVE" ? "Active" : "Inactive"
+              }}
+            </mat-hint>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+          <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                class="eliBtn"
+                mat-menu-item
+                (click)="openEditDiseaseDialog(element)"
+              >
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button
+                class="eliBtn"
+                mat-menu-item
+                (click)="actionToggleChange(element)"
+              >
+                <span class="status">
+                  {{
+                    element?.configurationStatus === "ACTIVE"
+                      ? "INACTIVE"
+                      : "ACTIVE"
+                  }}</span
+                >
+              </button>
+            </mat-menu>
+            <!-- <mat-icon
+              (click)="openEditDiseaseDialog(element)"
+              style="color: #a1a1a1; cursor: pointer"
+              >edit</mat-icon
+            >
+            <mat-slide-toggle
+              [checked]="
+                element?.configurationStatus === 'ACTIVE' ? true : false
+              "
+              (toggleChange)="actionToggleChange(element)"
+            ></mat-slide-toggle> -->
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div class="noRecordsFound" *ngIf="!messageSuccess">
+        No Records Found!
+      </div>
+      <mat-paginator
+        [ngClass]="
+          (dataSource.totalElemObservable | async) < 10
+            ? 'hide-pagination-element'
+            : 'show-pagination'
+        "
+        [length]="dataSource.totalElemObservable | async"
+        [pageSizeOptions]="[10, 25, 100]"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

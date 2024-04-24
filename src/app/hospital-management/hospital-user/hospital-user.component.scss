@@ -1,0 +1,98 @@
+.hospitalAdminsMain {
+
+
+  .hide-pagination-element {
+    display: none;
+  }
+
+  .close-button {
+    cursor: pointer;
+  }
+
+  .active {
+    cursor: pointer;
+    padding: 4px 10px;
+    background: #01cd74;
+    border-radius: 4px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+  }
+
+  .inactive {
+    cursor: pointer;
+    padding: 4px 10px;
+    // width: 85px;
+    // height: 25px;
+    background: #9aa5af;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+  }
+
+  .mat-menu-item:hover {
+    background-color: #ecfffa;
+  }
+
+  .hospitalAdmin {
+
+    ::ng-deep .mat-header-row,
+    .mat-row {
+      width: 100% !important;
+    }
+
+    .notAdmin {
+      border-radius: 0px !important;
+      padding: 0 !important;
+
+      ::ng-deep .mat-table {
+        border-top-left-radius: 0px !important;
+        border-top-right-radius: 0px !important;
+        max-height: 518px !important;
+        min-height: 518px !important;
+      }
+
+      ::ng-deep .mat-header-cell,
+      .mat-cell {
+        max-width: 142px !important;
+        min-width: 142px !important;
+      }
+    }
+
+    ::ng-deep .mat-header-cell,
+    .mat-cell {
+      max-width: 143px !important;
+      min-width: 143px !important;
+    }
+  }
+
+  @media only screen and (min-device-width: 1679px) and (max-device-width: 1800px) and (orientation: landscape) {
+    .hospitalAdmin {
+      .notAdmin {
+        ::ng-deep .mat-table {
+          max-height: 48em !important;
+          min-height: 48em !important;
+        }
+
+        ::ng-deep .mat-header-cell,
+        .mat-cell {
+          max-width: 170px !important;
+          min-width: 170px !important;
+        }
+      }
+
+      .show-pagination {
+        display: contents !important;
+      }
+    }
+
+    .mat-header-row,
+    .mat-row {
+      width: 100% !important;
+    }
+  }
+}

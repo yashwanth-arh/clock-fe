@@ -1,0 +1,19 @@
+form.assign-form {
+  display: block !important;
+  flex-direction: row;
+  width: 80%;
+
+  div {
+    flex: 1;
+
+    button {
+      margin-top: 10px;
+      margin-left: 15rem;
+    }
+  }
+  .mat-form-field {
+    display: inline-block;
+    width: 400px;
+    margin-left: -49px;
+}
+}

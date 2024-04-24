@@ -1,0 +1,34 @@
+<div>
+  <span class="close-button" title="Close" (click)="dialogRef.close()">
+    <img src="assets/svg/cancel.svg" alt="" />
+  </span>
+  <span mat-dialog-title class="module-form-title">Activities</span>
+</div>
+<mat-divider class="module-divider"></mat-divider>
+<mat-card-content class="notification-contents">
+  <div class="activity-list-div" *ngFor="let data of activitiesList">
+    <div fxLayout="column">
+      <div class="activity-main">
+        <div
+          fxLayout="column"
+        
+          class="activity-container"
+        >
+          <div class="activity-content">{{ data.description }}</div>
+          <div>{{data.latest_created_at | date:'d/M/yy, h:mm a'}}</div>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <!-- <div fxLayout="column" style="width: 20%;text-align: center;">
+              <div class="view-text" (click)="viewNotification(data)">View</div>
+          </div> -->
+  </div>
+  <div
+    fxLayout="column"
+    class="activity-container"
+    *ngIf="!activitiesList.length"
+  >
+    <div class="no-record">No past activities found!</div>
+  </div>
+</mat-card-content>

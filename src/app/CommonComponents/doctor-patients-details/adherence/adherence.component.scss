@@ -1,0 +1,153 @@
+.adherence {
+  padding: 16px 0 12px 0;
+  height: 27em;
+
+  .adherence-docTable {
+    width: 100%;
+    padding-top: 0px;
+    // margin-top: 1vh !important;
+    overflow: hidden;
+    // margin-left: 2vw;
+    // margin-right: 2vw;
+    box-shadow: none;
+    background: #ecfffa;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .adherance-dev {
+    // margin-top: 15px;
+    width: 100% !important;
+    // height: 22em;
+  }
+
+  .parent-date {
+    padding: 15px 0;
+  }
+
+  .main-div-medication {
+    // margin-top: 25px;
+    font-size: 16px;
+    line-height: 19px;
+    font-size: 16px;
+    line-height: 18px;
+    border-bottom: 1px solid #d4e1f6;
+    color: #5e7e9b;
+    padding: 0px 5px;
+  }
+
+  .content-med {
+    // height: 153px;
+    // overflow: auto;
+  }
+
+  .medicine-values {
+    // margin-top: 3vh;
+    padding: 6px;
+    border-bottom: 1px solid #d4e1f6;
+  }
+
+  .paginate-adherence {
+    position: fixed;
+    display: contents;
+    top: 92vh;
+    text-align: right;
+    margin-right: 5vw;
+  }
+
+  .loader-1 {
+    height: 50vh;
+    position: relative;
+    top: 20vh;
+    left: 35vw;
+  }
+
+  .doc-no-record-adherence {
+    padding: 20px 16px 20px 16px;
+    width: 133vh;
+    margin-top: 15%;
+    font-size: 18px;
+    font-size: 18px;
+    margin-top: -40vh;
+    text-align: center;
+  }
+
+  .adherance-no-records {
+    // left: 25rem;
+    position: relative;
+    top: -17rem;
+    text-align: center;
+    margin-top: 5%;
+    font-size: 18px;
+    // height: 20vh;
+  }
+
+  .outer-div {
+    background: #ffffff;
+    border: 1px solid #a3e8ca;
+    border-radius: 10px;
+    padding: 10px;
+    height: 22em;
+  }
+
+  .medication-adhrence-container {
+    position: relative;
+    // left: 16px;
+    // top: 6px;
+    background: #ffffff;
+    border: 1px solid #a3e8ca;
+    // box-shadow: 0px 0px 4px rgb(0 0 0 / 15%) !important;
+    border-radius: 10px;
+    height: 23em;
+  }
+
+  .graph-container {
+    width: 365px;
+  }
+
+  .reportLabel {
+    line-height: 18px;
+    text-align: center;
+    color: #5E7E9B;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin-top: 16px;
+  }
+
+  .adheranceMedication-div {
+    // height: 500px;
+    overflow: auto;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #a3e8ca;
+    box-shadow: none;
+    border-radius: 10px;
+    padding: 16px !important;
+    height: 23em;
+  }
+}
+
+@media only screen and (min-device-width: 1679px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .adherence {
+    height: 39em;
+
+    .example-container.mat-elevation-z8 {
+      height: 34em !important;
+    }
+
+    .medication-adhrence-container {
+      height: 34em;
+    }
+
+    .graph-container {
+      width: 33em;
+    }
+
+    ::ng-deep .canvasjs-chart-canvas {
+      width: 32em !important;
+      height: 25em !important;
+    }
+  }
+}

@@ -1,0 +1,136 @@
+<div class="deviceModel">
+  <!-- <app-navigation-bar (clickEvent)="addDeviceModel('add')"></app-navigation-bar> -->
+  <div>
+    <!-- <div class="rpm-module-filter-container">
+        <form [formGroup]="deviceModelfilter">
+          <div fxLayout="column">
+            <div>
+              <mat-form-field appearance="legacy">
+                <mat-label>Search</mat-label>
+                <input
+                  formControlName="searchQuery"
+                  matInput
+                  (keyup)="isEnableGlobalSearchFunc()"
+                />
+    
+              </mat-form-field>
+              <mat-icon
+                style="font-size: 17px; cursor: pointer"
+                (click)="unselectGlobalSearch()"
+                *ngIf="isEnableGlobalSearch"
+              >
+                close
+              </mat-icon>
+            </div>
+    
+          </div>
+          <button
+            mat-icon-button
+            class="rpm-search-button"
+            (click)="onDeviceModelFilter()"
+            matTooltip="Search"
+            matTooltipPosition="below"
+            [matTooltipClass]="{ 'rpm-tooltip': true }"
+          >
+            <mat-icon title="Search">search</mat-icon>
+          </button>
+        </form>
+      </div> -->
+    <div
+      class="example-container mat-elevation-z8"
+      [ngClass]="userRole === 'RPM_ADMIN' ? 'notAdmin' : ''"
+    >
+      <mat-table #table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Device Model </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.deviceModelName && element?.deviceModelName.length > 25
+                ? element?.deviceModelName
+                : ''
+            "
+          >
+            {{
+              element?.deviceModelName && element?.deviceModelName.length > 25
+                ? (element?.deviceModelName | slice : 0 : 25) + "..."
+                : element?.deviceModelName
+                ? element?.deviceModelName
+                : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="deviceType">
+          <mat-header-cell *matHeaderCellDef> Device Type </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.deviceType && element?.deviceType.length > 26
+                ? element?.deviceType
+                : ''
+            "
+          >
+            {{
+              element?.deviceType && element?.deviceType.length > 26
+                ? (element?.deviceType | slice : 0 : 26) + "..."
+                : element?.deviceType
+                ? element?.deviceType
+                : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="vendor">
+          <mat-header-cell *matHeaderCellDef> Vendor </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.vendorName && element?.vendorName.length > 26
+                ? element?.vendorName
+                : ''
+            "
+          >
+            {{
+              element?.vendorName && element?.vendorName.length > 26
+                ? (element?.vendorName | slice : 0 : 26) + "..."
+                : element?.vendorName
+                ? element?.vendorName
+                : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="addDeviceModel(element)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div class="noRecordsFound" *ngIf="length === 0">
+        No Records Found!!!!
+      </div>
+      <mat-paginator
+        [ngClass]="length < 10 ? 'hide-pagination-element' : 'show-pagination'"
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

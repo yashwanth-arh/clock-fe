@@ -1,0 +1,43 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">Create New CPT Code</span>
+
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px">
+  <form [formGroup]="addCPTCodeForm" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px">
+    <mat-dialog-content [formGroup]="addCPTCodeForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" required />
+        <mat-error>Name is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Description" formControlName="description" required />
+        <mat-error>Description is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Code</mat-label>
+        <input matInput placeholder="Code" formControlName="code" required />
+        <mat-error>Code is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input matInput placeholder="Amount" formControlName="amount" required />
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00</span>
+        <mat-error>Amount is required</mat-error>
+      </mat-form-field>
+
+    </mat-dialog-content>
+  </form>
+</mat-card-content>
+
+<div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+  <button mat-flat-button class="rpm-save-button" (click)="onSubmit()">
+    <span>Save</span>
+  </button>
+</div>

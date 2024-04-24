@@ -1,0 +1,30 @@
+@import "../../../variables";
+
+div.settings-content {
+  width: 90%;
+  margin: auto;
+  padding: 30px;
+}
+
+.tab-label-icon {
+  width: 30px;
+  padding: 10px;
+}
+.steps-icon {
+  color: $extra-color;
+}
+.steps-text {
+  .mat-icon {
+    font-size: large;
+  }
+  font-size: small;
+  font-weight: 600;
+}
+.screenshot-container {
+  width: 80%;
+  margin: auto;
+  img {
+    height: 400px;
+    width: 700px;
+  }
+}

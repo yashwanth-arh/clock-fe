@@ -1,0 +1,15 @@
+<div class="stopwatch-container">
+  <div *ngIf="lapEnabled && laps.length > 0">
+    <div *ngFor="let lap of laps; let i = index;"><strong>#{{i + 1}}</strong> {{formatTime(lap.hours, 2)}}
+      : {{formatTime(lap.minutes, 2)}} : {{formatTime(lap.seconds, 2)}} <span *ngIf="showMillis" class="millis"> :
+        {{formatTime(lap.milliseconds, 3)}}</span></div>
+  </div>
+  <p>
+    {{formatTime(time.hours, 2)}} : {{formatTime(time.minutes, 2)}} : {{formatTime(time.seconds, 2)}} <span
+      *ngIf="showMillis" class="millis"> : {{formatTime(time.milliseconds, 3)}}</span>
+  </p>
+  <div *ngIf="showControls">
+    <button class="button button-success" (click)="startStopwatch()">{{startButtonLabel}}</button>
+    <button class="button button-danger" (click)="resetStopwatch()">{{resetButtonLabel}}</button>
+  </div>
+</div>

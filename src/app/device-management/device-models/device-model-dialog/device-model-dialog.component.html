@@ -1,0 +1,83 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data && data === "add" ? "New Device Model" : "Update Device Model"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+<form
+  [formGroup]="modelForm"
+  (ngSubmit)="submit()"
+  class="org-form-div"
+  style="margin-top: 15px"
+>
+  <mat-dialog-content [formGroup]="modelForm">
+    <div class="form-div">
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Device Type</mat-label>
+        <mat-select formControlName="deviceTypeId" required>
+          <mat-option
+            *ngFor="let type of deviceTypeList"
+            [title]="type?.deviceType.length > 20 ? type?.deviceType : ''"
+            [value]="type.id"
+            >{{
+              type?.deviceType.length > 20
+                ? (type?.deviceType | slice : 0 : 20) + "..."
+                : type?.deviceType
+            }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Device type is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Vendor Name</mat-label>
+        <mat-select formControlName="vendorId" required>
+          <mat-option
+            *ngFor="let type of vendorList"
+            [title]="type?.vendorName.length > 20 ? type?.vendorName : ''"
+            [value]="type.id"
+            >{{
+              type?.vendorName.length > 20
+                ? (type?.vendorName | slice : 0 : 20) + "..."
+                : type?.vendorName
+            }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!modelForm.valid && modelForm.touched">{{
+          getVendorNameError()
+        }}</mat-error>
+        <!-- <mat-error>Vendor name is required</mat-error> -->
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Device Model</mat-label>
+        <input
+          matInput
+          formControlName="deviceModelName"
+          minlength="3"
+          maxlength="50"
+          required
+        />
+        <mat-error>{{ deviceModelErr() }}</mat-error>
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <input matInput placeholder="Description" formControlName="description" />
+      <mat-error>Description is required</mat-error>
+    </mat-form-field> -->
+    </div>
+  </mat-dialog-content>
+
+  <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+    <!-- <button [disabled]="!addDeviceForm.AddEditDeviceComponent.valid" mat-raised-button>Save New Member</button> -->
+    <button
+      mat-flat-button
+      class="rpm-save-button"
+      *ngIf="!submitted"
+      [disabled]="!modelForm.valid || isSubmitted"
+    >
+      {{ data == "add" ? "Save" : "Update" }}
+    </button>
+    <!-- <button mat-raised-button (click)="resetCreateDeviceForm()">Reset</button> -->
+  </div>
+</form>

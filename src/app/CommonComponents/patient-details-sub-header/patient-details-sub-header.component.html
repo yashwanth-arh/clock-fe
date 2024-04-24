@@ -1,0 +1,85 @@
+<div class="main-div">
+  <div fxLayout="row" class="main-div-row">
+    <!-- <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex: 0 0 100%;
+      "
+    > -->
+    <div #bpTrend id="bpTrend" class="piGraph"></div>
+    <div class="count-div">
+      <div class="adherence-box"></div>
+      <div class="adherence-text">
+        Adherence:
+        <span class="adherence-text-val">
+          {{
+            BPAdherenceChartData?.adharence
+              ? BPAdherenceChartData?.adharence
+              : "-"
+          }}
+          <span>{{
+            BPAdherenceChartData?.adharence > 1 ? "Days" : "Day"
+          }}</span>
+        </span>
+      </div>
+      &nbsp;
+      <!-- <div class="adherence-line"></div> -->
+
+      <div style="background: #ff4b3e" class="adherence-box"></div>
+      <div class="adherence-text">
+        Non-adherence:
+        <span class="adherence-text-val" style="color: #ff4b3e">
+          {{
+            BPAdherenceChartData?.nonAdharence
+              ? BPAdherenceChartData?.nonAdharence
+              : "-"
+          }}
+          <span>{{
+            BPAdherenceChartData?.nonAdharence > 1 ? "Days" : "Day"
+          }}</span>
+        </span>
+      </div>
+    </div>
+    <div class="date-filter-div">
+      <div fxLayout="row" class="date-div">
+        <div *ngIf="!hideDatepicker">Select date range:</div>
+
+        <div
+          class="date-field"
+          *ngIf="!hideDatepicker"
+          [formGroup]="subHeaderDates"
+        >
+          <mat-form-field appearance="outline">
+            <!-- <mat-label>Enter a date range</mat-label> -->
+            <mat-date-range-input
+              [rangePicker]="picker"
+              [min]="minDate"
+              [max]="maxDate"
+            >
+              <input
+                matStartDate
+                (dateChange)="startChange($event)"
+                formControlName="fromDate"
+                readonly
+              />
+              <input
+                matEndDate
+                (dateChange)="endChange($event)"
+                formControlName="toDate"
+                readonly
+              />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </div> -->

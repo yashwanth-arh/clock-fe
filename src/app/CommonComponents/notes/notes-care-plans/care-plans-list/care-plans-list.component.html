@@ -1,0 +1,437 @@
+<div class="notesPlans">
+  <div
+    *ngIf="!addNotesButton"
+    class="add-note"
+    [ngClass]="osType === 'Win32' ? 'add-note-win' : 'add-note-mac'"
+  >
+    <div fxLayout="row">
+      <mat-form-field appearance="outline" class="textField">
+        <mat-label>Title name</mat-label>
+        <textarea
+          type="text"
+          class="textAreaTitle"
+          maxlength="50"
+          matInput
+          [formControl]="newsTitle"
+          autocomplete="disabled"
+          [(ngModel)]="notesTitle"
+        ></textarea>
+        <mat-error *ngIf="newsTitle.touched && !newsTitle.valid">{{
+          newsErrTitle()
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <mat-form-field appearance="outline" class="textField">
+        <mat-label>Description</mat-label>
+        <textarea
+          type="text"
+          class="textArea"
+          maxlength="5000"
+          matInput
+          [formControl]="newsText"
+          autocomplete="disabled"
+          [(ngModel)]="noteDescriptionText"
+        ></textarea>
+        <mat-error *ngIf="newsText.touched && !newsText.valid">{{
+          newsErr()
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="end"
+      fxLayoutGap="10px"
+      class="note-buttons"
+    >
+      <span class="checkbox" *ngIf="!editable">
+        <mat-checkbox
+          class="example-margin"
+          color="primary"
+          [(ngModel)]="sharePatient"
+          [disabled]="newsText.invalid || showTemplateDiv"
+        >
+          Share to patient
+        </mat-checkbox>
+      </span>
+      <span
+        *ngIf="selectedOptionToShare.length"
+        class="share-icon"
+        (mouseover)="hoverShareIcon()"
+        (mouseout)="hoverOutShareIcon()"
+      >
+        <img
+          [src]="shareIcon"
+          #shareImg
+          name="share-icon"
+          style="cursor: pointer"
+          alt=""
+        />
+      </span>
+      <button
+        mat-flat-button
+        class="rpm-save-button"
+        (click)="createNote(notesTitle, noteDescriptionText, 'add')"
+        *ngIf="!editable && !addNotesButton"
+        [disabled]="newsText.invalid || isSubmitted"
+      >
+        Save
+      </button>
+      <button
+        mat-flat-button
+        class="rpm-save-button"
+        (click)="createNote(notesTitle, noteDescriptionText, 'edit')"
+        *ngIf="editable"
+        [disabled]="newsText.invalid || isSubmitted"
+      >
+        Update
+      </button>
+      <button
+        mat-flat-button
+        class="cancel-button"
+        *ngIf="!editable"
+        (click)="cancelNote()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-flat-button
+        class="cancel-button-edit"
+        *ngIf="editable"
+        (click)="cancelNote()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+  <div *ngIf="loadRes" class="notes-loader">
+    <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+  </div>
+  <div class="note-list" *ngIf="!loadRes">
+    <div
+      [ngClass]="addNotesButton ? 'notes' : 'noteSm'"
+      [ngStyle]="{
+        height: !addNotesButton ? '230px' : '',
+        'justify-content': !notesData?.length ? 'center' : ''
+      }"
+      fxLayout="column"
+      fxLayoutGap="5px"
+    >
+      <!-- <cdk-virtual-scroll-viewport class="example-viewport"> -->
+      <div fxLayout="column" fxLayoutGap="5px" *ngIf="addNotesButton">
+        <div *ngFor="let note of notesData; let i = index" class="example-item">
+          <li>
+            <div class="note-content">
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div
+                  fxLayout="row"
+                  fxLayoutGap="10px"
+                  style="margin-left: -10px"
+                >
+                  <div></div>
+                  <div fxLayout="row" fxLayoutGap="10px">
+                    <div fxLayout="column" fxLayoutGap="10px">
+                      <span style="color: rgb(18, 18, 19); font-weight: bold">
+                        <!-- {{
+                          note?.createdBy == userId ? "You" : note?.senderName
+                        }} -->
+                        {{ cpName(note) | titlecase }}
+                      </span>
+                      <span style="color: rgb(18, 18, 19); font-weight: bold">
+                        {{ note?.title }}
+                      </span>
+                      <!-- <span
+                      *ngIf="note?.receiverId !== userId"
+                      class="share-icon-info"
+                    >
+                      <img
+                        src="assets/svg/Share Icon Light blue.svg"
+                        [title]="
+                          note.receiverName == username
+                            ? 'You'
+                            : note.receiverName
+                        "
+                        style="cursor: pointer"
+                        alt=""
+                      />
+                    </span> -->
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 5px">
+                  {{
+                    note?.createdAt | date : "dd-MM-yyyy, hh:mm a" : "UTC"
+                  }}&nbsp;&nbsp;&nbsp;
+                  <!-- <span [matMenuTriggerFor]="menu" #menuTrigger>
+                    <img
+                      src="assets/svg/sign-button.svg"
+                      title="Use care plan"
+                      style="cursor: pointer"
+                      alt=""
+                    /> </span
+                  >&nbsp; -->
+                  <span
+                    *ngIf="note?.createdBy === cpid && addPermission === 'true'"
+                    (click)="enableNoteEdit(note)"
+                  >
+                    <img
+                      src="assets/svg/Edit Button.svg"
+                      title="Edit Notes"
+                      style="cursor: pointer"
+                      alt=""
+                    />
+                  </span>
+                  &nbsp;
+                  <span
+                    *ngIf="note?.createdBy === cpid && addPermission === 'true'"
+                    [matMenuTriggerFor]="menu"
+                    #menuTrigger
+                  >
+                    <img
+                      src="assets/svg/Delete Button.svg"
+                      title="Delete Notes"
+                      style="cursor: pointer"
+                      alt=""
+                    />
+                  </span>
+                  <mat-menu #menu="matMenu" class="mat-menu-panel confirm">
+                    <div style="padding: 15px">
+                      <div style="text-align: center">
+                        Please confirm if you want to
+                        <br />
+                        delete the note
+                      </div>
+                    </div>
+                    <div
+                      fxLayout="row"
+                      fxLayoutGap="5px"
+                      fxLayoutAlign="space-evenly center"
+                      style="padding: 16px"
+                    >
+                      <button mat-flat-button class="cancel-button">
+                        Cancel
+                      </button>
+                      <button
+                        mat-flat-button
+                        class="rpm-save-button"
+                        (click)="deleteNotes(note, i, 'notes')"
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  </mat-menu>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="form-group purple-border mt-2 lineBreak"
+                  *ngIf="!note.showMore"
+                >
+                  <p>
+                    {{ trimString(note?.description, 300) }}
+                    <span
+                      class="form-group purple-border mt-2 lineBreak"
+                      *ngIf="note?.description?.length > 300"
+                      (click)="note.showMore = !note.showMore"
+                      style="color: blue; cursor: pointer"
+                      >[Show
+                      <span>{{ note.showMore ? "less" : "More" }}]</span>
+                    </span>
+                  </p>
+                </div>
+                <div
+                  class="form-group purple-border mt-2 lineBreak"
+                  *ngIf="note.showMore"
+                >
+                  <p>
+                    {{ note?.description }}
+                    <span
+                      class="form-group purple-border mt-2 lineBreak"
+                      *ngIf="note?.description?.length > 300"
+                      (click)="note.showMore = !note.showMore"
+                      style="color: blue; cursor: pointer"
+                      >[Show
+                      <span>{{ note.showMore ? "less" : "More" }}]</span>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div></div>
+          </li>
+        </div>
+        <mat-paginator
+          [ngClass]="
+            length < 10 ? 'hide-pagination-element' : 'show-pagination'
+          "
+          (page)="handlePageEvent($event)"
+          [length]="length"
+          [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="pageIndex"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+      <div
+        fxLayout="column"
+        fxLayoutGap="5px"
+        style="height: 230px"
+        *ngIf="!addNotesButton"
+      >
+        <div class="carePlanNoteHeadline">Pre defined care plans</div>
+        <div
+          *ngFor="let note of notesCpData; let i = index"
+          class="example-item"
+        >
+          <li>
+            <div class="note-content">
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div
+                  fxLayout="row"
+                  fxLayoutGap="10px"
+                  style="margin-left: -10px"
+                >
+                  <div></div>
+                  <div fxLayout="row" fxLayoutGap="10px">
+                    <div fxLayout="column" fxLayoutGap="10px">
+                      <!-- <span style="color: rgb(18, 18, 19); font-weight: bold">
+                        {{
+                          note?.createdBy == userId ? "You" : note?.senderName
+                        }}
+                      </span> -->
+                      <span style="color: rgb(18, 18, 19); font-weight: bold">
+                        {{ note?.title }}
+                      </span>
+                      <!-- <span
+                      *ngIf="note?.receiverId !== userId"
+                      class="share-icon-info"
+                    >
+                      <img
+                        src="assets/svg/Share Icon Light blue.svg"
+                        [title]="
+                          note.receiverName == username
+                            ? 'You'
+                            : note.receiverName
+                        "
+                        style="cursor: pointer"
+                        alt=""
+                      />
+                    </span> -->
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 5px">
+                  {{
+                    note?.createdOn | date : "dd-MM-yyyy, hh:mm a"
+                  }}&nbsp;&nbsp;&nbsp;
+                  <span (click)="enableUseCarePlan(note)">
+                    <img
+                      src="assets/svg/sign-button.svg"
+                      title="Use Care Plan"
+                      style="cursor: pointer"
+                      alt=""
+                    /> </span
+                  >&nbsp;
+                  <span (click)="enableNoteEdit(note)">
+                    <img
+                      src="assets/svg/Edit Button.svg"
+                      title="Edit Care Plan"
+                      style="cursor: pointer"
+                      alt=""
+                    />
+                  </span>
+                  &nbsp;
+                  <span [matMenuTriggerFor]="menu" #menuTrigger>
+                    <img
+                      src="assets/svg/Delete Button.svg"
+                      title="Delete Care Plan"
+                      style="cursor: pointer"
+                      alt=""
+                    />
+                  </span>
+                  <mat-menu #menu="matMenu" class="mat-menu-panel confirm">
+                    <div style="padding: 15px">
+                      <div style="text-align: center">
+                        Please confirm if you want to
+                        <br />
+                        delete the care plan
+                      </div>
+                    </div>
+                    <div
+                      fxLayout="row"
+                      fxLayoutGap="5px"
+                      fxLayoutAlign="space-evenly center"
+                      style="padding: 16px"
+                    >
+                      <button mat-flat-button class="cancel-button">
+                        Cancel
+                      </button>
+                      <button
+                        mat-flat-button
+                        class="rpm-save-button"
+                        (click)="deleteNotes(note, i, 'notes')"
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  </mat-menu>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="form-group purple-border mt-2 lineBreak"
+                  *ngIf="!note.showMore"
+                >
+                  <p>
+                    {{ trimString(note.description, 300) }}
+                    <span
+                      class="form-group purple-border mt-2 lineBreak"
+                      *ngIf="note.description?.length > 300"
+                      (click)="note.showMore = !note.showMore"
+                      style="color: blue; cursor: pointer"
+                      >[Show
+                      <span>{{ note.showMore ? "less" : "More" }}]</span>
+                    </span>
+                  </p>
+                </div>
+                <div
+                  class="form-group purple-border mt-2 lineBreak"
+                  *ngIf="note.showMore"
+                >
+                  <p>
+                    {{ note.description }}
+                    <span
+                      class="form-group purple-border mt-2 lineBreak"
+                      *ngIf="note.description?.length > 300"
+                      (click)="note.showMore = !note.showMore"
+                      style="color: blue; cursor: pointer"
+                      >[Show
+                      <span>{{ note.showMore ? "less" : "More" }}]</span>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div></div>
+          </li>
+        </div>
+        <div
+          *ngIf="
+            !addNotesButton && notesCpData && !notesCpData?.length && !loadRes
+          "
+          class="no-data-found"
+          style="position: relative; top: 5em"
+        >
+          No Records Found!
+        </div>
+      </div>
+      <div
+        *ngIf="addNotesButton && notesData && !notesData?.length && !loadRes"
+        class="no-data-found"
+      >
+        No Records Found!
+      </div>
+      <!-- </cdk-virtual-scroll-viewport> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+    <mat-icon class="material-icons icon" color="black">close</mat-icon>
+</span>
+<span mat-dialog-title class="module-form-title">Caregiver Comment</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" class="notes-content">
+    <p class="comments">{{data?.comments}}</p>
+</mat-card-content>

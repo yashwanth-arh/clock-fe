@@ -1,0 +1,31 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <mat-icon class="material-icons icon" color="black">close</mat-icon>
+</span>
+<span mat-dialog-title class="module-form-title">Assign Clinics</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px">
+  <form [formGroup]="doctorsClinicDialog" (ngSubmit)="onSubmit()"
+    [class.error]="!doctorsClinicDialog.valid && doctorsClinicDialog.touched">
+    <mat-dialog-content [formGroup]="doctorsClinicDialog">
+      <mat-form-field appearance="outline" style="width: 400px;float: left;">
+        <mat-label>Clinics</mat-label>
+        <mat-select formControlName="clinicIds" multiple required>
+          <span *ngFor="let clinicData of clinicList">
+          <mat-option   [value]="clinicData.id"  style="width: 430px;" [disabled]="editClinicArr.includes(clinicData.id)">
+            {{ clinicData.name }}
+          </mat-option>
+        </span>
+        </mat-select>
+        <mat-error>Clinic is required</mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+    <div class="divbutton" style="margin-right: 8px;">
+      <button mat-flat-button class="rpm-save-button" *ngIf="!submitted" [disabled]="submitted">
+        <span>
+          Assign
+        </span>
+      </button>
+    </div>
+  </form>
+</mat-card-content>

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>
+    {{title}}
+</h1>
+
+<div mat-dialog-content>
+    <p *ngIf="titleboo == true" style="text-align: center;">{{message}}</p>
+</div>
+
+<div mat-dialog-actions style="position: relative;margin-left: 70px;">
+    <button mat-button  mat-dialog-close class="buttons disable-outline" (click)="dialogRef.close(false);">No</button>
+    <button mat-raised-button color="primary" style="color: white;"  mat-dialog-close (click)="closeDialog(true)">Yes</button>
+</div>

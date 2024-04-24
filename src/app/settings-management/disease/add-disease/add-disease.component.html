@@ -1,0 +1,102 @@
+<div class="main-disease">
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">New ICD</span>
+
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content
+  fxLayout
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <form
+    [formGroup]="addDiseaseForm"
+    [class.error]="!addDiseaseForm.valid && addDiseaseForm.touched"
+    fxLayout
+    fxLayout.xs="column"
+    fxLayoutAlign="center"
+    fxLayoutGap="10px"
+    style="margin-top: 10px"
+    class="form-clas"
+  >
+    <mat-dialog-content [formGroup]="addDiseaseForm">
+      <div class="form-div">
+        <!-- <mat-form-field appearance="outline">
+        <mat-label>Code</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="icdCode"
+          required
+          #icd
+          [matAutocomplete]="auto"
+          (keyup)="onKeyUp(icd.value)"
+        />
+        <mat-autocomplete
+          autoActiveFirstOption
+          #auto="matAutocomplete"
+          (optionSelected)="onSelectICD($event)"
+        >
+          <mat-option *ngFor="let code of icdCodes" [value]="code[0]">
+            {{ code[1] }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error>Code is required</mat-error>
+      </mat-form-field> -->
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Icd Code</mat-label>
+          <input
+            matInput
+            appNoFirstSpace
+            formControlName="icdCode"
+            minlength="3"
+            maxlength="50"
+            required
+          />
+          <mat-error>{{ icdCodeErr() }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            appAlphabetSpaceOnly
+            appNoFirstSpace
+            formControlName="icdName"
+            minlength="3"
+            maxlength="50"
+            required
+            (paste)="handlePaste($event)"
+          />
+          <mat-error>{{ icdNameErr() }}</mat-error>
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Description" formControlName="description" />
+        <mat-error>Description is required</mat-error>
+      </mat-form-field> -->
+      </div>
+    </mat-dialog-content>
+  </form>
+</mat-card-content>
+
+<div
+  fxLayout=" row"
+  fxLayoutGap="10px"
+  class="divbutton"
+  style="margin-top: 10px"
+>
+  <button
+    mat-flat-button
+    class="rpm-save-button"
+    [disabled]="!addDiseaseForm.valid || isSubmitted"
+    (click)="onSubmit()"
+  >
+    Add
+  </button>
+</div>
+</div>

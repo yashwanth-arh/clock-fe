@@ -1,0 +1,177 @@
+<mat-icon
+  style="float: right; cursor: pointer"
+  title="Close"
+  (click)="dialogRef.close()"
+  >close</mat-icon
+>
+<div class="report-container" #content id="contentToConvert">
+  <table style="width: 100%">
+    <tr>
+      <td (click)="download()" style="width: 100px">
+        <img
+          style="width: 198px; padding-bottom: 24px"
+          src="assets/img/Clock Health Logo.png"
+          alt=""
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="heading" style="float: left"> PHYSICIAN REPORT</span>
+        <span
+          style="
+            float: right;
+            font-size: 16px;
+            font-weight: bold;
+            position: relative;
+            top: 2.6vh;
+            color: #27255e;
+          "
+        >
+          <span style="color: #7a788f; font-weight: 400">Date: </span
+          >{{ onLoad() }}</span
+        >
+      </td>
+    </tr>
+  </table>
+  <section>
+    <div class="title-card">
+      <p>Patient Details</p>
+    </div>
+    <div class="table-2">
+      <table>
+        <tr>
+          <th>Patient Name</th>
+          <th>Date of Birth</th>
+          <th>Gender</th>
+        </tr>
+        <tr>
+          <td>
+            {{ reports?.patient?.firstName }}
+            {{ reports?.patient?.middleName }} {{ reports?.patient?.lastName }}
+          </td>
+          <td>{{ reports?.patient?.dob | date : "dd/MM/yyyy" }}</td>
+          <td>{{ reports?.patient?.gender }}</td>
+        </tr>
+        <tr>
+          <th>Clinic Name</th>
+          <th>Physician Name</th>
+          <th>Address</th>
+        </tr>
+        <tr>
+          <td>{{ reports?.patient?.branch?.name }}</td>
+          <td>{{ reports?.patient?.primaryPhysician?.name }}</td>
+          <td>
+            {{ reports?.patient?.address?.addressLine }},
+            {{ reports?.patient?.address?.city }},
+            {{ reports?.patient?.address?.country }},
+            {{ reports?.patient?.address?.state }},
+            {{ reports?.patient?.address?.zipCode }}
+          </td>
+        </tr>
+        <!-- <tr>
+                    <th>Insurance Name</th>
+                    <th>Insurance Number</th>
+                    <th>ICD Code</th>
+                </tr>
+                <tr>
+                    <td>{{reports?.patient?.insuranceData?.medicareAdvantageInsurer}}</td>
+                    <td>{{reports?.patient?.insuranceData?.medicareNumber}}</td>
+                    <td>{{reports?.patient?.primaryicdcode}}</td>
+                </tr> -->
+      </table>
+    </div>
+  </section>
+  <section style="margin-top: 45px">
+    <div class="title-card">
+      <p>Device Information</p>
+    </div>
+    <div class="table-2">
+      <table>
+        <tr>
+          <th>Device Type</th>
+          <th>Device Code</th>
+          <!-- <th>IMEI</th> -->
+          <th>Procurement Date</th>
+          <!-- <th>Status</th> -->
+        </tr>
+        <tr *ngFor="let device of reports?.healthDevice">
+          <td>{{ device["Device Type"] }}</td>
+          <td>{{ device["Device Code"] }}</td>
+          <!-- <td>{{device["IMEI"]}}</td> -->
+          <td>
+            {{
+              getRecorded(device["Date Of Intimation"]) | date : "dd-MM-yyyy"
+            }}
+          </td>
+          <!-- <td>{{device["Device Type"]}}</td> -->
+        </tr>
+      </table>
+      <span class="no-record-bp" *ngIf="!reports?.healthDevice?.length">
+        No Records Found!
+      </span>
+    </div>
+
+    <span class="page-break"></span>
+  </section>
+  <section style="margin-top: 45px">
+    <div class="title-card">
+      <p>Patient Vitals</p>
+    </div>
+    <div>
+      <div class="header-container">
+        <div class="sub-header-1">BLOOD PRESSURE</div>
+        <div class="sub-header-2">Blood Pressure Recordings</div>
+      </div>
+      <app-bp-reports [bpReport]="reports"></app-bp-reports>
+    </div>
+    <!-- <div>
+        <div class="header-container">
+                <div class="sub-header-1">
+                    BLOOD GLUCOSE 
+                </div>
+                <div class="sub-header-2">
+                    Blood Glucose Recordings 
+                </div>
+            </div>
+            <app-bg-reports [bgReport]="reports"></app-bg-reports>
+
+        </div> -->
+    <!-- <div>
+            <div class="header-container">
+                <div class="sub-header-1">
+                    BODY WEIGHT & BMI: 
+                </div>
+                <div class="sub-header-2">
+                    Body weight and BMI recordings
+                </div>
+            </div>
+            <app-weight-reports [wtReport]="reports"></app-weight-reports>
+        </div> -->
+  </section>
+  <!-- <section style="margin-top: 75px;">
+        <div class="title-card">
+            <p>
+                Claims
+            </p>
+        </div>
+        <div class="table-1">
+            <table>
+                <tr>
+                    <th>Date of Service</th>
+                    <th>CPT Code</th>
+                    <th>RPM Time</th>
+                    <th>Submission Status</th>
+                </tr>
+                <tr>
+                    <span *ngIf="reports?.claim.length">
+                        <td>{{reports?.claim[0]["Date of Service"]}}</td>
+                        <td>{{reports?.claim[0]["CPT Code"]}}</td>
+                        <td>{{reports?.claim[0]["RPM Time"]}}</td>
+                        <td>{{reports?.claim[0]["Submission Status"]}}</td>
+                    </span>
+                </tr>
+            </table>
+        </div>
+    </section> -->
+</div>

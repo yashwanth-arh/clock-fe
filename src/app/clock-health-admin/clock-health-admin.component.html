@@ -1,0 +1,109 @@
+<div class="rpm-module-management chAdmin">
+  <app-navigation-bar (clickEvent)="openCHAdmin('')"></app-navigation-bar>
+  <div>
+    <div class="example-container mat-elevation-z8">
+      <mat-table #table matSort matTableResponsive [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>
+            <span>Name</span>
+          </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              getName(element) && getName(element).length > 15
+                ? getName(element)
+                : ''
+            "
+          >
+            {{
+              getName(element) && getName(element).length > 15
+                ? (getName(element) | slice : 0 : 15) + "..."
+                : getName(element)
+                ? getName(element)
+                : "NA"
+            }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef>
+            <span>Email</span>
+          </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.emailId && element?.emailId.length > 15
+                ? element?.emailId
+                : ''
+            "
+          >
+            {{
+              element?.emailId && element?.emailId.length > 15
+                ? (element?.emailId | slice : 0 : 15) + "..."
+                : element?.emailId
+                ? element?.emailId
+                : "NA"
+            }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="mobileNo">
+          <mat-header-cell *matHeaderCellDef> Contact Number </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.contactnumber }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-hint
+              [ngClass]="element.status == 'ACTIVE' ? 'active' : 'inactive'"
+              >{{ element.status | titlecase }}
+            </mat-hint>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openCHAdmin(element)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item (click)="statusChange(element)">
+                <!-- <mat-icon>edit</mat-icon> -->
+                <span style="color: #52b204">{{
+                  element.status === "ACTIVE" ? "Inactive" : "Active"
+                }}</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div
+        class="noRecordsFound"
+        *ngIf="messageSuccess !== undefined && !messageSuccess"
+      >
+        No Records Found!
+      </div>
+      <mat-paginator
+        [ngClass]="length < 10 ? 'hide-pagination-element' : 'show-pagination'"
+        [length]="length"
+        [pageSizeOptions]="[10, 25, 100]"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

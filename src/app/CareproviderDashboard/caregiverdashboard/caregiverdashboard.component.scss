@@ -1,0 +1,259 @@
+#mask {
+  /* create are mask */
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: black;
+  z-index: 500;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+* {
+  background: linear-gradient(225deg, #E8EFF9 0%, #E7F2F0 100%) !important;
+}
+
+/* use :target to look for a link to the overlay then we find are mask */
+#overlay:target,
+#overlay:target+#mask {
+  display: block;
+  opacity: 1;
+}
+
+.main-content {
+  padding: 0 16px;
+  // overflow-y: auto;
+  max-height: 91vh;
+  overflow: auto;
+
+
+  // height: 95vh;
+  // margin-top: 0px;
+  // overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 4px !important;
+  height: 4px !important;
+}
+
+.content-overlay {
+  opacity: 0.2;
+  background-color: black;
+}
+
+table {
+  width: 100%;
+}
+
+#overlay {
+  position: fixed;
+  /* Sit on top of the page content */
+  display: none;
+  /* Hidden by default */
+  width: 100%;
+  /* Full width (cover the whole page) */
+  height: 100%;
+  /* Full height (cover the whole page) */
+  top: 0;
+  left: 100px;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  /* Black background with opacity */
+  z-index: 200;
+  /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer;
+  /* Add a pointer on hover */
+}
+
+.note-table {
+  margin-top: 10px;
+  height: 330px;
+  position: relative;
+  top: 41px;
+  left: 4px;
+}
+
+.example-sidenav {
+  display: block;
+  padding: 20px;
+  width: 82vw;
+  height: 90%;
+  border-radius: 20px;
+  z-index: 1;
+  top: -228vh;
+
+  // bottom: 233vh;
+  opacity: 1;
+  border: solid 1px #2196f3;
+  overflow-y: auto;
+  position: relative;
+  left: 270px;
+  animation: slideIn 8s backwards;
+
+  ::ng-deep .mat-ink-bar {
+    display: none !important;
+  }
+
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+    border-bottom: solid #52B204 3px;
+  }
+}
+
+.datePicker {
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed;
+  border-collapse: collapse;
+  z-index: 1;
+  position: relative;
+}
+
+.drawer {
+  position: fixed;
+  height: 100vh;
+  // margin-right: 1vw;
+  min-width: 65%;
+  border-radius: 40px 0px 0px 0px;
+  // border: 1px solid $primary-color;
+  max-width: 40%;
+  background: #f4f9fe;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.example-container {
+  margin-top: 10px;
+  max-height: 600px;
+  z-index: 20;
+  // height: 0px;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  // background-color: #ECFFFA;
+  overflow: hidden !important;
+}
+
+.drawer .header {
+  position: absolute;
+  // right: 0;
+  justify-content: space-between;
+  width: 100%;
+  height: 500px;
+}
+
+.drawer .contents {
+  padding: 16px;
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    transform: translateX(200px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@-moz-keyframes slideIn {
+  0% {
+    transform: translateX(200px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-200px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.history-header {
+  font-size: 16px;
+  font-weight: bold;
+  color: #52B204;
+}
+
+.icon-inside-drawer {
+  font-size: 20px;
+  position: relative;
+  top: 5px;
+  color: #52B204;
+}
+
+.container-shadow {
+  // font-size:12px;
+  // font-family: Verdana,Sans-Serif;
+  // display: table-cell;
+  background-color: bisque;
+  height: 48px;
+  // vertical-align: middle;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-left: 2px solid rgba(0, 0, 0, 0.12);
+  border-right: 2px solid rgba(0, 0, 0, 0.12);
+}
+
+.icon-red {
+  color: rgb(224, 40, 40);
+}
+
+.icon-green {
+  color: rgb(82, 231, 62);
+}
+
+.icon-orange {
+  color: rgb(235, 158, 44);
+}
+
+.dropActions {
+  width: 474px;
+}
+
+.textActions {
+  width: 450px;
+}
+
+.save {
+  margin-top: 20px;
+  height: 26px;
+  margin-right: 30px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .example-sidenav {
+    width: 74vw;
+    top: -234vh;
+  }
+
+  .dropActions {
+    width: 254px;
+  }
+
+  .textActions {
+    width: 250px;
+    margin-left: 4px;
+  }
+
+  .save {
+    margin-left: 84px;
+  }
+}
+
+@media only screen and (min-device-width: 1600px) and (max-device-width: 1800px) and (orientation: landscape) {
+
+  .main-content {
+    padding: 0 16px;
+    max-height: 91vh;
+    overflow: hidden;
+  }
+}

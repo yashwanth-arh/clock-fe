@@ -1,0 +1,997 @@
+<div class="main-container allFilters">
+  <div *ngIf="moduleName === 'Hospitals'">
+    <form [formGroup]="hospitalList" fxLayout="row" fxLayoutGap="10px">
+      <div class="global-search">
+        <!-- <mat-form-field appearance="legacy">
+            <mat-label>Search</mat-label> -->
+        <input
+          placeholder="Search with two characters"
+          formControlName="searchQuery"
+          matInput
+          (keyup)="isEnableHospitalGlobalSearchFunc()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableHospitalGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchHospital()"
+          *ngIf="isEnableHospitalGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !hospitalList.get('searchQuery').valid &&
+            hospitalList.get('searchQuery').touched &&
+            hospitalList.get('searchQuery').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+        <!-- <mat-icon matSuffix>search</mat-icon> -->
+        <!-- <mat-hint>Global Search</mat-hint> -->
+        <!-- </mat-form-field> -->
+        <!-- <mat-icon
+        class="close-icon"
+            (click)="unselectGlobalSearchHospital()"
+            *ngIf="isEnableHospitalGlobalSearch"
+          >
+            close</mat-icon
+          > -->
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="status"
+            (selectionChange)="isEnableHospitalStatusFunc()"
+          >
+            <mat-option
+              *ngFor="let statusData of status"
+              [value]="statusData.value"
+            >
+              {{ statusData.display | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="moduleName === 'Content Marketing'">
+    <form [formGroup]="contentList" fxLayout="row" fxLayoutGap="10px">
+      <div class="global-search">
+        <!-- <mat-form-field appearance="legacy">
+            <mat-label>Search</mat-label> -->
+        <input
+          placeholder="Search with two characters"
+          formControlName="searchContent"
+          matInput
+          (keyup)="isEnableContentGlobalSearchFunc()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableContentGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchContent()"
+          *ngIf="isEnableContentGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <!-- <mat-error
+          *ngIf="
+            !hospitalList.get('searchQuery').valid &&
+            hospitalList.get('searchQuery').touched &&
+            hospitalList.get('searchQuery').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        > -->
+        <!-- <mat-icon matSuffix>search</mat-icon> -->
+        <!-- <mat-hint>Global Search</mat-hint> -->
+        <!-- </mat-form-field> -->
+        <!-- <mat-icon
+        class="close-icon"
+            (click)="unselectGlobalSearchHospital()"
+            *ngIf="isEnableHospitalGlobalSearch"
+          >
+            close</mat-icon
+          > -->
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="contentStatus"
+            (selectionChange)="isEnableContentStatusFunc()"
+          >
+            <mat-option
+              *ngFor="let statusData of status"
+              [value]="statusData.value"
+            >
+              {{ statusData.display | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="moduleName === 'Patients'">
+    <form [formGroup]="patientGroup" fxLayout="row" fxLayoutGap="10px">
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="patientSearch"
+          matInput
+          (keyup)="isEnablePatient()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnablepatientGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchPatient()"
+          *ngIf="isEnablepatientGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !patientGroup.get('patientSearch').valid &&
+            patientGroup.get('patientSearch').touched &&
+            patientGroup.get('patientSearch').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="statusPatient"
+            (selectionChange)="isEnablePatientStatusFunc()"
+          >
+            <mat-option
+              *ngFor="let statusData of status"
+              [value]="statusData.value"
+            >
+              {{ statusData.display | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="moduleName === 'Configuration'">
+    <form [formGroup]="configureGroup" fxLayout="row" fxLayoutGap="10px">
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="configureSearch"
+          matInput
+          (keyup)="isEnableConfigure()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableConfiguGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchConfigur()"
+          *ngIf="isEnableConfiguGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !configureGroup.get('configureSearch').valid &&
+            configureGroup.get('configureSearch').touched &&
+            configureGroup.get('configureSearch').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <!-- <div class="status-search">
+        <mat-select
+          placeholder="Status"
+          formControlName="statusPatient"
+          (selectionChange)="isEnableConfigureGroupFunc()"
+        >
+          <mat-option *ngFor="let statusData of status" [value]="statusData.value">
+            {{ statusData.display | titlecase }}
+          </mat-option>
+        </mat-select>
+      </div> -->
+    </form>
+  </div>
+  <div *ngIf="moduleName === 'Facilities'">
+    <form [formGroup]="FacilitiesList" fxLayout="row" fxLayoutGap="10px">
+      <div class="global-search">
+        <!-- <mat-form-field appearance="legacy">
+            <mat-label>Search</mat-label> -->
+        <input
+          placeholder="Search with two characters"
+          formControlName="facilitiesSearch"
+          matInput
+          (keyup)="isEnableFacilitiesGlobalSearch()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableFacilitiesConfiguGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchFacilities()"
+          *ngIf="isEnableFacilitiesConfiguGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !FacilitiesList.get('facilitiesSearch').valid &&
+            FacilitiesList.get('facilitiesSearch').touched &&
+            FacilitiesList.get('facilitiesSearch').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="status"
+            (selectionChange)="Facilitiesstatus()"
+          >
+            <mat-option
+              *ngFor="let statusData of status"
+              [value]="statusData.value"
+            >
+              {{ statusData.display | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- <mat-icon
+      style="font-size: 17px; cursor: pointer"
+      (click)="unselectStatus()"
+      *ngIf="isEnableStatus"
+      >close
+    </mat-icon> -->
+      </div>
+    </form>
+  </div>
+  <div
+    *ngIf="
+      moduleName === 'Leader Points Board' || moduleName === 'Leader Board'
+    "
+  >
+    <form [formGroup]="leaderGroup" fxLayout="row" fxLayoutGap="10px">
+      <div
+        class="global-search"
+        *ngIf="!routeDetails.showReturnBtn && moduleName === 'Leader Board'"
+      >
+        <input
+          placeholder="Search with two characters"
+          formControlName="LeadershipSearch"
+          matInput
+          (keyup)="isEnableGlobalSearchLeadership()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableLeaderBoardGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchLeaderBoard()"
+          *ngIf="isEnableLeaderBoardGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !leaderGroup.get('LeadershipSearch').valid &&
+            leaderGroup.get('LeadershipSearch').touched &&
+            leaderGroup.get('LeadershipSearch').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div
+        *ngIf="moduleName === 'Leader Points Board'"
+        class="date-filter-container"
+      >
+        <div
+          fxLayoutAlign="end"
+          class="date-container"
+          *ngIf="routeDetails.showReturnBtn"
+        >
+          <!-- <mat-form-field appearance="outline"> -->
+          <div class="owl-Date-pick">
+            <input
+              [owlDateTime]="dt1"
+              [selectMode]="'range'"
+              [max]="today"
+              [owlDateTimeTrigger]="dt1"
+              (dateTimeChange)="getDate($event)"
+              placeholder="Select Date"
+              style="cursor: pointer;"
+              readonly
+            />
+            <span [owlDateTimeTrigger]="dt1" class="calIcon"
+              ><mat-icon style="cursor: pointer;">calendar_today</mat-icon></span
+            >
+            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+          </div>
+
+          <!-- </mat-form-field> -->
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="subModuleName === 'Support Tickets'">
+    <form [formGroup]="supportGroup" fxLayout="row" fxLayoutGap="10px">
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="supportSearch"
+          matInput
+          (keyup)="isEnableGlobalSearchFunc1()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableSupportTicketGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchSupportTicket()"
+          *ngIf="isEnableSupportTicketGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !supportGroup.get('supportSearch').valid &&
+            supportGroup.get('supportSearch').touched &&
+            supportGroup.get('supportSearch').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="statusSupport"
+            (selectionChange)="isEnableSupportStatusFunc()"
+          >
+            <!--  -->
+            <mat-option
+              *ngFor="let statusData of statusSupport"
+              [value]="statusData"
+            >
+              {{ statusData | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="moduleName === 'Reports'">
+    <form [formGroup]="logHistoryGroup" fxLayout="row" fxLayoutGap="10px">
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="logHistorySearch"
+          matInput
+          (keyup)="isEnableGlobalSearchLogHistory()"
+          maxlength="50"
+        />
+        <mat-error
+          *ngIf="
+            !logHistoryGroup.get('logHistorySearch').valid &&
+            logHistoryGroup.get('logHistorySearch').touched &&
+            logHistoryGroup.get('logHistorySearch').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <!-- <div fxLayout="row" class="date-div">
+        <div class="date-field">
+          <mat-form-field appearance="outline">
+          
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input
+                matStartDate
+                formControlName="startDate"
+                placeholder="Start date"
+              />
+              <input
+                matEndDate
+                formControlName="endDate"
+                placeholder="End date"
+              />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      </div> -->
+      <!-- <div fxLayoutAlign="end" class="date-container">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker000">
+            <input matStartDate placeholder="Start date" />
+            <input matEndDate placeholder="End date" />
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker000"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker000></mat-date-range-picker>
+        </mat-form-field>
+      </div> -->
+    </form>
+  </div>
+  <div *ngIf="subModuleName === 'Default Issues'">
+    <form [formGroup]="defaultGroup" fxLayout="row" fxLayoutGap="10px">
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="defaultSearch"
+          matInput
+          (keyup)="isEnableGlobalSearchFunc2()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableDefaultIssuesGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          src="../../../../assets/svg/Cross Button.svg"
+          class="close-icon"
+          *ngIf="isEnableDefaultIssuesGlobalSearch"
+          (click)="unselectGlobalSearchDefaultIssues()"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !defaultGroup.get('defaultSearch').valid &&
+            defaultGroup.get('defaultSearch').touched &&
+            defaultGroup.get('defaultSearch').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+    </form>
+  </div>
+  <div *ngIf="moduleName === 'Device Info'">
+    <form
+      [formGroup]="deviceFilterForm"
+      fxLayout="row"
+      fxLayoutGap="10px"
+      *ngIf="subModuleName === 'Devices'"
+    >
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="searchQuery"
+          matInput
+          (keyup)="isEnableGlobalDeviceSearchFunc()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableDeviceGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchDeviceInfo()"
+          *ngIf="isEnableDeviceGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !deviceFilterForm.get('searchQuery').valid &&
+            deviceFilterForm.get('searchQuery').touched &&
+            deviceFilterForm.get('searchQuery').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+      <div class="deviceStatus" *ngIf="role === 'RPM_ADMIN'">
+        <mat-form-field appearance="outline">
+          <mat-label>Device Types</mat-label>
+          <mat-select
+            placeholder="Device Types"
+            formControlName="deviceName"
+            (valueChange)="isEnableDeviceTypeFunc($event)"
+          >
+          <mat-option  value=""
+              > All
+            </mat-option>
+            <mat-option *ngFor="let type of deviceType" [value]="type.id"
+              >{{ type.deviceType }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- <mat-icon
+        style="font-size: 17px; cursor: pointer"
+        (click)="unselectDeviceType()"
+        *ngIf="isEnableDeviceType"
+        >close</mat-icon
+      > -->
+
+      <div class="deviceStatus" *ngIf="role === 'RPM_ADMIN'">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="status"
+            (valueChange)="isEnableDeviceStatusFunc($event)"
+          >
+            <mat-option
+              *ngFor="let status of statuslist"
+              [value]="status.viewValue"
+            >
+              {{ status.value | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="deviceStatus" *ngIf="role !== 'RPM_ADMIN'">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="status"
+            (valueChange)="isEnableDeviceStatusFunc($event)"
+          >
+            <mat-option
+              *ngFor="let status of statuslistHospital"
+              [value]="status.viewValue"
+            >
+              {{ status.value | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- <mat-icon
+        style="font-size: 17px; cursor: pointer"
+        (click)="unselectDeviceStatus()"
+        *ngIf="isEnableStatus"
+        >close
+      </mat-icon> -->
+
+      <!-- <button
+        mat-icon-button
+        class="rpm-search-button"
+        (click)="onSearch()"
+        matTooltip="Search"
+        matTooltipPosition="below"
+        [matTooltipClass]="{ 'rpm-tooltip': true }"
+      >
+        <mat-icon title="Search">search</mat-icon>
+      </button> -->
+    </form>
+    <form
+      [formGroup]="deviceModelfilter"
+      *ngIf="subModuleName === 'Device Models'"
+    >
+      <!-- <div class="global-search">
+        <input
+          placeholder="Search with two characters" onkeypress="return event.charCode != 32"
+          formControlName="searchQuery"
+          matInput
+          (keyup)="isEnableGlobalDeviceModelSearchFunc()"
+                     maxlength="50"
+        />
+      </div> -->
+      <!-- <mat-icon
+        style="font-size: 17px; cursor: pointer"
+        (click)="unselectDeviceModelGlobalSearch()"
+        *ngIf="isEnableGlobalSearch"
+      >
+        close
+      </mat-icon> -->
+      <!-- <button
+        mat-icon-button
+        class="rpm-search-button"
+        (click)="onDeviceModelFilter()"
+        matTooltip="Search"
+        matTooltipPosition="below"
+        [matTooltipClass]="{ 'rpm-tooltip': true }"
+      >
+        <mat-icon title="Search">search</mat-icon>
+      </button> -->
+    </form>
+  </div>
+  <div *ngIf="moduleName === 'Facility Admin'">
+    <form fxLayoutGap="10px" [formGroup]="facilityAdminsList">
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="searchQuery"
+          matInput
+          (keyup)="isEnableFacilityAdminsGlobalSearchFunc()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableUserGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchFacilityAdmin()"
+          *ngIf="isEnableUserGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !facilityAdminsList.get('searchQuery').valid &&
+            facilityAdminsList.get('searchQuery').touched &&
+            facilityAdminsList.get('searchQuery').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="statusFilter"
+            (selectionChange)="facilityAdminsstatus()"
+          >
+            <mat-option
+              *ngFor="let statusData of status"
+              [value]="statusData.value"
+            >
+              {{ statusData.display | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="moduleName === 'Hospital Admin'">
+    <form
+      fxLayoutGap="10px"
+      [formGroup]="hospitalAdminsList"
+      *ngIf="moduleName === 'Hospital Admin'"
+    >
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="searchQuery"
+          matInput
+          (keyup)="isEnableHospitalAdminsGlobalSearchFunc()"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableUserGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchHospitalAdmins()"
+          *ngIf="isEnableUserGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !hospitalAdminsList.get('searchQuery').valid &&
+            hospitalAdminsList.get('searchQuery').touched &&
+            hospitalAdminsList.get('searchQuery').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="statusFilter"
+            (selectionChange)="hospitalAdminsstatus()"
+          >
+            <mat-option
+              *ngFor="let statusData of status"
+              [value]="statusData.value"
+            >
+              {{ statusData.display | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="moduleName === 'Users'">
+    <form
+      fxLayoutGap="10px"
+      [formGroup]="careProviderList"
+      *ngIf="subModuleName === 'Care Providers'"
+    >
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="searchQuery"
+          matInput
+          (keyup)="isEnableCareProviderGlobalSearchFunc()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableUserGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchCareProvider()"
+          *ngIf="isEnableUserGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !careProviderList.get('searchQuery').valid &&
+            careProviderList.get('searchQuery').touched &&
+            careProviderList.get('searchQuery').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="statusFilter"
+            (selectionChange)="careProviderstatus()"
+          >
+            <mat-option
+              *ngFor="let statusData of status"
+              [value]="statusData.value"
+            >
+              {{ statusData.display | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+    <form
+      fxLayoutGap="10px"
+      [formGroup]="careCoordinatorList"
+      *ngIf="subModuleName === 'Program Coordinators'"
+    >
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="searchQuery"
+          matInput
+          (keyup)="isEnableCareCoordinatorGlobalSearchFunc()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableUserGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchUser()"
+          *ngIf="isEnableUserGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !careCoordinatorList.get('searchQuery').valid &&
+            careCoordinatorList.get('searchQuery').touched &&
+            careCoordinatorList.get('searchQuery').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="statusFilter"
+            (selectionChange)="careCoordinatorstatus()"
+          >
+            <mat-option
+              *ngFor="let statusData of status"
+              [value]="statusData.value"
+            >
+              {{ statusData.display | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+    <form
+      fxLayoutGap="10px"
+      [formGroup]="hospitalAdminsList"
+      *ngIf="subModuleName === 'Hospital Admin'"
+    >
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="searchQuery"
+          matInput
+          (keyup)="isEnableHospitalAdminsGlobalSearchFunc()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableUserGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchHospitalAdmins()"
+          *ngIf="isEnableUserGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !hospitalAdminsList.get('searchQuery').valid &&
+            hospitalAdminsList.get('searchQuery').touched &&
+            hospitalAdminsList.get('searchQuery').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="statusFilter"
+            (selectionChange)="hospitalAdminsstatus()"
+          >
+            <mat-option
+              *ngFor="let statusData of status"
+              [value]="statusData.value"
+            >
+              {{ statusData.display | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+    <form
+      fxLayoutGap="10px"
+      [formGroup]="facilityAdminsList"
+      *ngIf="subModuleName === 'Facility Admin'"
+    >
+      <div class="global-search">
+        <input
+          placeholder="Search with two characters"
+          formControlName="searchQuery"
+          matInput
+          (keyup)="isEnableFacilityAdminsGlobalSearchFunc()"
+          maxlength="50"
+        />
+        <img
+          src="../../../../assets/svg/SearchIcon.svg"
+          *ngIf="!isEnableUserGlobalSearch"
+          style="margin-left: 1px"
+          alt="search"
+        />
+        <img
+          class="close-icon"
+          (click)="unselectGlobalSearchFacilityAdmin()"
+          *ngIf="isEnableUserGlobalSearch"
+          src="../../../../assets/svg/Cross Button.svg"
+          alt=""
+        />
+        <mat-error
+          *ngIf="
+            !facilityAdminsList.get('searchQuery').valid &&
+            facilityAdminsList.get('searchQuery').touched &&
+            facilityAdminsList.get('searchQuery').hasError('pattern')
+          "
+          >Empty spaces are not allowed</mat-error
+        >
+      </div>
+      <div class="valid-text" *ngIf="showValidTextMessage">
+        <mat-error>Enter valid text</mat-error>
+      </div>
+      <div class="deviceStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            placeholder="Status"
+            formControlName="statusFilter"
+            (selectionChange)="facilityAdminsstatus()"
+          >
+            <mat-option
+              *ngFor="let statusData of status"
+              [value]="statusData.value"
+            >
+              {{ statusData.display | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>

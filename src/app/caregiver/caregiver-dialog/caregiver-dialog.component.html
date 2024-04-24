@@ -1,0 +1,233 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  !eleData ? "New Caregiver" : "Update Caregiver"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+<mat-card-content
+  class="container"
+  fxLayout
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <!-- <form [formGroup]="addEditMemberForm"
+                    [class.error]="!addEditMemberForm.valid && addEditMemberForm.touched"> -->
+  <form [formGroup]="caregiverForm" (ngSubmit)="onSubmit()">
+    <h2 mat-dialog-title></h2>
+    <mat-dialog-content [formGroup]="caregiverForm">
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          autocomplete="off"
+          appAlphabetSpaceOnly
+          minlength="3"
+          maxlength="50"
+          formControlName="name"
+          required
+        />
+        <mat-error
+          *ngIf="
+            !caregiverForm.controls['name'].valid &&
+            caregiverForm.controls['name'].touched
+          "
+          >{{ getErrorName() }}</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          autocomplete="off"
+          formControlName="email"
+          maxlength="50"
+          required
+        />
+        <mat-error
+          *ngIf="
+            !caregiverForm.controls['email'].valid &&
+            caregiverForm.controls['email'].touched
+          "
+        >
+          {{ getErrorEmail() }}
+        </mat-error>
+        <mat-error *ngIf="emailId?.errors?.emailTaken">
+          This email already exists.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Contact Number</mat-label>
+        <input
+          type="text"
+          matInput
+          autocomplete="disabled"
+          formControlName="contactNo"
+          required
+          maxlength="10"
+        />
+        <mat-error
+          *ngIf="
+            !caregiverForm.controls['contactNo'].valid &&
+            caregiverForm.controls['contactNo'].touched
+          "
+        >
+          {{ getErrorHomeNo() }}</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        class="fieldWidth"
+        *ngIf="userRole === 'RPM_ADMIN'"
+      >
+        <mat-label>Practice</mat-label>
+        <mat-select
+          formControlName="hospital"
+          (valueChange)="onPracticeSelection($event)"
+          required
+        >
+          <mat-option
+            *ngFor="let practiceData of practiceList"
+            [value]="practiceData"
+          >
+            {{ practiceData.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Practice is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        class="fieldWidth"
+        *ngIf="userRole === 'RPM_ADMIN' || userRole === 'hospital_USER'"
+      >
+        <mat-label>Clinic</mat-label>
+        <mat-select formControlName="branch" required>
+          <mat-option
+            *ngFor="let clinicData of clinicList"
+            [value]="clinicData"
+          >
+            {{ clinicData.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Clinic is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Zip Code</mat-label>
+        <input
+          matInput
+          autocomplete="off"
+          formControlName="zipCode"
+          (input)="changeZipcode()"
+          minlength="6"
+          maxlength="6"
+          required
+        />
+        <mat-error *ngIf="!caregiverForm.valid && caregiverForm.touched">{{
+          getZipCodeError()
+        }}</mat-error>
+        <!-- <mat-hint>Enter valid zipcode</mat-hint> -->
+      </mat-form-field>
+      <span
+        [ngClass]="
+          userRole === 'RPM_ADMIN'
+            ? 'super-admin-zipCodeStyle'
+            : userRole === 'BRANCH_USER'
+            ? 'clinic-zipCodeStyle'
+            : 'practice-zipCodeStyle'
+        "
+      >
+        <mat-icon (click)="onZipCodeSelection('')">search</mat-icon>
+      </span>
+
+      <mat-form-field
+        appearance="outline"
+        [ngClass]="
+          userRole === 'RPM_ADMIN'
+            ? 'admin-state'
+            : userRole === 'BRANCH_USER'
+            ? 'clinic-state'
+            : 'practice-state'
+        "
+      >
+        <mat-label>State</mat-label>
+        <input
+          appAlphabetSpaceOnly
+          type="text"
+          matInput
+          formControlName="state"
+          required
+          [readonly]="state.length ? true : false"
+        />
+        <mat-error>State is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        [ngClass]="
+          userRole === 'RPM_ADMIN'
+            ? 'admin-city'
+            : userRole === 'BRANCH_USER'
+            ? 'clinic-city'
+            : 'practice-city'
+        "
+      >
+        <mat-label>City</mat-label>
+        <input
+          appAlphabetSpaceOnly
+          type="text"
+          matInput
+          formControlName="city"
+          required
+        />
+        <mat-error>City is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        [ngClass]="
+          userRole === 'RPM_ADMIN'
+            ? 'admin-address'
+            : userRole === 'BRANCH_USER'
+            ? 'clinic-address'
+            : 'practice-address'
+        "
+      >
+        <mat-label>Address</mat-label>
+        <input
+          type="text"
+          maxlength="500"
+          matInput
+          formControlName="address"
+          required
+        />
+        <mat-error
+          *ngIf="
+            !caregiverForm.controls['address'].valid &&
+            caregiverForm.controls['address'].touched
+          "
+        >
+          {{ getErrorAddress() }}
+        </mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+    <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+      <!-- <button [disabled]="!addDeviceForm.AddEditDeviceComponent.valid" mat-raised-button>Save New Member</button> -->
+      <button
+        mat-flat-button
+        class="rpm-save-button"
+        *ngIf="!submitted"
+        [disabled]="caregiverForm.invalid || submitted"
+      >
+        {{ !eleData ? "Save" : "Update" }}
+      </button>
+      <!-- <button mat-raised-button (click)="resetCreateDeviceForm()">Reset</button> -->
+    </div>
+  </form>
+</mat-card-content>
+<!-- [disabled]="!caregiverForm.valid" -->

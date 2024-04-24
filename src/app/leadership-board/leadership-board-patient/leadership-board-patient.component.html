@@ -1,0 +1,121 @@
+<div class="leaderViewMain">
+  <app-navigation-bar (backEvent)="viewLeadershipBoard()"></app-navigation-bar>
+  <div style="padding: 0 16px 16px">
+    <div class="patient-details-top-bar">
+      <!-- <div fxFlex="20%">
+        <div class="content-data">{{ patientName }}</div>
+      </div> -->
+      <div fxFlex="35%" class="pointDiv">
+        <div class="content-data-heading">Observations (Points)</div>
+        <div>
+          <div class="content-data-readings">{{ patDetails?.obsPoint }}</div>
+        </div>
+      </div>
+      <div class="div-line"></div>
+      <div fxFlex="35%" class="pointDiv">
+        <div class="content-data-heading">BP Reading (Points)</div>
+        <div>
+          <div class="content-data-readings">{{ patDetails?.bpPoint }}</div>
+        </div>
+      </div>
+      <div class="div-line"></div>
+      <div fxFlex="35%" class="pointDiv">
+        <div class="content-data-heading">Total Points</div>
+        <div>
+          <div class="content-data-readings">{{ patDetails?.totPoint }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="example-container mat-elevation-z8">
+    <mat-table matSort #table matTableResponsive [dataSource]="dataSource">
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{
+            element?.readingDate
+              ? (element?.readingDate | date : "dd/MM/yyyy")
+              : "NA"
+          }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="obsPointsMorning">
+        <mat-header-cell *matHeaderCellDef>
+          Observations (Points)
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span class="identification-icons">
+            <img src="assets/img/sunPng.png" alt="" height="15"
+          /></span>
+          {{ element?.morningObsPoints ? element?.morningObsPoints : "NA" }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="obsPointsEvening">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span class="identification-icons">
+            <img src="assets/img/moonPng.png" alt="" height="15"
+          /></span>
+          {{ element?.eveningObsPoints ? element?.eveningObsPoints : "NA" }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="bpPointsMorning">
+        <mat-header-cell *matHeaderCellDef>
+          BP Readings (Points)
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span class="identification-icons">
+            <img src="assets/img/sunPng.png" alt="" height="15"
+          /></span>
+          {{
+            element?.morningReadingPoints ? element?.morningReadingPoints : "NA"
+          }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="bpPointsEvening">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span class="identification-icons">
+            <img src="assets/img/moonPng.png" alt="" height="15"
+          /></span>
+          {{
+            element?.eveningReadingPoints ? element?.eveningReadingPoints : "NA"
+          }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="totalPoints">
+        <mat-header-cell *matHeaderCellDef>Total Points</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ getTotalPoints(element) }}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <div
+    class="noRecordsFound"
+    *ngIf="
+      !(dataSource.loadingObservable | async) &&
+      messageSuccess !== undefined &&
+      !messageSuccess
+    "
+  >
+    No Records Found!
+  </div>
+  <mat-paginator
+    [ngClass]="
+      (dataSource.totalElemObservable | async) < 10 && !messageSuccess
+        ? 'hide-pagination-element'
+        : (dataSource.totalElemObservable | async) == undefined
+        ? 'hide-pagination-element'
+        : 'show-pagination'
+    "
+    [length]="dataSource.totalElemObservable | async"
+    [pageSizeOptions]="[10, 25, 100]"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>

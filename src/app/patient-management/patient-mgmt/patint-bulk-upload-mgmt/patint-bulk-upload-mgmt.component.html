@@ -1,0 +1,53 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+    <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">Bulk Enrollment</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-dialog-content>
+    <form [formGroup]="uploadForm">
+        <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Practices</mat-label>
+            <mat-select formControlName="hospitalId" (valueChange)="onhospitalSelection($event)" required>
+                <mat-option *ngFor="let org of hospital" [value]="org.id">
+                    {{ org.name }}
+                </mat-option>
+            </mat-select>
+            <mat-error>Practices is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Clinics</mat-label>
+            <mat-select formControlName="branch"  required>
+                <mat-option *ngFor="let branchData of branch" [value]="branchData.id">
+                    {{ branchData.name }}
+                </mat-option>
+            </mat-select>
+            <mat-error>Clinics is required</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Primary Physician</mat-label>
+            <mat-select formControlName="primaryPhysician">
+                <mat-option *ngFor="let doc of doctor" [value]="doc.id">
+                    {{ doc.name }}
+                </mat-option>
+            </mat-select>
+            <mat-error>Primary physician is required</mat-error>
+        </mat-form-field>
+
+        <div class="input-text">
+            <input #inputFile type="file" (change)="onFileSelect($event)" formControlName="upload_file" required
+                accept=".csv" />
+        </div>
+        <mat-hint style="position: relative;left: 35px;top: 5px;">Please select csv file</mat-hint>
+        <div class="download-text">
+            <a href="https://vizzydev.xyramsoft.com/Templates/patient.csv">Click here to
+                download csv file format</a>
+        </div>
+    </form>
+    <button mat-flat-button class="rpm-upload-button" style="float: right;" [disabled]="!uploadForm.valid"
+        (click)="onSubmit()">Upload</button>
+
+</mat-dialog-content>

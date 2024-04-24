@@ -1,0 +1,38 @@
+
+* {
+    font-family: helveticaneueregular;
+}
+
+.adherenceBar {
+    height: 21vh;
+    width: 80%;
+    position: relative;
+    top: 0vh;
+    left: 2vw;
+}
+.textInputWidth {
+    font-size: 12px;
+    width: 196px;
+    position: relative;
+    top: -5vh;
+    left: 13vw;
+}
+
+.no-data {
+    text-align: center;
+    /* margin-top: 31px; */
+    position: relative;
+    top: 100px;
+    font-size: 15px;
+    // height: 100vh;
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    .adherenceBar {
+        height: 20vh;
+        top: -2.5vh;
+    }
+    .textInputWidth {
+        top: 1vh;
+        left: 22vw;
+    }
+}

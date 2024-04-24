@@ -1,0 +1,24 @@
+export interface CallScheduleList {
+    "id"?: string | null;
+    "patientName"?: string | null;
+    "sender"?: string | null;
+    "senderName"?: string | null;
+    "receiver"?: string | null;
+    "title"?: string | null;
+    "callType"?: string | null;
+    "callState"?: string | null;
+    "video"?: boolean | null;
+    "recieverCallduration"?: string | null;
+    "senderCallduration"?: string | null;
+    "description"?: string | null;
+    "createdDate"?: string | null;
+    "scheduleDate"?: string | null;
+    "status"?: boolean | null;
+    "type"?: string | null;
+    "scheduleCallStatus"?: string | null;
+    "cancelledBy"?: string | null;
+    "notificationType"?: string | null;
+    "mobileNo"?: string | null;
+    "callStarted"?: boolean | null;
+    "callStartedDate"?: string | null
+}

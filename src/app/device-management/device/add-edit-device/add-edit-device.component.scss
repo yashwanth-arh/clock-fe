@@ -1,0 +1,38 @@
+// .fieldWidth-amount{
+//   width: 85px;
+//   margin-left: 22px;
+// }
+// .fieldWidth-amount-field{
+//   width: 185px;
+// }
+.mainDeviceAdd {
+  padding: 0;
+
+  ::ng-deep .mat-form-field {
+    width: 300px;
+    margin: 0px 15px 0px 0px;
+    padding: 0 !important;
+  }
+}
+
+.mat-dialog-content {
+  overflow: hidden;
+}
+
+.close-button {
+  cursor: pointer;
+}
+
+// .rpm-save-button {
+//   margin-right: 18px;
+// }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}

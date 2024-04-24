@@ -1,0 +1,204 @@
+.patientStatus {
+  // margin-top: -25px;
+  height: 85vh;
+  .example-container.mat-elevation-z8 {
+    overflow-x: auto;
+    margin-top: 10px;
+    max-height: 600px;
+    overflow: auto;
+    height: 504px;
+  }
+  .highAlert:hover {
+    background-color: #f44336;
+    .name {
+      color: white;
+    }
+    color: white;
+    cursor: pointer;
+  }
+  .alert:hover {
+    background-color: #FF8C00;
+    .name {
+      color: white;
+    }
+    color: white;
+    cursor: pointer;
+  }
+  .good:hover {
+    background-color: #4caf50;
+    .name {
+      color: white;
+    }
+    color: white;
+    cursor: pointer;
+  }
+  .non:hover {
+    background-color: grey;
+    .name {
+      color: white;
+    }
+    color: white;
+    cursor: pointer;
+  }
+  .name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #6977c5;
+  }
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:first-child {
+    color: white;
+    background-color: #2196f3;
+    border-bottom: solid red 7px;
+  }
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:nth-child(2) {
+    color: white;
+    background-color: #2196f3;
+    border-bottom: solid #FF8C00 7px;
+  }
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:nth-child(3) {
+    color: white;
+    background-color: #2196f3;
+    border-bottom: solid #4caf50 7px;
+  }
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:nth-child(4) {
+    color: white;
+    background-color: #2196f3;
+    border-bottom: solid white 7px;
+  }
+  ::ng-deep .mat-ink-bar {
+    display: none !important;
+  }
+  padding: 10px 30px;
+  table {
+    width: 100%;
+    border-radius: 5em;
+  }
+  .mat-table {
+    border-collapse: separate !important;
+    border-spacing: 0 8px !important;
+  }
+  //   td {
+  //       border-radius: 50%;
+
+  //   }
+  .rowBorder {
+    /* row border */
+    border-left: 15px solid #f44336;
+  }
+  .rowBorderAlert {
+    /* row border */
+    border-left: 15px solid #FF8C00;
+    // border-top-left-radius: 10px;
+    // border-bottom-left-radius: 10px;
+  }
+  .rowBorderGood {
+    /* row border */
+    border-left: 15px solid #4caf50;
+    // border-top-left-radius: 10px;
+    // border-bottom-left-radius: 10px;
+  }
+  .rowBorderNon {
+    /* row border */
+    border-left: 15px solid grey;
+    // border-top-left-radius: 10px;
+    // border-bottom-left-radius: 10px;
+  }
+  .rounded-circle {
+    border-radius: 50% !important;
+    position: relative;
+    top: 3px;
+    right: 5px;
+  }
+  .patientBio {
+    margin-left: -10px;
+  }
+  // .actionLabel {
+  //   position: relative;
+  //   top: 6px;
+  //   left: 51px;
+  // }
+
+  .comorbidity {
+    margin-left: -50px;
+  }
+  td.mat-cell {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .patientText {
+    width: 270px;
+    font-size: 14px;
+    font-weight: 400;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  .comorbidityText {
+    // width: 10%;
+    padding-left: 5px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .weightText {
+    // width: 10%;
+    padding-left: 5px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .bpText {
+    // width: 10%;
+    font-size: 14px;
+    font-weight: 400;
+    width: 280px;
+  }
+  .action_btn:hover {
+    background-color: rgb(120, 161, 238);
+  }
+}
+.symptomsText {
+  // width: 20%;
+  font-size: 14px;
+  font-weight: 400;
+}
+.statusText {
+  // width: 7%;
+  font-size: 14px;
+  font-weight: 400;
+}
+.actionText {
+  // width: 10%;
+  font-size: 14px;
+  font-weight: 400;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.actBtns ,.comments{
+  padding-left: 8px;
+}
+.wt {
+  font-weight: 500;
+  color: #f44336;
+}
+.wtAlert {
+  font-weight: 500;
+  color: #FF8C00;
+}
+.wtGood {
+  font-weight: 500;
+  color: #4caf50;
+}
+.bp {
+  font-weight: 500;
+  color: black;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1023px) and (orientation: landscape) {
+  .patientText {
+    width: 217px;
+  }
+
+  .actionLabel {
+    position: relative;
+    left: 27px;
+  }
+}

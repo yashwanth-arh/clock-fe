@@ -1,0 +1,133 @@
+<div class="rpm-module-management">
+  <app-navigation-bar (backEvent)="viewhospital()"></app-navigation-bar>
+  <div class="rpm-module-table-view">
+    <div class="rpm-module-filter-container">
+      <form [formGroup]="practiceClinicList">
+        <!-- <mat-form-field appearance="legacy">
+          <mat-label>Practice</mat-label>
+          <mat-select formControlName="practice">
+            <mat-option *ngFor="let practiceData of practiceList" [value]="practiceData.id">
+              {{ practiceData.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Practice is </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="legacy">
+          <mat-label>State</mat-label>
+          <mat-select formControlName="state" (valueChange)="onStateSelection($event)">
+            <mat-option *ngFor="let stateData of state" [value]="stateData">
+              {{ stateData }}
+            </mat-option>
+          </mat-select>
+          <mat-error>State is </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="legacy">
+          <mat-label>City</mat-label>
+          <input type="text" placeholder="Pick one" matInput formControlName="city" [matAutocomplete]="autoCity" />
+          <mat-icon matSuffix>arrow_drop_down</mat-icon>
+          <mat-autocomplete autoActiveFirstOption #autoCity="matAutocomplete">
+            <mat-option *ngFor="let city of CityFilteredOptions | async" [value]="city">
+              {{ city }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error>City is required</mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="legacy">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let statusValue of status" [value]="statusValue">
+              {{ statusValue }}
+            </mat-option>
+          </mat-select>
+          <mat-error>State is </mat-error>
+        </mat-form-field>
+
+        <button mat-icon-button class="rpm-search-button" matTooltip='Search' matTooltipPosition='below'
+          [matTooltipClass]="{'rpm-tooltip': true}">
+          <mat-icon title="Search">search</mat-icon>
+        </button>
+      </form>
+    </div>
+    <div class="rpm-module-table-container example-container mat-elevation-z8">
+      <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="name">
+          <mat-header-cell fxFlex="10%" *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell fxFlex="10%" *matCellDef="let element"> {{ element.name ? element.name : "N/A" }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="address.state">
+          <mat-header-cell fxFlex="20%" *matHeaderCellDef> State & Zip Code </mat-header-cell>
+
+          <mat-cell fxFlex="20%" *matCellDef="let element">{{ getFieldName(element, "state") }} - {{
+            getFieldName(element, "zipcode") }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="address.city">
+          <mat-header-cell fxFlex="20%" *matHeaderCellDef> City </mat-header-cell>
+
+          <mat-cell fxFlex="20%" *matCellDef="let element"> {{ getFieldName(element, "city") }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="address.addressLine">
+          <mat-header-cell fxFlex="30%" *matHeaderCellDef> Address </mat-header-cell>
+
+          <mat-cell fxFlex="30%" *matCellDef="let element"> {{ getFieldName(element, "address") }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="clinicNPI">
+          <mat-header-cell fxFlex="20%" *matHeaderCellDef> Clinic NPI </mat-header-cell>
+
+          <mat-cell fxFlex="20%" *matCellDef="let element"> {{ element.clinicNPI }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="primaryContactNumber">
+          <mat-header-cell fxFlex="25%" *matHeaderCellDef>Primary Contact Number</mat-header-cell>
+          <mat-cell fxFlex="25%" *matCellDef="let element"> {{ element.primaryContactNumber?element.primaryContactNumber:"N/A" }} </mat-cell>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="email">
+          <mat-header-cell fxFlex="10%" *matHeaderCellDef> Email Id </mat-header-cell>
+          <mat-cell fxFlex="10%" *matCellDef="let element"> {{ element.emailId? element.emailId:"-" }} </mat-cell>
+        </ng-container> -->
+
+        <ng-container matColumnDef="emcontactno">
+          <mat-header-cell fxFlex="30%" *matHeaderCellDef> Emergency Contact No. </mat-header-cell>
+          <mat-cell fxFlex="30%" *matCellDef="let element">{{ getFieldName(element, "emergencycontact") }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <mat-header-cell fxFlex="8%" *matHeaderCellDef> Status </mat-header-cell>
+          <mat-cell fxFlex="8%" *matCellDef="let element">
+            <mat-hint [ngClass]="element.status == 'ACTIVE' ? 'active' : 'inactive'">{{ element.status }} </mat-hint>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell fxFlex="8%" *matHeaderCellDef> Action </mat-header-cell>
+
+          <mat-cell fxFlex="8%" *matCellDef="let element">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="editBranch(element)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div class="noDataFoundText" *ngIf="messageSuccess!==undefined && !messageSuccess">No Records Found!</div>
+      <mat-paginator [ngClass]="(dataSource.totalElemObservable|async)<10?'hide-pagination-element':''"
+        [length]="dataSource.totalElemObservable | async" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </div>
+</div>

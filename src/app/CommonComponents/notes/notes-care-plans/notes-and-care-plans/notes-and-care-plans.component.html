@@ -1,0 +1,154 @@
+<div class="notes-module-main">
+  <mat-toolbar class="toolbar-heading">
+    <div fxLayout="row">
+      <div fxLayout="row" fxLayoutGap="49.5vw" fxLayoutGap.lg="49.5vw">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="4px">
+          <img title="Close" src="assets/svg/notes.svg" alt="" />
+          <span class="title">Notes & Care Plans</span>
+        </div>
+        <div>
+          <img
+            title="Close"
+            src="assets/svg/cancel.svg"
+            style="cursor: pointer"
+            alt=""
+            (click)="drawerToggleClose()"
+          />
+        </div>
+      </div>
+    </div>
+  </mat-toolbar>
+  <div class="notes-tabs">
+    <mat-tab-group
+      animationDuration="0ms"
+      dynamicHeight
+      class="mat-tabs"
+      [(selectedIndex)]="selectedTabIndex"
+      (selectedTabChange)="tabChange($event)"
+      mat-align-tabs="start"
+    >
+      <mat-tab label="Notes">
+        <app-notes-list
+          *ngIf="selectedTabIndex === 0"
+          [patientId]="patientId"
+          [patientName]="patientName"
+          [notesData]="notesData"
+          [defaultTemplate]="defaultTemplate"
+          (callNoteList)="callNoteListTriger($event)"
+          [drawerToggle]="drawerToggle"
+          (editedNoteData)="editedNoteDataTriger($event)"
+          (addNotes)="buttonChangeEvent($event)"
+          [addNotesButton]="showAddButton"
+        ></app-notes-list>
+      </mat-tab>
+      <mat-tab label="Care Plans" *ngIf="addPermission === 'true'"
+        ><app-care-plans-list
+          (addNotes)="buttonChangeEventPlans($event)"
+          [patientId]="patientId"
+          [addNotesButton]="showAddPlanButton"
+          [dateProp]="datePlan"
+          (callNoteList)="callNoteListTriger($event)"
+          *ngIf="selectedTabIndex === 1"
+        ></app-care-plans-list
+      ></mat-tab>
+    </mat-tab-group>
+    <div class="buttonDiv" style="position: absolute; top: 96px; right: 14px">
+      <span *ngIf="addNotesButton">
+        <button
+          *ngIf="
+            showAddButton && selectedTabIndex === 0 && addPermission === 'true'
+          "
+          mat-flat-button
+          class="rpm-save-button"
+          (click)="buttonChange(false)"
+        >
+          Add Notes
+        </button>
+        <button
+          *ngIf="
+            showAddPlanButton &&
+            selectedTabIndex === 1 &&
+            addPermission === 'true'
+          "
+          mat-flat-button
+          class="rpm-save-button"
+          (click)="buttonChangePlan(false)"
+        >
+          Add Care Plan
+        </button>
+        <!-- <mat-form-field
+          *ngIf="showAddButton && selectedTabIndex === 0"
+          appearance="outline"
+          class="date-picker"
+        >
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input
+            [rangePicker]="picker"
+            [min]="minDate"
+            [max]="maxDate"
+          >
+            <input
+              matStartDate
+              placeholder="Start date"
+              [(ngModel)]="fromDate"
+              (dateChange)="startEvent($event)"
+              readonly
+            />
+            <input
+              matEndDate
+              placeholder="End date"
+              [(ngModel)]="toDate"
+              (dateChange)="endEvent($event)"
+              readonly
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="date-picker"
+          *ngIf="showAddPlanButton && selectedTabIndex === 1"
+        >
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input
+            [rangePicker]="picker"
+            [min]="minDate"
+            [max]="maxDate"
+          >
+            <input
+              matStartDate
+              placeholder="Start date"
+              (dateChange)="startEventCarePlan($event)"
+              readonly
+            />
+            <input
+              matEndDate
+              placeholder="End date"
+              (dateChange)="endEventCarePlan($event)"
+              readonly
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field> -->
+      </span>
+      <!-- <span (click)="download()" *ngIf="addNotesButton">
+            <img
+              class="download-icon"
+              [src]="downloadIcon"
+              alt=""
+              title="Download Reports"
+              (mouseover)="downloadHover()"
+              (mouseout)="downloadHoverOut()"
+            />
+          </span> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="contentMarketing">
+  <app-navigation-bar (clickEvent)="addContent()"> </app-navigation-bar>
+  <div fxLayout="row wrap">
+    <div class="contentList" fxLayout="row wrap">
+      <mat-card class="example-card" *ngFor="let item of contentList">
+        <div class="menuBtn" *ngIf="adminAccess == 'true'">
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editContent(item)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button
+              mat-menu-item
+              (click)="statusChange(item)"
+              *ngIf="adminAccess == 'true'"
+            >
+              <span style="color: #52b204">{{
+                item.status == "ACTIVE" ? "Inactive" : "Active"
+              }}</span>
+            </button>
+            <button mat-menu-item (click)="deleteContent(item)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
+        <!-- <video width="100%" controls class="videoTag">
+          <source [src]="basePath+item?.attachments" type="video/mp4" />
+          This browser doesn't support video tag.
+        </video> -->
+        <img
+          [src]="basePath + item?.attachments"
+          width="390px"
+          height="206px"
+          style="border-radius: 12px; width: -webkit-fill-available"
+          [ngClass]="item?.status === 'ACTIVE' ? '' : 'disableContent'"
+          alt=""
+          *ngIf="
+            item?.attachments.includes('jpg') ||
+            item?.attachments.includes('jpeg') ||
+            item?.attachments.includes('png')
+          "
+        />
+        <div
+          class="video-container"
+          *ngIf="item?.attachments.includes('mp4')"
+          [ngClass]="item?.status === 'ACTIVE' ? '' : 'disableContent'"
+        >
+          <video #videoPlayer class="videoTag" id="example" controls>
+            <source [src]="basePath + item?.attachments" type="video/mp4" />
+
+            Your browser does not support the video tag.
+          </video>
+          <!-- <button class="play-pause-button">
+            <mat-icon>{{ isVideoPlaying ? "pause" : "play_arrow" }}</mat-icon>
+          </button> -->
+        </div>
+        <mat-card-content>
+          <h3
+            class="videoContentHeader"
+            [title]="item?.title.length > 40 ? item?.title : ''"
+          >
+            {{
+              item?.title.length > 40
+                ? (item?.title | slice : 0 : 40) + "..."
+                : item?.title | titlecase
+            }}
+          </h3>
+          <p
+            class="videoContent"
+            [title]="item?.description.length > 160 ? item?.description : ''"
+          >
+            {{
+              item?.description.length > 160
+                ? (item?.description | slice : 0 : 160) + "..."
+                : item?.description |titlecase
+            }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div
+      class="noRecordsFound"
+      style="width: 100%; top: 0"
+      *ngIf="length <= 0 || !length"
+    >
+      No Records Found!
+    </div>
+    <mat-paginator
+      *ngIf="length > 9"
+      [ngClass]="length < 9 ? 'hide-pagination-element' : 'show-pagination'"
+      (page)="handlePageEvent($event)"
+      [length]="length"
+      [pageSizeOptions]="pageSizeOptions"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

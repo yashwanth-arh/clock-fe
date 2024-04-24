@@ -1,0 +1,47 @@
+<div class="background">
+    <div class="layer" fxLayout="column" fxLayoutAlign="space-around center">
+        <div>
+            <div fxLayout="row" fxLayoutAlign="end">
+                <img src="assets/svg/DashboardIcons/Expand.svg" class="expand-screen" (click)="expand()" alt="" *ngIf="!hide">
+                <img src="assets/svg/DashboardIcons/Compress.svg" class="compress-screen" (click)="compress()" alt="" *ngIf="hide">
+            </div>
+        </div>
+        <div>
+            <span class="pulse" *ngIf="hide"></span>
+        </div>
+        <div  fxLayout="column" fxLayoutGap="30px" *ngIf="!hide" style="position: relative;top: 1vh;">
+            <div fxLayout="row" fxLayoutGap="20px">
+                <button mat-fab class="primary-btns">
+                   <img src="assets/svg/DashboardIcons/LineMute.svg" alt="">
+                </button>
+                <button mat-fab class="primary-btns">
+                    <img src="assets/svg/DashboardIcons/VideoFaceTime.svg" alt="">
+                </button>
+                <button mat-fab class="primary-btns">
+                    <img src="assets/svg/DashboardIcons/LoudSpeaker.svg" alt="">
+                </button>
+                <button mat-fab class="secondary-btn">
+                    <img src="assets/svg/DashboardIcons/DeclineCall.svg" alt="">
+                </button>
+            </div>
+        </div>
+        <div  fxLayout="column" fxLayoutGap="30px" *ngIf="hide">
+            <div fxLayout="row" fxLayoutGap="20px">
+                <button mat-fab class="primary-btns">
+                   <img src="assets/svg/DashboardIcons/LineMute.svg" alt="">
+                </button>
+                <button mat-fab class="primary-btns">
+                    <img src="assets/svg/DashboardIcons/VideoFaceTime.svg" alt="">
+                 </button>
+                 <button mat-fab class="primary-btns">
+                    <img src="assets/svg/DashboardIcons/LoudSpeaker.svg" alt="">
+                 </button>
+            </div>
+            <div fxLayoutAlign="center center">
+                <button mat-fab class="secondary-btn">
+                    <img src="assets/svg/DashboardIcons/DeclineCall.svg" alt="">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

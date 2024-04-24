@@ -1,0 +1,17 @@
+<div class="rpm-module-management logHistory">
+  <app-navigation-bar></app-navigation-bar>
+
+  <div class="log-history-tabs">
+    <mat-tab-group
+      animationDuration="0ms"
+      dynamicHeight
+      class="mat-tabs"
+      (selectedTabChange)="getTabDetails($event)"
+      mat-align-tabs="start"
+    >
+      <mat-tab [label]="'Log Histoty' + ' ' + '(' + logCount + ')'"
+        ><app-log-history (newItemEvent)="doSomething($event)"></app-log-history
+      ></mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+.btn-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+
+    .Ok-button {
+        position: relative;
+        left: -1.4vh;
+        width: 81.09px;
+        height: 37.13px;
+        background: #01CD74;
+        border: 1px solid #01CD74;
+        box-sizing: border-box;
+        color: #fff;
+        box-shadow: 0px 0px 10px rgba(1, 0, 102, 0.1);
+        border-radius: 10px;
+        outline: none;
+    }
+}
+
+.view-div {
+    margin-top: 10px;
+}
+
+.view-text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #424242;
+
+    .high-Alert {
+        color: Red;
+    }
+}

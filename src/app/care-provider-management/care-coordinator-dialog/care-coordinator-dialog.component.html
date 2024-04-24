@@ -1,0 +1,185 @@
+<div class="care-coordinator-main">
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data.mode === "EDIT" ? "Update Program Coordinator" : "Add Program Coordinator"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content
+  fxLayout
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+  style="overflow-x: hidden"
+>
+  <form
+    [formGroup]="doctorsDialog"
+    (ngSubmit)="onSubmit(doctorsDialog.value)"
+    [class.error]="!doctorsDialog.valid && doctorsDialog.touched"
+    class="org-form-div"
+  >
+    <mat-dialog-content [formGroup]="doctorsDialog" style="margin-top: 10px">
+      <div class="form-div">
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>First Name</mat-label>
+          <input
+            appAlphabetSpaceOnly
+            autocomplete="disabled"
+            minlength="3"
+            maxlength="50"
+            matInput
+            formControlName="firstName"
+            required
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['firstName'].valid &&
+              doctorsDialog.controls['firstName'].touched
+            "
+          >
+            {{ getErrorName() }}</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Middle Name</mat-label>
+          <input
+            appAlphabetSpaceOnly
+            autocomplete="disabled"
+            maxlength="50"
+            matInput
+            formControlName="middleName"
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['middleName'].valid &&
+              doctorsDialog.controls['middleName'].touched
+            "
+          >
+            {{ getMiddleErrorName() }}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Last Name</mat-label>
+          <input
+            appAlphabetSpaceOnly
+            autocomplete="disabled"
+            minlength="1"
+            maxlength="50"
+            matInput
+            formControlName="lastName"
+            required
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['lastName'].valid &&
+              doctorsDialog.controls['lastName'].touched
+            "
+          >
+            {{ getLastErrorName() }}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option [value]="val.value" *ngFor="let val of genderList">{{
+              val.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Contact Number </mat-label>
+          <input
+            appNumberCustomValidation
+            autocomplete="off"
+            matInput
+            formControlName="cellNumber"
+            maxlength="10"
+            required
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['cellNumber'].valid &&
+              doctorsDialog.controls['cellNumber'].touched
+            "
+          >
+            {{ getErrorCellNo() }}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            autocomplete="disabled"
+            maxlength="50"
+            formControlName="emailId"
+            [readonly]="checkUserLoggedIn"
+            (keyup)="getEmail()"
+            required
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['emailId'].valid &&
+              doctorsDialog.controls['emailId'].touched
+            "
+          >
+            {{ getErrorEmail() }}
+          </mat-error>
+          <mat-hint *ngIf="checkUserLoggedIn">
+            Cannot update email as user is already logged in!
+          </mat-hint>
+          <!-- <mat-error *ngIf="emailid?.errors?.emailTaken || emailExists">
+          This email already exists.
+        </mat-error> -->
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="fieldWidth"
+          *ngIf="userRole === 'HOSPITAL_USER'"
+        >
+          <mat-label>Facilities</mat-label>
+          <mat-select formControlName="facilityId" required>
+            <mat-option *ngFor="let list of clinicList" [value]="list?.id">
+              {{ list?.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Facilities is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Designation</mat-label>
+          <input
+            autocomplete="disabled"
+            appAlphabetSpaceOnly
+            minlength="2"
+            maxlength="20"
+            matInput
+            formControlName="designation"
+          />
+          <mat-error
+            *ngIf="
+              !doctorsDialog.controls['designation'].valid &&
+              doctorsDialog.controls['designation'].touched
+            "
+          >
+            {{ getErrorDesignation() }}</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+    <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+      <button
+        mat-flat-button
+        type="submit"
+        class="rpm-save-button"
+        [disabled]="submitted || !doctorsDialog.valid"
+      >
+        <span>{{ data.mode === "EDIT" ? "Update" : "Save" }}</span>
+      </button>
+    </div>
+  </form>
+</mat-card-content>
+</div>

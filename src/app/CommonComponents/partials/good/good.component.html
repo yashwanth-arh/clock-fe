@@ -1,0 +1,614 @@
+<div class="good-div">
+  <div class="example-container mat-elevation-z8 notAdmin">
+    <mat-table
+      #table
+      matSort
+      matTableResponsive
+      [dataSource]="dataSource"
+      matSortActive="name"
+      matSortDisableClear
+      matSortDirection="asc"
+    >
+      <ng-container matColumnDef="patient">
+        <mat-header-cell *matHeaderCellDef class="patientGood">
+          <div style="position: relative; left: 0.1vw">Patient</div>
+        </mat-header-cell>
+        <mat-cell
+          *matCellDef="let element; let i = index"
+          class="patientGood good"
+          (click)="
+            openPatientProfile(
+              element?.scopeId,
+              element?.firstName + ' ' + element?.lastName,
+              'Good',
+              i
+            )
+          "
+        >
+          <div fxLayout="row" class="patientBio">
+            <!-- <div>
+            <img alt="image" class="rounded-circle" width="30" *ngIf="element.patient.profileurl"
+              [src]="getProfileImage(element.patient.profileurl.trim())" />
+  
+            <img alt="image" class="rounded-circle" width="30" *ngIf="!element.patient.profileurl"
+              src="assets/svg/DashboardIcons/Patient.svg" />
+          </div> -->
+            <div
+              fxLayout="column"
+              fxLayoutGap="5px"
+              [ngClass]="
+                userRole === 'CAREPROVIDER'
+                  ? 'patient-info'
+                  : 'patient-info-coordinator'
+              "
+            >
+              <div class="name">
+                <div class="name" [title]="getFullName(element)">
+                  {{
+                    getFullName(element)?.length > 20
+                      ? (getFullName(element) | slice : 0 : 20) + "..."
+                      : getFullName(element)
+                  }}
+                </div>
+              </div>
+              <div
+                class="gender-age"
+                [title]="
+                  element.gender?.length > 20
+                    ? (element.gender | titlecase)
+                    : ''
+                "
+              >
+                {{ element.age }} years /
+                {{
+                  element.gender?.length > 20
+                    ? (element.gender | titlecase | slice : 0 : 20) + "..."
+                    : element.gender
+                    ? (element.gender | titlecase)
+                    : "-"
+                }}
+                <!-- {{ element.scopeId }} -->
+              </div>
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="comorbidity" class="comorbidity">
+        <mat-header-cell *matHeaderCellDef class="comorbidityText">
+          Comorbidity
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="comorbidityText">
+          {{ element.primaryicdcode }},
+          {{ element.secondaryicdcode }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <!-- <ng-container matColumnDef="recentWeight">
+      <th mat-header-cell *matHeaderCellDef class="weightText">
+        Recent BG (mmol/L)
+      </mat-header-cell>
+      <td mat-cell *matCellDef="let element" class="weightText rcnt-bg">
+        <div fxLayout="column">
+          <div fxLayout="row">
+            <div class="wt" [ngClass]="
+                element.patientObsBs?.zoneOfPatient == '1'
+                  ? 'highAlertText'
+                  : element.patientObsBs?.zoneOfPatient == '2'
+                  ? 'alertText'
+                  : element.patientObsBs?.zoneOfPatient == '3'
+                  ? 'greenText'
+                  : 'primaryText'
+              ">
+              <b>{{
+                element.patientObsBs?.presentBSreading
+                ? (element.patientObsBs?.presentBSreading | number: "1.1-1")
+                : ""
+                }}</b>
+            </div>
+            <div fxLayout="row" [ngClass]="
+                element.zoneOfPatient == '1'
+                  ? 'highAlertText'
+                  : element.zoneOfPatient == '2'
+                  ? 'alertText'
+                  : element.zoneOfPatient == '3'
+                  ? 'greenText'
+                  : 'primaryText'
+              ">
+              <mat-icon style="
+                  font-size: medium;
+                  position: relative;
+                  left: 7px;
+                  color: white;
+                " *ngIf="element.patientObsBs?.zoneOfPatient == '3'">arrow_downward
+              </mat-icon>
+            </div>
+          </div>
+        </div>
+        <div class="reading-date">
+          {{
+          element.patientObsBs?.createdAt
+          ? dateService.dateTransformation(element.patientObsBs?.createdAt)
+          : ""
+          }}
+        </div>
+      </mat-cell>
+    </ng-container> -->
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="recentBp">
+        <mat-header-cell *matHeaderCellDef class="bpText"
+          >BP (mmHg)</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element" class="bpText rcnt-bp">
+          <div fxLayout="column">
+            <div fxLayout="row" fxLayoutGap="10px">
+              <div>
+                <img
+                  title="bluetooth"
+                  src="assets/svg/Automatic BP Reading.svg"
+                  *ngIf="element.dataSource === 'bluetooth'"
+                />
+                <img
+                  title="manual"
+                  src="assets/svg/Manual BP Reading.svg"
+                  *ngIf="element.dataSource === 'manual'"
+                />
+                <img
+                  title="manual"
+                  src="assets/svg/Manual BP Reading.svg"
+                  *ngIf="element.dataSource === null"
+                />
+              </div>
+              <div
+                class="wt"
+                [ngClass]="
+                  element.zoneOfPatient == '1'
+                    ? 'highAlertText'
+                    : element.zoneOfPatient == '2'
+                    ? 'alertText'
+                    : element.zoneOfPatient == '3'
+                    ? 'greenText'
+                    : 'primaryText'
+                "
+              >
+                <b>{{ element.presentBp ? element.presentBp : "" }}</b>
+              </div>
+              <div
+                fxLayout="row"
+                [ngClass]="
+                  element.zoneOfPatient == '1'
+                    ? 'highAlertText'
+                    : element.zoneOfPatient == '2'
+                    ? 'alertText'
+                    : element.zoneOfPatient == '3'
+                    ? 'greenText'
+                    : 'primaryText'
+                "
+              >
+                <mat-icon
+                  style="font-size: medium; position: relative; left: 7px"
+                  *ngIf="element.bpType == 'hyper'"
+                  >arrow_upward
+                </mat-icon>
+                <mat-icon
+                  style="font-size: medium; position: relative; left: 7px"
+                  *ngIf="element.bpType == 'hypo'"
+                  >arrow_downward
+                </mat-icon>
+                <!-- <mat-icon
+                style="
+                  font-size: medium;
+                  position: relative;
+                  left: 7px;
+                  color: white;
+                "
+                *ngIf="element.zoneOfPatient == '3'"
+                >arrow_downward
+              </mat-icon> -->
+              </div>
+            </div>
+            <div class="reading-date">
+              {{
+                element.createdAt
+                  ? dateService.twelveHoursFormat(element.createdAt)
+                  : ""
+              }}
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <!-- Lifestyle Column -->
+      <ng-container matColumnDef="lifestyle">
+        <mat-header-cell *matHeaderCellDef class="indicatorsText">
+          Lifestyle Indicators
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="indicatorsText symp-icons">
+          <div fxLayout="column" fxLayoutGap="10px">
+            <div fxLayout="row" fxLayoutGap="10px" title="Lifestyle Indicators">
+              <span
+                fxLayout="row"
+                fxLayoutAlign="startn center"
+                class="symptomBorder"
+                fxLayout="row"
+                fxLayoutGap="5px"
+                *ngIf="element?.indicators"
+              >
+                <span
+                  *ngFor="
+                    let img of getIndicators(element?.indicators);
+                    let i = index
+                  "
+                >
+                  <img
+                    class="triggers"
+                    [title]="img.indicatorName"
+                    data-placement="top"
+                    [src]="
+                      'assets/img/Lifestyle & Symptom Icons/' +
+                      img.indicatorIcon
+                    "
+                    *ngIf="img.indicatorIcon !== ''"
+                  />
+                </span>
+              </span>
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="symptoms">
+        <mat-header-cell *matHeaderCellDef class="symptomsText"
+          >Symptoms</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element" class="symptomsText symp-icons">
+          <div fxLayout="column" fxLayoutGap="10px">
+            <div fxLayout="row" fxLayoutGap="10px" title="BP Symptoms">
+              <!-- <span
+              fxLayout="row"
+              fxLayoutAlign="start center"
+              class="symptomBorder"
+              *ngIf="getBPImage(element?.symptomsBp).length"
+              fxLayout="row"
+              fxLayoutGap="5px"
+            > -->
+              <span
+                *ngFor="
+                  let img of getBPImage(element?.symptomsBp);
+                  let i = index
+                "
+              >
+                <img
+                  *ngIf="img.symptomUrl !== ''"
+                  [src]="img.symptomUrl"
+                  [title]="img.symptomName"
+                  data-placement="top"
+                  class="triggers"
+              /></span>
+              <!-- </span> -->
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="contactNo">
+        <mat-header-cell *matHeaderCellDef class="symptomsText"
+          >Contact Number</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element" class="symptomsText symp-icons">
+          <div fxLayout="column" fxLayoutGap="10px">
+            <div fxLayout="row" fxLayoutGap="10px" title="BP Symptoms">
+              {{ element?.cellNumber }}
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Remarks</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="goodStatus">
+          <div fxLayout="row">
+            <div class="comments">
+              <div fxLayout="column" fxLayoutGap="7px">
+                <!-- <div class="currentStatus">
+                {{ showNextAppt(element) }}
+              </div> -->
+                <div fxLayout="row">
+                  <span class="view-info-text"> View Past Activities</span>
+                  <span
+                    class="info-icon"
+                    title="Past Activities"
+                    (click)="pastActivities(element)"
+                  >
+                    <img src="assets/svg/DashboardIcons/info.svg" />
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!-- <div fxLayoutAlign="end" fxHide.gt-md>
+              <mat-icon [matMenuTriggerFor]="menu" #menuTrigger
+                >more_vert</mat-icon
+              >
+              <mat-menu #menu="matMenu" class="mat-menu-panel myButtons">
+                <div fxLayout="row" fxLayoutGap="10px" class="actBtns">
+                  <div
+                    class="action_btn"
+                    (click)="emitNotes(element)"
+                    title="Notes"
+                  >
+                    <img [src]="imgSrcNote" alt="" />
+                  </div>
+                  <div
+                    class="call_btn"
+                    [matMenuTriggerFor]="audioMenu"
+                    #audioMenuTrigger
+                    title="Voice call"
+                    mat-menu-item
+                  >
+                    <img [src]="imgSrcAudioCall" class="call-btns" alt="" />
+                  </div>
+                  <div
+                    class="call_btn"
+                    [matMenuTriggerFor]="videoMenu"
+                    #videoMenuTrigger
+                    title="Video call"
+                    mat-menu-item
+                  >
+                    <img [src]="imgSrcVideo" class="call-btns" alt="" />
+                  </div>
+                  <mat-menu
+                    #audioMenu="matMenu"
+                    class="mat-menu-panel myButtons"
+                  >
+                    <div fxLayout="column" fxLayoutGap="1px">
+                      <div
+                        fxLayout="row"
+                        fxLayoutGap="6px"
+                        (click)="startAudioCall(element)"
+                        style="
+                          cursor: pointer;
+                          padding-top: 7px;
+                          padding-left: 3px;
+                        "
+                      >
+                        <div>
+                          <img
+                            src="assets/svg/DashboardIcons/Call Black.svg"
+                            alt=""
+                            style="width: 18px"
+                          />
+                        </div>
+                        <div class="menu-content">Make a voice call</div>
+                      </div>
+                      <div>
+                        <hr class="menu-divider" />
+                      </div>
+                      <div
+                        fxLayout="row"
+                        fxLayoutGap="6px"
+                        (click)="
+                          openScheduleCallDialog(element, 'scheduleVoice')
+                        "
+                        style="
+                          cursor: pointer;
+                          padding-bottom: 7px;
+                          padding-left: 3px;
+                        "
+                      >
+                        <div>
+                          <img
+                            src="assets/svg/DashboardIcons/Call Scheduler.svg"
+                            alt=""
+                            style="width: 18px"
+                          />
+                        </div>
+                        <div class="menu-content">Schedule a voice call</div>
+                      </div>
+                    </div>
+                  </mat-menu>
+
+                  <mat-menu
+                    #videoMenu="matMenu"
+                    class="mat-menu-panel myButtons"
+                  >
+                    <div fxLayout="column" fxLayoutGap="1px">
+                      <div
+                        fxLayout="row"
+                        fxLayoutGap="6px"
+                        style="
+                          cursor: pointer;
+                          padding-top: 7px;
+                          padding-left: 3px;
+                        "
+                        (click)="startVideoCall(element)"
+                      >
+                        <div>
+                          <img
+                            src="assets/svg/DashboardIcons/Video Call Black.svg"
+                            alt=""
+                            style="width: 18px"
+                          />
+                        </div>
+                        <div class="menu-content">Make a video call</div>
+                      </div>
+                      <div>
+                        <hr class="menu-divider" />
+                      </div>
+                      <div
+                        fxLayout="row"
+                        fxLayoutGap="6px"
+                        (click)="
+                          openScheduleCallDialog(element, 'scheduleVideo')
+                        "
+                        style="
+                          cursor: pointer;
+                          padding-bottom: 7px;
+                          padding-left: 3px;
+                        "
+                      >
+                        <div>
+                          <img
+                            src="assets/svg/DashboardIcons/Call Scheduler.svg"
+                            alt=""
+                            style="width: 18px"
+                          />
+                        </div>
+                        <div class="menu-content">Schedule a video call</div>
+                      </div>
+                    </div>
+                  </mat-menu>
+                </div>
+              </mat-menu>
+            </div> -->
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="actionText actionText-border-right"
+        >
+          Actions
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index" class="actionText">
+          <div fxLayout="row" fxLayoutGap="10px" class="actBtns">
+            <!-- <div class="action_btn" (click)="openReportDialog()" title="Reports">
+                  <img [src]="imgSrcReport" alt="">
+              </div> -->
+            <div class="action_btn" (click)="emitNotes(element)" title="Notes">
+              <img [src]="imgSrcNote" alt="" />
+            </div>
+            <!-- <div class="action_btn" (click)="openMessage(element?.patient?.cellNumber)" title="Message">
+            <img [src]="imgSrcMsg" alt="" />
+          </div> -->
+            <div
+              class="action_btn"
+              [matMenuTriggerFor]="audioMenu"
+              #audioMenuTrigger
+              title="Voice call"
+            >
+              <img [src]="imgSrcAudioCall" alt="" />
+            </div>
+            <mat-menu #audioMenu="matMenu">
+              <div fxLayout="column" fxLayoutGap="1px">
+                <button
+                  mat-menu-item
+                  fxLayout="row"
+                  fxLayoutGap="6px"
+                  (click)="startAudioCall(element)"
+                >
+                  <div>
+                    <img
+                      src="assets/svg/DashboardIcons/Call Black.svg"
+                      alt=""
+                      style="width: 18px"
+                    />
+                  </div>
+                  <div class="menu-content">Make a voice call</div>
+                </button>
+
+                <div
+                  mat-menu-item
+                  fxLayout="row"
+                  fxLayoutGap="6px"
+                  (click)="openScheduleCallDialog(element, 'scheduleVoice')"
+                  style="cursor: pointer"
+                >
+                  <div>
+                    <img
+                      src="assets/svg/DashboardIcons/Call Scheduler.svg"
+                      alt=""
+                      style="width: 18px"
+                    />
+                  </div>
+                  <div class="menu-content">Schedule a voice call</div>
+                </div>
+              </div>
+            </mat-menu>
+            <div
+              class="action_btn"
+              [matMenuTriggerFor]="videoMenu"
+              #videoMenuTrigger
+              title="Video call"
+            >
+              <img [src]="imgSrcVideo" alt="" />
+            </div>
+            <mat-menu #videoMenu="matMenu">
+              <div fxLayout="column" fxLayoutGap="1px">
+                <button
+                  fxLayout="row"
+                  fxLayoutGap="6px"
+                  mat-menu-item
+                  (click)="startVideoCall(element)"
+                >
+                  <div>
+                    <img
+                      src="assets/svg/DashboardIcons/Video Call Black.svg"
+                      alt=""
+                      style="width: 18px"
+                    />
+                  </div>
+                  Make a video call
+                </button>
+
+                <button
+                  fxLayout="row"
+                  fxLayoutGap="6px"
+                  mat-menu-item
+                  (click)="openScheduleCallDialog(element, 'scheduleVideo')"
+                >
+                  <div>
+                    <img
+                      src="assets/svg/DashboardIcons/Call Scheduler.svg"
+                      alt=""
+                      style="width: 18px"
+                    />
+                  </div>
+                  Schedule a video call
+                </button>
+              </div>
+            </mat-menu>
+
+            <div
+              class="action_btn"
+              (click)="
+                openMedication(
+                  element,
+                  element?.firstName + ' ' + element?.lastName
+                )
+              "
+              title="Message"
+            >
+              <img [src]="imgSrcMedication" alt="" />
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedGoodColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedGoodColumns"></mat-row>
+    </mat-table>
+  </div>
+  <div *ngIf="dataSource.loadRes" class="noRecordsFound">
+    <!-- <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+  </mat-progress-bar> -->
+    <app-loader [gifBackground]="'blueBg'"></app-loader>
+  </div>
+  <div class="noRecordsFound" *ngIf="goodZonePatCount === '0'">
+    No patients found!
+  </div>
+  <mat-paginator
+    [ngClass]="
+      (dataSource.totalElemObservable | async) < 10 || dataSource.loadRes
+        ? 'hide-pagination-element'
+        : 'doc-mat-paginator'
+    "
+    [length]="dataSource.totalElemObservable | async"
+    [pageSizeOptions]="[10, 25, 100]"
+    [hidePageSize]="true"
+  >
+  </mat-paginator>
+</div>

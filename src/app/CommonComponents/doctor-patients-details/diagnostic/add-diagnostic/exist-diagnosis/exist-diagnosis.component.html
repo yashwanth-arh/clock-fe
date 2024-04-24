@@ -1,0 +1,18 @@
+<div class="existDiagnosis">
+  <div>
+    {{ data.title }}
+  </div>
+  <div style="display: flex; gap: 5px">
+    <button
+      type="button"
+      mat-flat-button
+      class="cancel-button"
+      (click)="dialogRef.close(false)"
+    >
+      Cancel
+    </button>
+    <button class="save-btn" type="submit" (click)="dialogRef.close(true)">
+      Confirm
+    </button>
+  </div>
+</div>

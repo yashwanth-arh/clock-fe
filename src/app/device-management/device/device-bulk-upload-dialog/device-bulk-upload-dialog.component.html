@@ -1,0 +1,72 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">Device Bulk Upload</span>
+<mat-divider class="module-divider"></mat-divider>
+<form [formGroup]="uploadForm">
+  <mat-dialog-content>
+    <!-- <div class="upload-box">
+      <div fxLayout="column" class="upload-box-content">
+        <div>
+          <img src="assets/svg/file-text.svg" />
+        </div>
+        <div class="select-file-text">Please select excel file</div>
+        <label
+          for="file"
+          fxLayout="column"
+          fxLayoutGap="10px"
+          class="pres-upload-label"
+        >
+          <div class="click-browser-text">Click to browse</div>
+        </label>
+        <input
+          type="file"
+          id="file"
+          accept=".pdf,.png,.jpg,.jpeg"
+          (change)="onFileSelect($event)"
+          class="file"
+        />
+      </div> 
+    </div> -->
+    <div class="upload-box">
+      <div fxLayout="column" class="upload-box-content">
+        <div>
+          <img src="assets/svg/file-text.svg" />
+        </div>
+        <div class="select-file-text">
+          {{ fileName ? fileName : "Please select excel file" }}
+        </div>
+        <label
+          for="file"
+          fxLayout="column"
+          fxLayoutGap="10px"
+          class="pres-upload-label"
+        >
+          <div class="click-browser-text">Click to browse</div>
+        </label>
+        <input
+          type="file"
+          id="file"
+          accept=".xls,.xlsx"
+          (change)="onFileSelect($event)"
+          (click)="$event.target['value'] = null"
+          class="file"
+        />
+      </div>
+    </div>
+    <div class="button-div">
+      <button mat-flat-button class="rpm-save-button">
+        <a style="color: white" [href]="deviceUrl">Download</a>
+      </button>
+      <button
+        mat-flat-button
+        class="rpm-save-button"
+        [disabled]="!uploadForm.valid"
+        (click)="onSubmit()"
+        style="margin-left: 10px"
+      >
+        Upload
+      </button>
+    </div>
+  </mat-dialog-content>
+</form>

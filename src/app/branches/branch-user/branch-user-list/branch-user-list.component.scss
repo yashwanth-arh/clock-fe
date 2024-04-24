@@ -1,0 +1,113 @@
+.branchUserList {
+  // .rpm-module-table-container {
+  //   height: 63vh !important;
+  //   background: #fff;
+  // }
+
+  // .rpm-module-table-view {
+  //   margin: 0px;
+  //   padding: 0;
+  // }
+  // ::ng-deep .mat-header-row,.mat-row {
+  //   width: 100% !important;
+  // }
+
+  // ::ng-dee.mat-menu-item:hover {
+  //   background-color: #ecfffa;
+  // }
+  .mat-header-row,.mat-row {
+    width: 100% !important;
+  }
+
+  .hide-pagination-element {
+    display: none;
+  }
+
+  mat-icon {
+    position: relative;
+    left: 1px;
+    bottom: 2px;
+  }
+
+  button:focus {
+    outline: 0;
+  }
+
+  .valid-text {
+    margin-top: -23px;
+    margin-left: 11px;
+  }
+
+  .active {
+    cursor: pointer;
+    padding: 6px 10px;
+    background: #01cd74;
+    border-radius: 4px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    color: #ffffff;
+  }
+
+  .inactive {
+    padding: 6px 10px;
+    // width: 87px;
+    // height: 25px;
+    background: #9aa5af;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    color: #ffffff;
+  }
+
+  .notAdmin {
+    border-radius: 0px !important;
+    padding: 0 !important;
+
+    .mat-table {
+      border-top-left-radius: 0px !important;
+      border-top-right-radius: 0px !important;
+      max-height: 518px !important;
+      min-height: 518px !important;
+    }
+
+    .mat-header-cell,
+    .mat-cell {
+      max-width: 142px !important;
+      min-width: 142px !important;
+    }
+  }
+
+  .mat-header-cell,
+  .mat-cell {
+    max-width: 143px !important;
+    min-width: 143px !important;
+  }
+}
+@media only screen and (min-device-width: 1679px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .branchUserList {
+    .notAdmin {
+      .mat-table {
+        max-height: 46em !important;
+        min-height: 46em !important;
+      }
+      .mat-header-cell,
+      .mat-cell {
+        max-width: 170px !important;
+        min-width: 170px !important;
+      }
+    }
+    .mat-header-row,
+    .mat-row {
+      width: 100% !important;
+    }
+    .example-container.mat-elevation-z8 {
+      width: 114%;
+    }
+  }
+}
+// .mat-header-row,.mat-row {
+//   width: 100% !important;
+// }

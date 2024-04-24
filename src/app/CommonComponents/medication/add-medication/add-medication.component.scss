@@ -1,0 +1,64 @@
+.form-container {
+  padding: 16px 24px 16px 24px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  color: #424242;
+  position: relative;
+  // left: 0.8vw;
+  margin-bottom: 1vh;
+  top: -0.7vh;
+  text-align: center;
+}
+
+.textField {
+  width: 50%;
+
+}
+
+.medication-form-div {
+  ::ng-deep .mat-input-element {
+    top: -3px;
+    position: relative;
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    top: 4px;
+  }
+}
+
+.upld-pres {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 238px;
+}
+
+.save-button {
+  position: relative;
+  left: -1.4vh;
+  width: 81.09px;
+  height: 37.13px;
+  background: #01CD74;
+  box-shadow: 0px 0px 10px rgba(1, 0, 102, 0.1);
+  border-radius: 10px;
+  color: white;
+  outline: none;
+}
+
+.cancel-button {
+  position: relative;
+  left: -1.4vh;
+  width: 81.09px;
+  height: 37.13px;
+  background: #fff;
+  border: 1px solid #01CD74;
+  box-sizing: border-box;
+  color: #01CD74;
+  box-shadow: 0px 0px 10px rgba(1, 0, 102, 0.1);
+  border-radius: 10px;
+  outline: none;
+}

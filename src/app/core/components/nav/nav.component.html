@@ -1,0 +1,577 @@
+<app-header></app-header>
+<div class="loader-container-spinner" *ngIf="loaderService?.isLoading | async">
+  <app-loader [gifBackground]="'blueBg'"></app-loader>
+</div>
+
+<mat-sidenav-container
+  autosize
+  class="rpm-sidenav-container scrollable-element"
+>
+  <mat-sidenav
+    #sidenav
+    [opened]="opened"
+    [ngClass]="expanded ? 'sidenav-expanded' : 'sidenav-compressed'"
+    [autoFocus]="false"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    class="rpm-sidenav"
+    [fixedInViewport]="true"
+    [fixedBottomGap]="0"
+    disableClose=""
+    [fixedTopGap]="0"
+    color="primary"
+    *ngIf="authStateService.userLoggedIn | async as isLoggedIn"
+  >
+    <!-- <button
+      mat-icon-button
+      class="toggle-btn"
+      (click)="togglMenu()"
+      matTooltip="{{ !expanded ? 'Expand' : 'Compress' }}"
+      [matTooltipClass]="{ 'rpm-tooltip': true }"
+      matTooltipPosition="right"
+    >
+      <mat-icon>menu</mat-icon>
+    </button> -->
+
+    <!-- <div class="rpm-heading">
+      <img
+        src="assets/img/Clock Health Logo.png"
+        *ngIf="expanded"
+        style="width: 125px; margin-left: 35px; margin-top: 20px"
+        alt="brand-logo"
+      />
+      <img
+        src="assets/img/Clock Health Icon.png"
+        *ngIf="!expanded"
+        style="width: 60px; margin-left: 26px; margin-top: 20px"
+        alt="brand-logo"
+      />
+      <br />
+    </div> -->
+    <mat-nav-list [class.nav-list-compressed]="!expanded">
+      <mat-accordion>
+        <div *ngIf="!expanded; else fullMenu">
+          <ng-container *ngFor="let item of navigationRoutes">
+            <ng-container *appPermission="item.permissions; let isAllowed">
+              <ng-container *ngIf="isAllowed">
+                <a
+                  mat-list-item
+                  [ngClass]="expanded ? 'app-menu-button' : 'app-menu-icons'"
+                  [routerLink]="[item.route]"
+                  (click)="getRoute(item.route)"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  *ngIf="!item.subMenu; else subMenu"
+                >
+                  <div
+                    class="compressed-icon"
+                    style="display: flex; align-items: center; gap: 12px"
+                  >
+                    <!-- <mat-icon
+                      matListIcon
+                      class="app-nav-list-icon"
+                      [matTooltip]="item.title"
+                      [matTooltipPosition]="position"
+                      [matTooltipDisabled]="disabled"
+                      [matTooltipShowDelay]="showDelay"
+                      [matTooltipHideDelay]="hideDelay"
+                      [matTooltipClass]="{ 'rpm-tooltip': showExtraClass }"
+                    >
+                      {{ item.icon }}
+                    </mat-icon> -->
+                    <img
+                      [src]="
+                        item.route.includes(activeImg)
+                          ? item.activeImg
+                          : item.inActiveImg
+                      "
+                      [matTooltip]="item.title"
+                      [alt]="item.title"
+                    />
+                    <span class="rpm-list-item-text">{{ item.title }}</span>
+                  </div>
+                </a>
+                <ng-template #subMenu>
+                  <mat-expansion-panel
+                    class="menu-extension mat-elevation-z0"
+                    mat-list-item
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <div class="compressed-icon">
+                          <!-- <mat-icon
+                            matListIcon
+                            class="app-nav-list-icon"
+                            [matTooltip]="item.title"
+                            [matTooltipPosition]="position"
+                            [matTooltipDisabled]="disabled"
+                            [matTooltipShowDelay]="showDelay"
+                            [matTooltipHideDelay]="hideDelay"
+                            [matTooltipClass]="{
+                              'rpm-tooltip': showExtraClass
+                            }"
+                          >
+                            {{ item.icon }}
+                          </mat-icon> -->
+                          <img
+                            [src]="
+                              item.route.includes(activeImg)
+                                ? item.activeImg
+                                : item.inActiveImg
+                            "
+                            [matTooltip]="item.title"
+                            [alt]="item.title"
+                          />
+                          <span class="rpm-list-item-text">{{
+                            item.title
+                          }}</span>
+                        </div>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ng-container *ngFor="let subItem of item.subMenu">
+                      <div class="compressed-icon">
+                        <a
+                          style="height: 66px !important"
+                          mat-list-item
+                          [routerLink]="[subItem.route]"
+                          routerLinkActive="active"
+                          [routerLinkActiveOptions]="{ exact: true }"
+                        >
+                          <!-- <mat-icon
+                            matListIcon
+                            class="app-nav-list-icon"
+                            [matTooltip]="subItem.title"
+                            [matTooltipPosition]="position"
+                            [matTooltipDisabled]="disabled"
+                            [matTooltipShowDelay]="showDelay"
+                            [matTooltipHideDelay]="hideDelay"
+                            [matTooltipClass]="{
+                              'rpm-tooltip': showExtraClass
+                            }"
+                          >
+                            {{ subItem.icon }}
+                          </mat-icon> -->
+                          <img
+                            [src]="
+                              item.route.includes(activeImg)
+                                ? item.activeImg
+                                : item.inActiveImg
+                            "
+                            [matTooltip]="item.title"
+                            [alt]="item.title"
+                          />
+                          <span class="rpm-list-item-text">{{
+                            item.title
+                          }}</span>
+                        </a>
+                      </div>
+                    </ng-container>
+                  </mat-expansion-panel>
+                </ng-template>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+        <ng-template #fullMenu>
+          <div *ngFor="let item of navigationRoutes">
+            <ng-container *appPermission="item.permissions; let isAllowed">
+              <ng-container *ngIf="isAllowed">
+                <a
+                  mat-list-item
+                  class="app-menu-button"
+                  *ngIf="!item.subMenu; else subMenu"
+                  (click)="resetMenu()"
+                  [routerLink]="[item.route]"
+                  routerLinkActive="active"
+                  (click)="getRoute(item.route)"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                >
+                  <!-- <mat-icon matListIcon class="app-nav-list-icon">
+                    {{ item.icon }}
+                  </mat-icon> -->
+                  <div style="display: flex; align-items: center; gap: 12px">
+                    <img
+                      [src]="
+                        item.route.includes(activeImg)
+                          ? item.activeImg
+                          : item.inActiveImg
+                      "
+                      [matTooltip]="item.title"
+                      [alt]="item.title"
+                    />
+                    <span class="rpm-list-item-text">{{ item.title }}</span>
+                  </div>
+                </a>
+                <ng-template #subMenu>
+                  <mat-expansion-panel
+                    class="menu-extension mat-elevation-z0"
+                    mat-list-item
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <div
+                          class="app-parent-icon"
+                          fxLayout="row"
+                          fxLayoutAlign="space-between center"
+                        >
+                          <!-- <mat-icon
+                            matListIcon
+                            class="app-nav-list-icon p-t-4 p-l-4 p-r-4 p-b-4"
+                          >
+                            {{ item.icon }}
+                          </mat-icon> -->
+                          <div
+                            style="
+                              display: flex;
+                              align-items: center;
+                              gap: 12px;
+                            "
+                          >
+                            <img
+                              [src]="
+                                item.route.includes(activeImg)
+                                  ? item.activeImg
+                                  : item.inActiveImg
+                              "
+                              [matTooltip]="item.title"
+                              [alt]="item.title"
+                            />
+                            <span class="rpm-list-item-text">{{
+                              item.title
+                            }}</span>
+                          </div>
+                        </div>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ng-container *ngFor="let subItem of item.subMenu">
+                      <ng-container>
+                        <a
+                          mat-list-item
+                          (click)="resetMenu()"
+                          [routerLink]="[subItem.route]"
+                          routerLinkActive="active"
+                          [routerLinkActiveOptions]="{ exact: true }"
+                        >
+                          <!-- <mat-icon matListIcon class="app-nav-list-icon">
+                            {{ subItem.icon }}
+                          </mat-icon> -->
+                          <div
+                            style="
+                              display: flex;
+                              align-items: center;
+                              gap: 12px;
+                            "
+                          >
+                            <img
+                              [src]="
+                                item.route.includes(activeImg)
+                                  ? item.activeImg
+                                  : item.inActiveImg
+                              "
+                              [matTooltip]="item.title"
+                              [alt]="item.title"
+                            />
+                            <span class="rpm-list-item-text">
+                              {{ subItem.title }}</span
+                            >
+                          </div>
+                        </a>
+                      </ng-container>
+                    </ng-container>
+                  </mat-expansion-panel>
+                </ng-template>
+              </ng-container>
+            </ng-container>
+          </div>
+        </ng-template>
+      </mat-accordion>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-drawer-container hasBackdrop="false" class="profile-drawer-container">
+      <mat-drawer
+        #drawer
+        mode="over"
+        position="end"
+        class="profile-drawer"
+        [opened]="toggleProfile"
+      >
+        <div class="rpm-module-table-container tableSection">
+          <div class="profile-settings">
+            <div fxFlex="row">
+              <div class="edit-header">
+                <span>
+                  <p>
+                    <mat-icon class="edit-icon">edit</mat-icon
+                    ><b>Your Profile</b>
+                    <mat-icon
+                      class="close-icon"
+                      mat-flat-button
+                      (click)="closeProfileDrawer()"
+                      >close
+                    </mat-icon>
+                  </p>
+                </span>
+              </div>
+              <mat-divider class="module-divider"></mat-divider>
+              <app-image-upload
+                [imagePath]="profileImagePath"
+              ></app-image-upload>
+              <div *ngIf="isProfileLoaded">
+                <form
+                  role="form"
+                  aria-describedby="profile-edit-form"
+                  [formGroup]="editProfile"
+                  (ngSubmit)="onSubmit()"
+                >
+                  <mat-form-field
+                    *ngIf="editProfile.controls['name']"
+                    appearance="outline"
+                    class="profile-fieldWidth"
+                  >
+                    <mat-label>Name</mat-label>
+                    <input
+                      matInput
+                      autocomplete="off"
+                      placeholder="Name"
+                      formControlName="name"
+                      required
+                    />
+                    <mat-error>Name is required</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field
+                    appearance="outline"
+                    class="profile-fieldWidth"
+                    *ngIf="editProfile.controls['firstName']"
+                  >
+                    <mat-label>First Name</mat-label>
+                    <input
+                      matInput
+                      autocomplete="off"
+                      placeholder="Name"
+                      formControlName="firstName"
+                      required
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field
+                    appearance="outline"
+                    class="profile-fieldWidth"
+                    *ngIf="editProfile.controls['middleName']"
+                  >
+                    <mat-label>Middle Name</mat-label>
+                    <input
+                      matInput
+                      autocomplete="off"
+                      placeholder="Name"
+                      formControlName="middleName"
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field
+                    appearance="outline"
+                    class="profile-fieldWidth"
+                    *ngIf="editProfile.controls['lastName']"
+                  >
+                    <mat-label>Last Name</mat-label>
+                    <input
+                      matInput
+                      autocomplete="off"
+                      placeholder="Name"
+                      formControlName="lastName"
+                      required
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field
+                    appearance="outline"
+                    class="profile-fieldWidth"
+                    *ngIf="editProfile.controls['contactNumber']"
+                  >
+                    <mat-label>contact Number</mat-label>
+                    <input
+                      maxlength="10"
+                      appNumberCustomValidation
+                      matInput
+                      autocomplete="off"
+                      placeholder="Contact Number"
+                      formControlName="contactNumber"
+                      required
+                    />
+                    <mat-error
+                      *ngIf="
+                        editProfile.controls['contactNumber'] &&
+                        !editProfile.controls['contactNumber'].valid &&
+                        editProfile.controls['contactNumber'].touched
+                      "
+                    >
+                      {{ getErrorContactNo() }}</mat-error
+                    >
+                  </mat-form-field>
+
+                  <mat-form-field
+                    appearance="outline"
+                    class="profile-fieldWidth"
+                    *ngIf="editProfile.controls['homeNumber']"
+                  >
+                    <mat-label>Home Number</mat-label>
+                    <input
+                      maxlength="10"
+                      appNumberCustomValidation
+                      matInput
+                      autocomplete="off"
+                      formControlName="homeNumber"
+                      required
+                    />
+                    <mat-error
+                      *ngIf="
+                        editProfile.controls['homeNumber'] &&
+                        !editProfile.controls['homeNumber'].valid &&
+                        editProfile.controls['homeNumber'].touched
+                      "
+                    >
+                      {{ getErrorHomeNo() }}</mat-error
+                    >
+                  </mat-form-field>
+
+                  <mat-form-field
+                    appearance="outline"
+                    class="profile-fieldWidth"
+                    *ngIf="editProfile.controls['cellNumber']"
+                  >
+                    <mat-label>Cell Number</mat-label>
+                    <input
+                      maxlength="10"
+                      appNumberCustomValidation
+                      matInput
+                      autocomplete="off"
+                      formControlName="cellNumber"
+                      required
+                    />
+                    <mat-error
+                      *ngIf="
+                        editProfile.controls['cellNumber'] &&
+                        !editProfile.controls['cellNumber'].valid &&
+                        editProfile.controls['cellNumber'].touched
+                      "
+                    >
+                      {{ getErrorCellNo() }}</mat-error
+                    >
+                  </mat-form-field>
+
+                  <button
+                    mat-flat-button
+                    class="rpm-profile-button"
+                    [disabled]="!editProfile.valid"
+                  >
+                    Save
+                  </button>
+                </form>
+              </div>
+
+              <div class="reset-password-content">
+                <div class="reset-password-text">
+                  <p>Reset Password</p>
+                </div>
+                <form
+                  [formGroup]="resetForm"
+                  [class.error]="!resetForm.valid && resetForm.touched"
+                  (ngSubmit)="onResetPassword()"
+                >
+                  <div fxLayout="row">
+                    <div>
+                      <mat-form-field
+                        appearance="outline"
+                        class="profile-fieldWidth"
+                      >
+                        <mat-label>Old Password</mat-label>
+                        <input
+                          type="password"
+                          matInput
+                          autocomplete="off"
+                          formControlName="existingPassword"
+                          required
+                        />
+                        <mat-error>Old password is required</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div fxLayout="row">
+                    <div>
+                      <mat-form-field
+                        appearance="outline"
+                        class="profile-fieldWidth"
+                      >
+                        <mat-label>New Password</mat-label>
+                        <input
+                          type="password"
+                          matInput
+                          autocomplete="off"
+                          formControlName="newPassword"
+                          required
+                        />
+                        <mat-error *ngIf="newPassword?.errors?.required"
+                          >New password is required</mat-error
+                        >
+                        <mat-error *ngIf="newPassword?.errors?.pattern"
+                          >Enter valid password format</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                    <div>
+                      <img
+                        class="info-icon"
+                        src="assets/svg/DashboardIcons/information.svg"
+                        alt=""
+                        [title]="info"
+                      />
+                    </div>
+                  </div>
+
+                  <div fxLayout="row">
+                    <div>
+                      <mat-form-field
+                        appearance="outline"
+                        class="profile-fieldWidth"
+                      >
+                        <mat-label>Confirm Password</mat-label>
+                        <input
+                          type="password"
+                          matInput
+                          autocomplete="off"
+                          formControlName="reNewPassword"
+                          required
+                        />
+                        <mat-error>Confirm password is required</mat-error>
+                        <mat-error *ngIf="reNewPassword?.errors?.NoMatch"
+                          >Confirm password should match</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                    <div>
+                      <img
+                        class="info-icon"
+                        src="assets/svg/DashboardIcons/information.svg"
+                        alt=""
+                        [title]="info"
+                      />
+                    </div>
+                  </div>
+
+                  <button mat-flat-button class="rpm-profile-button">
+                    Reset
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-drawer>
+      <mat-drawer-content>
+        <router-outlet></router-outlet>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>

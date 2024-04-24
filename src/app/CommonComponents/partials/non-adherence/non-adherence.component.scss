@@ -1,0 +1,59 @@
+.non-adherence-div {
+  mat-tooltip-component {
+    display: none !important;
+  }
+
+  .hide-pagination-element {
+    display: none;
+  }
+
+  .notAdmin {
+    border-radius: 0px !important;
+    padding: 0 !important;
+
+
+    ::ng-deep .mat-table {
+      border-top-left-radius: 0px !important;
+      border-top-right-radius: 0px !important;
+      max-height: 528px !important;
+      min-height: 528px !important;
+      width: auto;
+    }
+  }
+
+
+
+  .action-text-position {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: -3.7vw;
+  }
+
+  th.mat-header-cell:last-of-type,
+  td.mat-cell:last-of-type,
+  td.mat-footer-cell:last-of-type {
+    padding-right: 16px;
+  }
+
+  @media only screen and (min-device-width: 769px) and (max-device-width: 1024px) {
+    .nonStatus {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+
+    .patientBio {
+      margin-left: 43px;
+    }
+  }
+
+  @media only screen and (min-device-width: 1600px) and (max-device-width: 1800px) {
+    .notAdmin {
+      ::ng-deep .mat-table {
+        max-height: 47em !important;
+        min-height: 47em !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,307 @@
+<div
+  class="patientDevice"
+  [ngClass]="
+    userRole === 'CARECOORDINATOR' ? 'carecoordinate-div' : 'admin-div'
+  "
+>
+  <app-navigation-bar
+    (backEvent)="viewhospital()"
+    [Headername]="hospitalName"
+  ></app-navigation-bar>
+  <!-- <app-navigation-bar (clickEvent)="openVendorDialog('add')"></app-navigation-bar> -->
+  <div fxLayout="row" style="padding-right: 16px">
+    <div
+      class="example-container mat-elevation-z8"
+      *ngIf="dataSource"
+      fxFlex="60"
+    >
+      <mat-table #table matTableResponsive [dataSource]="dataSource">
+        <ng-container matColumnDef="Name">
+          <mat-header-cell fxFlex="80%" *matHeaderCellDef>
+            Name
+          </mat-header-cell>
+          <mat-cell
+            fxFlex="80%"
+            *matCellDef="let element"
+            [title]="
+              element?.deviceModelName && element?.deviceModelName.length > 15
+                ? element?.deviceModelName
+                : ''
+            "
+          >
+            {{
+              element?.deviceModelName && element?.deviceModelName.length > 15
+                ? (element?.deviceModelName | slice : 0 : 15) + "..."
+                : element?.deviceModelName
+                ? element?.deviceModelName
+                : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+        <!-- <ng-container matColumnDef="Device Type">
+          <mat-header-cell fxFlex="80%" *matHeaderCellDef>
+            Device Type
+          </mat-header-cell>
+          <mat-cell fxFlex="80%" *matCellDef="let element">
+            {{ element?.device_category_name }}
+          </mat-cell>
+        </ng-container> -->
+        <!-- <ng-container matColumnDef="Version">
+          <mat-header-cell fxFlex="80%" *matHeaderCellDef>
+            Version
+          </mat-header-cell>
+          <mat-cell fxFlex="80%" *matCellDef="let element">
+            {{ element?.device_version }}
+          </mat-cell>
+        </ng-container> -->
+        <!-- <ng-container matColumnDef="Vendor">
+          <mat-header-cell fxFlex="80%" *matHeaderCellDef>
+            Vendor
+          </mat-header-cell>
+          <mat-cell fxFlex="80%" *matCellDef="let element">
+            {{ element?.vendor_name }}
+          </mat-cell>
+        </ng-container> -->
+        <ng-container matColumnDef="IMEI">
+          <mat-header-cell fxFlex="80%" *matHeaderCellDef>
+            IMEI / Serial No.
+          </mat-header-cell>
+          <mat-cell
+            fxFlex="80%"
+            *matCellDef="let element"
+            [title]="
+              element?.imeinumber && element?.imeinumber.length > 15
+                ? element?.imeinumber
+                : ''
+            "
+          >
+            {{
+              element?.imeinumber && element?.imeinumber.length > 15
+                ? (element?.imeinumber | slice : 0 : 15) + "..."
+                : element?.imeinumber
+                ? element?.imeinumber
+                : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Date Assigned">
+          <mat-header-cell fxFlex="80%" *matHeaderCellDef>
+            Last Updated
+          </mat-header-cell>
+          <mat-cell fxFlex="80%" *matCellDef="let element">
+            {{ element?.lastUpdatedAt | date : "dd/MM/yyyy" }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Status">
+          <mat-header-cell fxFlex="80%" *matHeaderCellDef>
+            Status
+          </mat-header-cell>
+          <mat-cell fxFlex="80%" *matCellDef="let element">
+            <mat-hint
+              [ngClass]="
+                element.assignStatus == 'ASSIGNED_HOS' ||
+                element.assignStatus == 'ASSIGNED_PAT'
+                  ? 'assign'
+                  : element.assignStatus == 'ASSIGNED_CH'
+                  ? 'available'
+                  : element.assignStatus == 'DAMAGED'
+                  ? 'damage'
+                  : 'unassign'
+              "
+              >{{
+                element.assignStatus == "ASSIGNED_HOS" ||
+                element.assignStatus == "ASSIGNED_PAT"
+                  ? "Assigned"
+                  : element.assignStatus == "DAMAGED"
+                  ? "Damaged"
+                  : "Available"
+              }}
+            </mat-hint>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Action">
+          <mat-header-cell fxFlex="13%" *matHeaderCellDef
+            >Action</mat-header-cell
+          >
+          <mat-cell fxFlex="13%" *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="unAssignDevice(element)">
+                <mat-icon>person_add</mat-icon>
+                <span>Unassign</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="userColumnHeaders"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: userColumnHeaders"></mat-row>
+      </mat-table>
+      <div class="noRecordsFound" *ngIf="length <= 0">No records found!</div>
+      <mat-paginator
+        [ngClass]="length < 10 ? 'hide-pagination-element' : 'show-pagination'"
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+    <div
+      *ngIf="(adminAccess == 'true' || userRole === 'CARECOORDINATOR') && dataSource"
+      fxFlex="40"
+    >
+      <mat-card style="border-radius: 8px">
+        <div fxLayout="column" fxLayoutGap="20px">
+          <div>
+            <div style="padding-bottom: 12px">Assign Device</div>
+            <mat-divider class="module-divider"></mat-divider>
+          </div>
+          <div fxLayout="column" fxLayoutGap="8px">
+            <!-- <span>Assign Single Device</span> -->
+            <!-- <mat-form-field class="example-full-width" appearance="fill"> -->
+            <!-- <mat-label>Assignee</mat-label> -->
+            <mat-icon class="iconItem" *ngIf="!onTextCancel">search</mat-icon>
+            <!-- <mat-icon
+              class="iconItem"
+              style="cursor: pointer"
+              *ngIf="onSelect"
+              (click)="onDisSelect()"
+              >close</mat-icon
+            > -->
+            <img
+              src="assets/svg/cancel.svg"
+              class="iconItemcancel"
+              style="cursor: pointer"
+              *ngIf="onTextCancel"
+              (click)="onDisSelect()"
+            />
+            <input
+              type="text"
+              matInput
+              maxlength="20"
+              appAlphabetNumericOnly
+              [formControl]="myControl"
+              [matAutocomplete]="auto"
+              placeholder="Search IMEI / Serial Number"
+              class="inputSearch"
+              [readonly]="showAssignedMsg"
+            />
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              (optionSelected)="selectedItem($event)"
+            >
+              <mat-option
+                *ngFor="let option of filteredOptions | async"
+                [value]="option.imeinumber"
+                [id]="option.deviceModelName"
+              >
+                {{ option.imeinumber }} - {{ option.deviceModelName }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error
+              *ngIf="
+                (filteredOptions | async)?.length <= 0 &&
+                myControl.valid &&
+                !onSelect &&
+                myControl.value?.length > 0
+              "
+              style="font-size: 12px"
+              >No Records Found! Please search with a valid IMEI or serial
+              number.
+            </mat-error>
+            <!-- </mat-form-field> -->
+            <div class="selected-item" *ngIf="onSelect">
+              <div class="selected-items" *ngIf="!showAssignedMsg">
+                <div fxLayout="column" fxLayoutGap="8px" fxFlex="60%">
+                  <span class="assignColumnName">
+                    IMEI / Serial Number - Name
+                  </span>
+                  <span class="assignData">
+                    {{ imeiNumber ? imeiNumber : "-" }} -
+                    {{ modelName ? modelName : "-" }}
+                  </span>
+                </div>
+                <!-- <div fxLayout="column" fxLayoutGap="8px">
+                  <span class="assignColumnName"> Name </span>
+                  <span class="assignData">
+                    {{ modelName ? modelName : "-" }}
+                  </span>
+                </div> -->
+                <div>
+                  <button class="assignBtn" (click)="createUser(imeiNumber)">
+                    Assign
+                  </button>
+                  <button class="unassignBtn" (click)="onDisSelect()">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+              <div class="selected-items1" *ngIf="showAssignedMsg">
+                <img
+                  src="../../../assets/gif/Success.gif"
+                  width="30"
+                  height="30"
+                />
+                Device assigned successfully
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div fxLayout="column" fxLayoutGap="8px" class="assignDiv">
+          <div>
+            <span>Device Bulk Upload</span>
+            <mat-divider class="module-divider"></mat-divider>
+          </div>
+          <div class="upload-bulk-div">
+            <form [formGroup]="uploadForm">
+              <div class="upload-box">
+                <div fxLayout="column" class="upload-box-content">
+                  <div>
+                    <img src="assets/svg/file-text.svg" />
+                  </div>
+                  <div class="select-file-text">
+                    {{ fileName ? fileName : "Please select excel file" }}
+                  </div>
+                  <label
+                    for="file"
+                    fxLayout="column"
+                    fxLayoutGap="10px"
+                    class="pres-upload-label"
+                  >
+                    <div class="click-browser-text">Click to browse</div>
+                  </label>
+                  <input
+                    type="file"
+                    id="file"
+                    accept=".xls,.xlsx"
+                    (change)="onFileSelect($event)"
+                    class="file"
+                  />
+                </div>
+              </div>
+              <div class="button-div">
+                <button
+                  mat-flat-button
+                  class="rpm-upload-button"
+                  [disabled]="!uploadForm.valid"
+                  (click)="onSubmit()"
+                >
+                  Upload
+                </button>
+              </div>
+            </form>
+          </div>
+        </div> -->
+      </mat-card>
+    </div>
+  </div>
+</div>

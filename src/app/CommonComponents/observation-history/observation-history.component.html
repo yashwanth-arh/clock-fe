@@ -1,0 +1,294 @@
+<div>
+  <div class="horizontal-line">
+    <div fxLayout="row" fxLayoutGap="16px">
+      <div fxLayout="row" fxLayoutGap="16px" class="heading">
+        <div>
+          <img src="assets/svg/DashboardIcons/Appintments Black.svg" width="30" alt="" />
+        </div>
+        <div class="title">Observation History</div>
+      </div>
+    </div>
+
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-around start" fxLayoutAlign.md="space-between start" fxLayoutGap="10px"
+    class="observationList" style="padding: 16px">
+    <!-- <div fxLayout="column" fxFlex="33.3%">
+    <div fxLayout="row" fxLayoutAlign="space-between" class="header">
+      <div>
+        <h3
+          fxHide.md
+          class="titleLeft"
+        >
+
+          Blood Glucose (mmol/L)
+        </h3>
+        <h3
+          fxHide.gt-md
+          class="titleLeft"
+        >
+
+          BG (mmol/L)
+        </h3>
+      </div>
+      <div>
+
+        <mat-paginator
+          [pageSize]="30"
+          [hidePageSize]="'true'"
+          aria-label="bs-obs-table"
+          aria-labelledby="bs-obs-table"
+          [length]="observationBSHistoryList.length"
+          #BsobsPaginator="matPaginator"
+        ></mat-paginator>
+      </div>
+    </div>
+    <div
+      *ngIf="!observationBSHistoryList.length"
+      class="no-record"
+      style="position: relative; left: -0.4vw"
+    >
+      No Records Found!
+    </div>
+    <div
+      class="example-container mat-elevation-z8"
+      style="position: relative; left: -1vh"
+      *ngIf="observationBSHistoryList.length"
+    >
+      <table
+        mat-table
+        *ngIf="observationBSHistoryList.length"
+        [dataSource]="observationBSDataSource"
+        class="mat-elevation-z0"
+        matSort
+      >
+        <ng-container matColumnDef="presentBs">
+          <th mat-header-cell *matHeaderCellDef class="readings"></th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="
+              element.zoneOfPat == '1'
+                ? 'icon-red'
+                : element.zoneOfPat == '2'
+                ? 'icon-orange'
+                : 'icon-green'
+            "
+            class="readings"
+            style="width: 40%"
+          >
+            <span>{{ element.presentBSreading | number: "1.2-2" }} </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="symptoms">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" class="weightSymptoms">
+            <span style="overflow-x: scroll; width: 84px" fxLayout="row"
+              >&nbsp;
+              <span *ngFor="let img of element?.symptomsBS">
+                <img
+                  style="width: 20px; cursor: pointer"
+                  [title]="img.symptomName"
+                  *ngIf="img.fileName !== ''"
+                  [src]="'assets/img/symptoms/' + img.fileName"
+                />
+              </span>
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef class="date"></th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            class="date"
+            style="width: 30%"
+          >
+            {{
+              element.createdAt !== null
+                ? dateService.dateTransformation(element.createdAt)
+                : ""
+            }}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="obsBSColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: obsBSColumns"></tr>
+      </table>
+    </div>
+  </div> -->
+
+    <div fxLayout="column" fxFlex="100%">
+      <div fxLayout="row" fxLayoutAlign="space-between" class="header">
+        <div fxHide.md>
+          <h3 class="title">
+            Blood Pressure (mmHg)
+          </h3>
+        </div>
+        <div fxHide.gt-md>
+          <h3 class="title">
+            BP (mmHg)
+          </h3>
+        </div>
+        <div [ngClass]="(observationBPHistoryList.length > 10) ? 'pagi-align':'hide-pagination'">
+          <mat-paginator [pageSize]="30" [hidePageSize]="'true'" aria-label="bp-obs-table"
+            aria-labelledby="bp-obs-table" [length]="observationBPHistoryList.length" #BpPaginator="matPaginator">
+          </mat-paginator>
+        </div>
+      </div>
+      <div *ngIf="!observationBPHistoryList.length && !loadRes" class="no-record">
+        No Records Found!
+      </div>
+      <div class="example-container mat-elevation-z8" *ngIf="observationBPHistoryList.length">
+        <table mat-table *ngIf="observationBPHistoryList.length" [dataSource]="observationBPDataSource"
+          class="mat-elevation-z0">
+          <ng-container matColumnDef="presentBp">
+            <th mat-header-cell *matHeaderCellDef class="readings bloodPressure"></th>
+            <td mat-cell *matCellDef="let element" [ngClass]="
+              element.zoneOfPat == '1'
+                ? 'icon-red'
+                : element.zoneOfPat == '2'
+                ? 'icon-orange'
+                : 'icon-green'
+            " class="readings">
+              <span>{{ element.presentBp }} </span>&nbsp;
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="symptoms">
+            <th mat-header-cell *matHeaderCellDef class="bpSymptoms" style="width: 600px"></th>
+            <td mat-cell *matCellDef="let element" class="bpSymptoms">
+              <span style="
+                overflow-x: auto;
+                width: 150px;
+              " fxLayout="row">
+                <span *ngFor="let img of element?.symptomsBp">
+                  <img style="width: 28px; cursor: pointer;margin-right: 8px;" [title]="img.symptomName"
+                    *ngIf="img.fileName !== ''" [src]="'assets/img/symptoms/' + img.fileName" />
+                </span>
+                <span *ngIf="!element?.symptomsBp?.length">--</span>
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdAtBp">
+            <th mat-header-cell *matHeaderCellDef class="date observationDate"></th>
+            <td mat-cell *matCellDef="let element" class="date">
+              {{
+              element.createdAt !== null
+              ? dateService.twelveHoursFormat(element.createdAt)
+              : ""
+              }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="obsbpColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: obsbpColumns"></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div fxLayout="column" fxFlex="33.3%">
+    <div fxLayout="row" fxLayoutAlign="space-between" class="header">
+      <div>
+        <h3
+          fxHide.md class="title">
+          Weight ({{ settingsState.weightUnit$ | async }}) & BMI
+        </h3>
+        <h3
+          fxHide.gt-md
+          class="title">
+          WT ({{ settingsState.weightUnit$ | async }}) & BMI
+        </h3>
+      </div>
+      <div class="pagi-align">
+        <mat-paginator
+          [pageSize]="30"
+          [hidePageSize]="'true'"
+          aria-label="wt-obs-table"
+          aria-labelledby="wt-obs-table"
+          [length]="observationWeightHistoryList.length"
+          #WtPaginator="matPaginator"
+        ></mat-paginator>
+      </div>
+    </div>
+    <div *ngIf="!observationWeightHistoryList.length" class="no-record">
+      No Records Found!
+    </div>
+    <div
+      class="example-container mat-elevation-z8"
+      style="position: relative; left: 6px"
+      *ngIf="observationWeightHistoryList.length"
+    >
+      <table
+        mat-table
+        *ngIf="observationWeightHistoryList.length"
+        [dataSource]="observationWeightDataSource"
+        class="mat-elevation-z0"
+        matSort
+      >
+        <ng-container matColumnDef="presentWt">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="readings bloodPressure"
+          ></th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="
+              element.zoneOfPat == '1'
+                ? 'icon-red'
+                : element.zoneOfPat == '2'
+                ? 'icon-orange'
+                : 'icon-green'
+            "
+            class="readings"
+            style="width: 40%"
+          >
+            <span
+              >{{
+                element.presentWt
+                  | weight: (settingsState.weightUnit$ | async):defaultWeight
+                  | number: "1.2-2"
+              }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="bmi">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <span>{{ element.bmi | number: "1.2-2" }} </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAtWt">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="date observationDate"
+          ></th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            class="date"
+            style="text-align: center"
+          >
+            {{
+              element.createdAt !== null
+                ? dateService.dateTransformation(element.createdAt)
+                : ""
+            }}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="obsWtColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: obsWtColumns"></tr>
+      </table>
+    </div>
+  </div> -->
+  </div>
+  <div *ngIf="loadRes" style="height: 50vh; position: relative; top: 3vh">
+    <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+  </div>
+  <router-outlet></router-outlet>

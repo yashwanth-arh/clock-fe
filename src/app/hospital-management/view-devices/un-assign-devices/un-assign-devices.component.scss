@@ -1,0 +1,35 @@
+.main-box {
+    width: 260px;
+    // height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.btn-div {
+    width: 260px;
+}
+
+.confirm {
+    outline-style: none;
+    padding: 10px 24px;
+    gap: 8px;
+    width: auto;
+    height: 37px;
+    background: #52B204;
+    border-radius: 6px;
+    color: #fff;
+}
+
+.cancel {
+    outline-style: none;
+    box-sizing: border-box;
+    padding: 10px 24px;
+    gap: 8px;
+    width: auto;
+    height: 37px;
+    border: 1px solid #52B204;
+    border-radius: 6px;
+    color: #52B204;
+}

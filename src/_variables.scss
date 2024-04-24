@@ -1,0 +1,150 @@
+@import "theme";
+
+// Base Margins and Paddings
+$margin-base: 4px;
+$margin-default: 16px;
+$margin-large: 24px;
+$padding-base: 4px;
+$padding-large: 16px;
+$ac-toolbar-title-padding: 16px !default;
+
+// Common widths, heights, and other distances
+$default-font-size: 12px;
+$medium-font-size: 14px;
+$large-font-size: 16px;
+$header-font-size: 18px;
+$notification-icon-font-size: 20px;
+$sidenav-width: 240px;
+$sidenav-compressed-width: 55px;
+$default-border-radius: 4px;
+$border-radius-large: 16px;
+$mentions-mat-icon-font-size: 20px;
+
+// Breakpoints for media queries
+$handset: 360px;
+$large-handset: 480px;
+$x-large-handset: 600px; // sm
+$large-tablet: 840px;
+$desktop: 960px; // md
+$large-desktop: 1280px; // lg
+$x-large-desktop: 1440px;
+$xx-large-desktop: 1920px; // xl
+$ultra-hd-desktop: 2560px;
+
+// TODO investigate removing these breakpoints and helper-breakpoints
+$breakpoints: (
+  xs: "screen and (max-width: 599px)",
+  sm: "screen and (min-width: 600px) and (max-width: 959px)",
+  md: "screen and (min-width: 960px) and (max-width: 1279px)",
+  lg: "screen and (min-width: 1280px) and (max-width: 1919px)",
+  xl: "screen and (min-width: 1920px) and (max-width: 5000px)",
+  lt-sm: "screen and (max-width: 599px)",
+  lt-md: "screen and (max-width: 959px)",
+  lt-lg: "screen and (max-width: 1279px)",
+  lt-xl: "screen and (max-width: 1919px)",
+  gt-xs: "screen and (min-width: 600px)",
+  gt-sm: "screen and (min-width: 960px)",
+  gt-md: "screen and (min-width: 1280px)",
+  gt-lg: "screen and (min-width: 1920px)",
+) !default;
+
+// Re-map the breakpoints for the helper classes
+$helper-breakpoints: (
+  xs: null,
+  sm: "gt-xs",
+  md: "gt-sm",
+  lg: "gt-md",
+  xl: "gt-lg",
+);
+
+// Colors
+$primary-color: #52B204;
+$accent-color: mat-color($app-accent);
+$warn-color: mat-color($app-warn);
+$dark-background: rgba(47, 53, 58, 1);
+$dark-foreground-text: rgb(76, 76, 76);
+$body-background: mat-color($app-accent);
+$inactive-status: $warn-color;
+$red-background: #540b0c;
+$light-inactive-status: rgb(255, 133, 129);
+$incomplete-status: rgb(241, 176, 29);
+$active-status: green;
+$light-active-status: rgb(112, 160, 112);
+$light-foreground-text: white;
+$light-background: white;
+$light-blue-background: mat-color($app-primary, 100);
+$light-grey: rgb(215, 215, 215);
+$light-form-background: rgb(247, 247, 247);
+$row-separator: rgba(128, 128, 128, 0.19);
+$aged-encounters: mat-color($app-warn, 700);
+$aging-encounters: rgb(255, 193, 8);
+$new-encounters: rgb(76, 175, 80);
+$all-encounters: rgb(32, 168, 216);
+$customer-grid-background: rgb(238, 196, 196);
+$disabled-workflow-step: rgba(0, 0, 0, 0.21);
+$active-workflow-step: rgb(0, 128, 0);
+$disabled-button-text: rgba(0, 0, 0, 0.26);
+$disabled-button-background: rgba(0, 0, 0, 0.12);
+$kendo-grid-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
+  0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+$forms-box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2),
+  0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
+$grid-buttons-default-background: rgb(47, 53, 57);
+$clinical-notes-tab-border: #d7d7d7;
+$aged-days-red: $warn-color;
+$aged-days-yellow: #ffc108;
+$aged-days-green: #4caf50;
+$flag-encounter: $warn-color;
+$procedure-code-highlight: green;
+$highlighted-mentions: #fff000;
+$cpt-mention-font-color: green;
+$icd-mention-font-color: rgb(32, 168, 216);
+$icd-cpt-mention-font-color: purple;
+$manual-mention-font-color: #000080;
+$dark-text-font-color: #494949;
+$input-field-background: #eef2f6;
+
+//----Colors of action button------
+$button-action-background-color: $primary-color;
+$button-action-font-color: #ffffff;
+
+//---COLORS OF STATUS BUTTON-----
+//--Active Status
+$button-active-background-color: lightgreen;
+$button-active-font-color: green;
+
+//--Inactive status
+$button-inactive-background-color: $light-inactive-status;
+$button-inactive-font-color: #c70039;
+
+//--New status
+$badge-new-background-color: #82caff;
+$badge-new-font-color: #348781;
+
+//--pending status
+$badge-pending-background-color: $button-active-background-color;
+$badge-pending-font-color: $button-active-font-color;
+
+//--Rejected status
+$badge-rejected-background-color: #f75d59;
+$badge-rejected-font-color: #ffffff;
+
+// Heights
+$height-base: 4px;
+
+/**
+New colors
+
+**/
+
+$secondary-color: #ff8c00;
+$tertiary-color: #27235e;
+$extra-color: #2196f3;
+
+/**
+cards box shadow
+**/
+$card-box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.02);
+
+/** audio-video-call **/
+$twilio-background: linear-gradient(180deg, #CBFFE8 0%, #D2FBEE 53.12%, #E8EEFF 100%);

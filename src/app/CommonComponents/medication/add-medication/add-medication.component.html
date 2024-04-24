@@ -1,0 +1,195 @@
+<div class="form-container">
+    <form [formGroup]="medicationForm" style="margin-left: -16px;">
+        <div class="medication-form-div" [formGroup]="medicationForm" fxLayout="column">
+            <div class="title">
+                {{data==='add'?'Add Medication':'Edit Medication'
+                }}
+            </div>
+            <div>
+                <mat-form-field appearance="outline" class="textField" fxFlex="360px">
+                    <mat-label>Medicine</mat-label>
+
+                    <input (keyup)="medicationNames()" appAlphabetSpaceOnly type="text" placeholder="Medicine" matInput
+                        formControlName="medicineName" [matAutocomplete]="auto" required />
+                    <mat-error>Medicine is required</mat-error>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let mname of medicine " [value]="mname['medicineName']">
+                            {{ mname['medicineName'] }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <!-- <div fxLayout="row" fxFlex="100%"> -->
+            <div fxLayout="row">
+                <div>
+                    <mat-form-field appearance="outline" fxFlex="180px">
+                        <mat-label>Dose</mat-label>
+                        <input type="number" min="0" matInput autocomplete="disabled" formControlName="medicineDose"
+                            required />
+                        <mat-error>Dose is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" fxFlex="180px">
+                        <mat-label>Duration</mat-label>
+                        <input type="number" min="0" matInput autocomplete="disabled" formControlName="duration"
+                            required />
+                        <mat-error>Duration is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div>
+                    <mat-form-field appearance="outline" fxFlex="180px">
+                        <mat-select formControlName="medicineUnit" placeholder="Units">
+                            <mat-option value="mg">
+                                mg
+                            </mat-option>
+                            <mat-option value="gm">
+                                gm
+                            </mat-option>
+                            <mat-option value="mcg">
+                                mcg
+                            </mat-option>
+                            <mat-option value="ml">
+                                ml
+                            </mat-option>
+                            <mat-option value="oz">
+                                oz
+                            </mat-option>
+                            <mat-option value="IU">
+                                IU
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field class="color1 dropActions" appearance="outline" fxFlex="180px">
+                        <mat-select formControlName="route" placeholder="Route">
+                            <mat-option value="Oral">
+                                Oral
+                            </mat-option>
+                            <mat-option value="Sublingual">
+                                Sublingual
+                            </mat-option>
+                            <mat-option value="IV">
+                                IV
+                            </mat-option>
+                            <mat-option value="IM">
+                                IM
+                            </mat-option>
+                            <mat-option value="SC">
+                                SC
+                            </mat-option>
+                            <mat-option value="Intra Dermal">
+                                Intra Dermal
+                            </mat-option>
+                            <mat-option value="Inhalation/Nebulization">
+                                Inhalation/Nebulization
+                            </mat-option>
+                            <mat-option value="Local Application">
+                                Local Application
+                            </mat-option>
+                            <mat-option value="Eye Drops">
+                                Eye Drops
+                            </mat-option>
+                            <mat-option value="Ear Drops">
+                                Ear Drops
+                            </mat-option>
+                            <mat-option value="Nasal Drops">
+                                Nasal Drops
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxLayout="row">
+                <div>
+                    <mat-form-field class="color1 dropActions" appearance="outline" fxFlex="180px">
+                        <mat-select formControlName="formulation" placeholder="Formulation">
+                            <mat-option value="Tab.">
+                                Tab.
+                            </mat-option>
+                            <mat-option value="Cap.">
+                                Cap.
+                            </mat-option>
+                            <mat-option value="Syr.">
+                                Syr.
+                            </mat-option>
+                            <mat-option value="Inj.">
+                                Inj.
+                            </mat-option>
+                            <mat-option value="Inhalation">
+                                Inhalation
+                            </mat-option>
+                            <mat-option value="Eye Drops">
+                                Eye Drops
+                            </mat-option>
+                            <mat-option value="Ear Drops">
+                                Ear Drops
+                            </mat-option>
+                            <mat-option value="Nasal Drops">
+                                Nasal Drops
+                            </mat-option>
+                            <mat-option value="Cream/Ointments">
+                                Cream/Ointments
+                            </mat-option>
+                            <mat-option value="Sachets">
+                                Sachets
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="color1 dropActions" appearance="outline" fxFlex="180px">
+                        <mat-select formControlName="frequency" placeholder="Frequency">
+                            <mat-option value="Once a day">
+                                Once a day
+                            </mat-option>
+                            <mat-option value="Two times a day">
+                                Two times a day
+                            </mat-option>
+                            <mat-option value="Three times a day">
+                                Three times a day
+                            </mat-option>
+                            <mat-option value="Four times a day">
+                                Four times a day
+                            </mat-option>
+                            <mat-option value="Once a week">
+                                Once a week
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+        <div style="margin-right: -16px;">
+            <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="end" class="mt-2">
+                <button mat-flat-button class="cancel-button" (click)="closeMedication()">
+                    Cancel
+                </button>
+                <button mat-flat-button class="save-button" *ngIf="!updateMedication" (click)="
+              createMedication(
+                medicationForm.valid,
+                medicationForm.value,
+                'add'
+              )
+            " [disabled]="!medicationForm.valid">
+                    Save
+                </button>
+                <button mat-flat-button class="save-button" *ngIf="updateMedication" (click)="
+              createMedication(
+                medicationForm.valid,
+                medicationForm.value,
+                'edit'
+              )
+            " [disabled]="!medicationForm.valid">
+                    Update
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

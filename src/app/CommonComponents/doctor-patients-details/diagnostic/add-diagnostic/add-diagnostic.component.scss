@@ -1,0 +1,55 @@
+::ng-deep .mat-form-field-infix {
+  display: flex;
+}
+
+.mat-dialog-content {
+  overflow: hidden;
+}
+
+.save-btn {
+  display: inline-flex;
+  height: 37px;
+  padding: 10px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #01cd74;
+  color: #fff;
+  border: none;
+}
+.diagnosis-table {
+  height: 40em;
+}
+.diagnosis-input {
+  width: 18em;
+}
+
+.mat-dialog-content {
+  max-height: 67vh;
+}
+
+.cancel-button {
+  position: relative;
+  left: -1.4vh;
+  // width: 81.09px;
+  height: 37.13px;
+  background: #fff;
+  border: 1px solid #01cd74;
+  box-sizing: border-box;
+  color: #01cd74;
+  box-shadow: 0px 0px 10px rgba(1, 0, 102, 0.1);
+  border-radius: 10px;
+  outline: none;
+}
+.form-div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 33px;
+  height: 50em;
+  min-height: 50vh;
+  max-height: 56vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

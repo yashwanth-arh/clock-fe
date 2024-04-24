@@ -1,0 +1,653 @@
+.patientObservation {
+  // width: 100%;
+  // height: auto;
+
+  // .mat-cell {
+  //   border-top-left-radius: 0px;
+  //   border-bottom-left-radius: 0px;
+  //   background-color: none;
+  // }
+
+  .triggers {
+    width: 22px;
+    height: 22px;
+  }
+
+  ::ng-deep .mat-header-cell,
+  .mat-cell {
+    max-width: 142px !important;
+    min-width: 142px !important;
+  }
+
+  ::ng-deep .mat-header-row {
+    min-height: 42px !important;
+  }
+
+  ::ng-deep .mat-header-cell {
+    // color: #5e9e7b !important;
+  }
+
+  ::ng-deep .mat-row {
+    margin: 0 0 5px 0 !important;
+    border: 1px solid #A2D7BF;
+  }
+
+  ::ng-deep .mat-cell {
+    max-height: 90px;
+    min-height: 90px;
+  }
+
+  .mat-elevation-z8 {
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  ::ng-deep .mat-table {
+    max-height: 445px !important;
+    min-height: 445px !important;
+    padding: 0 16px !important;
+  }
+
+  .obs-table {
+    width: 50% !important;
+    height: 20vh;
+    margin-bottom: 40px;
+  }
+
+  .no-symptoms {
+    text-align: center;
+    margin-right: 108px;
+  }
+
+  .no-record-observation {
+    text-align: center;
+    margin-top: -32vh;
+    font-size: 20px;
+  }
+
+  // ::ng-deep .mat-table tbody {
+  //   display: block;
+  // }
+
+  // table {
+  //   display: block;
+  //   // margin-top: -2vh;
+  //   // height: 60vh;
+  //   background-color: transparent;
+  //   // width: 100%;
+  //   // border-radius: 10px;
+  //   // border: 1px solid #2196f3 ;
+  //   padding: 16px;
+  // }
+
+  // .example-container-observation.mat-elevation-z8 {
+  //   overflow-x: auto;
+  //   // margin-top: 10px;
+  //   max-height: 600px;
+  //   overflow: auto;
+  //   height: 58vh;
+  //   // border-radius: 10px;
+  //   scrollbar-width: thin;
+  //   box-shadow: none;
+  // }
+
+  .mat-card {
+    padding: 0;
+  }
+
+  // ::ng-deep .mat-table tbody {
+  //   background-color: #f44336;
+  //   width: 50% !important;
+  //   display: block;
+  // }
+
+  // tr.mat-row,
+  // tr.mat-footer-row {
+  //   height: 96px;
+  //   justify-content: center;
+  //   // width: 98%;
+  // }
+
+  // tr.mat-header-row {
+  //   height: 52px;
+  //   width: 97%;
+  // }
+
+  // .mat-column-date {
+  //   display: flex !important;
+  //   // justify-content: center;
+  // }
+
+  // .mat-cell:nth-child(3) {
+  //   padding: 0px 0px !important;
+  // }
+
+  // .mat-cell:nth-child(2) {
+  //   border-top-left-radius: 10px;
+  //   border-bottom-left-radius: 10px;
+  //   background-color: #ECFFFA;
+  // }
+
+  // // .mat-row .morning-mat-row:nth-child(even) {
+  // //   background-color: #ECFFFA;
+  // // }
+
+  // // .mat-row .morning-mat-cell:nth-child(odd) {
+  // //   background-color: #ECFFFA;
+  // // }
+  // .mat-cell:nth-child(3) {
+  //   border-top-right-radius: 10px;
+  //   border-bottom-right-radius: 10px;
+  //   background-color: #ECFFFA;
+  // }
+
+  // .mat-cell:nth-child(4) {
+  //   border-top-left-radius: 10px;
+  //   border-bottom-left-radius: 10px;
+  //   background-color:none;
+  //   margin-left: 10px;
+  // }
+
+  // .mat-cell:nth-child(5) {
+  //   border-top-right-radius: 10px;
+  //   border-bottom-right-radius: 10px;
+  //   background-color: #ecf2ff;
+  // }
+
+  // .mat-table .mat-cell {
+  //   display: flex;
+  //   text-align: right;
+  //   font-weight: bold;
+  // }
+
+  // .mat-row {
+  //   // border-radius: 10px;
+  //   width: 94%;
+  //   position: relative;
+  //   top: 5vh;
+  //   left: -7px;
+  //   background: #ECFFFA;
+  //   border: 1px solid #a2d7bf;
+  //   border-radius: 10px;
+  //   // background-color: white;
+  //   // border-bottom: 1px solid #ddd;
+  // }
+
+  // mat-cell {
+  //   font-size: 16px;
+  //   color: #444444;
+
+  //   .symptom-icon {
+  //     width: 22px;
+  //     height: 22px;
+  //     cursor: pointer;
+  //   }
+  // }
+
+  // ::ng-deep mat-header-cell cdk-header-cell mat-column-date ng-star-inserted {
+  // }
+
+  // ::ng-deep .cdk-column-date {
+  //   flex: 0 0 154px !important;
+  // }
+
+  // .mat-header-cell {
+  //   background-color: #ffffff;
+  //   font-size: 16px;
+  //   line-height: 19px;
+  //   font-weight: 400;
+  //   color: #343434;
+  //   border-bottom: transparent;
+  // }
+
+  .morning-header-text {
+    position: relative;
+    left: 9px;
+  }
+
+  .morningIndicatorsDiv {
+    height: 66px;
+    width: 250px;
+    // overflow-x: auto;
+    // overflow-y: hidden;
+  }
+
+  .eveningIndicatorsDiv {
+    height: 1px;
+    // width: 300px;
+    // overflow-x: auto;
+    // overflow-y: hidden;
+  }
+
+  .morningSymptomsDiv {
+    height: 66px;
+  }
+
+  .eveningSymptomsDiv {
+    height: 1px;
+  }
+
+  .evening-header-text {
+    position: relative;
+    left: 4vw;
+  }
+
+  .symptom-names {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    color: #ff4537;
+  }
+
+  .bp-header-cell {
+    position: relative;
+    left: 5vw;
+  }
+
+  .green-divider {
+    width: 657px;
+    height: 0px;
+    border: 0.5px solid #a2d7bf;
+  }
+
+  .morning-header {
+    position: relative;
+    top: 18px;
+    right: 10.9vw;
+    font-size: 12px;
+    color: #ffc107;
+  }
+
+  .evening-header {
+    position: relative;
+    top: 18px;
+    right: 6.5vw;
+    font-size: 12px;
+    color: #007bff;
+  }
+
+  // ::ng-deep .mat-header-row {
+  //   position: fixed;
+  //   // top: 11;
+  //   z-index: 999;
+  //   margin-top: -16px;
+  // }
+
+  .panel {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    overflow-y: scroll;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar {
+    height: 3px;
+    overflow-x: scroll;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #a1a1a1;
+    border-radius: 10px;
+  }
+
+  .rounded-zone-red {
+    background-color: #f44336;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    position: relative;
+    top: 15px;
+    left: 12px;
+  }
+
+  // .mat-header-row {
+  //   width: 97%;
+  //   background: transparent;
+  //   position: absolute;
+  // }
+
+  .rounded-zone-orange {
+    background-color: #ff8c00;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    position: relative;
+    top: 15px;
+    left: 12px;
+  }
+
+  .spinner-div {
+    //    margin-left: 40vw;
+    margin-top: 2vh;
+  }
+
+  .rounded-zone-green {
+    background-color: #4caf50;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    position: relative;
+    top: 15px;
+    left: 12px;
+  }
+
+  .bg {
+    position: relative;
+    top: 13px;
+    left: 1.2vw;
+  }
+
+  .bgs {
+    position: relative;
+    top: 8px;
+    left: 6vw;
+  }
+
+  .date-text {
+    width: 100%;
+    /* display: inline-block; */
+    // margin-top: 12px;
+    font-weight: 400;
+  }
+
+  .obs-text-day {
+    position: relative;
+    top: -2.9vh;
+    // left: 1.5vw;
+
+    .morning-icon {
+      text-align: center;
+      position: relative;
+      bottom: -10px;
+      margin-right: 20px;
+    }
+  }
+
+  .obs-text-evenig {
+    position: relative;
+    /* top: 14px; */
+    // left: 1.5vw;
+
+    .morning-icon {
+      text-align: center;
+      position: relative;
+      bottom: -10px;
+      margin-right: 20px;
+    }
+  }
+
+  .obs-symptoms {
+    width: auto;
+    overflow-x: scroll;
+    margin-top: 10px;
+    // margin-left: 75px;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: start;
+  }
+
+  .obs-indicators {
+    width: 9rem;
+    margin-top: 8.5px;
+    display: flex;
+    justify-content: start;
+    overflow: auto;
+  }
+
+  .obs-symptoms-morning {
+    width: auto;
+    overflow-x: scroll;
+    margin-top: 10px;
+    // margin-left: -6rem;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: start;
+  }
+}
+
+.zone-btn {
+  cursor: pointer;
+  text-align: center;
+  // width: 38px;
+  height: 35px;
+  font-family: "Helvetica Neue";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 35px;
+  /* identical to box height */
+  color: #676767;
+}
+
+// tbody:before {
+//   content: "@";
+//   display: block;
+//   line-height: 10px;
+//   text-indent: -99999px;
+// }
+
+.zone-btn-selected {
+  cursor: pointer;
+  text-align: center;
+  // width: 38px;
+  height: 35px;
+  font-family: "Helvetica Neue";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 35px;
+  /* identical to box height */
+  color: #43b95c;
+}
+
+// @media only screen and (min-device-width: 1280px) and (max-device-width: 1280px) and (orientation: landscape) {
+
+//   .patientObservation[_ngcontent-ng-cli-universal-c382] .mat-header-row[_ngcontent-ng-cli-universal-c382] {
+//     width: 91.6%;
+//   }
+
+//   .patientObservation[_ngcontent-ng-cli-universal-c382] .bp-header-cell[_ngcontent-ng-cli-universal-c382] {
+//     position: relative;
+//     left: 3vw;
+//   }
+
+//   .patientObservation[_ngcontent-ng-cli-universal-c382] .evening-header-text[_ngcontent-ng-cli-universal-c382] {
+//     position: relative;
+//     left: 3vw;
+//   }
+
+//   .patientObservation {
+//     width: 100%;
+//     height: auto;
+//   }
+// }
+
+// @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+//   .patientObservation {
+//     width: 99%;
+
+//     mat-cell {
+//       font-size: 12px !important;
+//     }
+
+//     .mat-header-row {
+//       width: 91.4%;
+//     }
+
+//     .mat-header-cell {
+//       font-size: 12px;
+//     }
+
+//     .example-container-observation.mat-elevation-z8 {
+//       max-height: 504px;
+//       height: 51vh;
+//       margin-top: 0;
+//     }
+
+//     .no-record-observation {
+//       text-align: center;
+//       margin-top: 20px;
+//       font-size: 12px;
+//     }
+
+//     .obs-symptoms {
+//       overflow-x: auto;
+//       width: 132px;
+//       flex-direction: row;
+//       box-sizing: border-box;
+//       display: flex;
+//     }
+//   }
+// }
+
+// @media only screen and (min-device-width: 1279px) and (max-device-width: 1280px) and (orientation: landscape) {
+//   .patientObservation {
+//     table {
+//       width: 99%;
+//     }
+
+//     .bg {
+//       left: 2vw;
+//     }
+
+//     .bp {
+//       left: 3vw;
+//     }
+
+//     .bgs {
+//       left: 6.5vw;
+//     }
+
+//     .example-container-observation.mat-elevation-z8 {
+//       height: 50vh;
+//     }
+
+//     .no-record-observation {
+//       text-align: center;
+//       margin-top: 20px;
+//       font-size: 14px;
+//     }
+//   }
+// }
+
+@media only screen and (min-device-width: 1670px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .patientObservation {
+
+    // .mat-header-row {
+    //   width: 95.7%;
+    // }
+    .mat-table {
+      max-height: 44em !important;
+      min-height: 44em !important;
+      width: 62vw;
+    }
+
+    ::ng-deep .mat-header-cell,
+    .mat-cell {
+      max-width: 196px !important;
+      min-width: 196px !important;
+    }
+
+  }
+
+  //   .patientObservation {
+  //     width: 100%;
+  //   }
+}
+
+// @media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+//   .patientObservation {
+//     width: 100%;
+//     height: auto;
+//   }
+
+//   .obs-symptoms {
+//     overflow-x: auto !important;
+//     width: 150px !important;
+//     flex-direction: row;
+//     box-sizing: border-box;
+//     display: flex !important;
+//   }
+
+//   mat-header-cell {
+//     max-width: 18.2% !important;
+//     display: grid;
+//   }
+
+//   .morinig-text {
+//     width: 56px;
+//   }
+
+//   .morning-header {
+//     top: 4px !important;
+//     right: -2rem !important;
+//   }
+
+//   .morning-header-text {
+//     top: 11px;
+//     width: 13rem;
+//   }
+
+//   .evening-header-text {
+//     left: 2vw !important;
+//     width: 100%;
+//     top: 10px;
+
+//   }
+
+//   .evening-header {
+//     top: 5px !important;
+//     right: 5.2vw !important;
+//     font-size: 12px;
+//   }
+
+//   .bp-header-cell {
+//     left: 1.5vw !important;
+//     right: 0vw;
+//   }
+
+//   .icon-sort {
+//     position: relative;
+//     right: 116px;
+//   }
+
+//   .patientObservation .mat-header-row {
+//     width: 98.4% !important;
+//     background-color: transparent;
+//   }
+
+//   .patientObservation .mat-row {
+//     border-radius: 10px;
+//     position: relative;
+//     top: 6vh !important;
+//     // border-bottom: 1px solid #ddd;
+//   }
+
+//   .icon-sort {
+//     margin-left: 12vw;
+//   }
+
+//   .patientObservation .example-container-observation.mat-elevation-z8 {
+//     overflow-x: auto;
+//     margin-top: -12px;
+//     max-height: 600px;
+//     overflow: auto;
+//     height: 60vh !important;
+//     // border-radius: 10px;
+//   }
+// }
+// .patientObservation tbody::-webkit-scrollbar {
+//   display: none;
+// }
+
+// .patientObservation tbody{
+//   -ms-overflow-style: none;
+//   scrollbar-width: none;
+// }

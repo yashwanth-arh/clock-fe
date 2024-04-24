@@ -1,0 +1,252 @@
+<mat-toolbar class="rpm-navigation-bar">
+  <mat-toolbar-row>
+    <div>
+      <button
+        mat-icon-button
+        aria-label="navigate-back"
+        *ngIf="
+          (routeDetails?.showReturnBtn && routeDetails?.showReturnBtn) ||
+          (this.showReturnClinic && this.showReturnClinic !== '')
+        "
+        (click)="emitGoBackEventToParent(routeDetails?.title)"
+        class="rpm-navigate-back"
+      >
+        <mat-icon>arrow_back </mat-icon>
+      </button>
+      <!-- <span class="rpm-vertical-divider"></span> -->
+      <span
+        class="rpm-page-title"
+        *ngIf="routeDetails?.title !== 'Log History'"
+        >{{
+          (Headername && routeDetails?.title === "Facility Admin") ||
+          (Headername && routeDetails?.title === "Hospital Admin")
+            ? "Admins" + " " + "-" + " " + Headername
+            : Headername
+            ? routeDetails?.title + " - " + Headername
+            : leaderBoardPatientName
+            ? (leaderBoardPatientName | titlecase)
+            : routeDetails?.title
+        }}</span
+      >
+      <span class="rpm-page-title" *ngIf="routeDetails?.title === 'Log History'"
+        >{{ routeDetails?.title }}({{ logCount }})</span
+      >
+
+      <mat-divider [vertical]="true" [inset]="false"></mat-divider>
+
+      <!-- <ng-container *ngIf="label | async as labelText">
+      <ng-container *ngIf="labelText.length > 0">
+        <span class="rpm-page-label">{{ toolbarService.getToolbarLabelObs() | async }}</span>
+      </ng-container>
+    </ng-container> -->
+
+      <ng-container *ngIf="label && label !== 'undefined'">
+        <ng-container *ngIf="label.length > 0">
+          <span class="rpm-page-label">{{ label }}</span>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div *ngIf="routeDetails?.title !== 'Leader Points Board'">
+      <app-all-filters
+        [moduleName]="routeDetails?.title"
+        #filters
+      ></app-all-filters>
+    </div>
+    <div class="rpm-button-div" (click)="emitDownloadClickEventToParent()">
+      <button
+        mat-flat-button
+        color="primary"
+        disableRipple
+        style="outline: none"
+        class="rpm-toolbar-button"
+        *ngIf="routeDetails && routeDetails['actionDownload']"
+      >
+        <mat-icon> file_download </mat-icon>
+        {{ routeDetails["actionDownload"] }}</button
+      >&nbsp;&nbsp;
+      <button
+        mat-flat-button
+        color="primary"
+        class="rpm-toolbar-button"
+        *ngIf="
+          routeDetails?.showActionBtn && routeDetails?.title !== 'Device Info'
+        "
+        (click)="emitClickEventToParent(routeDetails?.title)"
+      >
+        <!-- <mat-icon
+          *ngIf="showIcon()"
+          (click)="emitClickEventToParent(routeDetails.title)"
+        >
+          add
+        </mat-icon> -->
+        <span *ngIf="showIcon()">{{
+          routeDetails?.title === "Device Info" && tabInfo !== "Add Devices"
+            ? tabInfo
+            : routeDetails?.title === "Users"
+            ? tabInfo
+            : routeDetails?.actionName || settingsTabs === "ICD Codes"
+            ? routeDetails?.actionNameICD
+            : settingsTabs === "Specialities"
+            ? routeDetails?.actionNameSpecilitiy
+            : settingsTabs === "Doctor Identity"
+            ? routeDetails?.actionNameDoctor
+            : settingsTabs === "Hospital Identity"
+            ? routeDetails?.actionNameHospital
+            : "Add"
+        }}</span>
+        <span *ngIf="showIcon() && routeDetails?.title === 'Tickets'">{{
+          selectedRole == "RPM_ADMIN" ? "Add New Default Issue" : "New Ticket"
+        }}</span>
+        <span
+          *ngIf="showIcon() && !tabInfo && routeDetails?.title !== 'Tickets'"
+        >
+          {{ routeDetails?.actionName }}</span
+        >
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        class="rpm-toolbar-button"
+        *ngIf="
+          routeDetails?.title === 'Device Info' &&
+          tabInfo == 'Add Devices' &&
+          role === 'RPM_ADMIN'
+        "
+      >
+        <mat-select
+          class="device-dropdown"
+          style="text-align: left; min-width: 8em"
+          *ngIf="
+            routeDetails?.title === 'Device Info' &&
+            tabInfo === 'Add Devices' &&
+            selectedRole === 'RPM_ADMIN'
+          "
+          placeholder="Add Device"
+        >
+          <mat-option (click)="emitClickEventToParent(routeDetails?.title)">
+            Add a device
+          </mat-option>
+          <mat-option (click)="emitBulkEventToParent(routeDetails?.title)">
+            Bulk Upload
+          </mat-option>
+        </mat-select>
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        class="rpm-toolbar-button"
+        (click)="emitClickEventToParent(routeDetails?.title)"
+        *ngIf="
+          tabInfo == 'Add Device Types' ||
+          tabInfo == 'Add Vendors' ||
+          tabInfo == 'Add Device Models'
+        "
+      >
+        <span *ngIf="showIcon()">
+          {{
+            tabInfo == "Add Device Types"
+              ? "Add Device Type"
+              : tabInfo == "Add Vendors"
+              ? "Add Vendor"
+              : tabInfo == "Add Device Models"
+              ? "Add Device Model"
+              : "Add"
+          }}</span
+        >
+      </button>
+      <div *ngIf="routeDetails?.title === 'Leader Points Board'">
+        <app-all-filters
+          [moduleName]="routeDetails?.title"
+          #filters
+        ></app-all-filters>
+      </div>
+    </div>
+    <!-- <div *ngIf="routeDetails.title === 'Devices'">
+      <button
+        mat-flat-button
+        color="primary"
+        class="rpm-bulk-upload-button"
+        (click)="emitBulkEventToParent(routeDetails.title)"
+      >
+        Device bulk upload
+      </button>
+    </div> -->
+    <!-- <div *ngIf="routeDetails.title ===  'Enrollments'">
+      <button mat-flat-button color="primary" class="rpm-bulk-upload-button"
+        (click)="emitBulkEventToParent(routeDetails.title)">
+        Enrollment bulk upload
+      </button>
+    </div> -->
+    <span class="rpm-toolbar-spacer"></span>
+
+    <!-- <div class="rpm-toolbar-right">
+      <ng-container
+        [formGroup]="dateRangeForm"
+        *ngIf="routeDetails.showDatePicker"
+      >
+        <mat-form-field appearance="outline" class="rpm-date-range-picker">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              matStartDate
+              placeholder="Start date"
+              formControlName="start"
+              readonly
+            />
+            <input
+              matEndDate
+              placeholder="End date"
+              formControlName="end"
+              (dateChange)="emitDatePickerEventToParent(dateRangeForm.value)"
+              readonly
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </ng-container>
+      <button
+        mat-icon-button
+        class="rpm-menu-btn"
+        matTooltip="Notification count"
+        matTooltipPosition="below"
+        [matTooltipClass]="{ 'rpm-tooltip': true }"
+        (click)="goToNotification()"
+        *ngIf="hasNotification"
+      >
+        <mat-icon
+          [matBadge]="notificationCount"
+          matBadgeColor="primary"
+          matBadgeOverlap="true"
+          >notifications
+        </mat-icon>
+      </button>
+      <div fxLayout="row">
+      <app-profile-image
+        style="cursor: pointer"
+        [matMenuTriggerFor]="menu"
+        [profileImage]="profileImagePath"
+        [shapeOfImage]="shapeofProfileImage"
+      >
+      </app-profile-image>
+      <div class="username">
+        {{name}}
+      </div>
+     </div>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onClickProfile()" color="primary">
+          <mat-icon>person_pin</mat-icon>
+          <span>Profile</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="onLogout()" color="primary">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div> -->
+  </mat-toolbar-row>
+</mat-toolbar>

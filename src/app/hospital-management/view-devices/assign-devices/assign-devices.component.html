@@ -1,0 +1,108 @@
+<span class="close-button"  title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data.add && data.add === "add" ? "Assign Devices" : "Update Admin"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+<div class="rpm-module-table-container example-container mat-elevation-z8">
+  <mat-table matTableResponsive [dataSource]="dataSource">
+    <ng-container matColumnDef="Name">
+      <mat-header-cell
+        fxFlex="30%"
+        class="w-140"
+        class="w-140"
+        *matHeaderCellDef
+      >
+        Name
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="30%"
+        class="w-140"
+        class="w-140"
+        *matCellDef="let element"
+      >
+        {{ element.deviceName ? element.deviceName : "N/A" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="deviceType">
+      <mat-header-cell
+        fxFlex="30%"
+        class="w-140"
+        class="w-140"
+        *matHeaderCellDef
+      >
+        Device Type
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="30%"
+        class="w-140"
+        class="w-140"
+        *matCellDef="let element"
+      >
+        {{ element?.category }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="version">
+      <mat-header-cell fxFlex="30%" *matHeaderCellDef>
+        Version
+      </mat-header-cell>
+      <mat-cell fxFlex="30%" *matCellDef="let element">
+        {{ element.deviceVersion ? element.version : "N/A" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="vendor">
+      <mat-header-cell fxFlex="30%" *matHeaderCellDef> Vendor </mat-header-cell>
+      <mat-cell fxFlex="30%" *matCellDef="let element">
+        {{ element.vendorName ? element.vendorName : "N/A" }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="imei">
+      <mat-header-cell fxFlex="30%" *matHeaderCellDef>
+        IMEI / Serial Number</mat-header-cell
+      >
+      <mat-cell fxFlex="30%" *matCellDef="let element">
+        {{ element.imeinumber ? element.imeinumber : "N/A" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell fxFlex="30%" *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell fxFlex="30%" *matCellDef="let element">
+        <div class="status">
+          {{ element.assignStatus ? element.assignStatus : "N/A" }}
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <mat-header-cell fxFlex="30%" *matHeaderCellDef> Action </mat-header-cell>
+      <mat-cell fxFlex="30%" *matCellDef="let element"
+        ><span class="assign" (click)="assignDevice(element)"
+          >Assign</span
+        ></mat-cell
+      >
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="userColumnHeaders"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: userColumnHeaders"></mat-row>
+  </mat-table>
+  <!-- <div
+        class="noDataFoundText"
+        *ngIf="(dataSource.totalElemObservable | async) === 0"
+      >
+        No Records Found!
+      </div>
+      <mat-paginator
+        [ngClass]="
+          (dataSource.totalElemObservable | async) < 10
+            ? 'hide-pagination-element'
+            : 'show-pagination'
+        "
+        [length]="dataSource.totalElemObservable | async"
+        [pageSizeOptions]="[10, 25, 100]"
+        showFirstLastButtons
+      ></mat-paginator> -->
+</div>

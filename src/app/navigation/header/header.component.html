@@ -1,0 +1,489 @@
+<div class="overlay" *ngIf="overlayOn"></div>
+
+<div>
+  <div class="toolbar" (eleId)="getPatientId($event)">
+    <div
+      fxFlex
+      fxLayout
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxlayoutGap="24px"
+    >
+      <div
+        (click)="home()"
+        style="
+          cursor: pointer;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          gap: 15px;
+          padding-left: 10px;
+        "
+      >
+        <img
+          class="careLogo"
+          src="assets/svg/Clock Health Logo.svg"
+          alt="CHC"
+        />
+        <!-- <div style="background-color: #fff; height: 2em; width: 1px"></div>
+        <span
+          style="
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+            padding-right: 15px;
+            letter-spacing: 1px;
+          "
+          >SECT</span
+        > -->
+      </div>
+      <div class="title-div" *ngIf="showProfile()">
+        <span style="margin-left: 10px">
+          {{
+            currentUrl && currentUrl?.includes("patientProfile")
+              ? "Patient Profile"
+              : currentUrl && currentUrl?.includes("careprovider-patient-list")
+              ? "Dashboard"
+              : currentUrl && currentUrl?.includes("totalPatients")
+              ? "Total Patients"
+              : currentUrl && currentUrl?.includes("support-ticket")
+              ? "Support Tickets"
+              : currentUrl && currentUrl?.includes("guardians")
+              ? "Guardians"
+              : currentUrl
+          }}
+        </span>
+      </div>
+      <div
+        class="title-div"
+        *ngIf="
+          details?.hospitalprovideAccessDetails &&
+          details?.hospitalprovideAccessDetails['hospitalName']
+        "
+      >
+        <span>
+          {{
+            details?.hospitalprovideAccessDetails["hospitalName"]
+              ? details?.hospitalprovideAccessDetails["hospitalName"]
+              : ""
+          }}
+        </span>
+      </div>
+
+      <div
+        style="outline: none; position: relative; left: 3vw"
+        *ngIf="showProfile()"
+      >
+        <img src="assets/svg/DashboardIcons/Time.svg" class="dt-time" alt="" />
+        <span class="current-date-time">{{
+          now | date : "MMM d, y, hh:mm a"
+        }}</span>
+      </div>
+    </div>
+    <div
+      fxFlex
+      fxLayout
+      fxLayoutAlign="end center"
+      class="navigation-items"
+      fxHide.xs
+    >
+      <div
+        fxLayout="row"
+        [ngClass]="osType === 'Win32' ? 'right-content' : 'mac-right-content'"
+      >
+        <div
+          style="z-index: 1"
+          *ngIf="showProfile() || userRole === 'CARECOORDINATOR'"
+        >
+          <div class="notification-btn" (click)="openTotalPatients()">
+            <img
+              title="Total Patients ({{ count }})"
+              src="assets/svg/DashboardIcons/Total Patients White.svg"
+              class="icon-space sm-icon"
+            />
+          </div>
+        </div>
+        <!-- <div style="z-index: 1">
+          <div class="notification-btn" (click)="openNav(drawer, 'appt')">
+            <img
+              title="Scheduled Appointments List"
+              src="assets/svg/DashboardIcons/Appointments White.svg"
+              class="icon-space sm-icon"
+            />
+          </div>
+        </div> -->
+        <div
+          style="z-index: 1"
+          *ngIf="showProfile() && userRole !== 'CARECOORDINATOR'"
+        >
+          <div class="notification-btn" (click)="openNav(drawer, 'call')">
+            <div class="notification-counter">
+              <div class="count-number">
+                {{ scheduledCallCount }}
+              </div>
+            </div>
+            <img
+              title="Scheduled call list"
+              [matBadge]="scheduledCallCount"
+              src="assets/svg/DashboardIcons/Call SchedulerHeader.svg"
+              class="icon-space sm-icon"
+            />
+          </div>
+        </div>
+        <div
+          style="z-index: 1"
+          *ngIf="showProfile() && userRole !== 'CARECOORDINATOR'"
+        >
+          <div
+            class="notification-btn"
+            (click)="openNotification(drawer)"
+            title="Notifications"
+          >
+            <div class="notification-counter">
+              <div class="count-number">
+                {{ notificationCountData }}
+              </div>
+            </div>
+            <img
+              [matBadge]="notificationCountData"
+              src="assets/svg/DashboardIcons/Notification.svg"
+              class="icon-space sm-icon"
+            />
+          </div>
+        </div>
+        <div style="top: 10px; position: relative">
+          <mat-menu
+            #menu="matMenu"
+            [ngClass]="showSettings ? 'settings' : 'mySettings'"
+          >
+            <div class="menu-container">
+              <div fxLayout="row" fxLayoutGap="11px" class="content-1">
+                <div
+                  class="img-content"
+                  fxLayout="row"
+                  (click)="imageInput.click()"
+                >
+                  <img
+                    alt="image"
+                    class="profile-circle"
+                    [src]="profileImg ? profileImg : defaultUrl"
+                  />
+
+                  <div class="camera-icon">
+                    <img
+                      src="assets/svg/DashboardIcons/Camera.svg"
+                      style="padding: 3px; margin-left: -2.4px"
+                      alt=""
+                    />
+                    <input
+                      id="myImage"
+                      type="file"
+                      accept="image/*"
+                      #imageInput
+                      (change)="uploadImage($event)"
+                      style="display: none"
+                    />
+                  </div>
+                </div>
+                <div class="bio-content" fxLayout="column" fxLayoutGap="7px">
+                  <div
+                    class="name"
+                    [title]="
+                      getFullName() && getFullName().length > 15
+                        ? getFullName()
+                        : ''
+                    "
+                  >
+                    {{
+                      getFullName().length > 15
+                        ? (getFullName() | slice : 0 : 15) + "..."
+                        : (getFullName() | titlecase)
+                    }}
+                    <!-- {{ userName }} -->
+                  </div>
+                  <div class="branch">
+                    {{ userRoleDisplay | titlecase }}
+                  </div>
+                </div>
+              </div>
+              <div
+                class="hover-bg"
+                style="border-bottom: 1px solid #f4f9fe"
+                *ngIf="userRole === 'CAREPROVIDER'"
+                (click)="openMyStaff()"
+              >
+                <div class="content-2" fxLayout="row" fxLayoutAlign="30px">
+                  <div>
+                    <img
+                      class="setting-icon"
+                      src="assets/svg/my-staff-new.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="setting-type">My Staff</div>
+                </div>
+              </div>
+              <div
+                class="hover-bg"
+                style="border-bottom: 1px solid #f4f9fe"
+                (click)="openResetPassword()"
+              >
+                <div class="content-2" fxLayout="row" fxLayoutAlign="30px">
+                  <div>
+                    <img
+                      class="setting-icon"
+                      src="assets/svg/DashboardIcons/Reset Password.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="setting-type">Reset Password</div>
+                </div>
+              </div>
+              <div
+                class="hover-bg"
+                style="border-bottom: 1px solid #f4f9fe"
+                *ngIf="showProfile()"
+                (click)="openTickets()"
+              >
+                <div class="content-2" fxLayout="row" fxLayoutAlign="30px">
+                  <div>
+                    <img
+                      class="setting-icon"
+                      src="assets/svg/DashboardIcons/Tickets.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="setting-type">Support</div>
+                  <!-- <div>
+                    <app-support-ticket></app-support-ticket>
+                  </div> -->
+                </div>
+              </div>
+              <div
+                class="hover-bg"
+                style="border-bottom: 1px solid #f4f9fe"
+                *ngIf="showProfile() && userRole !== 'CARECOORDINATOR'"
+              >
+                <div class="content-2" fxLayout="row" fxLayoutAlign="30px">
+                  <div>
+                    <img
+                      class="setting-icon"
+                      src="assets/svg/DashboardIcons/Notification Black.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="setting-type">Enable Notification</div>
+                  <div style="position: relative; left: 0.9vw">
+                    <mat-slide-toggle
+                      color="primary"
+                      [(ngModel)]="notificationToggle"
+                      [checked]="notificationToggle"
+                      (click)="unitConversion('nt')"
+                    >
+                      {{ notification }}</mat-slide-toggle
+                    >
+                  </div>
+                  <!-- <div>
+                  <app-support-ticket></app-support-ticket>
+                </div> -->
+                </div>
+              </div>
+
+              <mat-expansion-panel
+                (opened)="panelOpenState = true"
+                style="width: 280px"
+                class="hover-bg"
+                (closed)="panelOpenState = false"
+                (click)="displaySettings()"
+                class="mat-elevation-z0"
+                *ngIf="false"
+              >
+                <mat-expansion-panel-header (click)="$event.stopPropagation()">
+                  <mat-panel-title>
+                    <div>
+                      <div
+                        class="content-2"
+                        fxLayout="row"
+                        fxLayoutAlign="30px"
+                        style="position: relative; left: -1.5vw"
+                      >
+                        <div>
+                          <img
+                            class="setting-icon"
+                            src="assets/svg/DashboardIcons/Settings.svg"
+                            alt=""
+                          />
+                        </div>
+                        <div class="setting-type">Settings</div>
+                      </div>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                  <!-- <div class="hover-bg" (click)="$event.stopPropagation()">
+                    <div class="content-2" fxLayout="row" fxLayoutAlign="30px">
+                      <div>
+                        <img
+                          class="setting-icon"
+                          src="assets/svg/DashboardIcons/Weight Black.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div class="setting-type">Preferred Weight</div>
+                      <div style="position: relative; left: 1.2vw">
+                        <mat-slide-toggle
+                          color="primary"
+                          (click)="unitConversion('wt')"
+                          [checked]="weightToggle"
+                          >{{ weight }}
+                        </mat-slide-toggle>
+                      </div>
+                    </div>
+                  </div> -->
+                  <div class="hover-bg" (click)="$event.stopPropagation()">
+                    <div class="content-2" fxLayout="row" fxLayoutAlign="30px">
+                      <div>
+                        <img
+                          class="setting-icon"
+                          src="assets/svg/DashboardIcons/Height.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div class="setting-type">Preferred Height In</div>
+                      <div style="position: relative; left: 0.5vw">
+                        <mat-slide-toggle
+                          color="primary"
+                          (click)="unitConversion('ht')"
+                          [checked]="feetToggle"
+                          >{{ height }}
+                        </mat-slide-toggle>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hover-bg" (click)="$event.stopPropagation()">
+                    <div class="content-2" fxLayout="row" fxLayoutAlign="30px">
+                      <div>
+                        <img
+                          class="setting-icon"
+                          src="assets/svg/DashboardIcons/Notification Black.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div class="setting-type">Enable Notification</div>
+                      <div style="position: relative; left: 0.9vw">
+                        <mat-slide-toggle
+                          color="primary"
+                          [(ngModel)]="notificationToggle"
+                          [checked]="notificationToggle"
+                          (click)="unitConversion('nt')"
+                        >
+                          {{ notification }}</mat-slide-toggle
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+              <div class="hover-bg" (click)="onLogout()">
+                <div class="content-2" fxLayout="row" fxLayoutAlign="30px">
+                  <div>
+                    <img
+                      class="setting-icon"
+                      src="assets/svg/DashboardIcons/Logout Black.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="setting-type">Sign out</div>
+                </div>
+              </div>
+            </div>
+          </mat-menu>
+          <!-- <div>
+                      <div class="logout-btn">
+                          <img src="assets/svg/DashboardIcons/Logout.svg" (click)="onLogout()" class="icon-space">
+                      </div>
+                  </div> -->
+        </div>
+        <div
+          *ngIf="
+            userRole === 'RPM_ADMIN' ||
+            userRole === 'HOSPITAL_USER' ||
+            userRole === 'FACILITY_USER' ||
+            userRole === 'CAREPROVIDER' ||
+            userRole === 'CARECOORDINATOR'
+          "
+          class="profileOnHover"
+        >
+          <div
+            fxLayout="row"
+            class="profile-container"
+            [matMenuTriggerFor]="menu"
+          >
+            <app-profile-image
+              style="cursor: pointer"
+              [profileImage]="profileImg"
+              [shapeOfImage]="shapeofProfileImage"
+            >
+            </app-profile-image>
+            <div class="username" [title]="name">
+              {{ name.length > 12 ? (name | slice : 0 : 12) + "..." : name }}
+            </div>
+            <div
+              class="text-job text-muted mb-0"
+              style="font-size: x-small; margin-top: -20px"
+            >
+              <div style="color: #88d7c9">
+                {{
+                  branchName?.length > 32
+                    ? (branchName | slice : 0 : 32) + "..."
+                    : branchName
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="title-div" style="padding: 5px 20px !important">
+          <!-- <span
+            style="
+              color: #fff;
+              font-size: 22px;
+              font-weight: 700;
+              padding-right: 15px;
+              letter-spacing: 1px;
+            "
+            >SECT</span
+          > -->
+          <img src="assets/svg/SECT-logo.svg" alt="SECT-logo" width="50" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-drawer-container
+    [class.drawer-opened]="drawer.opened"
+    class="example-container"
+  >
+    <mat-drawer
+      #drawer
+      class="drawer"
+      mode="side"
+      opened="false"
+      position="end"
+      style="z-index: 1000"
+    >
+      <div class="contents">
+        <div class="comments-view container" fxFlex="100%">
+          <app-call-schedule
+            (disableOverlay)="getOverlay($event)"
+            [scheduleCall]="scheduledCallList"
+            (cancelledCall)="getCancelCallInfo($event)"
+            *ngIf="showCallSchedule"
+            (searchedScheduledData)="getSearchValues($event)"
+            [drawerToggle]="drawer"
+            (countScheduleCall)="getCallCount($event)"
+          ></app-call-schedule>
+        </div>
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
+</div>

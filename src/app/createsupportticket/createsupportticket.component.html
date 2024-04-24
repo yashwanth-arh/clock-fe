@@ -1,0 +1,161 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+
+<span mat-dialog-title class="module-form-title">{{
+  dataValue==='add' ? "New Ticket" : "Update Ticket"
+  }}</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content>
+  <form [formGroup]="vendorForm" (ngSubmit)="submitSupportTickets()">
+    <mat-dialog-content [formGroup]="vendorForm">
+      <div>
+        <div fxLayout="row">
+          <div fxFlex="15%" class="ticket-heading" style="padding-bottom: 14px;">
+            Issue Type*
+          </div>
+
+          <div  fxFlex="85%">
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+
+              <mat-select (selectionChange)="getSummary()" formControlName="ticketSummary" placeholder="Start typing here">
+                <mat-option *ngFor="let defaultSupports of defaultSupport" [value]="defaultSupports.supportTicketQuestions
+            ">
+                  {{ defaultSupports.supportTicketQuestions
+                  }}
+                </mat-option>
+                <mat-option value="Others"> Others </mat-option>
+              </mat-select>
+              <mat-error>Issue type is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          
+        </div>
+        <div>
+          <div fxLayout="row">
+            <div fxFlex="15%" class="ticket-heading" style="padding-bottom: 24px;">
+              {{description}}
+            </div>
+            <div fxFlex="85%">
+              <mat-form-field appearance="outline" class="fieldWidth">
+                <mat-label>Start typing here</mat-label>
+                <textarea maxlength="3000" matInput formControlName="ticketDescription"> </textarea>
+
+                <mat-error  *ngIf="vendorForm.get('ticketDescription').touched">{{
+                  getDescriptionError()
+                  }}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        
+            <!-- <mat-error>Ticket description is required</mat-error> -->
+        </div>
+        <div fxLayout="row" *ngIf="userRole === 'CAREPROVIDER'">
+          <div fxFlex="15%" class="ticket-heading">
+            Facility*
+          </div>
+
+          <div  fxFlex="85%">
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+
+              <mat-select (selectionChange)="getSummary()" formControlName="raisedToFacility" placeholder="Select Facility">
+                <mat-option *ngFor="let defaultSupports of details" [value]="defaultSupports.facilityId
+            ">
+                  {{ defaultSupports.facilityName
+                  }}
+                </mat-option>
+               
+              </mat-select>
+              <mat-error>Facility is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          
+        </div>
+      </div>
+
+      <div>
+
+        <div fxLayout="row">
+
+          <div fxFlex="14.8%" class="ticket-heading">
+            Attachments
+          </div>
+        <div fxFlex="85.2%" class="file-input">
+          <input type="file" id="files" class="file" accept=".pdf,.png,.jpg,.jpeg" 
+            (change)="uploadImage($event)" />
+          <label for="files" fxLayout="column" fxLayoutGap="10px" class="pres-upload-label">
+            <div class="add-files pres-upload-label">
+              Add File
+            </div>
+          </label>
+
+        </div>
+        </div>
+      
+        <div style="padding-left: 145px;"  *ngFor="let img of seletedFileValues let i = index">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row">
+          <img [src]="img.icon" />
+          <div class="attached-file">
+            {{img.name}}
+          </div>
+          </div>
+          
+          <div style="padding-top:7px">
+            <mat-icon class="material-icon icon" color="black" (click)="removeSelectedFile(i,img)">close</mat-icon>
+          </div>
+        </div>
+          <!-- <mat-divider></mat-divider> -->
+          <!-- <div class="line"></div> -->
+         
+        </div>
+       
+        <!-- <div *ngIf="imageSrc?.length">
+          <span *ngFor="let img of imageSrc let i = index">
+            <img id="preview" [src]="img.url ? img.url :img" (click)="imagePreview()" class="preview-image" />
+            <img src="assets/svg/Remove Minus Icon.svg" class="minus-icon" (click)="removeSelectedFile(i,img)" />
+
+          </span>
+        </div>
+        <div *ngIf="pdfimageSrc?.length">
+          <span *ngFor="let img of pdfimageSrc let i = index">
+            <img id="preview" [src]="img.url ? img.url :img" class="preview-image" />
+            <img *ngIf="dataValue=='add'" src="assets/svg/Remove Minus Icon.svg" class="minus-icon"
+              (click)="removeSelectedFile(i,img)" />
+          </span>
+        </div> -->
+      </div>
+
+      <!-- <div fxLayout="row">
+        <input (click)="uploadImage($event)" type="file" />
+        <div>
+          Attachemnts
+        </div>
+        <div class="add-files">
+          Add File
+        </div>
+
+
+      </div>
+      <div fxLayout="row">
+        <div class="attached-file">
+          attachment.png
+        </div>
+        <div style="padding-top:18px">
+          <mat-icon class="material-icons icon" color="black">close</mat-icon>
+        </div>
+      </div> -->
+    </mat-dialog-content>
+
+    <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+      <button mat-flat-button class="rpm-save-button" [disabled]="!vendorForm.valid || submitted">
+        Create
+      </button>
+    </div>
+  </form>
+</mat-card-content>

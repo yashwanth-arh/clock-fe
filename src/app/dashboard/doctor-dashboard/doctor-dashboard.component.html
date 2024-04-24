@@ -1,0 +1,152 @@
+<div class="rpm-module-management">
+  <app-navigation-bar></app-navigation-bar>
+  <div class="rpm-module-table-view">
+    <div class="rpm-module-filter-container">
+      <mat-grid-list cols="5" class="card-group-home">
+        <mat-grid-tile>
+          <mat-card class="card-design">
+            <mat-card-content class="card-content">
+              <div class="card-img">
+                <!-- <mat-icon class="home-icon">person_outline</mat-icon> -->
+              </div>
+              <div class="home-overview">
+                <h2>{{ cardDataList && cardDataList.noOfPatients ? cardDataList.noOfPatients : 0 }}</h2>
+                <p>No. of Patients</p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-card class="card-design">
+            <mat-card-content class="card-content">
+              <div class="card-img">
+                <!-- <mat-icon class="home-icon">person_outline</mat-icon> -->
+              </div>
+              <div class="home-overview">
+                <h2>{{ cardDataList && cardDataList.ObservationsPending ? cardDataList.ObservationsPending : 0 }}</h2>
+                <p>Observations Pending</p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-card class="card-design">
+            <mat-card-content class="card-content">
+              <div class="card-img">
+                <!-- <mat-icon class="home-icon">person_outline</mat-icon> -->
+              </div>
+              <div class="home-overview">
+                <h2>{{ cardDataList && cardDataList.ObservationsCompleted ? cardDataList.ObservationsCompleted : 0 }}
+                </h2>
+                <p>Observations Completed</p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-card class="card-design">
+            <mat-card-content class="card-content">
+              <div class="card-img">
+                <!-- <mat-icon class="home-icon">person_outline</mat-icon> -->
+              </div>
+              <div class="home-overview">
+                <h2>{{ cardDataList && cardDataList.noOfClaims ? cardDataList.noOfClaims : 0 }}</h2>
+                <p>No. of Claims</p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+         <mat-grid-tile>
+          <mat-card class="card-design">
+            <mat-card-content class="card-content">
+              <div class="card-img">
+                <!-- <mat-icon class="home-icon">person_outline</mat-icon> -->
+              </div>
+              <div class="home-overview">
+                <h2>{{ cardDataList && cardDataList.noOfClaimsForCurrentMonth ? cardDataList.noOfClaimsForCurrentMonth : 0 }}</h2>
+                <p>No of Claims For Current Month</p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    <div class="graph-content">
+      <mat-card class="graph-card">
+        <app-charts></app-charts>
+      </mat-card>
+
+      <mat-card class="ticket-card">
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <div class="list-content">
+                <div>
+                  <p class="ticket-heading">TIC0000001</p>
+                  <p class="ticket-para">patient enrolment is not working</p>
+                </div>
+                <div>
+                  <button mat-button color="black" class="btnstyle">New</button>
+                </div>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <div class="list-content">
+                <div class="list-details">
+                  <p class="ticket-heading">TIC0000001</p>
+                  <p class="ticket-para">patient enrolment is not working</p>
+                </div>
+                <div>
+                  <button mat-button color="black" class="btnstyle">New</button>
+                </div>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <p class="ticket-heading">TIC0000001</p>
+              <div class="list-content">
+                <p class="ticket-para">patient enrolment is not working</p>
+                <button mat-button color="black" class="btnstyle">New</button>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <p class="ticket-heading">TIC0000001</p>
+              <div class="list-content">
+                <p class="ticket-para">patient enrolment is not working</p>
+                <button mat-button color="black" class="btnstyle">New</button>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <p class="ticket-heading">TIC0000001</p>
+              <div class="list-content">
+                <p class="ticket-para">patient enrolment is not working</p>
+                <button mat-button color="black" class="btnstyle">New</button>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item role="listitem">
+            <div class="dashboard-list">
+              <p class="ticket-heading">TIC0000001</p>
+              <div class="list-content">
+                <p class="ticket-para">patient enrolment is not working</p>
+                <button mat-button color="black" class="btnstyle">New</button>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+    </div>
+  </div>
+</div>

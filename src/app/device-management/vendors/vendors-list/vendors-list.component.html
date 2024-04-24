@@ -1,0 +1,108 @@
+<div class="vendorsList">
+  <!-- <app-navigation-bar (clickEvent)="openVendorDialog('add')"></app-navigation-bar> -->
+  <div>
+    <!-- <div class="rpm-module-filter-container">
+                <form [formGroup]="deviceTypefilter">
+                    <mat-form-field appearance="legacy">
+                        <mat-label>Search</mat-label>
+                        <input matInput formControlName="searchquery" (keyup)="isEnableGlobalSearchFunc()" />
+                        <mat-hint>Global Search</mat-hint>
+                    </mat-form-field>
+                    <mat-icon style="font-size: 17px; cursor: pointer;" (click)="unselectGlobalSearch()"
+                        *ngIf="isEnableGlobalSearch"> close</mat-icon>
+                    <button mat-icon-button class="rpm-search-button" (click)="onDeviceTypeFilter()">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </form>
+            </div> -->
+
+    <div
+      class="example-container mat-elevation-z8"
+      [ngClass]="userRole === 'RPM_ADMIN' ? 'notAdmin' : ''"
+    >
+      <mat-table #table matSort matTableResponsive [dataSource]="dataSource">
+        <ng-container matColumnDef="vedername">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.vendorName && element?.vendorName.length > 48
+                ? element?.vendorName
+                : ''
+            "
+          >
+            {{
+              element?.vendorName && element?.vendorName.length > 48
+                ? (element.vendorName | titlecase | slice : 0 : 48) + "..."
+                : element?.vendorName
+                ? (element.vendorName | titlecase)
+                : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="agreement">
+          <mat-header-cell *matHeaderCellDef> Agreement </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <a
+              (click)="element?.documentName ? openPreview(element) : ''"
+              [style]="
+                element?.documentName
+                  ? 'cursor: pointer; text-decoration: none; text-decoration: underline;'
+                  : ''
+              "
+              >{{ element.documentName ? element.documentName : "-" }}</a
+            >
+          </mat-cell>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="description">
+                    <mat-header-cell fxFlex="60%" *matHeaderCellDef> Product Description
+                    </mat-header-cell>
+                    <mat-cell fxFlex="60%" *matCellDef="let element">{{element.deviceDescription}} </mat-cell>
+                </ng-container> -->
+        <!-- 
+                    <ng-container matColumnDef="deviceType">
+                        <mat-header-cell fxFlex="20%" *matHeaderCellDef> Device Type </mat-header-cell>
+                        <mat-cell fxFlex="20%" *matCellDef="let element">
+                    
+                            {{element.deviceType}}
+                        </mat-cell>
+                    </ng-container> -->
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openVendorDialog(element)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div class="noRecordsFound" *ngIf="length === 0">
+        No Records Found!!!!
+      </div>
+      <mat-paginator
+        [ngClass]="length < 10 ? 'hide-pagination-element' : 'show-pagination'"
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

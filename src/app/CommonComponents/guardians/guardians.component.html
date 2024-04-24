@@ -1,0 +1,223 @@
+<div class="guardians-div">
+  <div class="rpm-module-management">
+    <div class="guardian-sub-div">
+      <img
+        src="../../../assets/svg/Back.svg"
+        (click)="viewGuardians()"
+        class="Back-icon"
+        alt=""
+        srcset=""
+      />
+      <div class="guardian-title">Guardian -</div>
+      <div class="guardian-title">
+        {{
+          (queryParamsValues.name | titlecase) +
+            " " +
+            (queryParamsValues.middleName ? queryParamsValues.middleName : "") +
+            " " +
+            queryParamsValues.lastName
+        }}
+      </div>
+    </div>
+    <div class="tab-dev">
+      <div class="guardian-table-div">
+        <mat-table #table matSort matTableResponsive [dataSource]="dataSource">
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.guardianFullName &&
+                element?.guardianFullName?.length > 15
+                  ? element?.guardianFullName
+                  : ''
+              "
+            >
+              <!-- {{ element.guardianFullName }} -->
+              {{
+                (element.guardianFullName | titlecase) &&
+                element.guardianFullName.length > 15
+                  ? (element.guardianFullName | titlecase | slice : 0 : 15) +
+                    ".."
+                  : (element.guardianFullName | titlecase)
+                  ? (element.guardianFullName | titlecase)
+                  : " "
+              }}</mat-cell
+            >
+          </ng-container>
+          <ng-container matColumnDef="emailID">
+            <mat-header-cell *matHeaderCellDef> Email ID </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [title]="
+                element?.email && element?.email.length > 16
+                  ? element?.email
+                  : ''
+              "
+            >
+              {{
+                element?.email.length > 16
+                  ? (element?.email | slice : 0 : 16) + "..."
+                  : element?.email
+                  ? element?.email
+                  : "-"
+              }}</mat-cell
+            >
+          </ng-container>
+          <ng-container matColumnDef="contactNumber">
+            <mat-header-cell *matHeaderCellDef>
+              Contact Number
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" [title]="">
+              {{ element.mobileNumber }}</mat-cell
+            >
+          </ng-container>
+          <ng-container matColumnDef="relationship">
+            <mat-header-cell *matHeaderCellDef> Relationship </mat-header-cell>
+            <mat-cell *matCellDef="let element" [title]="">
+              {{ element.patientRelations }}</mat-cell
+            >
+          </ng-container>
+          <!-- <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <img
+                src="assets/svg/Edit Icon.svg"
+                (click)="editMedication(element)"
+                style="cursor: pointer"
+              />
+            </mat-cell>
+          </ng-container> -->
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <div class="no-records-dev" *ngIf="!dataSource?.length">
+          No Records Found!
+        </div>
+        <mat-paginator
+          [ngClass]="
+            length < 10 ? 'hide-pagination-element' : 'show-pagination'
+          "
+          (page)="handlePageEvent($event)"
+          [length]="length"
+          [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="pageIndex"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+      <div class="guardian-add-div">
+        <form [formGroup]="guadianForm">
+          <div fxLayout="column" fxLayoutGap="15px">
+            <div class="add-title" *ngIf="!showEdit">Add New Guardian</div>
+            <div class="add-title" *ngIf="showEdit">Edit Guardian</div>
+            <mat-form-field appearance="outline" class="mat-inpts">
+              <mat-label> Contact Number</mat-label>
+              <input
+                appNumberCustomValidation
+                type="text"
+                matInput
+                formControlName="contactNo"
+                (keyup)="getGuardianDetails($event)"
+                maxlength="10"
+                required
+              />
+              <mat-error
+                *ngIf="
+                  !guadianForm?.controls['contactNo'].valid &&
+                  guadianForm?.controls['contactNo'].touched
+                "
+                >{{ getErrorContactNo() }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mat-inpts">
+              <mat-label>Name</mat-label>
+              <input
+                matInput
+                autocomplete="disabled"
+                appAlphabetSpaceOnly
+                minlength="3"
+                maxlength="50"
+                formControlName="name"
+                required
+              />
+              <mat-error>{{ getErrorName() }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="mat-inpts">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                autocomplete="disabled"
+                maxlength="50"
+                formControlName="email"
+                required
+              />
+
+              <mat-error
+                *ngIf="
+                  !guadianForm?.controls['email'].valid &&
+                  guadianForm?.controls['email'].touched
+                "
+                >{{ getErrorEmail() }}
+              </mat-error>
+              <mat-error *ngIf="email?.errors?.emailTaken">
+                This email already exists.
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="mat-inpts">
+              <mat-label>Relationship</mat-label>
+              <mat-select formControlName="relationship" required>
+                <mat-option *ngFor="let val of relationship" [value]="val.id">
+                  {{ val.relation }}
+                </mat-option>
+              </mat-select>
+              <mat-error>Relationship is required</mat-error>
+            </mat-form-field>
+          </div>
+        </form>
+        <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            fxLayoutAlign="end"
+            class="butts"
+          >
+            <button
+              mat-flat-button
+              class="cancel-button"
+              (click)="openMedicationForm()"
+            >
+              Cancel
+            </button>
+
+            <button
+              *ngIf="!updateGuadian"
+              (click)="
+                createGuadian(guadianForm.valid, guadianForm.value, 'add')
+              "
+              [disabled]="!guadianForm.valid || isSubmitted"
+              mat-flat-button
+              class="rpm-save-button"
+            >
+              Save
+            </button>
+
+            <button
+              mat-flat-button
+              class="rpm-save-button"
+              *ngIf="updateGuadian"
+              (click)="
+                createGuadian(guadianForm.valid, guadianForm.value, 'edit')
+              "
+              [disabled]="!guadianForm.valid || isSubmitted"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

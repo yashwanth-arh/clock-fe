@@ -1,0 +1,51 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data.add && data.add === "add"
+    ? "New Doctor Identity"
+    : "Update Doctor Identity"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content
+  fxLayout
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <form [formGroup]="doctorIdentityForm" (ngSubmit)="submitSpecialty()">
+    <mat-dialog-content style="margin-top: 10px">
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Identity Type</mat-label>
+        <input
+          type="text"
+          appAlphabetSpaceOnly
+          appNoFirstSpace
+          matInput
+          formControlName="identityType"
+          minlength="3"
+          maxlength="50"
+          required
+        />
+        <!-- <mat-error>Enter minimum 3 characters</mat-error> -->
+        <mat-error
+          *ngIf="
+            !doctorIdentityForm.controls['identityType'].valid &&
+            doctorIdentityForm.controls['identityType'].touched
+          "
+          >{{ IdentityNameErr() }}</mat-error
+        >
+      </mat-form-field>
+      <button
+        mat-flat-button
+        class="rpm-save-button"
+      
+        [disabled]="!doctorIdentityForm.valid || isSubmitted"
+        style="float: right"
+      >
+        {{ data.add && data.add === "add" ? "Submit" : "Update" }}
+      </button>
+    </mat-dialog-content>
+  </form>
+</mat-card-content>

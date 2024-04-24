@@ -1,0 +1,341 @@
+<div class="totalPatientMain">
+  <div fxLayout="column" class="total-patients">
+    <div fxFlex="100%">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        style="outline: none; cursor: pointer"
+        class="mt-3"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center" class="search">
+          <button
+            mat-icon-button
+            aria-label="navigate-back"
+            class="rpm-navigate-back"
+            (click)="backToDashboard()"
+          >
+            <img src="assets/img/back-button.png" />
+          </button>
+          <div class="search-container">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search.."
+              (keyup)="getBySearchParams()"
+              [(ngModel)]="searchData"
+            />
+            <button
+              type="submit"
+              class="search-btn"
+              (click)="getBySearchParams()"
+            >
+              <img src="assets/svg/DashboardIcons/Search White.svg" alt="" />
+            </button>
+          </div>
+          <!-- <div *ngIf="showSearchBadge" class="search-field">
+          <mat-form-field appearance="legacy">
+            <input matInput [(ngModel)]="searchData" readonly />
+           
+          </mat-form-field>
+          <span (click)="cancelSearch()">
+            <img src="assets/svg/Cross Button.svg" alt="" />
+          </span>
+        </div> -->
+        </div>
+
+        <!-- <div fxLayout="column" fxLayoutAlign="end" fxLayoutGap="2vw">
+        <div>
+          <mat-form-field appearance="outline" class="fieldWidth dateTime">
+            <mat-label>Download Report</mat-label>
+            <input matInput [matDatepicker]="dp" [max]="max" [formControl]="date" readonly />
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+              (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+     
+      </div> -->
+        <div
+          (click)="openAddPatientDialog()"
+          fxLayout="column"
+          class="new-btn"
+          fxLayoutAlign="end"
+          fxLayoutGap="2vw"
+        >
+          New Patient
+        </div>
+      </div>
+    </div>
+    <!-- <div fxFlex="40%">
+
+    </div> -->
+  </div>
+
+  <div class="example-container mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="patient">
+        <mat-header-cell *matHeaderCellDef>Patients</mat-header-cell>
+        <mat-cell
+          *matCellDef="let element; let i = index"
+          (click)="
+            openPatientProfile(
+              element?.id,
+              element?.firstName + ' ' + element?.lastName,
+              'totalPatients',
+              i
+            )
+          "
+        >
+          <div fxLayout="row" class="patientBio">
+            <!-- <div class="outer-rounded-circle">
+                <img
+                  alt="image"
+                  class="rounded-circle"
+                  width="30"
+                  *ngIf="element.profileurl"
+                  [src]="element.profileurl.trim()"
+                />
+                <img
+                  src="assets/svg/DashboardIcons/Patient.svg"
+                  class="rounded-circle"
+                  *ngIf="!element.profileurl"
+                  alt=""
+                />
+              </div> -->
+            <div fxLayout="row">
+              <div
+                *ngIf="!element.diagnosis"
+                class="flag-div"
+                title="Pending vital details"
+              >
+                <img src="/assets/img/flag.png" />
+              </div>
+
+              <div fxLayout="column" fxLayoutGap="2px" class="patient-info">
+                <!-- <div *ngIf="!element.diagnosis" class="box">
+                  <div fxLayout="row">
+                    <div>
+                      <img src="/assets/img/diagnosisicon.png">
+                    </div>
+                  <div style="padding-top: 5px;">
+                Diagnosis details not updated
+              </div>
+             </div>
+                </div> -->
+                <div class="name" [title]="getFullName(element)">
+                  {{
+                    getFullName(element).length > 20
+                      ? (getFullName(element) | slice : 0 : 20) + "..."
+                      : getFullName(element)
+                  }}
+                </div>
+                <div class="gender-age">
+                  ({{ element.age }} years/{{ getGender(element) }})
+                  <!-- {{ element.id }} -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="contactNo">
+        <mat-header-cell *matHeaderCellDef class="centerText">
+          Contact Number
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.cellNumber }}
+          <div [matMenuTriggerFor]="levelOne" #levelOneTrigger="matMenuTrigger">
+            <span
+              *ngIf="element['homeNumber']"
+              style="color: #01cd74; cursor: pointer; padding-left: 5px"
+            >
+              + 1</span
+            >
+          </div>
+          <mat-menu #levelOne="matMenu">
+            <div class="location-box" style="padding: 10px">
+              <div class="loc-title">
+                Secondary Contact Number : {{ element.homeNumber }}
+              </div>
+            </div>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div
+            style="overflow-wrap: anywhere"
+            fxLayout="column"
+            fxLayoutGap="5px"
+          >
+            <div
+              [title]="
+                element.addressLine?.length > 80 ? element.addressLine : ''
+              "
+            >
+              {{
+                element.addressLine?.length > 80
+                  ? (element.addressLine | slice : 0 : 80) + "..."
+                  : element.addressLine
+                  ? element.addressLine + ","
+                  : "-"
+              }}
+            </div>
+            <div>
+              {{ element.city }}, {{ element.state }}
+              <!-- ,{{ element.address.country ? element.address.country : "-" }} -->
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div
+            [ngClass]="
+              element.userStatus == 'ACTIVE' ? 'activeStatus' : 'inactiveStatus'
+            "
+          >
+            {{ element.userStatus }}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="primaryPhysician">
+        <mat-header-cell *matHeaderCellDef>Primary Consultant</mat-header-cell>
+        <mat-cell
+          *matCellDef="let element"
+          [title]="
+            element['careProviders'] && element['careProviders'].length
+              ? getPhysicianName(element['careProviders'][0])
+              : ''
+          "
+        >
+          <div>
+            {{
+              element["careProviders"] &&
+              element["careProviders"].length &&
+              element["careProviders"][0]?.role == "DOCTOR" &&
+              getPhysicianName(element["careProviders"][0]).length > 18
+                ? "Dr. " +
+                  (getPhysicianName(element["careProviders"][0])
+                    | slice : 0 : 18) +
+                  "..."
+                : element["careProviders"][0]?.role == "DOCTOR" &&
+                  getPhysicianName(element["careProviders"][0]).length < 19
+                ? "Dr. " + getPhysicianName(element["careProviders"][0])
+                : getPhysicianName(element["careProviders"][0]).length > 18
+                ? (getPhysicianName(element["careProviders"][0])
+                    | slice : 0 : 18) + "..."
+                : getPhysicianName(element["careProviders"][0]).length < 19
+                ? getPhysicianName(element["careProviders"][0])
+                : "-"
+            }}
+          </div>
+          <!-- <div (click)="getcareTeam(element.id)">
+        
+          <img style="padding-left: 10px;" src="../../../assets/img/care-team.png">
+        </div> -->
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell
+          *matHeaderCellDef
+          style="max-width: 51px !important; min-width: 45px !important"
+          >Actions</mat-header-cell
+        >
+        <mat-cell
+          style="max-width: 45px !important; min-width: 45px !important"
+          mat-cell
+          *matCellDef="let element"
+        >
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <!-- <mat-icon>more_vert</mat-icon> -->
+            <img src="../../../assets/img/more-vertical.png" />
+          </button>
+          <mat-menu #menu="matMenu">
+            <!-- <button mat-menu-item (click)="openClaimsDialog(element)">
+          <mat-icon>dns</mat-icon>
+          <span>Add Claim</span>
+        </button> -->
+            <button
+              mat-menu-item
+              class="action-btn"
+              (click)="openEditPatientDialog(element)"
+            >
+              <img src="assets/svg/Edit Icon.svg" />
+              <span>Edit</span>
+            </button>
+
+            <button
+              mat-menu-item
+              *ngIf="userRole != 'CARECOORDINATOR'"
+              class="action-btn"
+              (click)="addDiagnostic(element)"
+            >
+              <!-- <img src="assets/svg/Edit Icon.svg" /> -->
+              <span>Update Health Parameters</span>
+            </button>
+            <button
+              mat-menu-item
+              *ngIf="userRole === 'CARECOORDINATOR'"
+              class="action-btn"
+              (click)="goToPatientDevice(element)"
+            >
+              <!-- <img src="assets/svg/Edit Icon.svg" /> -->
+              <span>View Devices</span>
+            </button>
+            <button
+              mat-menu-item
+              *ngIf="userRole === 'CARECOORDINATOR'"
+              class="action-btn"
+              (click)="goToPatientGuardin(element)"
+            >
+              <!-- <img src="assets/svg/Edit Icon.svg" /> -->
+              <span>View Guardians</span>
+            </button>
+            <button mat-menu-item (click)="viewCareTeam(element)">
+              <span>View Care Team</span>
+            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <div *ngIf="!(dataSource.totalElemObservable | async)" class="noRecordsFound">
+    No Records Found!
+  </div>
+  <div *ngIf="dataSource.loadRes" class="noRecordsFound">
+    <!-- <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+      </mat-progress-bar> -->
+    <app-loader [gifBackground]="'blueBg'"></app-loader>
+  </div>
+
+  <mat-paginator
+    [length]="100"
+    [pageSize]="10"
+    aria-label="Select page"
+    [ngClass]="
+      (dataSource.totalElemObservable | async) < 10
+        ? 'hide-pagination-element'
+        : 'tot-pagination'
+    "
+    [length]="dataSource.totalElemObservable | async"
+    [pageSizeOptions]="[10, 25, 100]"
+    [hidePageSize]="true"
+  >
+  </mat-paginator>
+</div>

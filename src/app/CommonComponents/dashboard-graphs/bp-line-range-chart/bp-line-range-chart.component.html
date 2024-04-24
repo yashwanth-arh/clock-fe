@@ -1,0 +1,14 @@
+<mat-card>
+  <div style="position: relative; top: 10vh" *ngIf="showData && !BPsysresult">
+    <app-loader [gifBackground]="'whiteBg'"></app-loader>
+  </div>
+  <div class="chart-id" *ngIf="!noData">
+    <div
+      id="bpMgmt"
+      [ngClass]="userRole == 'CAREGIVER' ? 'bpTime' : 'bpTimeDoc'"
+    ></div>
+  </div>
+  <div class="no-data" style="overflow: hidden" *ngIf="noData">
+    <span>No Records Found!</span>
+  </div>
+</mat-card>

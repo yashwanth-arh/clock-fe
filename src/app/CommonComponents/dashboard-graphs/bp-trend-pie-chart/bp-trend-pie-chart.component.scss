@@ -1,0 +1,195 @@
+.totalCount {
+  background-color: #424242;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  margin-top: -3px;
+  font-size: 10px;
+}
+
+// .totalCounts {
+//   background-color: #424242;
+//   border-radius: 10px;
+//   width: 5%;
+//   height: 28px;
+//   text-align: center;
+//   margin-top: -3px;
+//   font-size: 10px;
+// }
+
+.totalCountTitle {
+  position: relative;
+  top: 4vh;
+  // left: 16px;
+  color: #424242;
+}
+
+.totalCountTitleDoc {
+  position: relative;
+  top: 1.9vh;
+  // left: 16px;
+  color: #424242;
+}
+
+.chart-id {
+  // overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.textInputWidth {
+  font-size: 12px;
+  width: 13vw;
+  margin-bottom: 2vh;
+  margin-top: 2vh;
+  position: relative;
+  left: -16px;
+}
+
+.piGraph {
+  height: 57vh;
+  width: 100%;
+  position: relative;
+  top: -13vh;
+}
+
+canvas {
+
+  width: 300px !important;
+  height: 200px !important;
+
+}
+
+.piGraphDoc {
+  // height: 40vh;
+  height: 100%;
+  max-height: 18rem;
+  min-height: 18rem;
+  width: 100%;
+  position: relative;
+  top: -3vh;
+}
+
+.no-data {
+  // text-align: center;
+  // /* margin-top: 31px; */
+  // position: relative;
+  // top: 164px;
+  // font-size: 20px;
+  // height: 100vh;
+  // position: relative;
+  font-size: 14px;
+  height: 32vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paragrafe {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  // margin-left: 60px;
+}
+
+.paragrafe-circle {
+  color: #006595;
+  font-size: 14px;
+}
+
+// @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+//   .textInputWidth {
+//     width: 20vw;
+//   }
+
+//   .piGraph {
+//     top: -9vh;
+//     height: 56vh;
+//   }
+
+//   .piGraphDoc {
+//     // margin-left: -20vw;
+//     height: 70vh;
+//     width: 100%;
+//     position: relative;
+//     top: -12vh;
+//   }
+
+//   .paragrafe {
+//     font-size: 16px !important;
+//   }
+
+//   .paragrafe-circle {
+//     font-size: 14px !important;
+//   }
+// }
+
+// @media only screen and (min-device-width: 1280px) and (max-device-width: 1440px) and (orientation: landscape) {
+//   .piGraphDoc {
+//     height: 80vh;
+//     width: 100%;
+//     position: relative;
+//     top: -14vh !important;
+//   }
+//   canvas {
+//    height: 300px !important;
+// }
+// }
+
+// // @media only screen and (min-device-width: 1280px) and (max-device-width: 1280px) and (orientation: landscape) {
+// //   .piGraphDoc {
+// //     // margin-left: -20vw;
+// //     height: 70vh;
+// //     width: 100%;
+// //     position: relative;
+// //     top: -18vh !important;
+// //   }
+// // }
+
+// @media only screen and (min-device-width: 1278px) and (max-device-width: 1280px) and (orientation: landscape) {
+//   .chart-id {
+//     overflow: hidden;
+//     height: 50vh;
+//   }
+
+//   .piGraph {
+//     height: 70vh;
+//     width: 100%;
+//     position: relative;
+//     top: -15vh;
+//   }
+
+//   .piGraphDoc {
+//     // margin-left: -20vw;
+//     height: 70vh;
+//     width: 100%;
+//     position: relative;
+//     top: -12vh;
+//   }
+
+//   .no-data {
+//     height: 30vh;
+//   }
+// }
+
+// @media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+//   .piGraphDoc {
+//     height: 70vh;
+//     width: 100%;
+//     position: relative;
+//     top: -13vh;
+//   }
+
+//   .piGraph {
+//     height: 57vh;
+//     width: 100%;
+//     position: relative;
+//     top: -13vh;
+//   }
+
+//   .no-data {
+//     height: 74vh;
+//   }
+// }

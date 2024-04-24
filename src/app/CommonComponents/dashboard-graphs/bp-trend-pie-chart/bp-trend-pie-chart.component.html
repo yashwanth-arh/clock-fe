@@ -1,0 +1,25 @@
+<div style="padding: 50px" *ngIf="showData && !showGraph">
+  <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+  <app-loader [gifBackground]="'whiteBg'"></app-loader>
+</div>
+<div class="chart-id" *ngIf="showGraph">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start"
+    fxLayoutGap="10px"
+    class="totalCountTitleDoc"
+  >
+    <div>
+      <p class="paragrafe">Total Count:</p>
+    </div>
+    <div>
+      <p class="paragrafe-circle">
+        {{ totalCountBP }}
+      </p>
+    </div>
+  </div>
+  <div #bpTrend id="bpTrend" class="piGraphDoc"></div>
+</div>
+<div class="no-data" *ngIf="!showGraph && !showData">
+  <span style="margin-top: -31px">No Records Found!</span>
+</div>

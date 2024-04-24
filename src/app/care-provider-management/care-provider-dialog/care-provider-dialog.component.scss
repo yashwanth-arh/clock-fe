@@ -1,0 +1,117 @@
+.zipCodeStyle {
+  position: relative;
+  right: 60px;
+  top: 4px;
+  cursor: pointer;
+}
+// .rpm-save-button {
+//   margin-right: 40px;
+// }
+.close-button {
+  cursor: pointer;
+}
+
+.admin-state {
+  position: relative;
+  right: -23px;
+}
+
+.clinic-state {
+  position: relative;
+  right: 0px;
+}
+
+.admin-docNPI {
+  position: relative;
+  right: -97px;
+}
+
+.clinic-docNPI {
+  position: relative;
+  right: -25px;
+}
+
+.practice-docNPI {
+  position: relative;
+  right: -60px;
+}
+
+.admin-locNPI {
+  position: relative;
+  right: -22px;
+  top: -2vh;
+}
+
+.clinic-locNPI {
+  position: relative;
+  left: 63px;
+}
+
+.practice-locNPI {
+  position: relative;
+  left: 100px;
+}
+
+.admin-city {
+  position: relative;
+  right: -60px;
+}
+
+.clinic-city {
+  position: relative;
+  left: 37px;
+}
+
+.practice-city {
+  position: relative;
+  left: 22px;
+}
+
+.admin-status {
+  position: relative;
+  left: 59px;
+  width: 270px;
+  top: -16px;
+}
+
+.clinic-status {
+  position: relative;
+  left: 100px;
+  width: 270px;
+}
+
+.practice-status {
+  position: relative;
+  left: 22px;
+  width: 270px;
+}
+
+.doctor-form-div {
+  ::ng-deep.mat-form-field-flex {
+    width: 105%;
+  }
+
+}
+
+// .example-margin {
+//   margin-left: 35px;
+// }
+@media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+  .admin-docNPI,
+  .admin-locNPI,
+  .practice-docNPI,
+  .clinic-docNPI,
+  .practice-state,
+  .admin-state,
+  .admin-city,
+  .clinic-state,
+  .clinic-city,
+  .practice-city,
+  .practice-status,
+  .admin-status,
+  .clinic-status,
+  .practice-locNPI,
+  .clinic-locNPI {
+    width: 230px !important;
+  }
+}

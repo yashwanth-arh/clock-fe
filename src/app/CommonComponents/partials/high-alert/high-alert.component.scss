@@ -1,0 +1,82 @@
+.mainHighAlert {
+  .mat-dialog-container {
+    padding: 0 !important;
+  }
+
+  mat-tooltip-component {
+    display: none !important;
+  }
+
+  .winStsPadding {
+    padding-right: 73px;
+  }
+
+  .patient-sts {
+    width: 220px !important;
+  }
+
+  // .mat-dialog-container {
+  //   padding: 0px !important;
+  //   position: relative;
+  //   left: 15vw;
+  //   top: -4vh;
+  // }
+  .notAdmin {
+    border-radius: 0px !important;
+    padding: 0 !important;
+
+    ::ng-deep .mat-table {
+      border-top-left-radius: 0px !important;
+      border-top-right-radius: 0px !important;
+      max-height: 528px !important;
+      min-height: 528px !important;
+      width: auto;
+    }
+  }
+
+  .macStsPadding {
+    padding-right: 0px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .actionText {
+    padding-left: 16px;
+  }
+
+  .action-text-position {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: -3.7vw;
+  }
+
+  .no-symptoms {
+    position: relative;
+    left: 1vw;
+  }
+
+  @media only screen and (min-device-width: 769px) and (max-device-width: 1024px) {
+    .winStsPadding,
+    .macStsPadding {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  }
+
+  @media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+    .winStsPadding {
+      width: 250px;
+    }
+  }
+
+  @media only screen and (min-device-width: 1600px) and (max-device-width: 1800px) and (orientation: landscape) {
+    .mat-table {
+      min-height: 47em !important;
+      max-height: 47em !important;
+    }
+  }
+}

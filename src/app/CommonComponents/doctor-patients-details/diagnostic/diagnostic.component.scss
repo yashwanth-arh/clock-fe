@@ -1,0 +1,80 @@
+.diagnostic-main {
+  padding: 16px 0;
+
+  .table-main-dev {
+    height: 25em;
+  }
+
+  .mat-elevation-z8 {
+    box-sizing: border-box;
+    // height: 367px;
+    overflow-x: scroll;
+    border: 1px solid #a3e8ca;
+    border-radius: 10px;
+    box-shadow: none;
+    background: #ffffff;
+  }
+
+  .mat-header-cell,
+  .mat-cell {
+    max-width: 190px !important;
+    min-width: 190px !important;
+  }
+
+  .mat-header-row {
+    width: 156vw;
+  }
+
+  // .mat-column-date {
+  //     margin-left: 14px;
+  // }
+
+
+
+  ::ng-deep .mat-table {
+    // width: 125vw;
+    min-height: 275px !important;
+    max-height: 275px !important;
+  }
+
+  .mat-row {
+    // width: 124%;
+    width: fit-content;
+  }
+
+  .careProvider-main {
+    padding: 16px 0 12px 0;
+  }
+
+  .paginate {
+    display: flex;
+    justify-content: end;
+    margin-top: 21px;
+  }
+
+  ::ng-deep ::-webkit-scrollbar {
+    height: 4px;
+    /* height of horizontal scrollbar ← You're missing this */
+    width: 4px;
+    /* width of vertical scrollbar */
+    // border: 1px solid #d5d5d5;
+  }
+
+  @media only screen and (min-device-width: 1679px) and (max-device-width: 1800px) and (orientation: landscape) {
+    .mat-row {
+      width: -webkit-fit-content !important;
+    }
+
+    .table-main-dev {
+      height: 36em;
+    }
+
+    .mat-header-row[_ngcontent-ng-cli-universal-c386] {
+      width: 139vw;
+    }
+
+    .example-container.mat-elevation-z8 {
+      height: 54vh !important;
+    }
+  }
+}

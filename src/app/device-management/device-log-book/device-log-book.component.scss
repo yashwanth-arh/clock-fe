@@ -1,0 +1,94 @@
+.log-book-main {
+  margin: 0 18px;
+
+  .logBook-header {
+    height: 52px;
+    background-color: #d4e1f6;
+    border-radius: 10px 10px 0px 0px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+
+    .header-text {
+      font-size: 14px;
+      line-height: 16.1px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .text1 {
+        color: #5e7e9b;
+      }
+
+      .text2 {
+        color: #424242;
+      }
+    }
+  }
+
+  .logbook-content {
+    background: #ecfffa;
+    height: 450px;
+    padding: 20px;
+
+    .contentStart {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #d4e1f6;
+      padding: 0 0 18px 0;
+
+      .contentleft {
+        display: flex;
+        // align-items: center;
+        gap: 10em;
+
+        .profileDetails {
+          display: flex;
+          gap: 10px;
+          // align-items: center;
+
+          .profileName {
+            display: flex;
+            flex-direction: column;
+
+            .name {
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 16.7px;
+              color: #5b5b5b;
+            }
+
+            .designation {
+              font-size: 12px;
+              font-weight: 400;
+              line-height: 14.32px;
+              color: #b1b1b1;
+            }
+          }
+        }
+
+        .description {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 16.7px;
+          color: #5b5b5b;
+        }
+      }
+
+      .contentright {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 14.32px;
+        color: #b1b1b1;
+      }
+    }
+  }
+}
+@media only screen and (min-device-width: 1679px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .log-book-main {
+    .logbook-content {
+        height: 51em;
+    }
+  }
+}

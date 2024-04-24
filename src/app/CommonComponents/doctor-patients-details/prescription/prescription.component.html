@@ -1,0 +1,312 @@
+<div class="prescription-main">
+  <!-- <div>
+      <div *ngIf="userRole == 'DOCTOR'" fxLayout="row" class="presUpload">
+        <div class="prescription-button" (click)="openPresDialog(patientId)">
+          <img class="pres-upload" src="assets/svg/Pres Upload.svg" alt="" />
+          <span class="pres-text">Upload Prescription</span>
+        </div>
+      </div>
+      <div *ngIf="userRole == 'DOCTOR'" fxLayout="row">
+        <img src="assets/svg/DashboardIcons/AddMedication.svg" (click)="openAddMedication('')"
+          class="add-medication show-btn" alt="" style="margin-left: 23px; margin-top: 10px" />
+      </div>
+    </div> -->
+  <div fxLayout="row" class="top-margin">
+    <div
+      class="example-container mat-elevation-z8"
+      [ngClass]="
+        addPermission === 'true' ? 'doc-table-div' : 'doctor-table-div'
+      "
+      [fxFlex]="addPermission === 'true' ? '67%' : '100%'"
+      class="table-outer-div"
+    >
+      <!--     
+    [ngClass]="
+        userRole === 'CAREGIVER'
+          ? 'example-container mat-elevation-z8 pres-container-caregiver'
+          : 'example-container mat-elevation-z8 pres-container'
+      " *ngIf="!loadRes" fxFlex="70" class="table-outer-div" -->
+
+      <mat-table
+        [ngClass]="userRole == 'DOCTOR' ? 'docTable' : 'careTable'"
+        [dataSource]="imagePath"
+        [dataSource]="
+          imagePath
+            | paginate
+              : {
+                  itemsPerPage:
+                    userRole === 'CAREGIVER'
+                      ? presSizeCaregiver
+                      : presSizeDoctor,
+                  currentPage: pres,
+                  id: 'pres',
+                  totalItems: imagePath?.length
+                }
+        "
+        matSort
+        matSortActive="created"
+        matSortDisableClear
+        matSortDirection="desc"
+      >
+        <!-- <ng-container matColumnDef="updatedBy">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <img
+              style="border-radius: 20px"
+              *ngIf="!element.createdBy?.includes('PAT')"
+              src="assets/img/stethoscope.svg"
+              class="doc-icon"
+              alt=""
+              title="Uploaded by the doctor"
+            />
+            <img
+              style="border-radius: 20px"
+              *ngIf="element.createdBy?.includes('PAT')"
+              src="assets/img/patient-icon-new.svg"
+              class="doc-icon"
+              alt=""
+              title="Uploaded by the patient"
+            />
+          </mat-cell>
+        </ng-container> -->
+        <ng-container matColumnDef="date">
+          <mat-header-cell *matHeaderCellDef class="createAt">
+            Date
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="createAt">
+            <img
+              style="border-radius: 20px"
+              [src]="
+                element.userRole == 'DOCTOR' || element.userRole == 'NURSE'
+                  ? 'assets/img/stethoscope.svg'
+                  : 'assets/img/patient-icon-new.svg'
+              "
+              class="doc-icon"
+              alt=""
+              [title]="
+                element.userRole == 'DOCTOR'
+                  ? 'It was uploaded by the Dr.' + element?.createdByName
+                  : 'It was uploaded by the' + ' ' + element?.createdByName
+              "
+            />
+
+            {{
+              element.createdAt
+                ? (element.createdAt | date : "dd-MM-yyyy")
+                : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+        <!-- <ng-container matColumnDef="fileName">
+            <th mat-header-cell *matHeaderCellDef>
+              <div style="width: 100px">File Name</div>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.fileName }}
+            </td>
+          </ng-container> -->
+        <ng-container matColumnDef="fileName">
+          <mat-header-cell *matHeaderCellDef> File Name </mat-header-cell>
+          <mat-cell *matCellDef="let element" [title]="element.fileName">
+            {{ element.title }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef class="action"
+            >Action</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element" class="action">
+            <div fxLayout="row" fxLayoutGap="15px">
+              <a *ngIf="element.fileType.includes('pdf')">
+                <img
+                  (click)="openImage(urls + element.fileDownloadUri)"
+                  class="pres-download"
+                  style="cursor: pointer"
+                  title="Preview"
+                  src="assets/svg/view.svg"
+              /></a>
+              <a *ngIf="!element.fileType.includes('pdf')">
+                <img
+                  (click)="openImage(urls + element.fileDownloadUri)"
+                  class="pres-download"
+                  style="cursor: pointer"
+                  title="Preview"
+                  src="assets/svg/view.svg"
+              /></a>
+              <!-- <img
+                class="pres-delete"
+                title="Delete"
+                *ngIf="
+                  userRole == 'DOCTOR' && !element.createdBy?.includes('PAT')
+                "
+                (click)="confirmDialogPrescription(element)"
+                src="assets/svg/Prescription Delete.svg"
+              /> -->
+              <!-- *ngIf="element?.createdBy !== createdBy" -->
+
+              <!-- (!element.createdBy?.includes('PAT') &&
+              addPermission === 'true') || -->
+              <mat-slide-toggle
+                *ngIf="userid === element.createdBy && addPermission === 'true'"
+                [checked]="element.status === 'ACTIVE'"
+                #statusToggle
+                (toggleChange)="actionToggleChange(element)"
+              ></mat-slide-toggle>
+              <mat-hint
+                *ngIf="
+                  addPermission === 'false' || userid !== element.createdBy
+                "
+                [ngClass]="
+                  element.status == 'ACTIVE'
+                    ? 'mat-hint-active'
+                    : 'mat-hint-inactive'
+                "
+                ><span class="status-hint">{{ element.status }}</span>
+              </mat-hint>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <!-- 
+        <ng-container matColumnDef="status">
+          <td mat-cell *matCellDef="let element">
+            {{ element.status }}
+          </td>
+        </ng-container> -->
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns"></mat-row>
+      </mat-table>
+      <div
+        *ngIf="imagePath?.length <= 0 && !loadPresRes"
+        class="noRecordsFound"
+      >
+        No Records Found!
+      </div>
+      <div *ngIf="loadPresRes" class="noRecordsFound">
+        <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+      </div>
+      <div class="paginate">
+        <pagination-controls
+          *ngIf="imagePath?.length"
+          (pageChange)="pres = $event"
+          id="pres"
+        ></pagination-controls>
+      </div>
+    </div>
+
+    <div
+      *ngIf="userRole == 'CAREPROVIDER' && addPermission === 'true'"
+      class="outer-div Upload-Prescription-div"
+      fxFlex="31%"
+    >
+      <div class="upload-prescripation-div" style="width: 100%; height: 100%">
+        <div fxLayout="column" style="height: 100%">
+          <div class="title">Upload Prescription</div>
+          <div fxLayout="column">
+            <mat-form-field
+              appearance="outline"
+              style="padding-bottom: 0; width: 100%; margin-bottom: -13px"
+            >
+              <mat-label>File Name</mat-label>
+              <input
+                type="text"
+                appNoFirstSpace
+                (input)="getInputValues($event)"
+                (keypress)="omit_special_char($event)"
+                matInput
+                minlength="3"
+                maxlength="30"
+                [formControl]="singleControl"
+                [(ngModel)]="imageTitle"
+                required
+              />
+            </mat-form-field>
+
+            <mat-error
+              *ngIf="
+                singleControl.touched &&
+                singleControl.invalid &&
+                singleControl.hasError('required')
+              "
+              style="padding-bottom: 15px; padding-left: 12px"
+              >File Name is required</mat-error
+            >
+            <mat-error
+              *ngIf="
+                singleControl.touched &&
+                singleControl.invalid &&
+                singleControl.hasError('minlength')
+              "
+              style="padding-bottom: 15px; padding-left: 12px"
+              >Title min character is 3</mat-error
+            >
+          </div>
+
+          <div
+            fxLayout="row"
+            fxLayoutGap="20px"
+            style="min-height: 11em; margin-top: 20px"
+          >
+            <div class="file-input">
+              <input
+                type="file"
+                id="file"
+                accept=".pdf,.png,.jpg,.jpeg"
+                (change)="getInputValues($event)"
+                class="file"
+              />
+              <label
+                for="file"
+                fxLayout="column"
+                fxLayoutGap="10px"
+                class="pres-upload-label"
+              >
+                <div class="img-div">
+                  <img src="assets/svg/Upload.svg" alt="" />
+                </div>
+                <div class="upld-pres">Upload</div>
+              </label>
+            </div>
+            <div *ngIf="imageSrc">
+              <img id="preview" [src]="imageSrc" class="preview-image" />
+              <img
+                src="assets/svg/Remove Minus Icon.svg"
+                class="minus-icon"
+                (click)="removeSelectedFile()"
+              />
+            </div>
+            <div *ngIf="pdfimageSrc">
+              <img id="preview" [src]="pdfimageSrc" class="preview-image" />
+              <img
+                src="assets/svg/Remove Minus Icon.svg"
+                class="minus-icon"
+                (click)="removeSelectedFile()"
+              />
+            </div>
+          </div>
+          <div class="btn-div">
+            <button
+              mat-flat-button
+              class="cancel-button"
+              (click)="canclePrescriptioForm()"
+            >
+              Cancel
+            </button>
+            <button
+              mat-flat-button
+              class="rpm-save-button"
+              (click)="savePrescription()"
+              [disabled]="isSubmitted"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="loadResAddEditMedication" class="noRecordsFound">
+      <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+    </div>
+  </div>
+</div>

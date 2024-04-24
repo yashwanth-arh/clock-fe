@@ -1,0 +1,50 @@
+<span class="close-button"title="Close" (click)="dialogRef.close()">
+  <mat-icon class="material-icons icon" color="black">close</mat-icon>
+</span>
+<h2 mat-dialog-title>
+  <mat-icon>support_agent</mat-icon>
+  Comments
+</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="chatbox" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    <div class="requestchat" *ngFor="let request of requestRecord let i=index;">
+      <div *ngIf="this.loggedinUser == request.userId">
+        <span class="username-left" style="color: darkblue;" *ngIf="this.loggedinUser == request.userId"><b>You</b>
+        </span>
+        <span class="date-left">{{request.chatDate | date}}</span>
+        <mat-card class="speech-bubble-left">
+          <mat-card-content class="message-text-left">
+            {{request.message}}
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div *ngIf="this.loggedinUser != request.userId" style="margin-left: 20px;">
+        <span class="username-right"
+          *ngIf="this.loggedinUser != request.userId">{{request.writerName?request.writerName:request.userName}}
+        </span>
+        <span class="date-right">{{request.chatDate | date}}</span>
+        <mat-card class="speech-bubble-right">
+          <mat-card-content class="message-text-right">
+            {{request.message}}
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-card-footer>
+  <form role="form" [formGroup]="addRequestForm" class="add-request-form">
+    <div fxFlex="80%">
+      <mat-form-field appearance="outline">
+        <mat-label> Comments</mat-label>
+        <textarea matInput  formControlName="text" rows="0"></textarea>
+      </mat-form-field>
+    </div>
+    <div fxFlex="20%">
+      <button mat-flat-button color="primary" [disabled]="!addRequestForm.valid" class="save-btn" type="submit"
+        (click)="submitRequest()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </form>
+</mat-card-footer>

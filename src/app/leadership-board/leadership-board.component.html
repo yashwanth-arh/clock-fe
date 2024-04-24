@@ -1,0 +1,107 @@
+<div class="rpm-module-management">
+  <app-navigation-bar></app-navigation-bar>
+
+  <div class="leaderBoard">
+    <div class="example-container mat-elevation-z8">
+      <mat-table matSort #table matTableResponsive [dataSource]="dataSource">
+        <ng-container matColumnDef="patientName">
+          <mat-header-cell *matHeaderCellDef> Patient Name </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              getPatientName(element) && getPatientName(element).length > 15
+                ? getPatientName(element)
+                : ''
+            "
+          >
+            {{
+              getPatientName(element) && getPatientName(element).length > 15
+                ? (getPatientName(element) | titlecase | slice : 0 : 15) + "..."
+                : getPatientName(element)
+                ? (getPatientName(element) | titlecase)
+                : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="obsPoints">
+          <mat-header-cell *matHeaderCellDef>
+            Observations (Points)
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ getObsPoints(element) }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="bpPoints">
+          <mat-header-cell *matHeaderCellDef>
+            BP Readings (Points)
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ getBPPoints(element) }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="totalPoints">
+          <mat-header-cell *matHeaderCellDef> Total Points </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ getTotalPoints(element) }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span
+              style="
+                font-size: 14px;
+                color: #52b204;
+                font-weight: 400;
+                cursor: pointer;
+              "
+              (click)="gotoDetails(element)"
+              >View</span
+            >
+          </mat-cell>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="action">
+					<mat-header-cell fxFlex="10%" *matHeaderCellDef>Action</mat-header-cell>
+					<mat-cell fxFlex="10%" *matCellDef="let element">
+						<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+							<mat-icon>more_vert</mat-icon>
+						</button>
+						<mat-menu #menu="matMenu">
+							<button mat-menu-item (click)="editDeviceType(element)">
+								<mat-icon>edit</mat-icon>
+								<span>Edit</span>
+							</button>
+						</mat-menu>
+					</mat-cell>
+				</ng-container> -->
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+
+      <div
+        class="noRecordsFound"
+        *ngIf="
+          !(dataSource.loadingObservable | async) &&
+          messageSuccess !== undefined &&
+          !messageSuccess
+        "
+      >
+        No Records Found!
+      </div>
+      <mat-paginator
+        [ngClass]="
+          (dataSource.totalElemObservable | async) < 10
+            ? 'hide-pagination-element'
+            : 'show-pagination'
+        "
+        [length]="dataSource.totalElemObservable | async"
+        [pageSizeOptions]="[10, 25, 100]"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

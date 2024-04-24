@@ -1,0 +1,21 @@
+<section class="patient-info">
+	<div class="profile-icon" fxFlex="100%" fxFlex.lt-md="10%" fxFlex.md="10%" fxFlex.sm="12%">
+		<img [src]="patientData?.gender ==='MALE'? maleImg : femaleImg" alt="profile_image" width="60px" height="60px" />
+	</div>
+	<div class="profile-name" fxFlex="100%" fxFlex.lt-md="40%">
+		<h2>{{ patientData?.firstName }} {{ patientData?.lastName !==null ? patientData.lastName: '' }}</h2>
+	</div>
+	<div class="profile-age" fxFlex="100%" fxFlex.lt-md="30%">
+		<h4>{{ patientData?.age }}/{{ patientData?.gender }}</h4>
+	</div>
+	<div class="profile-address">
+		<h4 class="address-text">
+			{{ patientData?.address?.addressLine }},{{ patientData?.address?.city }}, {{ patientData?.address?.state }}-{{
+			patientData?.address?.zipCode }}
+		</h4>
+	</div>
+	<div class="profile-phone" fxFlex="100%" fxFlex.lt-md="30%">
+		<mat-icon>call</mat-icon>
+		<span class="phone-num">{{ patientData?.cellNumber }}</span>
+	</div>
+</section>

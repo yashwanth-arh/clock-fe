@@ -1,0 +1,112 @@
+.notes-module-main {
+  .title {
+    color: #5e7e9b;
+    font-weight: 700;
+    line-height: 18.4px;
+    font-size: 16px;
+  }
+
+  .toolbar-heading {
+    background-color: #fff;
+  }
+
+  .add-notesBtn {
+    border-radius: 6px;
+    background: #01cd74;
+    color: #fff;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    width: fit-content;
+  }
+
+  .notes-tabs {
+    padding: 24px 24px 0 24px;
+
+    ::ng-deep .mat-tab-group {
+      display: flex;
+      flex-direction: column;
+      // width: fit-content;
+      // // width: fit-content;
+      // // height: 41px;
+      // background: #B8DCF4;
+      // border-radius: 6px;
+      // padding: 4px;
+    }
+
+    ::ng-deep .mat-tab-header .mat-tab-label .mat-tab-label-content {
+      margin-bottom: 0 !important;
+    }
+
+    ::ng-deep .mat-form-field-outline {
+      background-color: #fff !important;
+      border-radius: 8px !important;
+    }
+
+    ::ng-deep .mat-tab-header {
+      width: fit-content !important;
+      // width: fit-content;
+      height: 42px;
+      background: #b8dcf4;
+      border-radius: 6px;
+      padding: 4px;
+      border-top-left-radius: 6px !important;
+      border-top-right-radius: 6px !important;
+    }
+
+    .mat-tab-body-content {
+      overflow: hidden !important;
+    }
+
+    ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+      color: #5f6368 !important;
+      // width: 130px !important;
+      min-width: auto !important;
+      height: 32px !important;
+      opacity: 1 !important;
+      background: #ffffff !important;
+      border-radius: 6px !important;
+      border-top-left-radius: 6px !important;
+
+      // border-radius: 6px 6px 0px 0px;
+    }
+
+    ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:first-child {
+      border-top-left-radius: 6px !important;
+    }
+
+    ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+    .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+      background-color: transparent;
+    }
+
+    ::ng-deep .mat-tab-label {
+      height: 36px !important;
+      min-width: auto !important;
+    }
+
+    .add-Notes {
+      display: flex;
+      justify-content: end;
+      position: absolute;
+      top: 1rem;
+      right: 0;
+    }
+
+    .btn-notes {
+      padding: 11px 24px;
+      height: 39px;
+      background: #01cd74;
+      border-radius: 6px;
+      color: white;
+      border: none;
+    }
+  }
+
+  @media only screen and (min-device-width: 1660px) and (max-device-width: 1800px) and (orientation: landscape) {
+    ::ng-deep .mat-form-field {
+      width: 61rem !important;
+    }
+  }
+}

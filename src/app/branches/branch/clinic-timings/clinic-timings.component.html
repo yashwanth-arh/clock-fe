@@ -1,0 +1,62 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <mat-icon class="material-icons icon" color="black">close</mat-icon>
+</span>
+<span mat-dialog-title class="module-form-title">Clinic Timings</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px">
+  <form [formGroup]="clinicTimingForm" (ngSubmit)="onSubmit(clinicTimingForm.valid,clinicTimingForm.value)">
+    <mat-dialog-content [formGroup]="clinicTimingForm">
+      <div>Session 1</div>
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Contact Number</mat-label>
+        <input matInput autocomplete="off" minlength="10" maxlength="21"
+          formControlName="session1ContactNumber" required />
+        <mat-error *ngIf="session1ContactNumber.errors?.required">Contact Number is required</mat-error>
+        <mat-error>Invalid phone number format</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Time From</mat-label>
+        <input matInput [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" formControlName="session1From"
+          required readonly>
+        <owl-date-time [pickerType]="'timer'" #dt2 [stepMinute]="5" [startAt]="maxDate"></owl-date-time>
+        <mat-error>Time From is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Time To</mat-label>
+        <input matInput [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" formControlName="session1To"
+          required readonly>
+        <owl-date-time [pickerType]="'timer'" #dt3 [stepMinute]="5" [startAt]="maxDate"></owl-date-time>
+        <mat-error>Time To is required</mat-error>
+      </mat-form-field>
+      <div>Session 2</div>
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Contact Number</mat-label>
+        <input  matInput autocomplete="off" maxlength="21"minlength="10" 
+          formControlName="session2ContactNumber" required />
+        <mat-error *ngIf="session2ContactNumber.errors?.required">Contact Number is required</mat-error>
+        <mat-error>Invalid phone number format</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Time From</mat-label>
+        <input matInput [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" formControlName="session2From"
+          required readonly>
+        <owl-date-time [pickerType]="'timer'" #dt4 [stepMinute]="5" [startAt]="maxDate"></owl-date-time>
+        <mat-error>Time From is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Time To</mat-label>
+        <input matInput [owlDateTimeTrigger]="dt5" [owlDateTime]="dt5" formControlName="session2To"
+          required readonly>
+        <owl-date-time [pickerType]="'timer'" #dt5 [stepMinute]="5" [startAt]="maxDate"></owl-date-time>
+        <mat-error>Time To is required</mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+      <button mat-flat-button class="rpm-save-button" *ngIf="!isSubmitted" [disabled]="!clinicTimingForm.valid || isSubmitted">
+        {{data.elementData ? 'Update':'Save'}}
+      </button>
+    </div>
+  </form>
+</mat-card-content>

@@ -1,0 +1,387 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">
+  {{ data.add && data.add === "add" ? "Add Facility" : "Update Facility" }}
+</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content
+  fxLayout
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <div fxLayout="column">
+    <form fxLayout="row" [formGroup]="branchForm" class="org-form-div">
+      <mat-dialog-content [formGroup]="branchForm" style="margin-top: 10px">
+        <div class="form-div">
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Facility Name</mat-label>
+            <input
+              type="text"
+              appAlphabetSpaceOnly
+              matInput
+              formControlName="name"
+              minlength="3"
+              maxlength="50"
+              required
+            />
+            <mat-error
+              *ngIf="
+                !branchForm?.controls['name'].valid &&
+                branchForm?.controls['name'].touched
+              "
+            >
+              {{ getErrorName() }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label> Contact Number</mat-label>
+            <input
+              appNumberCustomValidation
+              type="text"
+              matInput
+              formControlName="pcontact"
+              maxlength="10"
+              required
+            />
+            <mat-error
+              *ngIf="
+                !branchForm?.controls['pcontact'].valid &&
+                branchForm?.controls['pcontact'].touched
+              "
+            >
+              {{ getErrorPrimaryContactNo() }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Emergency Contact Number</mat-label>
+            <input
+              appNumberCustomValidation
+              type="text"
+              matInput
+              formControlName="emergencyContactNumber"
+              maxlength="10"
+              required
+            />
+            <mat-error
+              *ngIf="
+                !branchForm?.controls['emergencyContactNumber'].valid &&
+                branchForm?.controls['emergencyContactNumber'].touched
+              "
+            >
+              {{ getErrorEmergencyContactNo() }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Email</mat-label>
+            <input
+              *ngIf="data.mode !== 'EDIT'"
+              matInput
+              autocomplete="disabled"
+              maxlength="50"
+              formControlName="emailId"
+              required
+            />
+            <input
+              *ngIf="data.mode === 'EDIT'"
+              matInput
+              autocomplete="disabled"
+              maxlength="50"
+              formControlName="emailId"
+              required
+            />
+
+            <mat-error
+              *ngIf="
+                !branchForm?.controls['emailId'].valid &&
+                branchForm?.controls['emailId'].touched
+              "
+            >
+              {{ getErrorEmail() }}
+            </mat-error>
+            <mat-error *ngIf="emailid?.errors?.emailTaken">
+              This email already exists.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Country</mat-label>
+            <mat-select
+              formControlName="country"
+              (selectionChange)="getCountry($event)"
+              required
+            >
+              <mat-option value="India"> India </mat-option>
+              <mat-option value="USA"> USA </mat-option>
+            </mat-select>
+            <mat-error>Country is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Zip Code</mat-label>
+            <input
+              matInput
+              appNumberCustomValidation
+              autocomplete="off"
+              formControlName="zip_code"
+              (input)="changeZipcode()"
+              [readonly]="!branchForm?.controls['country'].value"
+              required
+            />
+            <mat-error *ngIf="!branchForm?.valid && branchForm?.touched">{{
+              getZipCodeError()
+            }}</mat-error>
+            <!-- <mat-hint>Enter valid zipcode</mat-hint> -->
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Address</mat-label>
+            <input
+              type="text"
+              maxlength="200"
+              matInput
+              formControlName="address"
+              required
+            />
+            <mat-error
+              *ngIf="
+                !branchForm?.controls['address'].valid &&
+                branchForm?.controls['address'].touched
+              "
+            >
+              {{ getErrorAddress() }}
+            </mat-error>
+          </mat-form-field>
+          <!-- <span class="zipCodeStyle">
+          <mat-icon (click)="onZipCodeSelection('')">search</mat-icon>
+        </span> -->
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>State</mat-label>
+            <input
+              appAlphabetSpaceOnly
+              type="text"
+              matInput
+              formControlName="state_name"
+              required
+              [readonly]="state?.length ? true : false"
+            />
+
+            <mat-error
+              *ngIf="branchForm?.controls['state_name'].errors?.required"
+              >State is required</mat-error
+            >
+
+            <mat-error
+              *ngIf="branchForm?.controls['state_name'].errors?.minlength"
+              >Enter minimum 3 characters
+            </mat-error>
+
+            <mat-error
+              *ngIf="branchForm?.controls['state_name'].errors?.maxlength"
+              >Max length is 20 characters
+            </mat-error>
+            <mat-error
+              *ngIf="branchForm?.controls['state_name'].errors?.pattern"
+              >Only alphabets,space are allowed
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>City</mat-label>
+            <input
+              appAlphabetSpaceOnly
+              type="text"
+              matInput
+              formControlName="city_name"
+              required
+              [readonly]="state?.length ? true : false"
+            />
+            <mat-error
+              *ngIf="branchForm?.controls['city_name'].errors?.required"
+              >City is required</mat-error
+            >
+
+            <mat-error
+              *ngIf="branchForm?.controls['city_name'].errors?.minlength"
+              >Enter minimum 3 characters
+            </mat-error>
+
+            <mat-error
+              *ngIf="branchForm?.controls['city_name'].errors?.maxlength"
+              >Max length is 30 characters
+            </mat-error>
+            <mat-error
+              *ngIf="branchForm?.controls['city_name'].errors?.pattern"
+              >Only alphabets,space are allowed
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Facility NPI</mat-label>
+            <input
+              matInput
+              type="text"
+              appNumberCustomValidation
+              
+              minlength="10"
+              maxlength="10"
+              formControlName="clinic_npi"
+            />
+            <mat-error
+              *ngIf="
+                branchForm?.controls['clinic_npi'].invalid &&
+                branchForm?.controls['clinic_npi'].touched
+              "
+              >{{ getClinicNpiError() }}</mat-error
+            >
+            <!-- <mat-error *ngIf="branchForm?.controls['clinic_npi'].errors?.minlength"
+            >Enter 10 digit Facility NPI</mat-error
+          > -->
+            <!-- <mat-error *ngIf="clinicNPI?.hasError('clinicNPITaken')">
+            This Facility NPI is already exists.
+          </mat-error> -->
+          </mat-form-field>
+        </div>
+      </mat-dialog-content>
+
+      <!-- <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+        <button
+          mat-flat-button
+          class="rpm-save-button"
+          [disabled]="!branchForm?.valid || isSubmitted"
+          *ngIf="!isSubmitted"
+          style="margin-right: 25px"
+        >
+          {{ data.add && data.add === "add" ? "Save" : "Update" }}
+        </button>
+      </div> -->
+    </form>
+    <!-- <div fxLayout="row">
+      <hr />
+      Facility Timing*
+      <hr />
+    </div>
+    <form fxLayout="column" [formGroup]="clinicTimingForm">
+      <mat-dialog-content [formGroup]="clinicTimingForm" class="clinical-form">
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Session 1 Time From</mat-label>
+          <input
+            matInput
+            [owlDateTimeTrigger]="dt2"
+            [owlDateTime]="dt2"
+            formControlName="session1From"
+            required
+            readonly
+          />
+          <owl-date-time
+            [pickerType]="'timer'"
+            #dt2
+            [stepMinute]="5"
+            [startAt]="maxDate"
+          ></owl-date-time>
+          <mat-error>{{getSession1TimeFromError()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Session 1 Time To</mat-label>
+          <input
+            matInput
+            [min]="clinicTimingForm.controls['session1From'].value"
+            [owlDateTimeTrigger]="dt3"
+            [owlDateTime]="dt3"
+            formControlName="session1To"
+            required
+            readonly
+          />
+          <owl-date-time
+            [pickerType]="'timer'"
+            #dt3
+            [stepMinute]="5"
+            [startAt]="maxDate"
+          ></owl-date-time>
+          <mat-error>{{getSession1TimeToError()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Contact Number</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            minlength="10"
+            maxlength="10"
+            appNumberCustomValidation
+            formControlName="session1ContactNumber"
+            required
+          />
+          <mat-error *ngIf="session1ContactNumber.errors?.required"
+            >Contact Number is required</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Session 2 Time From</mat-label>
+          <input
+            matInput
+            [owlDateTimeTrigger]="dt4"
+            [owlDateTime]="dt4"
+            formControlName="session2From"
+            readonly
+          />
+          <owl-date-time
+            [pickerType]="'timer'"
+            #dt4
+            [stepMinute]="5"
+            [startAt]="maxDate"
+          ></owl-date-time>
+          <mat-error>Session 2 Time From is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Session 2 Time To</mat-label>
+          <input
+            matInput [min]="clinicTimingForm.controls['session2From'].value"
+            [owlDateTimeTrigger]="dt5"
+            [owlDateTime]="dt5"
+            formControlName="session2To"
+            readonly
+          />
+          <owl-date-time
+            [pickerType]="'timer'"
+            #dt5
+            [stepMinute]="5"
+            [startAt]="maxDate"
+          ></owl-date-time>
+          <mat-error>Session 2 Time To is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Contact Number</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            appNumberCustomValidation
+            maxlength="10"
+            minlength="10"
+            formControlName="session2ContactNumber"
+          />
+          <mat-error *ngIf="session2ContactNumber.errors?.required"
+            >Contact Number is required</mat-error
+          >
+          <mat-error>Invalid phone number format</mat-error>
+        </mat-form-field>
+      </mat-dialog-content>
+    </form> -->
+
+    <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+      <button
+        type="submit"
+        (click)="onSubmit()"
+        mat-flat-button
+        class="rpm-save-button"
+        [disabled]="!branchForm?.valid || isSubmitted"
+      >
+        {{ data.add && data.add === "add" ? "Save" : "Update" }}
+      </button>
+    </div>
+  </div>
+</mat-card-content>

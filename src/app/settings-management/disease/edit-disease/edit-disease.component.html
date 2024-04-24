@@ -1,0 +1,101 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt=""
+/></span>
+<span mat-dialog-title class="module-form-title">Update ICD</span>
+
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content
+  fxLayout
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <form
+    [formGroup]="editDiseaseForm"
+    [class.error]="!editDiseaseForm.valid && editDiseaseForm.touched"
+    fxLayout
+    fxLayout.xs="column"
+    fxLayoutAlign="center"
+    class="form-clas"
+  >
+    <mat-dialog-content [formGroup]="editDiseaseForm" style="margin-top: 10px">
+      <div class="form-div">
+        <!-- <mat-form-field appearance="outline">
+				<mat-label>Code</mat-label>
+				<input
+					type="text"
+					matInput
+					formControlName="code"
+					required
+					#icd
+					formControlName="code"
+					[matAutocomplete]="auto"
+					(keyup)="onKeyUp(icd.value)"
+				/>
+				<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelectICD($event)">
+					<mat-option *ngFor="let code of icdCodes" [value]="code[0]">
+						{{ code[1] }}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error>Code is required</mat-error>
+			</mat-form-field> -->
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Icd Code</mat-label>
+          <input
+            matInput
+            appNoFirstSpace
+            placeholder="Icd Code"
+            formControlName="icdCode"
+            minlength="3"
+            maxlength="50"
+            required
+          />
+          <mat-error>{{ icdCodeErr() }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            appNoFirstSpace
+            formControlName="icdName"
+            minlength="3"
+            maxlength="50"
+            required
+          />
+          <mat-error>{{ icdNameErr() }}</mat-error>
+        </mat-form-field>
+        <!-- <mat-form-field appearance="outline">
+				<mat-label>Description</mat-label>
+				<input matInput placeholder="Description" formControlName="description" required />
+				<mat-error>Description is required</mat-error>
+			</mat-form-field> -->
+
+        <!-- <mat-form-field appearance="outline" *ngIf="editDiseaseForm.controls['status']">
+        <mat-label>Status</mat-label>
+        <input type="text" placeholder="Pick one" matInput formControlName="status" [matAutocomplete]="autoStatus"
+          required>
+        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+        <mat-autocomplete autoActiveFirstOption #autoStatus="matAutocomplete">
+          <mat-option *ngFor="let statusUnit of status" [value]="statusUnit">
+            {{statusUnit}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error>Status is required</mat-error>
+      </mat-form-field> -->
+      </div>
+    </mat-dialog-content>
+  </form>
+</mat-card-content>
+
+<div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+  <button
+    mat-flat-button
+    class="rpm-save-button"
+    [disabled]="!editDiseaseForm.valid || isSubmitted"
+    (click)="onSubmit(data.disease.id)"
+  >
+    Update
+  </button>
+</div>

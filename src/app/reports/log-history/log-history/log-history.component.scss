@@ -1,0 +1,264 @@
+@import "../../../../variables";
+
+.notAdmin {
+  border-radius: 0px !important;
+  padding: 0 !important;
+
+  ::ng-deep .mat-table {
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    max-height: 518px !important;
+    min-height: 518px !important;
+  }
+
+  ::ng-deep .mat-header-cell,
+  .mat-cell {
+    max-width: 172px !important;
+    min-width: 172px !important;
+  }
+}
+
+.text-header {
+  font-weight: bold;
+  font-size: 25px;
+  margin: 4rem 0rem 0rem 3rem;
+}
+
+.grid-align {
+  position: relative;
+  top: -8vh;
+}
+
+.card-design {
+  height: 150px;
+  width: 275px;
+  border-radius: 10px;
+}
+
+.card-content {
+  display: flex;
+  // padding-top: 2.4rem;
+}
+
+.valid-text {
+  margin-top: -23px;
+  margin-left: 11px;
+}
+
+.card-img {
+  height: 50px !important;
+  width: 50px !important;
+  background-color: #e1fff2;
+  // margin: 18px 0px 0px 18px;
+  border-radius: 10px;
+}
+
+.graph-card {
+  height: 460px;
+  width: 79.6vw;
+  margin-left: 1.6rem;
+  border-radius: 10px;
+
+  .bar-chart {
+    position: relative;
+    top: -1vh;
+    height: 311px;
+    width: 1153px;
+  }
+}
+
+canvas {
+  width: 1000px !important;
+  height: 600px !important;
+}
+
+.ticket-card {
+  height: 500px;
+  width: 500px;
+  margin-left: 2rem;
+  margin-right: 1rem;
+  border-radius: 10px;
+  overflow-y: scroll;
+}
+
+.graph-content {
+  display: flex;
+  position: relative;
+  top: -19vh;
+}
+
+.list-content {
+  display: flex;
+}
+
+.btnstyle {
+  background-color: lightgreen;
+  margin-left: 6rem;
+  height: 30px;
+  padding-bottom: 5px;
+  width: 50px;
+  padding-top: 0px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.home-icon {
+  font-size: 40px;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  color: black;
+}
+
+.home-overview {
+  text-align: center;
+}
+
+.home-overview h2 {
+  color: lightblue;
+  font-size: 36px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.home-overview p {
+  color: black;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.ticket-heading {
+  font-weight: bold;
+  font-size: 15px;
+  color: black;
+  // padding-top: 4rem;
+  // margin-bottom: -10px;
+}
+
+.ticket-para {
+  font-size: 13px;
+  color: black;
+  // padding-bottom: 2rem;
+}
+
+.list-details {
+  width: 75%;
+}
+
+.dashboard-list {
+  margin-bottom: 1rem;
+}
+
+.card-group-home {
+  padding: 0px;
+}
+
+.mat-list-item {
+  height: auto !important;
+  padding: 20px;
+  margin-top: 25px;
+
+  .mat-list-item-content {
+    margin-top: 5px;
+  }
+}
+
+.tableSection {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.matTable {
+  width: 40em;
+  overflow: scroll;
+}
+
+.mat-header-cell {
+  text-align: left;
+  word-wrap: none;
+}
+
+.mat-sort-header-content {
+  text-align: left;
+}
+
+.mat-cell {
+  text-align: left;
+}
+
+.hideChildren {
+  display: none;
+}
+
+p {
+  width: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hide-pagination-element {
+  display: none;
+}
+
+button:focus {
+  outline: 0;
+}
+
+@media only screen and (min-device-width: 1660px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .notAdmin {
+    ::ng-deep .mat-table {
+      max-height: 45em !important;
+      min-height: 45em !important;
+    }
+  }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  // .example-container.mat-elevation-z8 {
+  //   height: 540px;
+  //   box-shadow: none;
+  // }
+
+  .card-design {
+    width: 205px;
+    padding-right: 2px;
+  }
+
+  .graph-card {
+    position: relative;
+    top: 6vh;
+    height: 420px;
+    width: 100vw;
+    left: -1vw;
+  }
+
+  .card-img {
+    height: 50px;
+    width: 50px;
+    background-color: #e1fff2;
+    // margin: 18px 0px 0px 18px;
+    border-radius: 10px;
+  }
+}
+
+@media only screen and (min-device-width: 1800px) and (max-device-width: 1920px) and (orientation: landscape) {
+  .example-container.mat-elevation-z8 {
+    overflow-x: auto;
+    // margin-top: 35px;
+    max-height: 1000px !important;
+    height: 890px !important;
+    // overflow-y: scroll;
+    // overflow-x: scroll;
+  }
+
+  .show-pagination {
+    width: 86.5% !important;
+  }
+}
+
+@media only screen and (min-device-width: 1366px) and (max-device-width: 1400px) and (orientation: landscape) {
+  .example-container.mat-elevation-z8 {
+    height: 455px;
+  }
+}

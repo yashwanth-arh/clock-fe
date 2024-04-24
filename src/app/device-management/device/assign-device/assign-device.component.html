@@ -1,0 +1,46 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <mat-icon class="material-icons icon" color="black">close</mat-icon>
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data.mode === "assign" ? "Assign Device" : "Edit Device"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+<mat-card-content
+  class="container"
+  fxLayout
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <form [formGroup]="assignDevice" (ngSubmit)="onSubmit()" class="assign-form">
+    <h2 mat-dialog-title></h2>
+    <div fxFlex="80%">
+      <mat-form-field appearance="outline">
+        <mat-label>Practice</mat-label>
+        <mat-select
+          formControlName="hospitalId"
+          required
+        >
+          <mat-option
+            *ngFor="let practiceData of practiceList"
+            [value]="practiceData.id"
+          >
+            {{ practiceData.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Practice is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="20%">
+      <button
+        mat-flat-button
+        class="submit-btn"
+        *ngIf="!isSubmitted"
+        [disabled]="assignDevice.invalid || isSubmitted"
+      >
+        {{ data.mode && data.mode === "assign" ? "Submit" : "Delete" }}
+      </button>
+    </div>
+  </form>
+</mat-card-content>

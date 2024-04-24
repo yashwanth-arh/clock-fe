@@ -1,0 +1,32 @@
+<span class="close-button" (click)="close()">
+  <mat-icon class="material-icons icon" color="black">close</mat-icon>
+</span>
+<div class="settings-content">
+  <h2>Unable to access Camera/Microphone. Please check system settings!</h2>
+  <p>
+    If you are getting the error "Unable to access camera/microphone, please
+    check system settings." while using this application, this is because
+    certain permissions were not given on the browser.There are several
+    configuration steps that we recommend following on your browser or machine
+    to prevent this error message from appearing
+  </p>
+  <mat-tab-group animationDuration="0ms" [selectedIndex]="selectedIndex">
+    <mat-tab *ngFor="let setting of settings">
+      <ng-template mat-tab-label>
+        <img src="assets/img/{{ setting.icon }}" class="tab-label-icon" />
+        {{ setting.system }}
+      </ng-template>
+      <mat-list>
+        <mat-list-item *ngFor="let step of setting.steps" class="steps-text">
+          <mat-icon mat-list-icon class="steps-icon">trip_origin</mat-icon>
+          <p matLine>{{ step }}</p>
+        </mat-list-item>
+        <!-- <ng-container *ngIf="setting.screenshot">
+          <div class="screenshot-container">
+            <img src="assets/settings/{{ setting.screenshot }}" />
+          </div>
+        </ng-container> -->
+      </mat-list>
+    </mat-tab>
+  </mat-tab-group>
+</div>

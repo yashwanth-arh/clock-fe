@@ -1,0 +1,118 @@
+.practice-zipCodeStyle {
+  position: relative;
+  // left: 56vw;
+  // bottom: 10.5vh;
+  left: -4vw;
+  bottom: -0.5vh;
+  cursor: pointer;
+}
+.super-admin-zipCodeStyle {
+  position: relative;
+  left: 56vw;
+  bottom: 10.5vh;
+
+  cursor: pointer;
+}
+.clinic-zipCodeStyle {
+  position: relative;
+  right: 58px;
+  width: 270px;
+  top: 6px;
+
+  cursor: pointer;
+}
+.close-button {
+  cursor: pointer;
+}
+
+.practice-state {
+  position: relative;
+  right: 3px;
+  width: 270px;
+}
+
+.admin-state {
+  position: relative;
+  right: -1px;
+  width: 270px;
+}
+
+.clinic-state {
+  position: relative;
+  right: 0px;
+  width: 270px;
+}
+
+.admin-city {
+  position: relative;
+  left: 37px;
+  width: 270px;
+}
+
+.clinic-city {
+  position: relative;
+  left: 37px;
+  width: 270px;
+}
+
+.practice-city {
+  position: relative;
+  left: 18px;
+  width: 270px;
+}
+
+.practice-address {
+  position: relative;
+  left: 57px;
+  width: 270px;
+}
+
+.admin-address {
+  position: relative;
+  left: 73px;
+  width: 270px;
+}
+
+.clinic-address {
+  position: relative;
+  left: 23px;
+  width: 270px;
+}
+
+.divbutton {
+  margin-right: 25px;
+}
+@media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+  .practice-zipCodeStyle,
+  .super-admin-zipCodeStyle,
+  .clinic-zipCodeStyle,
+  .practice-state,
+  .admin-state,
+  .admin-city,
+  .clinic-state,
+  .clinic-city,
+  .practice-city,
+  .practice-address,
+  .admin-address,
+  .clinic-address {
+    width: 230px !important;
+  }
+  .super-admin-zipCodeStyle {
+    position: relative;
+    left: -5vw;
+    bottom: -0.8vh;
+    cursor: pointer;
+  }
+  .admin-state{
+    position: relative;
+    right: -24px;
+  }
+  .admin-city{
+    position: relative;
+    left: 61px;
+  }
+  .admin-address {
+    position: relative;
+    left: 97px;
+}
+}

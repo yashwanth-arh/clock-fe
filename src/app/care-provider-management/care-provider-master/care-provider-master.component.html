@@ -1,0 +1,51 @@
+<div class="rpm-module-management">
+  <div>
+    <div *ngIf="showCareProvider">
+      <app-navigation-bar (clickEvent)="addDoctor()"></app-navigation-bar>
+    </div>
+    <div *ngIf="showCareCoordinator">
+      <app-navigation-bar (clickEvent)="addCoordinator()"></app-navigation-bar>
+    </div>
+    <div *ngIf="showFacilityAdmin">
+      <app-navigation-bar
+        (clickEvent)="addFacilityAdmin()"
+      ></app-navigation-bar>
+    </div>
+    <div *ngIf="showHospitalAdmin">
+      <app-navigation-bar
+        (clickEvent)="addHospitalAdmin()"
+      ></app-navigation-bar>
+    </div>
+  </div>
+  <div class="tabs-div-careMaster">
+    <mat-tab-group
+      dynamicHeight
+      animationDuration="0ms"
+      class="mat-tabs"
+      mat-stretch-tabs="false"
+      (selectedTabChange)="getTabDetails($event)"
+      mat-align-tabs="start"
+    >
+      <mat-tab label="Care Providers">
+        <app-care-provider *ngIf="showCareProvider"></app-care-provider>
+      </mat-tab>
+      <mat-tab label="Program Coordinators">
+        <app-care-coordinator
+          *ngIf="showCareCoordinator"
+        ></app-care-coordinator>
+      </mat-tab>
+      <mat-tab label="Facility Admins" *ngIf="userRole === 'FACILITY_USER'">
+        <app-branch-user-list
+          *ngIf="showFacilityAdmin"
+          [hideNav]="showFacilityAdmin"
+        ></app-branch-user-list>
+      </mat-tab>
+      <mat-tab label="Hospital Admins" *ngIf="userRole === 'HOSPITAL_USER'">
+        <app-hospital-user
+          *ngIf="showHospitalAdmin"
+          [hideNav]="showHospitalAdmin"
+        ></app-hospital-user>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

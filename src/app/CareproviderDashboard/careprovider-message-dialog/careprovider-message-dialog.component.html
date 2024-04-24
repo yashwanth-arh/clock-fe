@@ -1,0 +1,37 @@
+<div class="message-dialog">
+  <mat-toolbar class="toolbar-heading">
+    <div fxLayout="row">
+      <div fxLayout="row" fxLayoutGap="280px" fxLayoutGap.lg="250px"> 
+        <div  fxLayout="row" fxLayoutGap="3px" class="container">
+          <img src="assets/svg/DashboardIcons/Message Black.svg"/>
+          <span class="title">Message</span>
+        </div>
+        <div style="cursor: pointer;" title="Close" (click)="dialogRef.close()">
+          <img src="assets/svg/cancel.svg" title="Add Notes" alt="" class="close-btn" />
+        </div>
+      </div>
+    </div>
+  </mat-toolbar>
+    
+    <div fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" class="card-content">
+      <form [formGroup]="messageDialog" (ngSubmit)="onSubmit()"
+        [class.error]="!messageDialog.valid && messageDialog.touched">
+        <mat-dialog-content [formGroup]="messageDialog">
+          <mat-form-field appearance="outline" class="textField">
+            <textarea autocomplete="disabled" class="textArea" matInput placeholder="Type your message" formControlName="message" required></textarea>
+            <mat-error *ngIf="!messageDialog.controls['message'].valid && messageDialog.controls['message'].touched">
+              {{ getErrorName() }}</mat-error>
+          </mat-form-field>
+        </mat-dialog-content>
+        <div fxLayout="row" fxLayoutGap="10px" class="btn-grp">
+          <button  type="reset" mat-flat-button class="cancel-button" (click)="dialogRef.close()">
+            Cancel
+          </button>
+          <button  mat-flat-button class="save-button" [disabled]="!messageDialog.valid">
+            Send
+          </button>
+        </div>
+      </form>
+    </div>
+    
+</div>

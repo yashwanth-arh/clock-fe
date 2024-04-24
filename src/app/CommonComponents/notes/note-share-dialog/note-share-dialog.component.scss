@@ -1,0 +1,65 @@
+.module-form-title {
+    color: #5E7E9B;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.close-button {
+    color: #5E7E9B;
+    cursor: pointer;
+}
+
+.mainNotes {
+    height: 15.8em;
+    margin-top: 15px;
+    flex-direction: row;
+    box-sizing: border-box;
+    overflow: auto;
+    display: flex;
+
+    .save-button {
+        background-color: #52B204;
+        color: white;
+        // border: 1px solid #2196F3;
+        border-radius: 10px;
+        font-size: 12px;
+        outline: none;
+        width: fit-content;
+        // height: 5vh;
+        padding: 0 24px;
+        right: 22px;
+    }
+
+    .mat-flat-button.mat-button-disabled.mat-button-disabled {
+        font-size: 12px !important;
+
+        width: fit-content;
+        padding: 0 24px !important;
+    }
+
+    .fieldWidth {
+        width: 200px;
+    }
+
+
+    .button-bg {
+        background-color: #eff7ff;
+        border: 2px solid #cfe7ff;
+        border-radius: 3px;
+        cursor: pointer;
+        position: relative;
+        right: 15px;
+    }
+
+    .textInputWidth {
+        font-size: 12px;
+        width: 20vw;
+        margin-bottom: 4vh;
+    }
+
+    ::ng-deep .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+        transform: translateY(-25%);
+        position: relative;
+        top: 0.4vh;
+    }
+}

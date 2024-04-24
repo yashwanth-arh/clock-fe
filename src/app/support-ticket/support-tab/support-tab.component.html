@@ -1,0 +1,32 @@
+<div class="rpm-module-management">
+  <app-navigation-bar
+    *ngIf="selectedTabName === 'Default Issues'"
+    (clickEvent)="ticketTiltle('add')"
+  ></app-navigation-bar>
+
+  <app-navigation-bar
+    *ngIf="selectedTabName === 'Support Tickets'"
+    (clickEvent)="ticketTiltle1()"
+  ></app-navigation-bar>
+  <!-- <div *ngIf="selectedTabName == 'Default Issues'">
+    <app-navigation-bar (clickEvent)="addDeviceType()"></app-navigation-bar>
+  </div> -->
+
+  <div class="support-tab" id="support">
+    <mat-tab-group
+      animationDuration="0ms"
+      *ngIf="userRole == 'RPM_ADMIN'"
+      (selectedTabChange)="getSupportTicket1($event)"
+    >
+      <mat-tab label="Support Tickets"
+        ><app-support-ticket></app-support-ticket
+      ></mat-tab>
+      <!-- <mat-tab label="Inprogress"></mat-tab> -->
+      <mat-tab label="Default Issues" *ngIf="userRole == 'RPM_ADMIN'"
+        ><app-ticket-title></app-ticket-title
+      ></mat-tab>
+    </mat-tab-group>
+
+    <app-support-ticket *ngIf="userRole !== 'RPM_ADMIN'"></app-support-ticket>
+  </div>
+</div>

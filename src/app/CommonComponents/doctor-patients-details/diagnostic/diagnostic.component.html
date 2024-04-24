@@ -1,0 +1,223 @@
+<div class="diagnostic-main">
+  <div class="rpm-module-table-view table-main-dev">
+    <div
+      *ngIf="!loadRes"
+      class="rpm-module-table-container example-container mat-elevation-z8"
+    >
+      <mat-table
+        #table
+        matSort
+        matTableResponsive
+        [dataSource]="
+          dataSource
+            | paginate
+              : {
+                  itemsPerPage: size,
+                  currentPage: p,
+                  id: 'p',
+                  totalItems: vitlsHistoryList.length
+                }
+        "
+      >
+        <ng-container matColumnDef="date">
+          <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+          <mat-cell *matCellDef="let element" [title]="">
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <div class="doc-Icon">
+                <img
+                  [src]="
+                    element.providerRole == 'DOCTOR' ||
+                    element.providerRole == 'NURSE'
+                      ? 'assets/svg/Updated by Doctor.svg'
+                      : 'assets/img/patient-icon-new.svg'
+                  "
+                  style="cursor: pointer"
+                  [title]="
+                    element.providerRole == 'DOCTOR'
+                      ? 'It was uploaded by the Dr.' +
+                        (element?.createdByName | titlecase)
+                      : 'It was uploaded by the' +
+                        ' ' +
+                        (element?.createdByName | titlecase)
+                  "
+                  alt=""
+                />
+                <!-- <img
+                  src="assets/img/patient-icon-new.svg"
+                  style="cursor: pointer"
+                  [title]="
+                    'It was uploaded by the' + ' ' + element?.createdByName
+                  "
+                  *ngIf="element.userRole !== 'DOCTOR'"
+                  alt=""
+                /> -->
+              </div>
+              <div>
+                {{ getDate(element.date | date : "d-MM-y hh:mm a" : "UTC") }}
+              </div>
+            </div>
+            <!-- {{ getDate(element.date | date : "d-MM-y hh:mm a" : "UTC") }} -->
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="diagnosis">
+          <mat-header-cell *matHeaderCellDef> Diagnosis </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{
+              element.diagnosisName ? (element.diagnosisName | titlecase) : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="height(CMs)">
+          <mat-header-cell *matHeaderCellDef> Height (cms) </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.height }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="weight(Kg)">
+          <mat-header-cell *matHeaderCellDef> Weight (Kg) </mat-header-cell>
+          <mat-cell *matCellDef="let element"
+            >{{ element?.weight ? element?.weight : "-" }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="hbA1C(Percent)">
+          <mat-header-cell *matHeaderCellDef> HbA1C (%) </mat-header-cell>
+          <mat-cell *matCellDef="let element"
+            >{{ element?.hba1c ? element?.hba1c : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="cholesterol(mg/dL)">
+          <mat-header-cell *matHeaderCellDef
+            >Cholesterol (mg/dL)
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.cholestralLevels ? element?.cholestralLevels : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="triglyceride(mg/dL)">
+          <mat-header-cell *matHeaderCellDef
+            >Triglyceride (mg/dL)
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{
+              element?.triglycerideLevels ? element?.triglycerideLevels : "-"
+            }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="HD(mg/dL)">
+          <mat-header-cell *matHeaderCellDef>HDL (mg/dL)</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.hdlLevels ? element?.hdlLevels : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="LDL(mg/dL)">
+          <mat-header-cell *matHeaderCellDef>LDL (mg/dL) </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.ldlLevels ? element?.ldlLevels : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fasting Sugar(mg/dL)">
+          <mat-header-cell *matHeaderCellDef
+            >Fasting Sugar <br />(mg/dL)
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.fastingSugar ? element?.fastingSugar : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="postprandial(mg/dL)">
+          <mat-header-cell *matHeaderCellDef
+            >Postprandial Sugar (mg/dL)
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.postPrandial ? element?.postPrandial : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="random Sugar(mg/dL)">
+          <mat-header-cell *matHeaderCellDef
+            >Random Sugar<br />(mg/dL)</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">
+            {{ element?.randomSugar ? element?.randomSugar : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="patientUnderMadication">
+          <mat-header-cell *matHeaderCellDef
+            >Patient Under Medication
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.patientUnderMedication === true ? "Yes" : "No" }}
+          </mat-cell>
+        </ng-container> -->
+
+        <ng-container matColumnDef="baselineSystolic">
+          <mat-header-cell *matHeaderCellDef
+            >Baseline Systolic
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.baselineSystolic ? element?.baselineSystolic : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="baseloneDiastolic">
+          <mat-header-cell *matHeaderCellDef
+            >Baseline Diastolic
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.baselineDiastolic ? element?.baselineDiastolic : "-" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <!-- <img
+              src="assets/svg/Edit Icon.svg"
+              (click)="editDiagnostic(element)"
+              *ngIf="
+                element.createdById === careproviderId &&
+                addPermission === 'true'
+              "
+              style="cursor: pointer"
+            /> -->
+            <img
+              src="assets/svg/Edit Icon.svg"
+              *ngIf="
+                Datecheck(element.date) &&
+                element.createdById === careproviderId
+                  ? true
+                  : false
+              "
+              (click)="editDiagnostic(element)"
+              style="cursor: pointer"
+            />
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+
+      <div class="noDataFoundText" *ngIf="dataSource && !dataSource?.length">
+        No Records Found!
+      </div>
+      <div class="paginate">
+        <pagination-controls
+          *ngIf="vitlstotalElements >= 1"
+          (pageChange)="p = $event"
+          id="p"
+        ></pagination-controls>
+      </div>
+    </div>
+    <div *ngIf="loadRes" class="loader-1">
+      <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+    </div>
+  </div>
+</div>

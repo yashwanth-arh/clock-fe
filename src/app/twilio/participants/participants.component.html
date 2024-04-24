@@ -1,0 +1,29 @@
+<div id="participant-list">
+  <div id="alone" [ngClass]="{ 'table': isAlone, 'd-none': !isAlone }">
+    <div class="alone-info-flex">
+      <div class="alone-text" *ngIf="!compressed">
+        <h3>You are now in the meeting room</h3>
+      </div>
+      <div class="alone-text" *ngIf="!compressed">
+        <span>Waiting for {{ this.stateService.waitingFor$ |async}} to join!</span>
+      </div>
+      <div class="alone-spinner" *ngIf="!compressed">
+        <img src="assets/img/Call Loader.gif" style="width: 70px;" />
+      </div>
+      <div *ngIf="(this.stateService.callType$ | async) ==='video' && !compressed">
+        <app-camera #camera></app-camera>
+      </div>
+    </div>
+  </div>
+  <!--
+      TODO:
+      Add a list of participants, by their identity.
+      Make the list items become a click target.
+      Clicking a participant will make them their video most prominent.
+      Future: Watch for the dominantSpeaker feature to be implemented and do this automatically.
+  -->
+  <div [ngClass]="{ 'd-none': isAlone }">
+
+    <div #list></div>
+  </div>
+</div>

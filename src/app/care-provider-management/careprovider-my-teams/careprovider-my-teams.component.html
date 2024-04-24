@@ -1,0 +1,145 @@
+<span
+  class="close-button"
+  style="cursor: pointer"
+  title="Close"
+  (click)="dialogRef.close()"
+>
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">My Staff</span>
+<mat-divider class="module-divider"></mat-divider>
+<mat-card-content
+  fxLayout
+  fxLayout.xs="column"
+  style="margin: 16px 0 8px 0"
+  fxLayoutGap="10px"
+>
+  <div fxLayout="column" class="heading-left-section">Add Members</div>
+  <div fxLayout="column" class="heading-right-section">
+    Members Added
+  </div></mat-card-content
+>
+<mat-card-content fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+  <div fxLayout="row" class="myStaffMain" fxLayoutGap="10px">
+    <div fxLayout="column" class="left-section">
+      <div></div>
+      <div>
+        <div
+          class="search-div-staff"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+        >
+          <div class="global-search-staff">
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <input
+                matInput
+                placeholder="Search Provider"
+                maxlength="50"
+                [(ngModel)]="careprovider"
+                (keyup)="searchCareprovider()"
+              />
+
+              <img
+                class="searchIcon"
+                onclick="searchCareprovider()"
+                src="../../../assets/svg/SearchIcon.svg"
+                alt=""
+                style="padding-right: 10px"
+                *ngIf="showSearch"
+              />
+              <img
+                *ngIf="showCancel"
+                (click)="removeCareProvider()"
+                style="padding-right: 10px"
+                src="assets/svg/Unmap.svg"
+                class="un-map"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div
+            class="provider-names"
+            fxLayout="row"
+            *ngFor="let list of careProviderList"
+          >
+            <div fxFlex="50">
+              <span class="doc-name" [title]="getProviderName(list)">{{
+                getProviderName(list)?.length > 30 && list?.role === "DOCTOR"
+                  ? "Dr." +
+                    " " +
+                    (getProviderName(list) | titlecase | slice : 0 : 30) +
+                    "..."
+                  : getProviderName(list) && list?.role === "DOCTOR"
+                  ? "Dr." + " " + (getProviderName(list) | titlecase)
+                  : getProviderName(list)?.length > 30 &&
+                    list?.role !== "DOCTOR"
+                  ? (getProviderName(list) | titlecase | slice : 0 : 30) + "..."
+                  : getProviderName(list) && list?.role !== "DOCTOR"
+                  ? (getProviderName(list) | titlecase)
+                  : "-"
+              }}</span>
+            </div>
+            <div fxFlex="50" fxLayoutAlign="end end">
+              <span
+                (click)="addCareprovider(list)"
+                class="add-action"
+                *ngIf="
+                  (!list?.added && adminAccess == 'true') ||
+                  (!list?.added && userRole === 'CAREPROVIDER')
+                "
+                >Add</span
+              >
+              <img
+                class="tick-icon"
+                src="assets/svg/Added.svg"
+                *ngIf="list?.added"
+              />
+            </div>
+          </div>
+          <div *ngIf="!careProviderList?.length" class="no-records">
+            No Records Found!
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="column" class="right-section">
+      <div></div>
+      <div>
+        <div fxLayout="row" *ngFor="let list of mappedCareproviders">
+          <span class="selected-facility-names">
+            <div fxFlex="50">
+              <span class="doc-name" [title]="getProviderName(list)">{{
+                getProviderName(list)?.length > 15 && list?.role === "DOCTOR"
+                  ? "Dr." +
+                    " " +
+                    (getProviderName(list) | titlecase | slice : 0 : 15) +
+                    "..."
+                  : getProviderName(list) && list?.role === "DOCTOR"
+                  ? "Dr." + " " + (getProviderName(list) | titlecase)
+                  : getProviderName(list)?.length > 15 &&
+                    list?.role !== "DOCTOR"
+                  ? (getProviderName(list) | titlecase | slice : 0 : 15) + "..."
+                  : getProviderName(list) && list?.role !== "DOCTOR"
+                  ? (getProviderName(list) | titlecase)
+                  : "-"
+              }}</span>
+            </div>
+            <div fxFlex="50" fxLayoutAlign="end end">
+              <!-- <span *ngIf="!showRightIcon" class="add-action">Add</span> -->
+              <img
+                (click)="unmapCareprovider(list)"
+                src="assets/svg/Unmap.svg"
+                class="un-map"
+                *ngIf="adminAccess == 'true' || userRole === 'CAREPROVIDER'"
+              />
+            </div>
+          </span>
+        </div>
+        <div *ngIf="!mappedCareproviders?.length" class="no-mapped">
+          No Mapped Care Provider!
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card-content>

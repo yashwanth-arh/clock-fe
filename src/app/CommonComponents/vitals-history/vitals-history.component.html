@@ -1,0 +1,225 @@
+<div fxLayout="column" class="vitals-main-container">
+  <div class="innerMainText">Average BP (mmHg)</div>
+  <div fxFlex="100%" class="vitalInnerDiv">
+    <div fxLayout="row" class="location-graph">
+      <div class="location-filter-div">
+        <!-- <div class="table-main-div"> -->
+        <div>
+          <div fxLayout="row" fxLayoutGap="45px" class="header-values">
+            <div class="heading-location">Location</div>
+            <div class="heading-location">Average</div>
+          </div>
+          <div style="padding: 8px; overflow: auto">
+            <div
+              class="content-values"
+              fxLayout="row"
+              fxLayoutGap="20px"
+              *ngFor="let loc of patientLocations"
+            >
+              <div class="tab-value" [title]="loc.location_type">
+                {{
+                  loc?.locationName?.length > 6
+                    ? (loc.locationName | slice : 0 : 6) + "..."
+                    : loc.locationName
+                }}
+              </div>
+
+              <div
+                [ngClass]="
+                  getZoneColors(loc.averageBp) == 1
+                    ? 'zone-red-average'
+                    : getZoneColors(loc.averageBp) == 2
+                    ? 'zone-orange-average'
+                    : getZoneColors(loc.averageBp) == 3
+                    ? 'zone-green-average'
+                    : 'default-average'
+                "
+              >
+                {{ loc.averageBp ? loc.averageBp : "No Readings" }}
+              </div>
+            </div>
+            <div class="no-location" *ngIf="!patientLocations?.length">
+              No location found!
+            </div>
+          </div>
+        </div>
+        <div style="flex: 1 0 50%">
+          <app-bp-trend-pie-chart></app-bp-trend-pie-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div fxFlex="100%">
+    <div fxLayout="row" class="multiple-week-values">
+      <mat-tab-group
+        animationDuration="0ms"
+        class="zone-readings-card"
+        (selectedTabChange)="tabValues($event)"
+      >
+        <mat-tab [label]="val" *ngFor="let val of matTabValues">
+          <div fxLayout="row">
+            <div class="average-bp-heading">Average BP:</div>
+            <div
+              [ngClass]="
+                getZoneColors(bpAverageSummaryDetails?.totalAverage) == 1
+                  ? 'average-bp-value-highAlert'
+                  : getZoneColors(bpAverageSummaryDetails?.totalAverage) == 2
+                  ? 'average-bp-value-alert'
+                  : getZoneColors(bpAverageSummaryDetails?.totalAverage) == 3
+                  ? 'average-bp-value-good'
+                  : 'average-bp-value'
+              "
+            >
+              {{
+                bpAverageSummaryDetails?.totalAverage
+                  ? bpAverageSummaryDetails?.totalAverage
+                  : "No Readings"
+              }}
+            </div>
+          </div>
+          <div
+            fxLayout="row"
+            style="gap: 12px"
+            fxLayoutAlign="space-around center"
+            class="morning-box-div"
+          >
+            <div class="morning-box">
+              <div
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="10px"
+              >
+                <img src="assets/img/morning-icon.png" />
+                <div class="zone-heading">Morning</div>
+              </div>
+
+              <!-- <div fxLayout="row" style="padding-top: 14px"> -->
+              <div fxLayout="column" style="height: 4em">
+                <div class="zone-texts">Mean:</div>
+                <div
+                  [ngClass]="
+                    getZoneColors(
+                      bpAverageSummaryDetails?.bpMorningAverageData
+                        ?.morningAverage
+                    ) == 1
+                      ? 'zone-texts-value-bp-highalert'
+                      : getZoneColors(
+                          bpAverageSummaryDetails?.bpMorningAverageData
+                            ?.morningAverage
+                        ) == 2
+                      ? 'zone-texts-value-bp-alert'
+                      : getZoneColors(
+                          bpAverageSummaryDetails?.bpMorningAverageData
+                            ?.morningAverage
+                        ) == 3
+                      ? 'zone-texts-value-bp-good'
+                      : ''
+                  "
+                >
+                  {{
+                    bpAverageSummaryDetails?.bpMorningAverageData
+                      ?.morningAverage
+                      ? bpAverageSummaryDetails?.bpMorningAverageData
+                          ?.morningAverage
+                      : "No Readings"
+                  }}
+                </div>
+              </div>
+              <div fxLayout="row" class="reading-container">
+                <div fxLayout="row" style="gap: 6px">
+                  <img src="assets/svg/High Alert Reading.svg" />
+                  <div class="zone-texts-value">
+                    {{
+                      bpAverageSummaryDetails?.bpMorningAverageData?.highAlert
+                    }}
+                  </div>
+                </div>
+                <div fxLayout="row" style="gap: 6px">
+                  <img src="assets/svg/Alert Reading.svg" />
+                  <div class="zone-texts-value">
+                    {{ bpAverageSummaryDetails?.bpMorningAverageData?.alert }}
+                  </div>
+                </div>
+                <div fxLayout="row" style="gap: 6px">
+                  <img src="assets/svg/Good Reading.svg" />
+                  <div class="zone-texts-value">
+                    {{ bpAverageSummaryDetails?.bpMorningAverageData?.normal }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+
+            <div class="morning-box">
+              <div
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="10px"
+              >
+                <img src="assets/img/night-icon.png" />
+                <div class="zone-heading">Evening</div>
+              </div>
+              <div fxLayout="column" style="height: 4em">
+                <div class="zone-texts">Mean:</div>
+                <div
+                  [ngClass]="
+                    getZoneColors(
+                      bpAverageSummaryDetails?.bpEveningAverageData
+                        ?.eveningAverage
+                    ) == 1
+                      ? 'zone-texts-value-bp-highalert'
+                      : getZoneColors(
+                          bpAverageSummaryDetails?.bpEveningAverageData
+                            ?.eveningAverage
+                        ) == 2
+                      ? 'zone-texts-value-bp-alert'
+                      : getZoneColors(
+                          bpAverageSummaryDetails?.bpEveningAverageData
+                            ?.eveningAverage
+                        ) == 3
+                      ? 'zone-texts-value-bp-good'
+                      : ''
+                  "
+                >
+                  {{
+                    bpAverageSummaryDetails?.bpEveningAverageData
+                      ?.eveningAverage
+                      ? bpAverageSummaryDetails?.bpEveningAverageData
+                          ?.eveningAverage
+                      : "No Readings"
+                  }}
+                </div>
+              </div>
+              <div fxLayout="row" class="reading-container">
+                <div fxLayout="row" style="gap: 6px">
+                  <img src="assets/svg/High Alert Reading.svg" />
+                  <div class="zone-texts-value">
+                    {{
+                      bpAverageSummaryDetails?.bpEveningAverageData?.highAlert
+                    }}
+                  </div>
+                </div>
+                <div fxLayout="row" style="gap: 6px">
+                  <img src="assets/svg/Alert Reading.svg" />
+                  <div class="zone-texts-value">
+                    {{ bpAverageSummaryDetails?.bpEveningAverageData?.alert }}
+                  </div>
+                </div>
+                <div fxLayout="row" style="gap: 6px">
+                  <img src="assets/svg/Good Reading.svg" />
+                  <div class="zone-texts-value">
+                    {{ bpAverageSummaryDetails?.bpEveningAverageData?.normal }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+<!-- <div *ngIf="loadRes" style="height: 50vh; position: relative; top: 10vh">
+    <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+  </div> -->

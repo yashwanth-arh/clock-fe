@@ -1,0 +1,924 @@
+.notesList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+
+
+    .hide-pagination-element {
+        display: none;
+    }
+
+    .useTemplate {
+        color: #01cd74;
+        cursor: pointer;
+    }
+
+    .btn-grp {
+        position: relative;
+        top: 3.2vh;
+        left: -2.5vw;
+    }
+
+    .add-note-win,
+    .add-temp-win {
+        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+            width: 67.7em;
+        }
+
+        ::ng-deep .mat-form-field {
+
+            padding: 20px 0px 0px 0px;
+        }
+
+        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+            background: #fff !important;
+        }
+    }
+
+    ::ng-deep .cdk-overlay-container {
+        position: fixed;
+        z-index: 1000000 !important;
+    }
+
+    .add-note-mac,
+    .add-temp-mac {
+        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+            width: 67.7em;
+        }
+
+        ::ng-deep .mat-form-field {
+
+            padding: 20px 0px 0px 0px;
+        }
+    }
+
+    .example-margin {
+        margin: 0 10px;
+    }
+
+    .example-margin-share {
+        margin-right: 30px;
+    }
+
+    .title {
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 21px;
+        color: #5e7e9b;
+        position: relative;
+        left: 0px;
+        top: 0.4vh;
+    }
+
+    .buttonDiv {
+        text-align: right;
+        height: 5vh;
+        position: relative;
+        left: 1.5vw;
+        top: -16px;
+    }
+
+    .addNote {
+        position: relative;
+        left: 16px;
+        top: 0.2vh;
+        cursor: pointer;
+    }
+
+    .add-notes {
+        background-color: #52B204;
+        color: white;
+        // border: 1px solid #2196F3;
+        border-radius: 10px;
+        font-size: 12px;
+        outline: none;
+        width: 132px;
+        height: 35px;
+        bottom: 7px;
+        // left: -3.3vw;
+    }
+
+    .notes-container {
+        position: relative;
+        top: -1vh;
+
+        .note-actions {
+            .date-picker {
+                position: relative;
+                top: 1vh;
+                left: 7vw;
+            }
+        }
+
+        .button-bg {
+            background-color: #eff7ff;
+            border: 1px solid #cfe7ff;
+            border-radius: 4px;
+            cursor: pointer;
+
+            img {
+                width: 32px;
+            }
+        }
+
+        .edit-button-bg {
+            background-color: #eff7ff;
+            border: 1px solid #cfe7ff;
+            border-radius: 4px;
+
+            img {
+                width: 20px;
+                position: relative !important;
+                top: -1px !important;
+                cursor: pointer;
+            }
+        }
+
+        .edit-button-bg:hover {
+            .edit {
+                color: #2196f3;
+            }
+        }
+    }
+
+    .download-icon {
+        position: relative;
+        top: 20px !important;
+        cursor: pointer;
+    }
+
+    ::ng-deep .custom-frame {
+
+        & .mat-checkbox-background,
+        .mat-checkbox-frame {
+            border-radius: 70% !important;
+        }
+    }
+
+    .list-order {
+
+        // text-align: center;
+        mat-radio-button {
+            padding-left: 5px;
+        }
+
+        padding: 2px;
+    }
+
+    .example-margin-header {
+        margin: 0 12px;
+    }
+
+    .example-margin {
+        margin: 0 5px;
+    }
+
+    .form {
+        position: relative;
+        top: 3vh;
+    }
+
+    .textField {
+        // width: 61vw;
+        // height: 23vh;
+        // position: relative;
+        // top: -2vw;
+    }
+
+    .textArea {
+        // height: 6vh;
+        background-color: white;
+        height: 15vh;
+        resize: none;
+    }
+
+    .note-buttons,
+    .temp-buttons {
+        // margin-left: 15px;
+        // position: relative;
+        // top: -3vh;
+        // left: 2.5vw;
+    }
+
+    .checkbox {
+        margin-right: 10px;
+        position: relative;
+        top: 5px;
+    }
+
+    .save-button {
+        height: 38px;
+        width: auto;
+    }
+
+    .mat-menu-panel.confirm {
+        min-width: 35px;
+        max-width: 300px;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        max-height: calc(100vh - 20px);
+        border-radius: 10px;
+        outline: 0;
+        padding: 0px 12px;
+        // padding-left: 10px !important;
+        padding: 10px;
+    }
+
+
+    ::ng-deep .confirm {
+        width: 342px !important;
+        left: 0.5vw;
+        top: 0.5vh;
+        position: relative;
+        padding: 20px 16px;
+        // border-radius: 0px 0px 0px 10px;
+    }
+
+    .mat-menu-content {
+        padding: 15px;
+    }
+
+    .update-button {
+        background-color: #52B204;
+        color: white;
+        // border: 1px solid #2196F3;
+        border-radius: 10px;
+        font-size: 12px;
+        outline: none;
+        // width: 6vw;
+        // height: 5vh;
+    }
+
+    .share-icon {
+        position: relative;
+        bottom: -3.5px;
+        right: 25px;
+    }
+
+    .editable {
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        outline: none;
+        padding: 3px 0px 3px 3px;
+        margin: 5px 1px 3px 0px;
+        border: 1px solid #dddddd;
+    }
+
+    // .editable:focus,
+    // textarea:focus {
+    //   box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    //   padding: 3px 0px 3px 3px;
+    //   margin: 5px 1px 3px 0px;
+    //   border: 1px solid rgba(81, 203, 238, 1);
+    // }
+    .cancel-button {
+        background-color: white;
+        color: #52B204;
+        // border: 1px solid #2196F3;
+        border: #52B204 1px solid;
+        border-radius: 10px;
+        font-size: 12px;
+        outline: none;
+        // width: 12vh;
+        // height: 5vh;
+    }
+
+    :ng-deep .mat-flat-button {
+        border: none;
+    }
+
+    .cancel-button-edit {
+        background-color: white;
+        color: #52B204;
+        // border: 1px solid #2196F3;
+        border: #52B204 1px solid;
+        // border: 1px solid #2196F3;
+        border-radius: 10px;
+        font-size: 12px;
+        outline: none;
+        // width: 12vh;
+        // height: 5vh;
+    }
+
+    button {
+        outline: none;
+    }
+
+    .add-note,
+    add-temp {
+        // height: 30vh;
+        // position: relative;
+        // top: 3vh;
+        // left: -1.5vw;
+    }
+
+    ::-webkit-scrollbar {
+        width: 4px;
+        overflow-y: scroll;
+        background: transparent;
+        scrollbar-width: auto;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #a1a1a1;
+        border-radius: 10px;
+        scrollbar-width: auto;
+    }
+
+    .lineBreak {
+        max-width: 100vw;
+        word-wrap: break-word;
+    }
+
+    .tempBreak {
+        max-width: 62vw;
+        word-wrap: break-word;
+    }
+
+    .note-list,
+    .template-list {
+        // border: 1px solid #cfe7ff;
+        // border-radius: 10px;
+        // // background-color: #eff7ff;
+        // height: 565px;
+        // // margin-top: 10px;
+        // position: relative;
+        // top: 3.9vh;
+        // left: -1.5vw;
+        // width: 64vw;
+
+        .notes,
+        .templates,
+        .tempAdd,
+        .noteSm {
+            // padding: 10px;
+            // position: relative;
+            // top: -4vh;
+
+            // overflow: auto;
+            .example-viewport {
+                height: 850px;
+                overflow-x: hidden;
+                scrollbar-width: auto;
+
+                .example-item {
+                    padding: 4px 16px 4px 0px;
+                }
+            }
+
+            li {
+                list-style: none;
+                background-color: white;
+                border-radius: 10px;
+
+                .note-content,
+                .template {
+                    padding: 16px;
+                    // width: 63vw;
+
+                    .purple-border textarea {
+                        border: 1px solid white;
+
+                        textarea {
+                            background-color: white;
+                        }
+                    }
+
+                    img {
+                        position: relative;
+                        top: -0.6vh;
+                    }
+                }
+            }
+        }
+
+        .notes,
+        .templates {
+            overflow: auto;
+            height: 518px;
+        }
+
+        .tempAdd {
+            height: 421px;
+            position: relative;
+            top: -7vh;
+        }
+
+        .back {
+            margin-top: -2vh;
+            cursor: pointer;
+        }
+
+        ::ng-deep .backAdd {
+            position: relative;
+            top: -8vh;
+            background-color: red !important;
+        }
+
+        .noteSm {
+            overflow: auto;
+            height: 377px;
+        }
+    }
+
+    .share-icon-info {
+        position: relative;
+        bottom: -2px;
+    }
+
+    .template {
+        background-color: #fff;
+        position: relative;
+        overflow: hidden;
+        transition: box-shadow 0.5s;
+        max-height: 600px;
+        border-radius: 10px;
+    }
+
+    .template:hover {
+        background: rgba(75, 75, 75, 0.6);
+        // opacity: 0.6;
+    }
+
+    .example-container.mat-elevation-z8 {
+        box-shadow: none;
+    }
+
+    .template-link {
+        // font-size: 2rem;
+        // font-weight: 500;
+        // // color: #333;
+        // letter-spacing: 0.1rem;
+        // // border: 0.3rem solid #e41c6f;
+        // // padding: 0 1rem;
+        // background-color: transparent;
+        position: absolute;
+        bottom: -5rem;
+        // transition: bottom 0.1s;
+    }
+
+    // .template {
+    //   position: absolute;
+    //   bottom: 0.5vh;
+    //   left: 22vw;
+    //   background-color: transparent;
+    //   transition: bottom 0.1s 0.1s;
+    // }
+    .template:hover .template-link {
+        position: absolute;
+        bottom: 0.5vh;
+        left: 25vw;
+        // background-color: rgba(128, 128, 128, 0.37);
+        transition: bottom 0.1s 0.1s;
+
+        .btn_img {
+            cursor: pointer;
+        }
+    }
+
+    .no-data-found {
+        font-size: 18px;
+        font-weight: 500;
+        text-align: center;
+        // margin-top: 13em;
+    }
+
+    .notes-loader {
+        margin-top: 25vh;
+    }
+
+    .cancel-icon {
+        cursor: pointer;
+    }
+
+    .template-li {
+        width: 950px;
+    }
+
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+
+        // .useTemplate{
+        //     margin-top: 9px;
+        // }
+        .add-note-win,
+        .add-temp-win {
+            ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+                width: 67.7em;
+            }
+        }
+
+        .add-note-mac,
+        .add-temp-mac {
+            ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+                width: 67.7em;
+            }
+        }
+
+        .no-data-found {
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .note-list,
+        .template-list {
+            // border: 1px solid #cfe7ff;
+            // border-radius: 10px;
+            // // background-color: #eff7ff;
+            // height: 565px;
+            // // margin-top: 10px;
+            // position: relative;
+            // top: 3.9vh;
+            // left: -1.5vw;
+            // width: 88vw;
+
+            .notes,
+            .templates,
+            .tempAdd,
+            .noteSm {
+                // padding: 10px;
+                // position: relative;
+                // top: -4vh;
+
+                // overflow: auto;
+                .example-viewport {
+                    height: 850px;
+                    overflow-x: hidden;
+                    scrollbar-width: auto;
+
+                    .example-item {
+                        padding: 4px 16px 4px 0px;
+                    }
+                }
+
+                li {
+                    list-style: none;
+                    background-color: white;
+                    border-radius: 10px;
+                    width: 85vw;
+
+                    .note-content {
+                        width: 84vw;
+                    }
+
+                    .template {
+                        width: 90vw;
+                    }
+
+                    .note-content,
+                    .template {
+                        padding: 16px;
+
+                        .purple-border textarea {
+                            border: 1px solid white;
+
+                            textarea {
+                                background-color: white;
+                            }
+                        }
+
+                        img {
+                            position: relative;
+                            top: -0.6vh;
+                        }
+                    }
+                }
+            }
+
+            .notes {
+                overflow: auto;
+                height: 569px;
+            }
+
+            .templates {
+                height: 496px;
+            }
+
+            .tempAdd {
+                height: 325px;
+                position: relative;
+                top: -7vh;
+            }
+
+            .back {
+                margin-top: -2vh;
+                cursor: pointer;
+            }
+
+            ::ng-deep .backAdd {
+                position: relative;
+                top: -8vh;
+                background-color: red !important;
+            }
+
+            .noteSm {
+                overflow: auto;
+                height: 377px;
+            }
+        }
+
+        .template-li {
+            width: 870px;
+        }
+
+        .add-notes {
+            background-color: #52B204;
+            color: white;
+            // border: 1px solid #2196F3;
+            border-radius: 10px;
+            font-size: 12px;
+            outline: none;
+            width: 132px;
+            height: 35px;
+            top: 7px;
+        }
+
+        .btn-grp {
+            position: relative;
+            top: 1vh;
+            left: -4.5vw;
+        }
+
+        .buttonDiv {
+            position: relative;
+            left: 0vw;
+        }
+
+        .lineBreak {
+            max-width: 77vw;
+            word-wrap: break-word;
+        }
+
+        .tempBreak {
+            max-width: 85vw;
+            word-wrap: break-word;
+        }
+
+        .template:hover .template-link {
+            position: absolute;
+            bottom: 0.5vh;
+            left: 31vw;
+            transition: bottom 0.1s 0.1s;
+        }
+
+        .toolbar-heading {
+            width: 97vw;
+            position: relative;
+            left: -3vw;
+            top: -2.2vh;
+        }
+
+        .note-list {
+            .noteSm {
+                overflow: auto;
+                height: 284px;
+            }
+        }
+
+        .cancel-icon {
+            cursor: pointer;
+            position: relative;
+            left: 18vw;
+        }
+
+        .note-list {
+
+            .notes,
+            .noteSm {
+                .example-viewport {
+                    scrollbar-width: auto;
+                    height: 493px;
+                    position: relative;
+                    top: 0vh;
+                }
+            }
+        }
+
+        .use-temp {
+            position: relative;
+            top: 2vh;
+            padding-right: 12px;
+            color: #01cd74;
+        }
+
+        .textField {
+            width: 88vw;
+        }
+
+        .save-button {
+            width: 8vw;
+        }
+
+        .cancel-button {
+            left: 0vw;
+            width: 8vw;
+        }
+
+        .note-buttons {
+            // margin-left: -24px;
+            // position: relative;
+            // top: 0vh;
+            // left: -1vw;
+        }
+
+        .temp-buttons {
+            // margin-left: -24px;
+            // position: relative;
+            // top: 0vh;
+            // left: -1vw;
+        }
+
+        .add-note {
+            position: relative;
+            top: 2vh;
+        }
+    }
+
+    @media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+
+        .add-note-win,
+        .add-temp-win {
+            ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+                width: 106% !important;
+            }
+        }
+    }
+
+    @media only screen and (min-device-width: 1670px) and (max-device-width: 1800px) and (orientation: landscape) {
+        .cancel-icon {
+            margin-left: 54px;
+        }
+
+        .no-data-found {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .macWidth {
+            width: 100% !important;
+        }
+
+        .download-icon {
+            position: relative;
+            top: 18px;
+            cursor: pointer;
+        }
+
+        .note-list {
+            margin-top: 30px !important;
+        }
+
+        .notes {
+            overflow: auto;
+            height: 705px !important;
+        }
+
+        .templates {
+            height: 705px !important;
+        }
+
+        .add-note-mac,
+        .add-temp-mac {
+            ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+                width: 106% !important;
+            }
+        }
+    }
+
+    @media only screen and (min-device-width: 1279px) and (max-device-width: 1280px) and (orientation: landscape) {
+
+        .add-note-mac,
+        .add-temp-mac {
+            ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+                width: 105%;
+            }
+        }
+
+        .cancel-icon {
+            position: relative;
+            right: 11px;
+        }
+
+        .save-button {
+            height: 38px;
+        }
+
+        .cancel-button {
+            height: 38px;
+        }
+
+        .cancel-button-edit {
+            height: 38px;
+        }
+
+        .update-button {
+            height: 38px;
+        }
+
+        .note-list,
+        .template-list {
+            // // border: 1px solid #cfe7ff;
+            // border-radius: 10px;
+            // // background-color: #eff7ff;
+            // height: 565px;
+            // // margin-top: 10px;
+            // position: relative;
+            // top: 3.9vh;
+            // left: -1.5vw;
+            // width: 64vw;
+
+            .notes,
+            .templates,
+            .tempAdd,
+            .noteSm {
+                // padding: 10px;
+                // position: relative;
+                // top: -4vh;
+
+                // overflow: auto;
+                .example-viewport {
+                    scrollbar-width: auto;
+                    height: 850px;
+                    overflow-x: hidden;
+
+                    .example-item {
+                        padding: 4px 16px 4px 0px;
+                    }
+                }
+
+                li {
+                    list-style: none;
+                    background-color: white;
+                    border-radius: 10px;
+
+                    .note-content,
+                    .template {
+                        padding: 16px;
+                        // width: 63vw;
+
+                        .purple-border textarea {
+                            border: 1px solid white;
+
+                            textarea {
+                                background-color: white;
+                            }
+                        }
+
+                        img {
+                            position: relative;
+                            top: -0.6vh;
+                        }
+                    }
+                }
+            }
+
+            .notes,
+            .templates {
+                overflow: auto;
+                height: 469px;
+            }
+
+            .tempAdd {
+                height: 315px;
+                position: relative;
+                top: -7vh;
+            }
+
+            .back {
+                margin-top: -2vh;
+                cursor: pointer;
+            }
+
+            ::ng-deep .backAdd {
+                position: relative;
+                top: -8vh;
+                background-color: red !important;
+            }
+
+            .noteSm {
+                overflow: auto;
+                height: 250px;
+            }
+        }
+    }
+
+    .redTxt {
+        color: #f00;
+        cursor: pointer;
+    }
+
+    .limitTextHeight {
+        height: 60px;
+        overflow: hidden;
+    }
+
+    .macWidth {
+        width: 911px;
+    }
+
+    .winidth {
+        width: 962px;
+    }
+}

@@ -1,0 +1,93 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  dataValue === "add" ? "Create Vendor" : "Update Vendor"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<mat-card-content>
+  <form
+    [formGroup]="vendorForm"
+    (ngSubmit)="onUpload()"
+    style="margin-top: 12px"
+  >
+    <mat-dialog-content [formGroup]="vendorForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Vendor Name</mat-label>
+        <input
+          type="text"
+          matInput
+          appAlphabetSpaceOnly
+          minlength="2"
+          maxlength="50"
+          formControlName="vendorName"
+          required
+        />
+        <!-- <mat-error *ngIf="vendorForm.get('vendorName').hasError('required')"
+          >Vendor name is required</mat-error
+        >
+        <mat-error *ngIf="vendorForm.get('vendorName').hasError('whitespace')"
+          >Only spaces are not allowed</mat-error
+        > -->
+        <mat-error>{{ vendorErr() }}</mat-error>
+      </mat-form-field>
+      <div>
+        <div>Agreement:</div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <label for="file" fxLayout="column" class="pres-upload-label">
+            <img src="assets/svg/Agreement.svg" />
+          </label>
+          <input
+            type="file"
+            id="file"
+            (change)="onFileSelected($event)"
+            class="file"
+            (click)="$event.target['value'] = null"
+          />
+          <div
+            *ngIf="pdfimageSrc.length"
+            fxLayout="row"
+            fxLayoutAlign="space-around center"
+          >
+            <div>
+              <img
+                [src]="
+                  pdfimageSrc[0].includes('pdf')
+                    ? 'assets/svg/pdf img.svg'
+                    : pdfimageSrc[0].includes('jpg') ||
+                      pdfimageSrc[0].includes('jpeg') ||
+                      pdfimageSrc[0].includes('png')
+                    ? 'assets/svg/Jpg.svg'
+                    : 'assets/svg/doc.svg'
+                "
+                alt="Preview"
+              />
+              <!-- <img
+                width="50px"
+                height="50px"
+                *ngIf="selectedFile.type.startsWith('application')"
+                src="assets/svg/Pdf Icon.svg"
+                alt="Preview"
+              /> -->
+            </div>
+            <div (click)="removeSelectedFile()" class="closeBtn">
+              <mat-icon>cancel</mat-icon>
+            </div>
+            <!-- <div *ngIf="!previewUrl">Preview not available</div> -->
+          </div>
+        </div>
+      </div>
+    </mat-dialog-content>
+
+    <div fxLayout="row" fxLayoutGap="10px" class="divbutton">
+      <button
+        mat-flat-button
+        class="rpm-save-button"
+        [disabled]="!vendorForm.valid || isSubmitted"
+      >
+        {{ dataValue === "add" ? "Save" : "Update" }}
+      </button>
+    </div>
+  </form>
+</mat-card-content>

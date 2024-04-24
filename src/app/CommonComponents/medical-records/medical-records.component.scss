@@ -1,0 +1,80 @@
+.medical-tabs {
+
+    padding: 16px 10px 0 10px;
+.vitalButton:hover{
+    color: #fff !important;
+}
+
+    ::ng-deep .mat-tab-group {
+        display: flex;
+        flex-direction: column;
+        // width: fit-content;
+        // // width: fit-content;
+        // // height: 41px;
+        // background: #B8DCF4;
+        // border-radius: 6px;
+        // padding: 4px;
+    }
+
+    ::ng-deep .mat-tab-header .mat-tab-label .mat-tab-label-content {
+        margin-bottom: 0 !important;
+    }
+
+    ::ng-deep .mat-tab-header {
+
+        width: fit-content !important;
+        // width: fit-content;
+        height: 41px;
+        background: #B8DCF4;
+        border-radius: 6px;
+        padding: 4px;
+        border-top-left-radius: 6px !important;
+        border-top-right-radius: 6px !important;
+    }
+
+    .mat-tab-body-content {
+        overflow: hidden !important;
+    }
+
+    ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+        color: #5F6368 !important;
+        width: 130px !important;
+        height: 33px !important;
+
+        background: #FFFFFF !important;
+        border-radius: 6px !important;
+        border-top-left-radius: 6px !important;
+
+        // border-radius: 6px 6px 0px 0px;
+    }
+
+    ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:first-child {
+        border-top-left-radius: 6px !important;
+    }
+
+    ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+    .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+        background-color: transparent;
+    }
+
+    ::ng-deep .mat-tab-label {
+        height: 36px !important;
+    }
+
+    .diagnostic {
+        display: flex;
+        justify-content: end;
+        position: absolute;
+        top: 1rem;
+        right: 11px;
+    }
+
+    .btn-diagnostic {
+        padding: 11px 24px;
+        height: 39px;
+        background: #01CD74;
+        border-radius: 6px;
+        color: white;
+        border: none;
+    }
+}

@@ -1,0 +1,11 @@
+@import "../../variables";
+
+p.countdown-text {
+  color: $primary-color;
+  span.countdown-number {
+    color: $secondary-color;
+    font-size: larger;
+    font-weight: 700;
+    line-height: 20px;
+  }
+}

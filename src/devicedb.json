@@ -1,0 +1,103 @@
+[
+    {
+        "id": 1,
+        "DeviceCode": "58232-0649",
+        "DeviceType": "gluco meter",
+        "VendorName": "Sigismond Nancekivell",
+        "AssignedDate": "7/23/2020",
+        "Version": "2.01",
+        "Amount": "$67",
+        "Status": "assigned"
+    },
+   
+    {
+        "id": 2,
+        "DeviceCode": "63629-1565",
+        "DeviceType": "pulse oximeter",
+        "VendorName": "Mattheus Demead",
+        "AssignedDate": "1/24/2020",
+        "Version": "0.74",
+        "Amount": "$40",
+        "Status": "assigned"
+    },
+    {
+        "id": 3,
+        "DeviceCode": "49967-018",
+        "DeviceType": "Bp instrumeter",
+        "VendorName": "Stace Champley",
+        "AssignedDate": "4/17/2020",
+        "Version": "4.4.4",
+        "Amount": "$50",
+        "Status": "unassigned"
+    },
+    {
+        "id": 4,
+        "DeviceCode": "49873-060",
+        "DeviceType": "ortho",
+        "VendorName": "Rosette Gouinlock",
+        "AssignedDate": "5/2/2020",
+        "Version": "7.9.2",
+        "Amount": "$70",
+        "Status": "assigned"
+    },
+    {
+        "id": 5,
+        "DeviceCode": "49283-005",
+        "DeviceType": "thermometer",
+        "VendorName": "Livvy Reignolds",
+        "AssignedDate": "1/29/2020",
+        "Version": "2.33",
+        "Amount": "$30",
+        "Status": "assigned"
+    },
+    {
+        "id": 6,
+        "DeviceCode": "0496-0708",
+        "DeviceType": "thermometer",
+        "VendorName": "Danny Jentle",
+        "AssignedDate": "9/7/2020",
+        "Version": "0.32",
+        "Amount": "$25",
+        "Status": "unassigned"
+    },
+    {
+        "id": 7,
+        "DeviceCode": "54973-3075",
+        "DeviceType": "x-ray",
+        "VendorName": "Jilli Tiltman",
+        "AssignedDate": "2/18/2020",
+        "Version": "0.98",
+        "Amount": "$20",
+        "Status": "assigned"
+    },
+    {
+        "id": 8,
+        "DeviceCode": "37808-200",
+        "DeviceType": "x-ray",
+        "VendorName": "Enoch Burstowe",
+        "AssignedDate": "12/3/2020",
+        "Version": "5.07",
+        "Amount": "$60",
+        "Status": "assigned"
+    },
+    {
+        "id": 9,
+        "DeviceCode": "67777-308",
+        "DeviceType": "x-ray",
+        "VendorName": "Adeline Fehners",
+        "AssignedDate": "7/1/2020",
+        "Version": "0.72",
+        "Amount": "$40",
+        "Status": "unassigned"
+    },
+    {
+        "id": 10,
+        "DeviceCode": "63187-063",
+        "DeviceType": "gluco meter",
+        "VendorName": "Oby Durban",
+        "AssignedDate": "8/10/2020",
+        "Version": "0.55",
+        "Amount": "$35",
+        "Status": "unassigned"
+    }
+]

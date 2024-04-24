@@ -1,0 +1,359 @@
+<div
+  fxLayout="row"
+  fxLayoutAlign="space-around start"
+  fxLayoutGap="10px"
+  class="patientObservation"
+>
+  <mat-card
+    style="border-radius: 10px"
+    fxLayout="column"
+    fxFlex="100%"
+    style="box-shadow: none"
+  >
+    <div class="example-container-observation mat-elevation-z8">
+      <mat-table matTableResponsive [dataSource]="patientObservationDataSource">
+        <!-- Weight Column -->
+
+        <ng-container matColumnDef="date">
+          <mat-header-cell *matHeaderCellDef> Date &nbsp; </mat-header-cell>
+
+          <mat-cell
+            fxFlex="20%"
+            fxFlex.md="17%"
+            *matCellDef="let element"
+            style="padding-left: 16px"
+          >
+            <div class="date-text">
+              <div
+                fxLayout="row"
+                fxLayoutGap="24px"
+                fxLayoutAlign="start center"
+              >
+                <div fxLayoutAlign="center" style="position: relative">
+                  {{
+                    element.date !== "NaN"
+                      ? (element.date | date : "dd/MM/yyyy")
+                      : ""
+                  }}
+                </div>
+              </div>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="bpDay">
+          <mat-header-cell
+            *matHeaderCellDef
+            style="max-width: 155px !important; min-width: 155px !important"
+          >
+            Blood Pressure (mmHg)
+          </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            style="max-width: 155px !important; min-width: 155px !important"
+          >
+            <div>
+              <div fxLayout="column" fxLayoutGap="11px" class="obs-text-day">
+                <div fxLayout="row" fxLayoutGap="10px">
+                  <div class="morning-icon">
+                    <img src="assets/img/sunPng.png" alt="" height="15" />
+                  </div>
+                  <div>
+                    <div
+                      class="rounded-zone-red"
+                      *ngIf="element?.morningZoneOfPatient == '1'"
+                    ></div>
+                    <div
+                      class="rounded-zone-orange"
+                      *ngIf="element?.morningZoneOfPatient == '2'"
+                    ></div>
+                    <div
+                      class="rounded-zone-green"
+                      *ngIf="element?.morningZoneOfPatient == '3'"
+                    ></div>
+                  </div>
+
+                  <div style="position: relative; top: 11px; left: 10px">
+                    <span>
+                      {{
+                        element?.morningPresentBp
+                          ? element?.morningPresentBp
+                          : ""
+                      }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                style="width: 657px; height: 0px; border: 0.5px solid #a2d7bf"
+              ></div>
+              <div fxLayout="column" fxLayoutGap="11px" class="obs-text-evenig">
+                <div fxLayout="row" fxLayoutGap="10px">
+                  <div class="morning-icon">
+                    <img src="assets/img/moonPng.png" alt="" height="15" />
+                  </div>
+                  <div>
+                    <div
+                      class="rounded-zone-red"
+                      *ngIf="element?.eveningZoneOfPatient == '1'"
+                    ></div>
+                    <div
+                      class="rounded-zone-orange"
+                      *ngIf="element?.eveningZoneOfPatient == '2'"
+                    ></div>
+                    <div
+                      class="rounded-zone-green"
+                      *ngIf="element?.eveningZoneOfPatient == '3'"
+                    ></div>
+                  </div>
+
+                  <div style="position: relative; top: 11px; left: 10px">
+                    <span>
+                      {{
+                        element?.eveningPresentBp
+                          ? element?.eveningPresentBp
+                          : ""
+                      }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="indicators">
+          <mat-header-cell *matHeaderCellDef>
+            Life Style Indicators
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div
+              [ngClass]="
+                getMorningIndicators(element?.morningIndicators).length
+                  ? 'morningIndicatorsDiv'
+                  : 'eveningIndicatorsDiv'
+              "
+            >
+              <div
+                fxLayout="row"
+                fxLayoutGap="10px"
+                class="obs-indicators"
+                *ngIf="getMorningIndicators(element?.morningIndicators).length"
+              >
+                <ng-container
+                  *ngFor="
+                    let img of getMorningIndicators(element?.morningIndicators);
+                    let i = index
+                  "
+                >
+                  <img
+                    class="triggers"
+                    [title]="img.indicatorName"
+                    data-placement="top"
+                    *ngIf="img.indicatorIcon !== ''"
+                    [src]="
+                      'assets/img/Lifestyle & Symptom Icons/' +
+                      img.indicatorIcon
+                    "
+                  />
+                  <div *ngIf="img.indicatorIcon === ''"></div>
+                </ng-container>
+              </div>
+              <div
+                class="no-symptoms"
+                *ngIf="
+                  !getMorningIndicators(element?.morningIndicators)?.length
+                "
+              ></div>
+              <div class="green-divider"></div>
+              <div
+                fxLayout="row"
+                fxLayoutGap="10px"
+                class="obs-indicators"
+                *ngIf="getEveningIndicators(element?.eveningIndicators)?.length"
+              >
+                <ng-container
+                  *ngFor="
+                    let img of getEveningIndicators(element?.eveningIndicators);
+                    let i = index
+                  "
+                >
+                  <img
+                    class="triggers"
+                    [title]="img.indicatorName"
+                    data-placement="top"
+                    *ngIf="img.indicatorIcon !== ''"
+                    [src]="
+                      'assets/img/Lifestyle & Symptom Icons/' +
+                      img.indicatorIcon
+                    "
+                  />
+                </ng-container>
+              </div>
+              <div
+                class="no-symptoms"
+                *ngIf="
+                  !getEveningIndicators(element?.eveningIndicators)?.length
+                "
+              ></div>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="bpDaySymptoms">
+          <mat-header-cell
+            *matHeaderCellDef
+            style="max-width: 277px !important; min-width: 277px !important"
+          >
+            Symptoms
+          </mat-header-cell>
+          <mat-cell
+            style="max-width: 277px !important; min-width: 277px !important"
+            *matCellDef="let element"
+          >
+            <div
+              [ngClass]="
+                element?.morningSymptomsBp?.length
+                  ? 'morningSymptomsDiv'
+                  : 'eveningSymptomsDiv'
+              "
+            >
+              <div
+                fxLayout="row"
+                fxLayoutGap="10px"
+                class="obs-symptoms-morning"
+                *ngIf="element?.morningSymptomsBp?.length"
+              >
+                <ng-container
+                  *ngFor="
+                    let img of getSymptomsBP(element?.morningSymptomsBp);
+                    let i = index
+                  "
+                >
+                  <img
+                    class="triggers"
+                    [title]="img.symptomName"
+                    data-placement="top"
+                    *ngIf="img.fileName !== ''"
+                    [src]="
+                      'assets/img/Lifestyle & Symptom Icons/' + img.symptomUrl
+                    "
+                  />
+                  <span class="symptom-names">{{ img.symptomName }}</span>
+                </ng-container>
+              </div>
+              <div
+                class="no-symptoms"
+                *ngIf="!element?.morningSymptomsBp?.length"
+              ></div>
+              <div class="green-divider"></div>
+              <div
+                fxLayout="row"
+                fxLayoutGap="10px"
+                class="obs-symptoms"
+                *ngIf="element?.eveningSymptomsBp?.length"
+              >
+                <ng-container
+                  *ngFor="
+                    let img of getSymptomsBP(element?.eveningSymptomsBp);
+                    let i = index
+                  "
+                >
+                  <img
+                    class="triggers"
+                    [title]="img.symptomName"
+                    data-placement="top"
+                    *ngIf="img.fileName !== ''"
+                    [src]="
+                      'assets/img/Lifestyle & Symptom Icons/' + img.symptomUrl
+                    "
+                  />
+                  <span class="symptom-names">{{ img.symptomName }}</span>
+                </ng-container>
+              </div>
+              <div
+                class="no-symptoms"
+                *ngIf="!element?.eveningSymptomsBp?.length"
+              ></div>
+            </div>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="sort">
+          <mat-header-cell
+            *matHeaderCellDef
+            style="max-width: 30px !important; min-width: 30px !important"
+          >
+            <span [matMenuTriggerFor]="menu" #menuTrigger
+              ><img
+                width="24px"
+                src="assets/svg/Sort.svg"
+                title="zone-filter"
+                class="icon-sort"
+            /></span>
+            <mat-menu #menu="matMenu" class="mat-menu-panel panel">
+              <div
+                [ngClass]="
+                  !selectedGreenZone ? 'zone-btn' : 'zone-btn-selected'
+                "
+                title="Green"
+                (click)="filterByZone('3')"
+              >
+                Green
+              </div>
+              <mat-divider></mat-divider>
+              <div
+                [ngClass]="!selectedRedZone ? 'zone-btn' : 'zone-btn-selected'"
+                title="Red"
+                (click)="filterByZone('1')"
+              >
+                Red
+              </div>
+              <mat-divider></mat-divider>
+              <div
+                [ngClass]="
+                  !selectedOrangeZone ? 'zone-btn' : 'zone-btn-selected'
+                "
+                title="Orange"
+                (click)="filterByZone('2')"
+              >
+                Orange
+              </div>
+              <mat-divider></mat-divider>
+              <!-- <div
+                [ngClass]="
+                  !selectedNonAdherence ? 'zone-btn' : 'zone-btn-selected'
+                "
+                title="Non Adherence"
+                (click)="filterByZone(undefined)"
+              >
+                Non Adherence
+              </div> -->
+              <mat-divider></mat-divider>
+              <div
+                [ngClass]="!selectedAllZone ? 'zone-btn' : 'zone-btn-selected'"
+                title="All Zone"
+                (click)="filterByZone('')"
+              >
+                All
+              </div>
+            </mat-menu>
+          </mat-header-cell>
+          <mat-cell
+            style="max-width: 0px !important; min-width: 0px !important"
+            *matCellDef="let element"
+          ></mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="obsColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: obsColumns"></mat-row>
+      </mat-table>
+    </div>
+    <div *ngIf="loadRes" class="noRecordsFound">
+      <!-- <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+            </mat-progress-bar> -->
+      <app-loader [gifBackground]="'blueBg'"></app-loader>
+    </div>
+    <div class="no-record-observation" *ngIf="length <= 0 && !loadRes">
+      No Records Found!
+    </div>
+  </mat-card>
+</div>

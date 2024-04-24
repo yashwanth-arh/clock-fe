@@ -1,0 +1,533 @@
+<div>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    style="padding: 0 0 16px 0"
+  >
+    <div style="color: #5e7e9b; font-weight: 700; font-size: 14px">
+      Notifications
+    </div>
+    <div class="clear" (click)="clearAll()" *ngIf="notifications.length">
+      Clear All
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-card-content class="notification-contents">
+    <div style="height: 60vh; overflow: auto; width: 34em">
+      <div *ngFor="let data of notifications">
+        <div fxLayout="row" style="width: 100%">
+          <div fxLayout="column">
+            <div
+              *ngIf="data.type == 50"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img
+                    src="assets/svg/DashboardIcons/Registration.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="title-text">
+                  {{ data?.title }}
+                </div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div
+                  class="notification-content"
+                  [title]="
+                    data?.description && data?.description.length > 25
+                      ? data?.description
+                      : ''
+                  "
+                >
+                  {{
+                    data?.description && data?.description.length > 25
+                      ? (data.description | slice : 0 : 25) + "..."
+                      : data?.description
+                      ? data.description
+                      : ""
+                  }}
+                </div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 37"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img
+                    src="assets/svg/DashboardIcons/Registration.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="title-text">Reminder for medication</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+
+            <div
+              *ngIf="data.type == 15"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img
+                    src="assets/svg/DashboardIcons/Video Call Black.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="title-text">Scheduled Video Call</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 6"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img
+                    src="assets/svg/DashboardIcons/Clinical Details.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="title-text">Dialysis not closed</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 7"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img
+                    src="assets/svg/DashboardIcons/High Alert Red.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="title-text">High Alert</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 9"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img
+                    src="assets/svg/DashboardIcons/Dialysis Scheduled.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="title-text">Extra Dialysis Request</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 14"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img
+                    src="assets/svg/DashboardIcons/Denied Dialysis Schedule.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="title-text">Denied Dialysis Request</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 10"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img src="assets/svg/911 High Alert.svg" alt="" />
+                </div>
+                <div class="title-text">High Alert {{ data.patientId }}</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 12"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img src="assets/svg/Template Blue.svg" alt="" />
+                </div>
+                <div class="title-text">New Registration</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 17"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img src="assets/svg/Phone Blue.svg" alt="" />
+                </div>
+                <div class="title-text">Scheduled audio call</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 16"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img src="assets/svg/Video Call Blue.svg" alt="" />
+                </div>
+                <div class="title-text">Immediate video call</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 18"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img src="assets/svg/Phone Blue.svg" alt="" />
+                </div>
+                <div class="title-text">Immediate voice call</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 29"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img
+                    src="assets/svg/DashboardIcons/High Alert Red.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="title-text">Red Zone Patient</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 28"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img
+                    src="assets/svg/DashboardIcons/High Alert Red.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="title-text">Red Zone Patient</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 19"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img src="assets/svg/Phone Blue.svg" alt="" />
+                </div>
+                <div class="title-text">Call cancelled by clinic</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 20"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img src="assets/svg/Cancelled Audio Call.svg" alt="" />
+                </div>
+                <div class="title-text">Cancelled call</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 25 && showApptModule"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img src="assets/svg/Appointment scheduled.svg" alt="" />
+                </div>
+                <div class="title-text">Appointment Scheduled</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 26 && showApptModule"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img src="assets/svg/Appointment Rescheduled.svg" alt="" />
+                </div>
+                <div class="title-text">Appointment Rescheduled</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+            <div
+              *ngIf="data.type == 27 && showApptModule"
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img src="assets/svg/Appointment Cancelled.svg" alt="" />
+                </div>
+                <div class="title-text">Cancelled appointment</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+
+            <div
+              *ngIf="
+                ![
+                  4, 27, 26, 20, 19, 25, 50, 37, 15, 6, 7, 9, 14, 10, 12, 17,
+                  16, 18, 29, 28
+                ].includes(data.type)
+              "
+              style="margin-top: 10px; cursor: pointer"
+              (click)="viewNotification(data)"
+            >
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div>
+                  <img
+                    src="assets/svg/DashboardIcons/Notification.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="title-text">{{ data?.title }}</div>
+              </div>
+              <div class="time-ago">
+                {{
+                  data?.createdOn
+                    ? (data?.createdOn | date : "dd-MM-yyyy, hh:mm a" : "utc")
+                    : "-"
+                }}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="notification-content">{{ data.description }}</div>
+              </div>
+            </div>
+          </div>
+          <div
+            fxLayout="column"
+            style="width: 20%; text-align: center; align-self: self-end"
+          >
+            <div class="view-text" (click)="viewNotification(data)">View</div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+      <div
+        fxLayout="column"
+        class="no-notification"
+        *ngIf="!notifications.length"
+      >
+        No Notifications Available
+      </div>
+    </div>
+  </mat-card-content>
+</div>

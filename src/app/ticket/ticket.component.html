@@ -1,0 +1,88 @@
+<div class="rpm-module-management">
+  <app-navigation-bar (clickEvent)="addTicket('')"></app-navigation-bar>
+  <div class="rpm-module-table-view">
+    <div class="rpm-module-filter-container">
+      <form [formGroup]="ticketfilter">
+        <mat-form-field appearance="legacy">
+          <mat-label>Search</mat-label>
+          <input matInput formControlName="searchQuery" (keyup)="isEnableGlobalSearchFunc()" />
+          <mat-icon matSuffix class="search-mat-icon">search</mat-icon>
+          <!-- <mat-hint>Global Search</mat-hint> -->
+        </mat-form-field>
+        <mat-icon style="font-size: 17px; cursor: pointer;" (click)="unselectGlobalSearch()"
+          *ngIf="isEnableGlobalSearch">
+          close
+        </mat-icon>
+        <button mat-icon-button class="rpm-search-button" (click)="onRequestFilter()" matTooltip='Search'
+          matTooltipPosition='below' [matTooltipClass]="{'rpm-tooltip': true}">
+          <mat-icon title="Search">search</mat-icon>
+        </button>
+      </form>
+    </div>
+
+    <div class="rpm-module-table-container example-container mat-elevation-z8">
+      <mat-table matSort matTableResponsive [dataSource]="dataSource">
+        <ng-container matColumnDef="patient.firstName">
+          <mat-header-cell *matHeaderCellDef  fxFlex="30%">
+            Patient Name
+          </mat-header-cell>
+          <mat-cell fxFlex="30%" *matCellDef="let element">{{ element.patient.firstName ?
+            element.patient.firstName:'N/A' }} {{ element.patient.lastName ? element.patient.lastName:''
+            }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="patient.cellNumber">
+          <mat-header-cell fxFlex="30%" *matHeaderCellDef >
+            Contact Number
+          </mat-header-cell>
+          <mat-cell fxFlex="30%" *matCellDef="let element">{{ element.patient.cellNumber ?
+            element.patient.cellNumber:'N/A'}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="lastComment">
+          <mat-header-cell fxFlex="30%" *matHeaderCellDef >
+            Last Comment
+          </mat-header-cell>
+          <mat-cell fxFlex="30%" *matCellDef="let element">{{ element.lastComment ? element.lastComment :'N/A' }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="doctor.name">
+          <mat-header-cell fxFlex="30%" *matHeaderCellDef >
+            Raised By
+          </mat-header-cell>
+          <mat-cell fxFlex="30%" *matCellDef="let element">{{ element.doctor.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="requestedDate">
+          <mat-header-cell fxFlex="30%" *matHeaderCellDef >
+            Date
+          </mat-header-cell>
+          <mat-cell fxFlex="30%" *matCellDef="let element">{{ element.requestedDate | date}}
+            <button mat-icon-button (click)="viewTicket(element)" matTooltip='Chat' matTooltipPosition='below'
+              [matTooltipClass]="{'rpm-tooltip': true}">
+              <mat-icon>support_agent</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+          <mat-header-cell fxFlex="10%" *matHeaderCellDef >Action</mat-header-cell>
+          <mat-cell fxFlex="10%" *matCellDef="let element">
+            <button mat-icon-button (click)="viewTicket(element)">
+              <mat-icon>support_agent</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div class="noDataFoundText" *ngIf="length===0">No Records Found!</div>
+      <mat-paginator [ngClass]="length<10?'hide-pagination-element':'show-pagination'" (page)="handlePageEvent($event)"
+        [length]="length" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

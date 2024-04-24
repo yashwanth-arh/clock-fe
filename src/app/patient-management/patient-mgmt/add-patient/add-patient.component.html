@@ -1,0 +1,2208 @@
+<span class="close-button" title="Close" (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{
+  data?.patient && diagnosis == false
+    ? "Edit Patient"
+    : diagnosis == true
+    ? "Update vital details"
+    : "Add Patient"
+}}</span>
+<mat-divider class="module-divider"></mat-divider>
+
+<div class="main-div">
+  <mat-horizontal-stepper
+    style="padding: 0"
+    style="align-items: baseline"
+    class="mat-stepper"
+    [linear]="'true'"
+    #stepper
+  >
+    <mat-step [stepControl]="personalDetailsForm" *ngIf="diagnosis == false">
+      <form
+        [formGroup]="personalDetailsForm"
+        class="org-form-div"
+        style="margin-top: 10px"
+      >
+        <ng-template matStepLabel>Personal</ng-template>
+        <div class="form-div">
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>First Name</mat-label>
+            <input
+              appAlphabetSpaceOnly
+              matInput
+              autocomplete="disabled"
+              formControlName="firstName"
+              minlength="3"
+              maxlength="50"
+              required
+              (input)="storeData()"
+            />
+            <mat-error *ngIf="firstName.errors?.required"
+              >First Name is required</mat-error
+            >
+            <mat-error *ngIf="firstName.errors?.minlength"
+              >Enter minimum 3 characters</mat-error
+            >
+            <mat-error *ngIf="firstName.errors?.maxlength"
+              >First Name must be within 50 characters</mat-error
+            >
+            <mat-error *ngIf="firstName.errors?.pattern"
+              >Only alphabets,space are allowed</mat-error
+            >
+            <mat-error
+              *ngIf="
+                firstName.errors?.whitespace &&
+                !firstName.errors?.minlength &&
+                !firstName.errors?.required
+              "
+              >Only spaces are not allowed</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Middle Name</mat-label>
+            <input
+              appAlphabetSpaceOnly
+              matInput
+              autocomplete="off"
+              formControlName="middleName"
+              maxlength="50"
+              (input)="storeData()"
+            />
+            <mat-error *ngIf="middleName.errors?.minlength"
+              >Enter minimum 3 characters</mat-error
+            >
+            <mat-error *ngIf="middleName.errors?.maxlength"
+              >Max length should be 50 characters</mat-error
+            >
+            <mat-error *ngIf="middleName.errors?.pattern"
+              >Only alphabets,space are allowed</mat-error
+            >
+            <!-- <mat-hint>Middle name is optional</mat-hint> -->
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Last Name</mat-label>
+            <input
+              appAlphabetSpaceOnly
+              matInput
+              autocomplete="off"
+              formControlName="lastName"
+              minlength="1"
+              maxlength="50"
+              required
+              (input)="storeData()"
+            />
+            <mat-error *ngIf="lastName.errors?.required"
+              >Last name is required</mat-error
+            >
+            <mat-error *ngIf="lastName.errors?.minlength"
+              >Enter minimum 1 characters</mat-error
+            >
+            <mat-error *ngIf="lastName.errors?.pattern"
+              >Only alphabets,space are allowed</mat-error
+            >
+            <mat-error
+              *ngIf="
+                lastName.errors?.whitespace &&
+                !lastName.errors?.minlength &&
+                !lastName.errors?.required
+              "
+              >Only spaces are not allowed</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>DOB</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [max]="dateRestrict"
+              [min]="minDate"
+              formControlName="dateOfBirth"
+              required
+              (dateChange)="calculateAge($event)"
+              readonly
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="dateOfBirth.errors?.required"
+              >Date of Birth is required</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Age</mat-label>
+            <input
+              matInput
+              autocomplete="off"
+              formControlName="age"
+              required
+              type="text"
+              readonly
+            />
+            <mat-error *ngIf="age.errors?.required">Age is required</mat-error>
+            <mat-error *ngIf="age.errors?.min"
+              >Minimum age should be atleast greater than 0</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Gender</mat-label>
+            <mat-select
+              formControlName="gender"
+              (selectionChange)="storeData()"
+              required
+            >
+              <mat-option
+                *ngFor="let gender of genderList"
+                [value]="gender.value"
+              >
+                {{ gender.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="patientGender.errors?.required"
+              >Gender is required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Occupation</mat-label>
+            <input
+              maxlength="30"
+              appAlphabetSpaceOnly
+              matInput
+              autocomplete="off"
+              formControlName="occupation"
+              required
+              (input)="storeData()"
+            />
+            <mat-error *ngIf="occupation?.errors?.required"
+              >Occupation is required</mat-error
+            >
+            <mat-error *ngIf="occupation.errors?.pattern"
+              >Only alphabets, space are allowed</mat-error
+            >
+            <mat-error *ngIf="occupation.errors?.minlength"
+              >Occupation must be atleast 2 characters long</mat-error
+            >
+            <mat-error *ngIf="occupation.errors?.maxlength"
+              >max length is 30 characters</mat-error
+            >
+            <mat-error
+              *ngIf="
+                occupation.errors?.whitespace &&
+                !occupation.errors?.minlength &&
+                !occupation?.errors?.required
+              "
+              >Only spaces are not allowed</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Aadhaar Number</mat-label>
+            <input
+              appNumberCustomValidation
+              minlength="12"
+              maxlength="12"
+              matInput
+              autocomplete="off"
+              formControlName="aadhaarNumber"
+              required
+              (input)="storeData()"
+            />
+            <!-- (paste)="preventPaste($event)" -->
+            <mat-error *ngIf="aadhaarNumber?.errors?.required"
+              >Aadhaar number is required</mat-error
+            >
+            <!-- <mat-error *ngIf="aadhaarNumber.errors?.minlength"
+              >Aadhaar number should be minimum 12 digits</mat-error
+            > -->
+            <mat-error *ngIf="aadhaarNumber.errors?.pattern"
+            >
+            <!-- Enter Valid 12 digits Aadhaar number -->
+            Enter a valid 12-digit Aadhaar number</mat-error
+          >
+            <!-- <mat-error *ngIf="aadhaarnumber.errors?.maxlength"
+              >max length is 30 characters</mat-error
+            > -->
+            <mat-error
+              *ngIf="
+                aadhaarNumber.errors?.whitespace &&
+                !aadhaarNumber.errors?.minlength &&
+                !aadhaarNumber?.errors?.required
+              "
+              >Only spaces are not allowed</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </form>
+      <div class="rpm-stepper-nav stepper-bttn">
+        <!-- <button
+          mat-icon-button
+          matStepperNext
+          [ngClass]="
+            !personalDetailsForm.valid
+              ? 'rpm-save-button-disable'
+              : 'rpm-save-button'
+          "
+          [disabled]="!personalDetailsForm.valid"
+        >
+          <mat-icon>navigate_next</mat-icon>
+        </button> -->
+        <button
+          matStepperNext
+          mat-flat-button
+          type="submit"
+          [disabled]="!personalDetailsForm.valid"
+          class="next-btn"
+        >
+          Next
+        </button>
+      </div>
+    </mat-step>
+
+    <mat-step
+      [stepControl]="contactDetailsForm"
+      label="Contact"
+      *ngIf="diagnosis == false"
+    >
+      <form
+        [formGroup]="contactDetailsForm"
+        class="org-form-div"
+        style="margin-top: 10px"
+      >
+        <!-- <mat-form-field appearance="outline" class="fieldWidth">
+        <mat-label>Home contact number</mat-label>
+        <input
+          appNumberCustomValidation
+          matInput
+          autocomplete="off"
+          formControlName="homeNumber"
+          maxlength="10"
+        />
+      </mat-form-field> -->
+
+        <!-- <span formGroupName="address"> -->
+        <div class="form-div">
+          <ng-container>
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Country</mat-label>
+              <mat-select
+                formControlName="country"
+                (selectionChange)="getCountry($event)"
+                required
+              >
+                <mat-option value="India"> India </mat-option>
+                <mat-option value="USA"> USA </mat-option>
+              </mat-select>
+              <mat-error>Country is required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Country Code</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                formControlName="countryCode"
+                readonly
+                required
+              />
+              <mat-error>Country code is required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Zip Code</mat-label>
+              <input
+                matInput
+                appNumberCustomValidation
+                (input)="storeData()"
+                appNumberCustomValidation
+                autocomplete="off"
+                (input)="changeZipcode()"
+                formControlName="zipCode"
+                [readonly]="!this.contactDetailsForm.controls['country'].value"
+                required
+              />
+              <mat-error *ngIf="!zipcode?.valid">{{
+                getZipCodeError()
+              }}</mat-error>
+            </mat-form-field>
+            <!-- <span class="zipCodeStyle">
+          <mat-icon (click)="onZipCodeSelection('')">search</mat-icon>
+        </span> -->
+          </ng-container>
+          <ng-container>
+            <mat-form-field appearance="outline" class="fieldWidth state">
+              <mat-label>State</mat-label>
+              <input
+                maxlength="20"
+                appAlphabetSpaceOnly
+                type="text"
+                matInput
+                formControlName="state"
+                required
+                [readonly]="state.length ? true : false"
+              />
+              <mat-error
+                *ngIf="contactDetailsForm.controls['state'].errors?.required"
+                >State is required</mat-error
+              >
+
+              <mat-error
+                *ngIf="contactDetailsForm.controls['state'].errors?.minlength"
+                >Enter minimum 3 characters
+              </mat-error>
+
+              <mat-error
+                *ngIf="contactDetailsForm.controls['state'].errors?.maxlength"
+                >Max length is 20 characters
+              </mat-error>
+              <mat-error
+                *ngIf="contactDetailsForm.controls['state'].errors?.pattern"
+                >Only alphabets,space are allowed
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>City</mat-label>
+              <input
+                appAlphabetSpaceOnly
+                type="text"
+                matInput
+                (input)="storeData()"
+                minlength="3"
+                formControlName="city"
+                maxlength="30"
+                [readonly]="state.length ? true : false"
+                required
+              />
+              <mat-error
+                *ngIf="contactDetailsForm.controls['city'].errors?.required"
+                >City is required</mat-error
+              >
+
+              <mat-error
+                *ngIf="contactDetailsForm.controls['city'].errors?.minlength"
+                >Enter minimum 3 characters
+              </mat-error>
+
+              <mat-error
+                *ngIf="contactDetailsForm.controls['city'].errors?.maxlength"
+                >Max length is 30 characters
+              </mat-error>
+              <mat-error
+                *ngIf="contactDetailsForm.controls['city'].errors?.pattern"
+                >Only alphabets,space are allowed
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Address line</mat-label>
+              <input
+                maxlength="200"
+                matInput
+                autocomplete="off"
+                formControlName="addressLine"
+                minlength="3"
+                maxlength="200"
+                required
+              />
+              <!-- <input
+              (input)="storeData()"
+              matInput
+              minlength="3"
+              ngx-google-places-autocomplete
+              [options]="options"
+              #placesRef="ngx-places"
+              formControlName="addressLine"
+              (onAddressChange)="handleAddressChange($event)"
+              required
+            /> -->
+              <!-- <input matInput autocomplete="off" formControlName="addressLine" minlength="3" maxlength="500" required /> -->
+              <mat-error *ngIf="!addressLine?.valid"
+                >{{ getErrorAddress() }}
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+          <!-- </span> -->
+
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Primary Contact Number</mat-label>
+            <input
+              appNumberCustomValidation
+              matInput
+              autocomplete="off"
+              formControlName="cellNumber"
+              maxlength="10"
+              (input)="storeData()"
+              required
+            />
+            <mat-error *ngIf="cellNumber.errors?.required"
+              >Primary Contact Number is required</mat-error
+            >
+            <mat-error *ngIf="cellNumber.errors?.pattern"
+              >Enter Valid Primary Contact Number</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="fieldWidth"
+            style="position: relative"
+          >
+            <mat-label>Secondary Contact Number</mat-label>
+            <input
+              appNumberCustomValidation
+              matInput
+              autocomplete="off"
+              formControlName="homeNumber"
+              (input)="storeData()"
+              maxlength="10"
+            />
+            <mat-error *ngIf="homeNumber.errors?.pattern"
+              >Enter Valid Secondary Contact Number</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="fieldWidth"
+            style="position: relative"
+          >
+            <mat-label>Personal Email</mat-label>
+            <input
+              matInput
+              autocomplete="off"
+              formControlName="personalEmail"
+              (input)="storeData()"
+              maxlength="50"
+              [readonly]="checkUserLoggedIn"
+              required
+            />
+            <mat-error
+              *ngIf="!contactDetailsForm.controls['personalEmail'].valid"
+            >
+              {{ getErrorEmail() }}
+            </mat-error>
+            <mat-error *ngIf="emailId?.errors?.emailTaken">
+              This email already exists.
+            </mat-error>
+            <mat-hint *ngIf="checkUserLoggedIn">
+              Cannot update email as user is already logged in!
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <!-- <h3>Address</h3> -->
+
+        <div class="rpm-stepper-nav">
+          <!-- <button mat-icon-button matStepperPrevious class="rpm-save-button">
+          <mat-icon>navigate_before</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          matStepperNext
+          [ngClass]="
+            !contactDetailsForm.valid
+              ? 'rpm-save-button-disable'
+              : 'rpm-save-button'
+          "
+          [disabled]="!contactDetailsForm.valid"
+        >
+          <mat-icon>navigate_next</mat-icon>
+        </button> -->
+          <button
+            matStepperPrevious
+            mat-flat-button
+            type="submit"
+            class="next-btn"
+          >
+            Previous
+          </button>
+          <button
+            matStepperNext
+            mat-flat-button
+            type="submit"
+            [disabled]="!contactDetailsForm.valid"
+            class="next-btn"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step
+      [stepControl]="clinicDetailsForm"
+      label="Clinic"
+      *ngIf="diagnosis == false"
+    >
+      <form
+        [formGroup]="clinicDetailsForm"
+        class="org-form-div"
+        style="margin-top: 10px"
+      >
+        <!-- <mat-form-field
+        appearance="outline"
+        class="fieldWidth"
+        *ngIf="userRole === 'RPM_ADMIN'"
+      >
+        <mat-label>Practices</mat-label>
+        <mat-select
+          formControlName="hospitalId"
+          (valueChange)="onhospitalSelection($event)"
+          required
+        >
+          <mat-option *ngFor="let org of hospital" [value]="org.id">
+            {{ org.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Practices is required</mat-error>
+      </mat-form-field> -->
+
+        <!-- <mat-form-field
+        appearance="outline"
+        class="fieldWidth"
+        *ngIf="userRole === 'RPM_ADMIN'"
+      >
+        <mat-label>Practices</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="hospitalId"
+          required
+          #icd
+          [matAutocomplete]="auto"
+          (input)="onKeyUp()"
+        />
+        <mat-autocomplete
+          autoActiveFirstOption
+          #auto="matAutocomplete"
+          (optionSelected)="onhospitalSelection('',$event)"[displayWith]="dispSelOrg()"
+        >
+          <mat-option *ngFor="let org of hospital" [value]="org">
+            {{ org.name }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error>Practices is required</mat-error>
+      </mat-form-field> -->
+        <div class="form-div">
+          <mat-form-field
+            appearance="outline"
+            class="fieldWidth"
+            *ngIf="userRole === 'HOSPITAL_USER'"
+          >
+            <mat-label>Facility</mat-label>
+            <mat-select
+              formControlName="facilityId"
+              (valueChange)="onBranchSelection($event)"
+              required
+              multiple
+            >
+              <mat-option
+                *ngFor="let branchData of clinicList"
+                [value]="branchData.id"
+              >
+                {{ branchData.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Facility is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            class="fieldWidth"
+            *ngIf="userRole === 'CAREPROVIDER'"
+          >
+            <mat-label>Facility</mat-label>
+            <mat-select
+              formControlName="facilityId"
+              (valueChange)="onBranchSelection($event)"
+              required
+              [disabled]="this.data && this.userRole === 'CAREPROVIDER'"
+              multiple
+            >
+              <mat-option
+                *ngFor="let branchData of clinicList"
+                [value]="branchData.facilityId"
+              >
+                {{ branchData.facilityName }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Facility is required</mat-error>
+          </mat-form-field>
+
+          <!-- <mat-form-field
+            *ngIf="userRole !== 'CAREPROVIDER'"
+            appearance="outline"
+            class="fieldWidth"
+          >
+            <mat-label>Primary Physician*</mat-label>
+            <mat-select
+              formControlName="providerId"
+              (selectionChange)="storeData()"
+              [disabled]="this.data && this.userRole === 'CARECOORDINATOR'"
+            >
+              <mat-option *ngFor="let doc of doctor" [value]="doc.id">
+                {{ doc.firstName }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Primary physician is required</mat-error>
+          </mat-form-field> -->
+          <mat-form-field
+            appearance="outline"
+            class="fieldWidth"
+            *ngIf="userRole !== 'CAREPROVIDER'"
+          >
+            <mat-label>Primary Consultant</mat-label>
+            <input
+              type="text"
+              placeholder="Assignee"
+              aria-label="Assignee"
+              matInput
+              formControlName="providerId"
+              [matAutocomplete]="auto"
+              required
+            />
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              [displayWith]="displayFn"
+              (optionSelected)="storeData()"
+            >
+              <mat-option
+                *ngFor="let option of filteredOptionsProvider | async"
+                [value]="option"
+              >
+                {{ option.firstName }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error>Primary Consultant is required</mat-error>
+          </mat-form-field>
+
+          <!-- <mat-form-field
+            *ngIf="userRole !== 'CAREPROVIDER'"
+            appearance="outline"
+            class="fieldWidth"
+          >
+            <mat-label>Care Team</mat-label>
+
+            <mat-select
+              formControlName="careTeamId"
+              (selectionChange)="storeCareData($event)"
+              [disabled]="this.filteredDataToSearch.length <= 0"
+              multiple
+            >
+              <div class="fixed">
+                <mat-form-field
+                  [floatLabel]="'never'"
+                  appearance="outline"
+                  style="
+                    margin: 5px;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    border-radius: 5px;
+                    position: absolute;
+                    top: 0;
+                    width: calc(100% - 10px);
+                    background: white;
+                    z-index: 100;
+                    height: 40px;
+                  "
+                >
+                  <input
+                    matInput
+                    placeholder=""
+                    style="padding-left: 10px"
+                    (input)="lookup($event.target)"
+                    #inputFilter
+                  />
+                  <mat-icon class="search" matPrefix>search</mat-icon>
+                  <mat-icon
+                    class="fa fa-times"
+                    matSuffix
+                    (click)="clean(inputFilter)"
+                  ></mat-icon>
+                </mat-form-field>
+              </div>
+              <div style="padding-top: 80px">
+                <mat-option
+                  *ngFor="let doc of filteredDataToSearch"
+                  [value]="doc.id"
+                >
+                  {{ doc.firstName }}
+                </mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field> -->
+
+          <mat-form-field
+            appearance="outline"
+            class="fieldWidth"
+            *ngIf="userRole !== 'CAREPROVIDER'"
+          >
+            <mat-label>Care Team</mat-label>
+            <mat-select
+              (openedChange)="openedChange($event)"
+              formControlName="careTeamId"
+              multiple
+            >
+              <!-- <mat-select-trigger>
+                {{
+                  clinicDetailsForm.get("careTeamId").value
+                    ? clinicDetailsForm.get("careTeamId").value[0]?.firstName
+                    : ""
+                }}
+                <span
+                  *ngIf="clinicDetailsForm.get('careTeamId').value?.length > 1"
+                  class="additional-selection"
+                >
+                  (+{{ clinicDetailsForm.get("careTeamId").value.length - 1 }}
+                  {{
+                    clinicDetailsForm.get("careTeamId").value?.length === 2
+                      ? "other"
+                      : "others"
+                  }})
+                </span>
+              </mat-select-trigger> -->
+              <div class="select-container" style="padding-top: 14px">
+                <mat-optgroup>
+                  <mat-form-field style="width: 100%">
+                    <input
+                      #search
+                      autocomplete="off"
+                      placeholder="Search"
+                      aria-label="Search"
+                      matInput
+                      [formControl]="searchTextboxControl"
+                    />
+                    <button
+                      [disableRipple]="true"
+                      *ngIf="search.value"
+                      matSuffix
+                      mat-icon-button
+                      aria-label="Clear"
+                      (click)="clearSearch($event)"
+                    >
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </mat-optgroup>
+                <mat-option
+                  (onSelectionChange)="selectionChange($event)"
+                  *ngFor="let option of filteredOptions | async"
+                  [value]="option.id"
+                >
+                  {{ option.firstName }}
+                </mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- <mat-form-field class="diease-chip-list" appearance="outline">
+        <mat-label>Primary Diagnosis*</mat-label>
+        <mat-chip-list
+          #primarychipList
+          aria-label="Primary Diagnosis selection"
+        >
+          <mat-chip
+            *ngFor="let code of pnames"
+            [selectable]="pselectable"
+            [removable]="premovable"
+            (removed)="removePrimary(code)"
+            disabled
+          >
+            {{ code }}
+            <mat-icon matChipRemove *ngIf="premovable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            #primarycodeInput
+            formControlName="primaryDiagnosis"
+            [matAutocomplete]="pauto"
+            [matChipInputFor]="primarychipList"
+            [matChipInputSeparatorKeyCodes]="pseparatorKeysCodes"
+            (matChipInputTokenEnd)="addPrimary($event)"
+            (focusout)="pdonfocusOut($event)"
+            (keyup)="onPrimaryDiseaseKeyUp(primarycodeInput.value)"
+            readonly
+            required
+          />
+       
+        </mat-chip-list>
+        <mat-autocomplete
+          #pauto="matAutocomplete"
+          (optionSelected)="primaryselected($event)"
+        >
+          <mat-option *ngFor="let codes of pdiseases" [value]="codes">
+            {{ codes.name }}({{ codes.id }})
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-error
+        *ngIf="
+          !clinicDetailsForm.controls['primaryDiagnosis'].valid &&
+          clinicDetailsForm.controls['primaryDiagnosis'].touched
+        "
+        class="error-handler"
+        >{{ getPDError() }}</mat-error
+      >
+      <mat-form-field class="diease-chip-list" appearance="outline">
+        <mat-label>Secondary Diagnosis</mat-label>
+        <mat-chip-list
+          #secondarychipList
+          aria-label="Secondary Diagnosis selection"
+        >
+          <mat-chip
+            *ngFor="let code of snames"
+            [selectable]="sselectable"
+            [removable]="sremovable"
+            (removed)="removeSecondary(code)"
+          >
+            {{ code }}
+            <mat-icon matChipRemove *ngIf="sremovable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            #secondarycodeInput
+            formControlName="secondaryDiagnosis"
+            [matAutocomplete]="sauto"
+            [matChipInputFor]="secondarychipList"
+            [matChipInputSeparatorKeyCodes]="sseparatorKeysCodes"
+            (matChipInputTokenEnd)="addSecondary($event)"
+            (focusout)="sdonfocusOut($event)"
+            (keyup)="onSecondaryDiseaseKeyUp(secondarycodeInput.value)"
+          />
+          <mat-hint> Type atleast 4 characters to search </mat-hint>
+        </mat-chip-list>
+        <mat-autocomplete
+          #sauto="matAutocomplete"
+          (optionSelected)="secondaryselected($event)"
+        >
+          <mat-option *ngFor="let codes of sdiseases" [value]="codes">
+            {{ codes.name }}({{ codes.id }})
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field> -->
+        <div
+          style="margin-top: 22vh"
+          fxLayout="row"
+          fxLayoutAlign="end end"
+          fxLayoutGap="1px"
+        >
+          <div class="rpm-stepper-nav">
+            <!-- <button mat-icon-button matStepperPrevious class="rpm-save-button">
+            <mat-icon>navigate_before</mat-icon>
+          </button>
+          <button
+            *ngIf="userRole == 'CAREPROVIDER'"
+            mat-icon-button
+            matStepperNext
+            [ngClass]="
+              !contactDetailsForm.valid
+                ? 'rpm-save-button-disable'
+                : 'rpm-save-button'
+            "
+          >
+            <mat-icon>navigate_next</mat-icon>
+          </button> -->
+            <button
+              matStepperPrevious
+              mat-flat-button
+              type="submit"
+              class="next-btn"
+            >
+              Previous
+            </button>
+            <button
+              *ngIf="userRole == 'CAREPROVIDER' && !this.data"
+              matStepperNext
+              mat-flat-button
+              type="submit"
+              [disabled]="!clinicDetailsForm.valid"
+              class="next-btn"
+            >
+              Next
+            </button>
+
+            <!-- <button
+          [ngClass]="
+            !clinicDetailsForm.valid
+              ? 'rpm-save-button-disable'
+              : 'rpm-save-button'
+          "
+          [disabled]="!clinicDetailsForm.valid"
+          mat-icon-button
+          matStepperNext
+          class="rpm-save-button"
+        >
+          <mat-icon>navigate_next</mat-icon>
+        </button> -->
+          </div>
+
+          <div
+            *ngIf="userRole !== 'CAREPROVIDER'"
+            class="rpm-stepper-nav submit-button"
+          >
+            <button
+              mat-flat-button
+              class="next-btn"
+              [disabled]="!clinicDetailsForm.valid || submitted"
+              (click)="onSubmit()"
+            >
+              {{ data?.patient ? "Update" : "Save" }}
+            </button>
+          </div>
+          <div
+            *ngIf="userRole == 'CAREPROVIDER' && this.data"
+            class="rpm-stepper-nav submit-button"
+          >
+            <button
+              mat-flat-button
+              class="next-btn"
+              [disabled]="!clinicDetailsForm.valid || submitted"
+              (click)="onSubmit()"
+            >
+              {{ data?.patient ? "Update" : "Save" }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step
+      *ngIf="userRole == 'CAREPROVIDER' && diagnosis == false && !this.data"
+      [stepControl]="healthDetailsForm"
+      label="Health Parameters"
+    >
+      <div style="height: 72vh; overflow-y: scroll">
+        <form
+          class="org-form-div"
+          style="margin-top: 10px"
+          [formGroup]="healthDetailsForm"
+        >
+          <div class="form-div">
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Select date</mat-label>
+              <input
+                matInput
+                [max]="today"
+                [min]="today"
+                [matDatepicker]="pickers"
+                formControlName="date"
+                required
+                readonly
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="pickers"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #pickers></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Baseline Systolic</mat-label>
+              <input
+                matInput
+                appNumberCustomValidation
+                type="text"
+                autocomplete="off"
+                min="30"
+                max="500"
+                (input)="storeData()"
+                (keypress)="
+                  limitKeypress(
+                    $event,
+                    healthDetailsForm.get('baselineSystolic').value,
+                    3
+                  )
+                "
+                formControlName="baselineSystolic"
+                required
+              />
+
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.baselineSystolic.hasError(
+                    'required'
+                  )
+                "
+                >Baseline Systolic is required</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.baselineSystolic.hasError('min')
+                "
+                >Baseline Systolic cannot be lesser than 30</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.baselineSystolic.hasError('max')
+                "
+                >Baseline Systolic cannot be greater than 500</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Baseline Diastolic</mat-label>
+              <input
+                matInput
+                appNumberCustomValidation
+                type="text"
+                autocomplete="off"
+                min="30"
+                max="500"
+                (input)="storeData()"
+                (keypress)="
+                  limitKeypress(
+                    $event,
+                    healthDetailsForm.get('baselineDiastolic').value,
+                    3
+                  )
+                "
+                formControlName="baselineDiastolic"
+                required
+              />
+
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.baselineDiastolic.hasError(
+                    'required'
+                  )
+                "
+                >Baseline Diastolic is required</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.baselineDiastolic.hasError('min')
+                "
+                >Baseline Diastolic cannot be lesser than 30</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.baselineDiastolic.hasError('max')
+                "
+                >Baseline Diastolic cannot be greater than 500</mat-error
+              >
+            </mat-form-field>
+            <div>
+              <mat-form-field appearance="outline" class="fieldWidth">
+                <mat-label>Height (cms)</mat-label>
+                <input
+                  matInput
+                  appNumberCustomValidation
+                  maxlength="3"
+                  (input)="validateTextHeight($event)"
+                  autocomplete="off"
+                  formControlName="height"
+                  (input)="storeData()"
+                  required
+                />
+                <mat-hint>Hint:165 (CMs)</mat-hint>
+                <mat-error
+                  *ngIf="healthDetailsForm.controls.height.hasError('required')"
+                  >Height is required</mat-error
+                >
+
+                <mat-error
+                  *ngIf="healthDetailsForm?.controls?.height?.hasError('max')"
+                  >Height should be between 50 to 250cms.</mat-error
+                >
+
+                <mat-error
+                  *ngIf="healthDetailsForm?.controls?.height?.hasError('min')"
+                  >Height should be between 50 to 250cms.</mat-error
+                >
+              </mat-form-field>
+              <!-- <div *ngIf="keyEventHeight[0] === '0'" class="height-error">
+                Height can't be 0
+              </div> -->
+            </div>
+            <div>
+              <mat-form-field appearance="outline" class="fieldWidth">
+                <mat-label>Weight (Kg)</mat-label>
+                <input
+                  type="tel"
+                  matInput
+                  appNumberCustomValidation
+                  maxlength="3"
+                  (input)="validateTextWeight($event)"
+                  autocomplete="off"
+                  formControlName="weight"
+                  min="30"
+                  max="800"
+                  (input)="storeData()"
+                  required
+                />
+
+                <mat-hint>Hint:40 (kg)</mat-hint>
+
+                <mat-error
+                  *ngIf="healthDetailsForm.controls.weight.errors?.required"
+                  >Weight is required</mat-error
+                >
+                <mat-error
+                  *ngIf="healthDetailsForm.controls.weight.hasError('max')"
+                  >Weight cannot be greater than 800 Kgs</mat-error
+                >
+                <mat-error
+                  *ngIf="healthDetailsForm.controls.weight.hasError('min')"
+                  >Weight cannot be lesser than 30 Kgs</mat-error
+                >
+              </mat-form-field>
+              <!-- <div *ngIf="keyEventWeight[0] === '0'" class="weight-error">
+                Weight can't be 0
+              </div> -->
+            </div>
+
+            <div>
+              <mat-form-field appearance="outline" class="fieldWidth">
+                <mat-label>Clinic Blood Pressure (mmHg)</mat-label>
+                <input
+                  matInput
+                  autocomplete="off"
+                  (input)="validateTextBP()"
+                  formControlName="clinicBloodPressure"
+                  (input)="storeData()"
+                  (keypress)="onInput($event)"
+                  required
+                />
+                <mat-hint>Hint:120/80</mat-hint>
+                <mat-error>
+                  {{ getErrorBP() }}
+                </mat-error>
+              </mat-form-field>
+              <!-- <div *ngIf="showBPError" class="bp-error">Enter valid BP</div> -->
+              <div></div>
+            </div>
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Clinic Pulse Rate (bpm)</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                appNumberCustomValidation
+                min="1"
+                type="text"
+                (input)="storeData()"
+                (keypress)="
+                  limitKeypress(
+                    $event,
+                    healthDetailsForm.get('clinicPulseRate').value,
+                    3
+                  )
+                "
+                formControlName="clinicPulseRate"
+                required
+              />
+              <mat-hint>Hint:85 bpm</mat-hint>
+
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.clinicPulseRate.hasError(
+                    'required'
+                  )
+                "
+                >Clinic Pulse Rate is required</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.clinicPulseRate.hasError('max')
+                "
+                >Clinic Pulse Rate cannot be greater than 200</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.clinicPulseRate.hasError('min')
+                "
+                >Clinic Pulse Rate cannot be lesser than 10</mat-error
+              >
+            </mat-form-field>
+
+            <!-- <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Patient Under Medication</mat-label>
+
+              <mat-select
+                formControlName="patientUnderMadication"
+                (selectionChange)="storeData()"
+                required
+              >
+                <mat-option
+                  *ngFor="let val of patUnderMedications"
+                  [value]="val.value"
+                >
+                  {{ val.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.patientUnderMadication.hasError(
+                    'required'
+                  )
+                "
+                >Patient Under Medication is required</mat-error
+              >
+            </mat-form-field> -->
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Random Sugar (mg/dL)</mat-label>
+              <input
+                matInput
+                appNumberCustomValidation
+                appNoFirstZero
+                type="text"
+                autocomplete="off"
+                (input)="storeData()"
+                min="1"
+                minlength="2"
+                maxlength="3"
+                min="10"
+                formControlName="fastingSugar"
+              />
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.fastingSugar.hasError('minlength')
+                "
+                >Enter minimum 2 characters</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.fastingSugar.hasError('min') &&
+                  !healthDetailsForm.controls.fastingSugar.hasError('minlength')
+                "
+                >Random Sugar cannot be lesser than 10</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Diagnosis</mat-label>
+              <div style="display: flex">
+                <input
+                  appAlphabetSpaceOnly
+                  [matAutocomplete]="auto"
+                  autocomplete="disabled"
+                  matInput
+                  (keyup)="filterDiagnosis()"
+                  formControlName="diagnosislist"
+                  minlength="3"
+                  class="diagnosisfield"
+                  maxlength="50"
+                />
+                <img
+                  style="margin-left: 15px"
+                  src="../../../../assets/svg/SearchIcon.svg"
+                  alt="search"
+                />
+              </div>
+              <mat-autocomplete
+                autoActiveFirstOption
+                #auto="matAutocomplete"
+                [displayWith]="dispdia()"
+              >
+                <mat-option
+                  *ngFor="let icdName of vitalsList"
+                  [value]="icdName"
+                >
+                  {{ icdName.icdName }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.diagnosislist.hasError('minlength')
+                "
+                >Enter minimum 3 characters</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>HbA1C (%)</mat-label>
+              <input
+                matInput
+                type="number"
+                autocomplete="off"
+                (input)="storeData()"
+                (keypress)="onlyNumbersDecimal($event)"
+                formControlName="hba1c"
+              />
+              <mat-hint>Hint:7 %</mat-hint>
+              <mat-error
+                *ngIf="healthDetailsForm.controls.hba1c.hasError('min')"
+                >HbA1C should not be less than 1</mat-error
+              >
+              <mat-error
+                *ngIf="healthDetailsForm.controls.hba1c.hasError('max')"
+                >HbA1C should not be greater than 99</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Cholesterol Levels (mg/dL)</mat-label>
+              <input
+                matInput
+                appNumberCustomValidation
+                appNoFirstZero
+                type="text"
+                autocomplete="off"
+                (input)="storeData()"
+                min="10"
+                minlength="2"
+                maxlength="3"
+                formControlName="cholestralLevels"
+              />
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.cholestralLevels.hasError(
+                    'minlength'
+                  )
+                "
+                >Enter minimum 2 characters</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.cholestralLevels.hasError('min') &&
+                  !healthDetailsForm.controls.cholestralLevels.hasError(
+                    'minlength'
+                  )
+                "
+                >Cholesterol Levels cannot be lesser than 10</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Triglyceride Levels (mg/dL)</mat-label>
+              <input
+                matInput
+                appNumberCustomValidation
+                appNoFirstZero
+                type="text"
+                autocomplete="off"
+                (input)="storeData()"
+                min="1"
+                minlength="2"
+                min="10"
+                maxlength="3"
+                formControlName="trilycerideLevels"
+              />
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.trilycerideLevels.hasError(
+                    'minlength'
+                  )
+                "
+                >Enter minimum 2 characters</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.trilycerideLevels.hasError(
+                    'min'
+                  ) &&
+                  !healthDetailsForm.controls.trilycerideLevels.hasError(
+                    'minlength'
+                  )
+                "
+                >Triglyceride Levels cannot be lesser than 10</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>HDL Levels (mg/dL)</mat-label>
+              <input
+                matInput
+                appNumberCustomValidation
+                appNoFirstZero
+                type="text"
+                autocomplete="off"
+                (input)="storeData()"
+                min="1"
+                minlength="2"
+                min="10"
+                maxlength="3"
+                formControlName="hdlLevels"
+              />
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.hdlLevels.hasError('minlength')
+                "
+                >Enter minimum 2 characters</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.hdlLevels.hasError('min') &&
+                  !healthDetailsForm.controls.hdlLevels.hasError('minlength')
+                "
+                >HDL Levels cannot be lesser than 10</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>LDL levels (mg/dL)</mat-label>
+              <input
+                matInput
+                appNumberCustomValidation
+                appNoFirstZero
+                type="text"
+                autocomplete="off"
+                (input)="storeData()"
+                min="1"
+                minlength="2"
+                min="10"
+                maxlength="3"
+                formControlName="ldlLevels"
+              />
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.ldlLevels.hasError('minlength')
+                "
+                >Enter minimum 2 characters</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.ldlLevels.hasError('min') &&
+                  !healthDetailsForm.controls.ldlLevels.hasError('minlength')
+                "
+                >LDL Levels cannot be lesser than 10</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Fasting Sugar (mg/dL)</mat-label>
+              <input
+                matInput
+                appNumberCustomValidation
+                appNoFirstZero
+                type="text"
+                autocomplete="off"
+                (input)="storeData()"
+                min="1"
+                minlength="2"
+                min="10"
+                maxlength="3"
+                formControlName="randomSugar"
+              />
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.randomSugar.hasError('minlength')
+                "
+                >Enter minimum 2 characters</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.randomSugar.hasError('min') &&
+                  !healthDetailsForm.controls.randomSugar.hasError('minlength')
+                "
+                >Fasting Sugar cannot be lesser than 10</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Postprandial Sugar (mg/dL)</mat-label>
+              <input
+                matInput
+                appNumberCustomValidation
+                appNoFirstZero
+                type="text"
+                autocomplete="off"
+                (input)="storeData()"
+                min="1"
+                minlength="2"
+                min="10"
+                maxlength="3"
+                formControlName="postPrandial"
+              />
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.postPrandial.hasError('minlength')
+                "
+                >Enter minimum 2 characters</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  healthDetailsForm.controls.postPrandial.hasError('min') &&
+                  !healthDetailsForm.controls.postPrandial.hasError('minlength')
+                "
+                >Postprandial Sugar cannot be lesser than 10</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="rpm-stepper-nav">
+            <div class="rpm-stepper-nav submit-button">
+              <button
+                *ngIf="diagnosis == false"
+                matStepperPrevious
+                mat-flat-button
+                type="submit"
+                class="next-btn"
+              >
+                Previous
+              </button>
+
+              <button
+                mat-flat-button
+                class="next-btn"
+                [disabled]="!healthDetailsForm.valid || submitted"
+                (click)="onSubmit()"
+              >
+                {{ data?.patient ? "Update" : "Save" }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-step>
+
+    <!-- <mat-step [stepControl]="insuranceDetailsForm" label="Insurance">
+    <div style="height: 50vh">
+      <form [formGroup]="insuranceDetailsForm">
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Insurance type</mat-label>
+          <mat-select formControlName="insuranceType">
+            <mat-option *ngFor="let type of insuranceTypeList" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <ng-container formGroupName="insuranceData">
+          <ng-container *ngIf="insuranceDetails.value === 'MEDICARE'">
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Medicare Number</mat-label>
+ 
+              <input
+                appNumberCustomValidation
+                matInput
+                maxlength="20"
+                autocomplete="off"
+                formControlName="medicareNumber"
+              />
+              
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Medicare Advantage Insurer</mat-label>
+
+              <input
+                matInput
+                autocomplete="off"
+                maxlength="20"
+                (keypress)="allowAlphaNumericOnKeyPress($event)"
+                formControlName="medicareAdvantageInsurer"
+              />
+              <mat-hint>Only alphanumeric characters.</mat-hint>
+   
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Medicare Advantage Individual Number</mat-label>
+              <input
+                appNumberCustomValidation
+                maxlength="20"
+                matInput
+                autocomplete="off"
+                formControlName="medAdvIndividualNumber"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Medicare Advantage; Group Number</mat-label>
+              <input
+                appNumberCustomValidation
+                matInput
+                maxlength="20"
+                autocomplete="off"
+                formControlName="medAdvGroupNumber"
+              />
+            </mat-form-field>
+          </ng-container>
+          <ng-container *ngIf="insuranceDetails.value === 'OTHERS'">
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Insurance Name</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                maxlength="50"
+                minlength="3"
+                formControlName="medicareAdvantageInsurer"
+              />
+
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="fieldWidth">
+              <mat-label>Insurance Number</mat-label>
+ 
+              <input
+                type="text"
+                matInput
+                maxlength="100"
+                minlength="3"
+                autocomplete="off"
+                formControlName="medicareNumber"
+              />
+            </mat-form-field>
+          </ng-container>
+        </ng-container>
+
+        <div class="rpm-stepper-nav" style="position: relative; top: 17vh">
+          <button mat-icon-button matStepperPrevious class="rpm-save-button">
+            <mat-icon>navigate_before</mat-icon>
+          </button>
+          <button mat-icon-button matStepperNext class="rpm-save-button">
+            <mat-icon>navigate_next</mat-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-step> -->
+
+    <!-- 
+  <mat-step [stepControl]="EMRDetailsForm" label="EMR">
+    <div style="height: 50vh">
+      <form [formGroup]="EMRDetailsForm">
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>SSN</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            formControlName="ssn"
+            [mask]="ssnMask"
+            maxlength="11"
+            placeholder="SSN"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>EMR Patient ID</mat-label>
+
+          <input
+            matInput
+            autocomplete="off"
+            formControlName="emrPatientId"
+            maxlength="9"
+            placeholder="EMR Patient ID"
+          />
+   
+        </mat-form-field>
+
+        <div class="rpm-stepper-nav" style="position: relative; top: 30vh">
+          <button mat-icon-button matStepperPrevious class="rpm-save-button">
+            <mat-icon>navigate_before</mat-icon>
+          </button>
+          <button
+            mat-flat-button
+            class="rpm-save-button"
+            [disabled]="isSubmitted"
+            (click)="onSubmit()"
+          >
+            {{ data?.patient ? "Update" : "Save" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-step> -->
+  </mat-horizontal-stepper>
+  <div *ngIf="diagnosis == true" style="height: 72vh; overflow-y: scroll">
+    <form
+      class="org-form-div"
+      style="margin-top: 10px"
+      [formGroup]="healthDetailsForm"
+    >
+      <div class="form-div">
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickers"
+            formControlName="date"
+            required
+            readonly
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="pickers"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickers></mat-datepicker>
+          <!-- <mat-error *ngIf="dateOfBirth.errors?.required"
+          >Date of Birth is required</mat-error
+        > -->
+        </mat-form-field>
+        <!-- <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Diagnosis</mat-label>
+          <input matInput autocomplete="off" formControlName="diagnosislist" placeholder="Diagnosis" required />
+          <mat-error>Diagnosis is required</mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Diagnosis</mat-label>
+          <!-- [matAutocomplete]="auto" -->
+          <input
+            appAlphabetSpaceOnly
+            [matAutocomplete]="auto"
+            autocomplete="disabled"
+            matInput
+            (keyup)="filterDiagnosis()"
+            formControlName="diagnosislist"
+            required
+          />
+          <!-- <img src="../../../../assets/svg/SearchIcon.svg" alt="search" /> -->
+          <!-- <mat-error>Diagnosis is required</mat-error> -->
+          <mat-autocomplete
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+            [displayWith]="dispdia()"
+          >
+            <mat-option *ngFor="let icdName of vitalsList" [value]="icdName">
+              {{ icdName.icdName }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <div>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Weight</mat-label>
+            <input
+              type="tel"
+              matInput
+              appNumberCustomValidation
+              maxlength="3"
+              (input)="validateTextWeight($event)"
+              autocomplete="off"
+              formControlName="weight"
+              max="800"
+              (input)="storeData()"
+              required
+            />
+
+            <mat-hint>Hint:40 (kg)</mat-hint>
+
+            <mat-error
+              *ngIf="healthDetailsForm.controls.weight.errors?.required"
+              >Weight is required</mat-error
+            >
+            <mat-error *ngIf="healthDetailsForm.controls.weight.hasError('max')"
+              >Weight cannot be greater than 800 Kgs</mat-error
+            >
+          </mat-form-field>
+          <div *ngIf="keyEventWeight[0] === '0'" class="weight-error">
+            Weight can't be 0
+          </div>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Height</mat-label>
+            <input
+              matInput
+              appNumberCustomValidation
+              maxlength="3"
+              (input)="validateTextHeight($event)"
+              autocomplete="off"
+              formControlName="height"
+              (input)="storeData()"
+              required
+            />
+            <mat-hint>Hint:165 (cms)</mat-hint>
+            <mat-error
+              *ngIf="healthDetailsForm.controls.height.hasError('required')"
+              >Height is required</mat-error
+            >
+
+            <mat-error
+              *ngIf="healthDetailsForm?.controls?.height?.hasError('max')"
+              >Height should be between 50 to 250cms.</mat-error
+            >
+
+            <mat-error
+              *ngIf="healthDetailsForm?.controls?.height?.hasError('min')"
+              >Height should be between 50 to 250cms.</mat-error
+            >
+          </mat-form-field>
+          <div *ngIf="keyEventHeight[0] === '0'" class="height-error">
+            Height can't be 0
+          </div>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="fieldWidth">
+            <mat-label>Clinic Blood Pressure</mat-label>
+            <input
+              matInput
+              autocomplete="off"
+              (input)="validateTextBP()"
+              formControlName="clinicBloodPressure"
+              placeholder="Clinic Blood Pressure"
+              (input)="storeData()"
+              (keypress)="onInput($event)"
+              required
+            />
+            <mat-hint>Hint:120/80</mat-hint>
+            <mat-error>
+              {{ getErrorBP() }}
+            </mat-error>
+          </mat-form-field>
+          <div *ngIf="showBPError" class="bp-error">Enter valid BP</div>
+          <div></div>
+        </div>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Clinic Pulse Rate</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            appNumberCustomValidation
+            min="1"
+            type="text"
+            (input)="storeData()"
+            (keypress)="
+              limitKeypress(
+                $event,
+                healthDetailsForm.get('clinicPulseRate').value,
+                3
+              )
+            "
+            formControlName="clinicPulseRate"
+            placeholder="Clinic Pulse Rate"
+            required
+          />
+          <mat-hint>Hint:85 bpm</mat-hint>
+
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.clinicPulseRate.hasError('required')
+            "
+            >Clinic Pulse Rate is required</mat-error
+          >
+          <mat-error
+            *ngIf="healthDetailsForm.controls.clinicPulseRate.hasError('max')"
+            >Clinic Pulse Rate cannot be greater than 200</mat-error
+          >
+          <mat-error
+            *ngIf="healthDetailsForm.controls.clinicPulseRate.hasError('min')"
+            >Clinic Pulse Rate cannot be lesser than 10</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Cholesterol Levels</mat-label>
+          <input
+            matInput
+            appNumberCustomValidation
+            appNoFirstZero
+            type="text"
+            autocomplete="off"
+            (input)="storeData()"
+            min="1"
+            minlength="2"
+            min="10"
+            maxlength="3"
+            formControlName="cholestralLevels"
+            placeholder="Cholesterol Levels"
+          />
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.cholestralLevels.hasError('minlength')
+            "
+            >Enter minimum 2 characters</mat-error
+          >
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.cholestralLevels.hasError('min') &&
+              !healthDetailsForm.controls.cholestralLevels.hasError('minlength')
+            "
+            >Cholesterol Levels cannot be lesser than 10</mat-error
+          >
+        </mat-form-field>
+        <!-- <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Patient Under Medication</mat-label>
+
+          <mat-select
+            formControlName="patientUnderMadication"
+            (selectionChange)="storeData()"
+            required
+          >
+            <mat-option
+              *ngFor="let val of patUnderMedications"
+              [value]="val.value"
+            >
+              {{ val.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>HbA1c</mat-label>
+          <input
+            matInput
+            type="number"
+            autocomplete="off"
+            (keypress)="onlyNumbersDecimal($event)"
+            (input)="storeData()"
+            formControlName="hba1c"
+            placeholder="HbA1c"
+          />
+          <mat-hint>Hint:7 %</mat-hint>
+          <mat-error *ngIf="healthDetailsForm.controls.hba1c.hasError('min')"
+            >Min Value should be 99</mat-error
+          >
+          <mat-error *ngIf="healthDetailsForm.controls.hba1c.hasError('max')"
+            >Max Value should be 99</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Baseline Systolic</mat-label>
+          <input
+            matInput
+            appNumberCustomValidation
+            type="text"
+            autocomplete="off"
+            min="30"
+            max="500"
+            (input)="storeData()"
+            (keypress)="
+              limitKeypress(
+                $event,
+                healthDetailsForm.get('baselineSystolic').value,
+                3
+              )
+            "
+            formControlName="baselineSystolic"
+            placeholder="Baseline Systolic"
+            required
+          />
+
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.baselineSystolic.hasError('required')
+            "
+            >Baseline Systolic is required</mat-error
+          >
+          <mat-error
+            *ngIf="healthDetailsForm.controls.baselineSystolic.hasError('min')"
+            >Baseline Systolic cannot be lesser than 30</mat-error
+          >
+          <mat-error
+            *ngIf="healthDetailsForm.controls.baselineSystolic.hasError('max')"
+            >Baseline Systolic cannot be greater than 500</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Baseline Diastolic</mat-label>
+          <input
+            matInput
+            appNumberCustomValidation
+            type="text"
+            autocomplete="off"
+            min="30"
+            max="500"
+            (input)="storeData()"
+            (keypress)="
+              limitKeypress(
+                $event,
+                healthDetailsForm.get('baselineDiastolic').value,
+                3
+              )
+            "
+            formControlName="baselineDiastolic"
+            placeholder="Baseline Diastolic"
+            required
+          />
+
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.baselineDiastolic.hasError('required')
+            "
+            >Baseline Diastolic is required</mat-error
+          >
+          <mat-error
+            *ngIf="healthDetailsForm.controls.baselineDiastolic.hasError('min')"
+            >Baseline Diastolic cannot be lesser than 30</mat-error
+          >
+          <mat-error
+            *ngIf="healthDetailsForm.controls.baselineDiastolic.hasError('max')"
+            >Baseline Diastolic cannot be greater than 500</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Triglyceride Levels</mat-label>
+          <input
+            matInput
+            appNumberCustomValidation
+            appNoFirstZero
+            type="text"
+            autocomplete="off"
+            (input)="storeData()"
+            min="1"
+            minlength="2"
+            min="10"
+            maxlength="3"
+            formControlName="trilycerideLevels"
+            placeholder="Triglyceride Levels"
+          />
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.trilycerideLevels.hasError('min') &&
+              !healthDetailsForm.controls.trilycerideLevels.hasError(
+                'minlength'
+              )
+            "
+            >Triglyceride Levels cannot be lesser than 10</mat-error
+          >
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.trilycerideLevels.hasError('minlength')
+            "
+            >Enter minimum 2 characters</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>HDL Levels</mat-label>
+          <input
+            matInput
+            appNumberCustomValidation
+            appNoFirstZero
+            type="text"
+            autocomplete="off"
+            (input)="storeData()"
+            min="1"
+            minlength="2"
+            min="10"
+            maxlength="3"
+            formControlName="hdlLevels"
+            placeholder="HDL Levels"
+          />
+          <mat-error
+            *ngIf="healthDetailsForm.controls.hdlLevels.hasError('minlength')"
+            >Enter minimum 2 characters</mat-error
+          >
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.hdlLevels.hasError('min') &&
+              !healthDetailsForm.controls.hdlLevels.hasError('minlength')
+            "
+            >HDL Levels cannot be lesser than 10</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>LDL levels</mat-label>
+          <input
+            matInput
+            appNumberCustomValidation
+            appNoFirstZero
+            type="text"
+            autocomplete="off"
+            (input)="storeData()"
+            min="1"
+            minlength="2"
+            min="10"
+            maxlength="3"
+            formControlName="ldlLevels"
+            placeholder="LDL levels"
+          />
+          <mat-error
+            *ngIf="healthDetailsForm.controls.ldlLevels.hasError('minlength')"
+            >Enter minimum 2 characters</mat-error
+          >
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.ldlLevels.hasError('min') &&
+              !healthDetailsForm.controls.ldlLevels.hasError('minlength')
+            "
+            >LDL Levels cannot be lesser than 10</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Fasting Sugar(mg/dl)</mat-label>
+          <input
+            matInput
+            appNumberCustomValidation
+            appNoFirstZero
+            type="text"
+            autocomplete="off"
+            (input)="storeData()"
+            min="1"
+            minlength="2"
+            min="10"
+            maxlength="3"
+            formControlName="randomSugar"
+            placeholder="Fasting Sugar(mg/dl)"
+          />
+          <mat-error
+            *ngIf="healthDetailsForm.controls.randomSugar.hasError('minlength')"
+            >Enter minimum 2 characters</mat-error
+          >
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.randomSugar.hasError('min') &&
+              !healthDetailsForm.controls.randomSugar.hasError('minlength')
+            "
+            >Fasting Sugar cannot be lesser than 10</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Postprandial(mg/dl)</mat-label>
+          <input
+            matInput
+            appNumberCustomValidation
+            appNoFirstZero
+            type="text"
+            autocomplete="off"
+            (input)="storeData()"
+            min="1"
+            minlength="2"
+            min="10"
+            maxlength="3"
+            formControlName="postPrandial"
+            placeholder="Postprandial(mg/dl)"
+          />
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.postPrandial.hasError('minlength')
+            "
+            >Enter minimum 2 characters</mat-error
+          >
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.postPrandial.hasError('min') &&
+              !healthDetailsForm.controls.postPrandial.hasError('minlength')
+            "
+            >Postprandial cannot be lesser than 10</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Random Sugar(mg/dl)</mat-label>
+          <input
+            matInput
+            appNumberCustomValidation
+            appNoFirstZero
+            type="text"
+            autocomplete="off"
+            (input)="storeData()"
+            min="1"
+            minlength="2"
+            maxlength="3"
+            min="10"
+            formControlName="fastingSugar"
+            placeholder="Random Sugar(mg/dl)"
+          />
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.fastingSugar.hasError('minlength')
+            "
+            >Enter minimum 2 characters</mat-error
+          >
+          <mat-error
+            *ngIf="
+              healthDetailsForm.controls.fastingSugar.hasError('min') &&
+              !healthDetailsForm.controls.fastingSugar.hasError('minlength')
+            "
+            >Random Sugar cannot be lesser than 10</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="rpm-stepper-nav">
+        <div class="rpm-stepper-nav submit-button">
+          <!-- <button *ngIf="diagnosis == false" matStepperPrevious mat-flat-button type="submit" class="next-btn">
+            Previous
+          </button> -->
+          <!-- <button mat-icon-button matStepperPrevious class="rpm-save-button">
+          <mat-icon>navigate_before</mat-icon>
+        </button> -->
+          <button mat-flat-button class="next-btn" (click)="onSubmit()">
+            {{ data?.patient ? "Update" : "Save" }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

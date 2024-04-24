@@ -1,0 +1,120 @@
+<div class="adherence">
+  <div fxLayout="row" class="top-margin" fxLayoutGap="10px">
+    <div
+      class="medication-adherence-container"
+      fxFlex="70"
+      class="table-outer-div"
+      style="height: 22rem"
+    >
+      <div fxLayout="row">
+        <div
+          class="example-container mat-elevation-z8 adheranceMedication-div"
+          *ngIf="!loadRes"
+        >
+          <mat-card
+            class="adherence-docTable adherance-dev"
+            *ngFor="
+              let med of adheranceMedication
+                | paginate
+                  : {
+                      itemsPerPage: medsize,
+                      currentPage: medp,
+                      id: 'pmed',
+                      totalItems: adheranceMedication?.length
+                    }
+            "
+          >
+            <div class="parent-date">{{ med.date }}</div>
+            <div
+              class="main-div-medication"
+              fxLayout="row"
+              fxLayoutAlign="space-around center"
+            >
+              <div fxFlex="30%">Medicine</div>
+              <div fxFlex="30%">Time</div>
+              <div fxFlex="30%">Response</div>
+            </div>
+            <!-- <hr /> -->
+            <div class="content-med">
+              <div
+                fxLayout="row"
+                class="medicine-values"
+                fxLayoutAlign="space-around center"
+                *ngFor="let value of med.adherenceList"
+              >
+                <div fxFlex="30%">
+                  {{ value?.medicationName ? value?.medicationName : "N/A" }}
+                </div>
+                <div fxFlex="30%">
+                  {{
+                    value?.medicationTime
+                      ? (value.medicationTime | date : "hh:mm a" : "UTC")
+                      : "N/A"
+                  }}
+                </div>
+                <div
+                  fxFlex="30%"
+                  [ngStyle]="
+                    value?.medicationTaken === 'YES'
+                      ? { color: '#5acb00' }
+                      : { color: 'red' }
+                  "
+                >
+                  {{
+                    value?.medicationTaken
+                      ? value?.medicationTaken === "NOT_ANSWERED"
+                        ? "Not Answered"
+                        : value?.medicationTaken === "NO"
+                        ? "No"
+                        : "Yes"
+                      : "N/A"
+                  }}
+                </div>
+              </div>
+            </div>
+          </mat-card>
+          <div class="paginate-adherence">
+            <pagination-controls
+              [fxHide.md]="userRole == 'DOCTOR'"
+              *ngIf="adheranceMedication?.length"
+              (pageChange)="getPage($event)"
+              id="pmed"
+            ></pagination-controls>
+          </div>
+        </div>
+
+        <div *ngIf="loadRes" class="loader-1">
+          <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+        </div>
+      </div>
+      <div
+        *ngIf="!adheranceMedication?.length && !loadRes"
+        class="doc-no-record-adherence adherance-no-records"
+      >
+        No Records Found!
+      </div>
+    </div>
+
+    <div
+      fxLayoutAlign="end"
+      class="outer-div medication-adhrence-container"
+      fxHide.md
+    >
+      <div class="graph-container">
+        <div>
+          <div class="reportLabel">Medication Adherence</div>
+        </div>
+        <app-medication-adherence-chart
+          *ngIf="showmedicationAdherence"
+          [patientId]="patientId"
+        ></app-medication-adherence-chart>
+      </div>
+    </div>
+    <div
+      *ngIf="loadResAddEditMedication"
+      style="height: 50vh; position: relative; top: 13vh; left: 9vw"
+    >
+      <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+    </div>
+  </div>
+</div>

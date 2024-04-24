@@ -1,0 +1,88 @@
+@import "../../variables";
+
+.hide-pagination-element {
+  display: none;
+}
+
+.rpm-toolbar-button {
+  color: #ffffff !important;
+  margin-left: 10%;
+  background-color: $primary-color;
+}
+
+.rpm-toolbar-button:hover {
+  background-color: #2196f3;
+}
+
+.show-pagination {
+  // ::ng-deep .mat-paginator-page-size {
+  //   display: none !important;
+  // }
+}
+
+.leaderBoard {
+
+  ::ng-deep .mat-header-cell,
+  .mat-cell {
+    max-width: 215px !important;
+    min-width: 215px !important;
+  }
+}
+
+mat-icon {
+  position: relative;
+  left: 1px;
+  bottom: 2px;
+}
+
+
+button:focus {
+  outline: 0;
+}
+
+.mat-menu-item:hover {
+  background-color: #ECFFFA;
+}
+
+
+@media only screen and (min-device-width: 1660px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .mat-header-row,
+  .mat-row {
+    width: 100% !important;
+  }
+}
+@media only screen and (min-device-width: 1670px) and (max-device-width: 1800px) and (orientation: landscape) {
+  // .example-container.mat-elevation-z8 {
+  //   height: 420px;
+  //   box-shadow: none;
+  // }
+  .leaderBoard {
+
+    ::ng-deep .mat-header-cell,
+    .mat-cell {
+      max-width: 255px !important;
+      min-width: 255px !important;
+    }
+  }
+}
+
+// @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+//   .example-container.mat-elevation-z8 {
+//     height: 490px;
+//   }
+// }
+
+// @media only screen and (min-device-width: 1800px) and (max-device-width: 1920px) and (orientation: landscape) {
+//   .example-container.mat-elevation-z8 {
+//     overflow-x: auto;
+//     // margin-top: 35px;
+//     max-height: 1000px !important;
+//     height: 820px !important;
+//     // overflow-y: scroll;
+//     // overflow-x: scroll;
+//   }
+
+//   .show-pagination {
+//     width: 86.5% !important;
+//   }
+// }

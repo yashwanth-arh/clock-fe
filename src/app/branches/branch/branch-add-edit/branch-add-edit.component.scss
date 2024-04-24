@@ -1,0 +1,110 @@
+.zipCodeStyle {
+  position: relative;
+  right: 60px;
+  top: 4px;
+  cursor: pointer;
+}
+
+.close-button {
+  cursor: pointer;
+}
+
+.facility-npi {
+  width: 270px;
+  margin-left: 22px;
+}
+
+.admin-state {
+  position: relative;
+  right: 0px;
+  width: 270px;
+}
+
+.practice-state {
+  position: relative;
+  right: -26px;
+  width: 270px;
+}
+
+.admin-city {
+  position: relative;
+  left: 23px;
+  width: 270px;
+}
+
+.practice-city {
+  position: relative;
+  right: -61px;
+  width: 270px;
+}
+
+.practice-clinicNpi {
+  position: relative;
+  left: 21px;
+  width: 270px;
+}
+
+.admin-clinicNpi {
+  position: relative;
+  left: 60px;
+  width: 270px;
+}
+
+.admin-status {
+  position: relative;
+  width: 270px;
+  left: 98px;
+}
+
+.clinic-status {
+  position: relative;
+  width: 270px;
+  left: 37px;
+}
+
+.practice-status {
+  position: relative;
+  width: 270px;
+  left: 60px;
+}
+
+.divbutton {
+  justify-content: end;
+  // margin-right: 35px;
+}
+
+.mat-dialog-content {
+  overflow: hidden !important;
+}
+
+.clinical-form {
+  overflow: hidden;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .admin-city {
+    left: 36px;
+  }
+
+  .admin-clinicNpi {
+    left: 25px;
+  }
+
+  .admin-status {
+    left: 60px;
+  }
+}
+
+@media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+  .admin-state,
+  .admin-city,
+  .admin-clinicNpi,
+  .practice-state,
+  .practice-city,
+  .practice-clinicNpi,
+  .clinic-state,
+  .clinic-city,
+  .clinic-clinicNpi {
+    width: 230px !important;
+  }
+}

@@ -1,0 +1,113 @@
+<div>
+  <div style="border-bottom: 1px rgba(192, 192, 192, 1) solid; margin-bottom: 16px">
+    <div fxLayout="row" fxLayoutGap="16px">
+      <div fxLayout="row" fxLayoutGap="16px">
+        <div class="heading">
+          <img src="assets/svg/DashboardIcons/Vitals Blue.svg" width="30" alt="" style="color: #5e7e9b" />
+        </div>
+        <div class="title">BP Readings</div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="68%" fxFlex.md="56%" class="map-view-div">
+      <!-- <div class="map-view" id="map"></div> -->
+      <!-- <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"/> -->
+      <agm-map [fitBounds]="true" [usePanning]="true" [latitude]="agmlat" [longitude]="agmlong" [zoom]="agmzoom">
+        <!-- <agm-marker-cluster [minimumClusterSize]="minClusterSize" -->
+        imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
+        <agm-marker [agmFitBounds]="true" *ngFor="let marker of markers" [latitude]="marker.lat"
+          [longitude]="marker.lng" [iconUrl]="marker.icon" [iconAnchorX]="10" [iconAnchorY]="10" [iconHeight]="25"
+          [iconWidth]="25" [label]="marker.label">
+          <agm-info-window [disableAutoPan]="true">
+            {{ marker.label.text }}
+          </agm-info-window>
+        </agm-marker>
+        <div *ngFor="let gmarker of groupedArray">
+          <agm-marker [agmFitBounds]="true" *ngFor="let subgmarker of gmarker" [latitude]="subgmarker.lat"
+            [longitude]="subgmarker.longi" [iconUrl]="subgmarker.icon" [iconAnchorX]="10" [iconAnchorY]="10"
+            [iconHeight]="25" [iconWidth]="25">
+            <agm-info-window [disableAutoPan]="true">
+              {{ subgmarker.sys + "/" + subgmarker.dia }}
+            </agm-info-window>
+          </agm-marker>
+        </div>
+
+        <!-- </agm-marker-cluster> -->
+        <agm-circle *ngFor="let circle of centroidLatLong" [latitude]="getlat(circle)" [longitude]="getLong(circle)"
+          [radius]="200" [fillColor]="
+            circle.zone == '1' ? 'red' : circle.zone == '2' ? 'orange' : 'green'
+          " [circleDraggable]="false" [editable]="false" [label]="circle.label"></agm-circle>
+      </agm-map>
+      <div class="location-filter">
+        <!-- <mat-form-field appearance="outline" class="fieldWidth"> -->
+        <!-- <mat-label>Locations</mat-label> -->
+        <!-- <mat-select
+            [(ngModel)]="locationFilter"
+            (selectionChange)="getParticularLocation($event)"
+            required
+          >
+            <mat-option value="locations">All Locations</mat-option>
+            <mat-option
+              [value]="loc.locationId"
+              *ngFor="let loc of patientLocations"
+              >{{ loc.locationType }}</mat-option
+            >
+          </mat-select> -->
+        <div class="location-filter-div">
+          <!-- <div class="table-main-div"> -->
+          <div fxLayout="row" fxLayoutGap="10px" class="header-values">
+            <div>Location</div>
+            <div>Zone</div>
+            <div>Average</div>
+          </div>
+          <div style="padding: 8px; overflow: auto">
+            <div
+              class="content-values"
+              fxLayout="row"
+              fxLayoutGap="20px"
+              *ngFor="let loc of patientLocations"
+            >
+              <div class="tab-value" (click)="getParticularLocation(loc)" [title]="loc.location_type">
+                {{
+                  loc.location_type.length > 6
+                    ? (loc.location_type | slice : 0 : 6) + "..."
+                    : loc.location_type
+                }}
+              </div>
+              <div [ngClass]="
+                  getZoneColor(loc?.zone) == '1'
+                    ? 'zone-red'
+                    : getZoneColor(loc?.zone) == '2'
+                    ? 'zone-orange'
+                    : getZoneColor(loc?.zone) == '3'
+                    ? 'zone-green'
+                    : ''
+                ">
+                {{ loc.zone ? (loc.zone | number : "1.0-0") : "-" }}
+              </div>
+              <div
+                [ngClass]="
+                  getZoneColor(loc?.zone) == '1'
+                    ? 'zone-red-average'
+                    : getZoneColor(loc?.zone) == '2'
+                    ? 'zone-orange-average'
+                    : getZoneColor(loc?.zone) == '3'
+                    ? 'zone-green-average'
+                    : 'default-average'
+                "
+              >
+                {{ loc.sys ? (loc.sys | number : "1.0-0") : "-"
+                }}<span *ngIf="loc.sys && loc.dia">/</span>{{ loc.dia | number : "1.0-0" }}
+              </div>
+            </div>
+            <div class="no-location" *ngIf="!patientLocations.length">
+              No location found!
+            </div>
+          </div>
+        </div>
+        <!-- </mat-form-field> -->
+      </div>
+    </div>
+  </div>
+</div>

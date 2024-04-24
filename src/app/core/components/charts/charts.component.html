@@ -1,0 +1,32 @@
+<div>
+  <div>
+    <!-- <form>
+      <mat-form-field appearance="outline" class="textInputWidth graphType">
+        <mat-select placeholder="Choose types" [(ngModel)]="chartType">
+          <mat-option disabled selected style="color: black;">--choose chart types-- </mat-option>
+          <mat-option value="bar">Bar Chart</mat-option>
+          <mat-option value="line">Line Chart</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form> -->
+  </div>
+
+  <div class="canvas-container">
+    <!-- <ng-container *ngIf="showCharts">
+      No Records Found!
+    </ng-container> -->
+    <ng-container *ngIf="!showNoRecords">
+      <!-- <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [plugins]="chartPlugins"
+        [legend]="chartLegend" [chartType]="chartType" (chartHover)="chartHovered($event)">
+      </canvas> -->
+      <div id="chartContainer" class="barChart"></div>
+    </ng-container>
+    <div
+      *ngIf="showNoRecords"
+      style="position: unset; height: 100%"
+      class="noRecordsFound"
+    >
+      No records found!
+    </div>
+  </div>
+</div>

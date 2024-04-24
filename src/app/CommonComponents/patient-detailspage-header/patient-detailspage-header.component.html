@@ -1,0 +1,771 @@
+<div fxLayout="row" class="patientHeaderMain">
+  <div>
+    <div class="box shine" *ngIf="loadPatientData"></div>
+    <!-- style="transform: matrix(1, 0, 0, 0.93, 14, 15)" -->
+    <div
+      style="position: absolute; top: 20%; left: -2%; z-index: 1"
+      class="nav-btns md-nav-btns"
+      *ngIf="!loadPatientData"
+    >
+      <img
+        src="assets/svg/LeftGrey.svg"
+        alt=""
+        title="Previous"
+        *ngIf="leftIconDisable"
+      />
+      <img
+        src="assets/svg/LeftGreen.svg"
+        alt=""
+        title="Previous"
+        *ngIf="!leftIconDisable"
+        style="cursor: pointer"
+        (click)="goBackwardPatient()"
+      />
+    </div>
+  </div>
+  <div class="main-div" *ngIf="!loadPatientData">
+    <div class="profile-main-div" *ngIf="observationData">
+      <div class="profile-circle">
+        <img
+          (click)="profileDrawerToggle(profileDrawer)"
+          alt="image"
+          *ngIf="
+            observationData && observationData?.patientProfile
+          "
+          class="rounded-circle"
+          style="width: 45px"
+          [src]="imagePath"
+        />
+        <img
+          (click)="profileDrawerToggle(profileDrawer)"
+          alt="image"
+          matTooltip="Patient Details"
+          [matTooltipPosition]="position"
+          [matTooltipDisabled]="disabled"
+          [matTooltipShowDelay]="showDelay"
+          [matTooltipHideDelay]="hideDelay"
+          [matTooltipClass]="{ 'side-nav-icon': showExtraClass }"
+          *ngIf="
+            observationData &&
+            !observationData?.patientProfile
+          "
+          class="rounded-circle"
+          src="assets/svg/PatientIcon.svg"
+        />
+        <mat-drawer-container
+          [class.drawer-opened]="profileDrawer.opened"
+          class="example-container comments-drawer"
+        >
+          <mat-drawer
+            #profileDrawer
+            class="patientDrawer"
+            mode="side"
+            opened="false"
+          >
+            <div fxLayout="column" class="details" fxLayoutAlign="space-around">
+              <div fxLayout="row" fxLayoutGap="2vw" fxLayoutGap.md="0vw">
+                <div
+                  fxLayout="row"
+                  class="patient-icon"
+                  fxLayoutGap="15px"
+                  (click)="showPatientDetails()"
+                >
+                  <img
+                    alt="image"
+                    class="rounded-circle"
+                    style="position: relative; top: -2vh; width: 45px"
+                    *ngIf="observationData?.patientProfile"
+                    [src]="imagePath"
+                  />
+                  <img
+                    alt="image"
+                    class="rounded-circle"
+                    style="position: relative; top: -2vh; width: 45px"
+                    *ngIf="!observationData?.patientProfile"
+                    src="assets/svg/DashboardIcons/Patient.svg"
+                  />
+                  <div class="name" title="{{ fullName }}">
+                    {{
+                      fullName?.length > 15
+                        ? (fullName | slice : 0 : 15) + "..."
+                        : fullName
+                    }}
+                  </div>
+                </div>
+                <div>
+                  <img
+                    src="assets/svg/back_button.svg"
+                    (click)="closeProfileDrawerToggle(profileDrawer)"
+                    class="arrow"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div style="height: 43em;overflow-y: auto;background: white;">
+              <div
+                class="patientCard"
+                fxLayout="column"
+                fxLayoutAlign="space-evenly start"
+              >
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="space-between center"
+                  fxLayoutGap="9vw"
+                ></div>
+                <div style="width: 22em;" fxLayout="row" fxLayoutAlign="start" fxLayoutGap="5px">
+                  <p
+                    style="font-weight: 500; font-size: larger"
+                    title="{{ fullName }}"
+                  >
+                    {{
+                      fullName?.length > 12
+                        ? (fullName | slice : 0 : 12) + "..."
+                        : fullName
+                    }}
+                  </p>
+                  <p style="overflow-wrap: anywhere;">
+                    ({{
+                      observationData?.patientDetails?.age
+                        ? observationData?.patientDetails?.age
+                        : "-"
+                    }}
+                    years /
+                    {{
+                      observationData?.patientDetails?.gender
+                        ? (observationData?.patientDetails?.gender | titlecase)
+                        : ""
+                    }})
+                  </p>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="5px">
+                  <div>
+                    <img
+                      src="assets/svg/DashboardIcons/Patient Id.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div>
+                    <p>{{ dpid }}</p>
+                  </div>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="5px">
+                  <div>
+                    <img src="assets/svg/DashboardIcons/Email.svg" alt="" />
+                  </div>
+                  <div>
+                    <p [title]="observationData?.patientDetails?.personalEmail">
+                      {{
+                        observationData?.patientDetails?.personalEmail?.length >
+                        30
+                          ? (observationData?.patientDetails?.personalEmail
+                              | slice : 0 : 30) + "..."
+                          : observationData?.patientDetails?.personalEmail
+                          ? observationData?.patientDetails?.personalEmail
+                          : "-"
+                      }}
+                    </p>
+                  </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="5px">
+                  <div>
+                    <img src="assets/svg/DashboardIcons/Phone.svg" alt="" />
+                  </div>
+                  <div style="display: flex">
+                    <p>{{ observationData?.patientDetails?.cellNumber }}</p>
+                    <p *ngIf="observationData?.patientDetails?.homeNumber">
+                      ,{{ observationData?.patientDetails?.homeNumber }}
+                    </p>
+                  </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="5px">
+                  <div>
+                    <img src="assets/svg/DashboardIcons/Location.svg" alt="" />
+                  </div>
+                  <div style="width: 20em;">
+                    <p style="overflow-wrap: anywhere;">
+                      {{ observationData?.patientDetails?.addressLine }},{{
+                        observationData?.patientDetails?.city
+                      }},{{ observationData?.patientDetails?.state }},{{
+                        observationData?.patientDetails?.country
+                      }}
+                      ,{{ observationData?.patientDetails?.zipCode }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div fxLayout="column">
+                <div>
+                  <mat-accordion>
+                    <mat-expansion-panel
+                      (opened)="panelOpenState = true"
+                      (closed)="panelOpenState = false"
+                    >
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          <div
+                            fxLayout="row"
+                            fxLayoutAlign="start"
+                            fxLayoutGap="12px"
+                            class="headerContent"
+                          >
+                            <div>
+                              <img
+                                src="assets/svg/DashboardIcons/Clinical Details.svg"
+                                alt=""
+                              />
+                            </div>
+                            <div>
+                              <p class="profile-side-drawer-texts">
+                                Clinical Details
+                              </p>
+                            </div>
+                          </div>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div style="background-color: #ecfffa" fxLayout="column">
+                        <div
+                          fxLayoutAlign="row"
+                          style="padding: 5px 5px 5px 25px"
+                          fxLayoutGap="5px"
+                        >
+                          <div class="clinical-bold-text">Diagnosis:</div>
+
+                          <div fxLayoutAlign="row" fxLayoutGap="3px">
+                            <div class="clinical-normal-text">
+                              <!-- <span *ngIf="diagnosisDetails?.length > 1">
+                                <span
+                                  *ngFor="let diagnosis of diagnosisDetails"
+                                  >{{
+                                    getDiagnosis(diagnosis.diagnosisName)
+                                  }}</span
+                                >
+                              </span>
+                              <span *ngIf="diagnosisDetails?.length === 1">
+                                <span
+                                  *ngFor="let diagnosis of diagnosisDetails"
+                                  >{{ diagnosis.diagnosisName }}</span
+                                >
+                              </span> -->
+                              <span>{{ getDiagnosis(diagnosisDetails) }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          fxLayoutAlign="row"
+                          style="padding: 5px 5px 5px 25px"
+                          fxLayoutGap="5px"
+                        >
+                          <div class="clinical-normal-text">Height:</div>
+                          <div
+                            fxLayoutAlign="row"
+                            fxLayoutGap="3px"
+                            class="clinical-bold-text"
+                          >
+                            {{ getHeights(diagnosisDetails) }}
+                            cms
+                            <!-- {{ settingsState.heightUnit$ | async }} -->
+                            <!-- diagnosisDetails?.length
+                                ? (getHeight(diagnosisDetails?.height)
+                                  | height
+                                    : (settingsState.heightUnit$ | async)
+                                    : defaultHeight)
+                                : "" -->
+                          </div>
+                        </div>
+
+                        <div
+                          fxLayoutAlign="row"
+                          style="padding: 5px 5px 5px 25px"
+                          fxLayoutGap="5px"
+                        >
+                          <div class="clinical-normal-text">Weight:</div>
+                          <div
+                            fxLayoutAlign="row"
+                            fxLayoutGap="3px"
+                            class="clinical-bold-text"
+                          >
+                            <!-- {{
+                              diagnosisDetails?.length
+                                ? diagnosisDetails[0]?.weight
+                                : ""
+                            }} -->
+                            {{ getWhight(diagnosisDetails) }}
+                            Kg
+                          </div>
+                        </div>
+                        <div
+                          fxLayoutAlign="row"
+                          style="padding: 5px 5px 5px 25px"
+                          fxLayoutGap="5px"
+                        >
+                          <div class="clinical-normal-text">Baseline:</div>
+                          <div
+                            fxLayoutAlign="row"
+                            fxLayoutGap="3px"
+                            class="clinical-bold-text"
+                          >
+                            {{ getBaselineBP(diagnosisDetails) }}
+                          </div>
+                        </div>
+                      </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel
+                      (opened)="panelOpenState = true"
+                      (closed)="panelOpenState = false"
+                    >
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          <div
+                            fxLayout="row"
+                            fxLayoutAlign="start"
+                            fxLayoutGap="10px"
+                            class="headerContent"
+                          >
+                            <div>
+                              <img
+                                src="assets/svg/DashboardIcons/Dialysis Center.svg"
+                                alt=""
+                              />
+                            </div>
+                            <div>
+                              <p class="profile-side-drawer-texts">
+                                Clinic Name
+                              </p>
+                            </div>
+                          </div>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div
+                        style="
+                          background-color: #ecfffa;
+                          padding: 5px 5px 5px 25px;
+                        "
+                        fxLayout="column"
+                      >
+                        <span
+                          class="facility-name"
+                          *ngFor="let data of deviceClinicDetails?.ClinicName"
+                        >
+                          {{ data?.facilityName | titlecase }}</span
+                        >
+                      </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel
+                      (opened)="panelOpenState = true"
+                      (closed)="panelOpenState = false"
+                    >
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          <div
+                            fxLayout="row"
+                            fxLayoutAlign="start"
+                            fxLayoutGap="11px"
+                            class="headerContent"
+                          >
+                            <div>
+                              <img
+                                src="assets/svg/DashboardIcons/Doctor.svg"
+                                alt=""
+                              />
+                            </div>
+                            <div>
+                              <p class="profile-side-drawer-texts">
+                                Care Provider
+                              </p>
+                            </div>
+                          </div>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div
+                        style="
+                          background-color: #ecfffa;
+                          padding: 5px 5px 5px 25px;
+                        "
+                        fxLayout="column"
+                      >
+                        <span *ngIf="deviceClinicDetails?.Doctor?.length">
+                          <span
+                            class="provider-name"
+                            *ngFor="let data of deviceClinicDetails?.Doctor"
+                          >
+                            <li>
+                              {{
+                                data?.name?.length > 28
+                                  ? (data?.role === "DOCTOR"
+                                      ? "Dr. " + (data?.name | titlecase)
+                                      : (data?.name
+                                        | titlecase
+                                        | slice : 0 : 28)) + "..."
+                                  : data?.role === "DOCTOR"
+                                  ? "Dr. " + (data?.name | titlecase)
+                                  : (data?.name | titlecase)
+                              }}
+                            </li>
+                            <img src="../../../assets/svg/primary-physician.svg"></span
+                          >
+                        </span>
+                      
+
+                        <span style="padding-top:10px;" *ngIf="deviceClinicDetails?.careTeam?.length">
+                          <span
+                            class="provider-name"
+                            *ngFor="let data of deviceClinicDetails?.careTeam"
+                          >
+                            <li>
+                              {{
+                                data?.role === 'DOCTOR'? 'Dr. ' + (data.firstName | titlecase) + ' ' + (data.lastName | titlecase) : (data.firstName | titlecase) + ' ' + (data.lastName | titlecase)
+                              }}
+                            </li></span
+                          >
+                        </span>
+                      </div>
+
+                      <!-- <div class="specialization-text" fxLayout="column">
+                        Specialization:
+                        <span *ngIf="deviceClinicDetails?.Doctor?.length">
+                          <span
+                            *ngFor="let data of deviceClinicDetails?.Doctor"
+                            >{{
+                              data?.careProviderSpecility
+                                ? data?.careProviderSpecility
+                                : "-"
+                            }}</span
+                          >
+                        </span>
+                      </div> -->
+                      <!-- <div
+                        style="
+                          background-color: #ecfffa;
+                          padding: 5px 5px 5px 25px;
+                        "
+                        fxLayout="column"
+                      >
+                        Doc NPI:
+                        {{deviceClinicDetails?.Doctor.length
+                          ? deviceClinicDetails?.Doctor[0]?.careProviderSpecility:'-'}}
+                      </div> -->
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel
+                      (opened)="panelOpenState = true"
+                      (closed)="panelOpenState = false"
+                    >
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          <div
+                            fxLayout="row"
+                            fxLayoutAlign="start"
+                            fxLayoutGap="10px"
+                            class="headerContent"
+                          >
+                            <div>
+                              <img
+                                src="assets/svg/DashboardIcons/Device Info.svg"
+                                alt=""
+                              />
+                            </div>
+                            <div>
+                              <p class="profile-side-drawer-texts">
+                                Device Info
+                              </p>
+                            </div>
+                          </div>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div
+                        class="device-scroll"
+                        style="
+                          background-color: #ecfffa;
+                          padding: 5px 5px 5px 25px;
+                        "
+                        fxLayout="column"
+                      >
+                        <p style="margin-bottom: 5px; font-size: 12px">
+                          BP Device IMEI / Serial No:
+                          {{
+                            deviceClinicDetails?.DeviceInfo?.length
+                              ? deviceClinicDetails?.DeviceInfo[0]?.imeiNumber
+                              : "-"
+                          }}
+                        </p>
+                        <p style="margin-bottom: 5px; font-size: 12px">
+                          BP Device Model:
+                          {{
+                            deviceClinicDetails?.DeviceInfo?.length
+                              ? deviceClinicDetails?.DeviceInfo[0]
+                                  ?.deviceModelName
+                              : "-"
+                          }}
+                        </p>
+                      </div>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </div>
+              </div>
+            
+              </div>
+            </div>
+          </mat-drawer>
+        </mat-drawer-container>
+      </div>
+      <div class="fullName-dev">
+        <div class="name-div" title="{{ fullName }}">
+          {{
+            fullName?.length > 19
+              ? (fullName | slice : 0 : 19) + "..."
+              : fullName
+          }}
+        </div>
+        <div fxLayout="row">
+          <div class="patient-det">
+            {{
+              observationData?.patientDetails?.age
+                ? observationData?.patientDetails?.age
+                : 40
+            }}
+            years /
+            {{
+              observationData?.patientDetails?.gender
+                ? (observationData?.patientDetails?.gender | titlecase)
+                : ""
+            }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="second-div-line" *ngIf="observationData"></div>
+
+    <div fxLayout="row" class="bp-main-div" *ngIf="observationData">
+      <div fxLayout="row" style="width: max-content">
+        <div>
+          <img src="../../../assets/svg/bp-new.svg" />
+        </div>
+        <div fxLayout="column" style="margin-left: 14px; gap: 6px">
+          <div class="patient-det" style="color: #bedaff">Baseline BP</div>
+          <div fxLayout="row" class="baseline-bp-value">
+            <div class="name-div">
+              {{ getBaselineBP(diagnosisDetails) }}
+              mmHg
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-div" fxLayout="row" *ngIf="observationData">
+      <div class="clinicBpDiv">
+        <div fxLayout="row" class="box-inside-div">
+          <div fxLayout="row">
+            <div>
+              <img style="width: 24px" src="../../../assets/svg/bp-new.svg" />
+            </div>
+            <div fxLayout="column" style="margin-left: 14px">
+              <div class="patient-div" style="color: #bedaff">Clinic BP</div>
+              <div class="name-div clinic-pulse-valu">
+                {{
+                  diagnosisDetails?.clinicbloodpressure
+                    ? diagnosisDetails?.clinicbloodpressure
+                    : "-"
+                }}
+                <span
+                  *ngIf="
+                    diagnosisDetails && diagnosisDetails?.clinicbloodpressure
+                  "
+                  >mmHg</span
+                >
+              </div>
+            </div>
+          </div>
+          <!-- <div
+            style="cursor: pointer"
+            *ngIf="userRole == 'CAREGIVER'"
+            class="Editbutton"
+          >
+            <img
+              (click)="
+                editClinicbp(observationData?.clinicBp, observationData?.id)
+              "
+              src="../../../assets/svg/edit-details.svg"
+              style="margin-left: 5px; margin-top: 19px"
+            />
+          </div> -->
+          <div class="second-div-line" style="margin-top: 19px"></div>
+          <div fxLayout="row">
+            <div>
+              <img
+                class="icon-class"
+                style="width: 24px"
+                src="../../../assets/svg/pulseicon.svg"
+              />
+            </div>
+            <div fxLayout="column" style="margin-left: 14px">
+              <div class="patient-div" style="color: #bedaff">Clinic Pulse</div>
+              <div class="name-div">
+                {{
+                  diagnosisDetails && diagnosisDetails?.cinicpulserate !== null
+                    ? diagnosisDetails?.cinicpulserate
+                    : "-"
+                }}
+                <span
+                  *ngIf="diagnosisDetails && diagnosisDetails?.cinicpulserate"
+                  >bpm</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="clinic-datails"
+        title="Last Clinic Visit: {{
+          diagnosisDetails && diagnosisDetails?.date
+            ? (diagnosisDetails && diagnosisDetails?.date | date : 'MM/dd/YYYY')
+            : '-'
+        }}"
+      >
+        <img
+          [ngClass]="
+            userRole === 'DOCTOR' && browserName === 'Chrome'
+              ? 'clinic-det-doc'
+              : userRole === 'CAREGIVER' && browserName === 'Chrome'
+              ? 'clinic-det-care'
+              : userRole === 'DOCTOR' && browserName === 'Firefox'
+              ? 'clinic-det-doc-fire'
+              : 'clinic-det-care-fire'
+          "
+          src="../../../assets/svg/clinic-details.svg"
+        />
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="observationData">
+      <div fxLayout="column" class="img-xp-div">
+        <img src="../../../assets/svg/xp-star1.svg" />
+      </div>
+      <div class="xp-div">
+        <span class="xp-count">{{
+          xpPoints?.totalExperiencePoints ? xpPoints?.totalExperiencePoints : 0
+        }}</span>
+        <span class="patient-det" style="color: #b7f1ff"
+          >&nbsp; &nbsp; Points</span
+        >
+      </div>
+    </div>
+
+    <div
+      fxLayout="row"
+      class="md-sereen-action-btn"
+      fxLayoutGap="10px"
+      fxLayoutGap.md="10px"
+      *ngIf="observationData"
+    >
+      <div class="action-btn-div">
+        <div
+          fxLayout="row"
+          fxLayoutGap="12px"
+          class="actionBtns"
+          fxLayoutAlign="end"
+        >
+          <div fxLayout="row" fxLayoutGap="12px" class="ipad-action-btn">
+            <div
+              style="cursor: pointer"
+              title="Notes"
+              (click)="openNav(drawer)"
+            >
+              <img [src]="imgSrcNote" alt="" />
+            </div>
+            <div
+              style="cursor: pointer"
+              title="Audio Call"
+              (click)="
+                audioClicked ? $event.stopPropagation() : startAudioCall();
+                (audioClicked ? false : null)
+              "
+            >
+              <img [src]="imgSrcAudioCall" alt="" />
+            </div>
+            <div
+              style="cursor: pointer"
+              title="Video Call"
+              (click)="
+                videoClicked ? $event.stopPropagation() : startVideoCall();
+                (videoClicked ? false : null)
+              "
+            >
+              <img [src]="imgSrcVideoNote" />
+            </div>
+            <div
+              style="cursor: pointer"
+              title="Medication"
+              (click)="openMedication()"
+            >
+              <img [src]="imgSrcMedication" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- style="transform: matrix(1, 0, 0, 0.93, -15.98, 14)" -->
+  <div
+    style="position: absolute; right: -2%; top: 20%"
+    class="nav-btns md-nav-btns"
+    *ngIf="!loadPatientData"
+  >
+    <img
+      src="assets/svg/RightGreen.svg"
+      alt=""
+      title="Next"
+      *ngIf="!rightIcondisable"
+      style="cursor: pointer"
+      (click)="goForwardPatient()"
+    />
+    <img
+      src="assets/svg/RightGrey.svg"
+      alt=""
+      title="Next"
+      *ngIf="rightIcondisable"
+    />
+  </div>
+</div>
+<mat-drawer-container
+  [class.drawer-opened]="drawer.opened"
+  class="example-container"
+>
+  <mat-drawer
+    #drawer
+    [ngClass]="showNotes ? 'drawer' : showDialysis ? 'scheduledDrawer' : ''"
+    mode="side"
+    opened="false"
+    position="end"
+  >
+    <div class="contents">
+      <div class="comments-view" fxFlex="100%">
+        <!-- <app-notes
+          [patientId]="dpid"
+          [notesData]="noteList"
+          [defaultTemplate]="defaultNoteList"
+          [drawerToggle]="drawer"
+          (editedNoteData)="viewEditedNote($event)"
+          (callNoteList)="triggeredNoteList($event)"
+          (addedTemplateFromNote)="viewTemplate($event)"
+          (notesClosed)="closeNotesDrawer()"
+          *ngIf="showNotes"
+        >
+        </app-notes> -->
+        <app-notes-and-care-plans
+          *ngIf="showNotes"
+          [patientId]="dpid"
+          [notesData]="noteList"
+          [drawerToggle]="drawer"
+          (editedNoteData)="viewEditedNote($event)"
+          (callNoteList)="triggeredNoteList($event)"
+          (addedTemplateFromNote)="viewTemplate($event)"
+          (notesClosed)="closeNotesDrawer()"
+        ></app-notes-and-care-plans>
+      </div>
+    </div>
+  </mat-drawer>
+</mat-drawer-container>

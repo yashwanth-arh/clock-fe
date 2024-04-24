@@ -1,0 +1,13 @@
+<div class="main-box">
+  <div>
+    {{
+      data.add == "unassign"
+        ? "You are Unassigning Device"
+        : "You are Assigning Device"
+    }}
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-evenly" class="btn-div">
+    <button (click)="dialogRef.close()" class="cancel">Cancel</button>
+    <button class="confirm" (click)="confirm()">Confirm</button>
+  </div>
+</div>

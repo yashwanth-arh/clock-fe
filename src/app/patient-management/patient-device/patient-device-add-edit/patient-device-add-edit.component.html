@@ -1,0 +1,32 @@
+<span class="close-button" title="Close"  (click)="dialogRef.close()">
+  <img src="assets/svg/cancel.svg" alt="" />
+</span>
+<span mat-dialog-title class="module-form-title">{{ data.add && data.add === "add" ? "Assign New Device" : "Unassign
+  Device" }}</span>
+<mat-divider class="module-divider"></mat-divider>
+<mat-card-content class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px">
+  <form [formGroup]="addEditDevice" (submit)="onSubmit(addEditDevice.value)">
+    <h2 mat-dialog-title></h2>
+    <mat-dialog-content [formGroup]="addEditDevice">
+      <mat-form-field appearance="outline" *ngIf="data.add && data.add === 'add'">
+        <mat-label>Device Code</mat-label>
+        <input type="text" placeholder="device type" matInput [formControl]="device_type"
+          [matAutocomplete]="autoDevice" />
+        <mat-autocomplete autoActiveFirstOption #autoDevice="matAutocomplete" [displayWith]="dispSelDevice()">
+          <mat-option *ngFor="let type of filteredDeviceList | async" [value]="type">
+            {{ type.deviceCode }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-hint style="color: red; font-size: 10px;">{{ deviceMessage }}</mat-hint>
+      </mat-form-field>
+
+      <h2 *ngIf="data.add && data.add === 'edit'">Are you sure you want to unassign this device ?</h2>
+    </mat-dialog-content>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <button mat-flat-button class="rpm-assign-button"
+        [disabled]="(isSubmitted || !this.device_type.value) && data.add === 'add'">
+        {{ data.add && data.add === "add" ? "Assign" : "Unassign" }}
+      </button>
+    </div>
+  </form>
+</mat-card-content>

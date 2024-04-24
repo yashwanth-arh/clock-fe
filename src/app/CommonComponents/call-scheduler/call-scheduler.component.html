@@ -1,0 +1,77 @@
+<div class="mainCallScheduler">
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="header">
+    <div fxLayout="row" fxLayoutAlign="start center"  style="gap:10px; width: 100%;" >
+      <img
+        src="assets/svg/DashboardIcons/Phone blue.svg"
+        alt=""
+        *ngIf="data.uniqueKey === 'scheduleVoice' || data.uniqueKey === 'SCHEDULE_VOICECALL'"
+      />
+      <img
+        src="assets/svg/DashboardIcons/video blue.svg"
+        alt=""
+        *ngIf="data.uniqueKey == 'scheduleVideo' || data.uniqueKey == 'SCHEDULE_VIDEOCALL' "
+      />
+      <div class="title">
+        {{ this.data.uniqueValue !== "update" ? "Schedule" : "Reschedule" }} a
+        {{ data.uniqueKey == "scheduleVoice"  ? "voice" : data.uniqueKey == "SCHEDULE_VOICECALL"?"voice": "video" }} call
+      </div>
+    </div>
+    <div (click)="dialogRef.close()" title="Close" style="cursor: pointer">
+      <img src="assets/svg/cancel.svg" alt="" />
+    </div>
+  </div>
+  <div *ngIf="loadRes">
+    <!-- <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+    </mat-progress-bar> -->
+    <app-loader [gifBackground]="'whiteBg'"> </app-loader>
+  </div>
+  <div *ngIf="!loadRes">
+    <form [formGroup]="scheduleCallForm" (ngSubmit)="scheduleCall()">
+      <div fxLayout="row" class="checkbox-div" *ngIf="userRole === 'CAREGIVER'">
+        <mat-checkbox
+          class="example-margin"
+          *ngIf="this.data.uniqueValue !== 'update'"
+          (change)="checkValue($event)"
+          [checked]="checkedUser"
+          >Myself</mat-checkbox
+        >
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center">
+        <mat-form-field appearance="outline" class="fieldWidth">
+          <mat-label>Date & Time</mat-label>
+          <input
+            matInput
+            [owlDateTime]="dt1"
+            [owlDateTimeTrigger]="dt1"
+            formControlName="scheduleDate"
+            [min]="minDate"
+
+            placeholder="Date Time"
+            readonly
+          />
+          <owl-date-time
+            #dt1
+            [stepMinute]="5"
+            [startAt]="minDate"
+          ></owl-date-time>
+          <img class="calendar-img" src="assets/svg/Calendar Grey.svg" alt="" />
+          <mat-error>Date & Time is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <div>
+          <button
+            class="scheduler-btn"
+            (click)="scheduleCall()"
+            [disabled]="isSubmitted"
+            type="button"
+          >
+          {{ this.data.uniqueValue !== "update" ? "Schedule Now" : "Reschedule Now" }}
+       
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

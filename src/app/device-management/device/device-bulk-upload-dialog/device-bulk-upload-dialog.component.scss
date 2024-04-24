@@ -1,0 +1,105 @@
+.input-text {
+  margin-left: 35px;
+  margin-top: 10px;
+}
+
+.download-text {
+  margin: 20px;
+  margin-left: 40px;
+}
+
+.close-button {
+  cursor: pointer;
+}
+
+.button-div {
+  // margin: 15px;
+  float: right;
+  margin: 15px 0 0 0;
+
+  .rpm-upload-button {
+    width: 94px;
+    height: 37px;
+    border-radius: 8px;
+    background-color: #52b204;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 20px;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    letter-spacing: 0.3px;
+    margin-left: 10px;
+    text-align: center;
+
+  }
+
+  .rpm-download-button {
+    width: 112px;
+    height: 37px;
+    text-align: center;
+    background: #52b204;
+    border-radius: 6px;
+    color: #ffffff;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 20px;
+
+    a {
+
+      color: #ffffff !important;
+      text-decoration: none !important;
+    }
+  }
+}
+
+.rpm-dialog {
+  overflow: hidden;
+}
+
+.file {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+  display: none;
+}
+
+.upload-box {
+  height: 155px;
+  // margin: 15px;
+  background: #ffffff;
+  // border: 1px dashed #a2a2a2;
+  border: 2px dashed #d7d1d1;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0 15px 0;
+
+  .upload-box-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .select-file-text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.03em;
+    color: #9d9d9d;
+    padding: 9px 0 9px 0;
+  }
+
+  .click-browser-text {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+
+    color: #52b204;
+  }
+}

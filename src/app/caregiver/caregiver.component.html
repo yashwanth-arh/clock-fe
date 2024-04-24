@@ -1,0 +1,269 @@
+<div class="rpm-module-management">
+  <app-navigation-bar (clickEvent)="openCaregiver('')"></app-navigation-bar>
+  <div class="rpm-module-table-view">
+    <div class="rpm-module-filter-container">
+      <form [formGroup]="caregiverlist">
+        <div fxLayout="column">
+          <div>
+          <mat-form-field appearance="legacy">
+            <mat-label>Search</mat-label>
+            <input
+              matInput
+              [formControl]="searchquery"
+              matInput
+              (keyup)="isEnableGlobalSearchFunc()"
+            />
+            <!-- <mat-icon matSuffix class="search-mat-icon">search</mat-icon> -->
+            <!-- <mat-hint>Global Search</mat-hint> -->
+          </mat-form-field>
+          <mat-icon
+            style="font-size: 17px; cursor: pointer"
+            (click)="unselectGlobalSearch()"
+            *ngIf="isEnableGlobalSearch"
+            >close</mat-icon
+          >
+        </div>
+        <div class="valid-text" *ngIf="showValidTextMessage">
+          <mat-error>Enter valid text</mat-error>
+        </div>
+        </div>
+        <mat-form-field appearance="legacy" *ngIf="userRole == 'RPM_ADMIN'">
+          <mat-label>Practice</mat-label>
+          <mat-select
+            formControlName="practiceFilter"
+            (valueChange)="onPracticeSelection($event)"
+          >
+            <mat-option
+              *ngFor="let practiceData of practiceList"
+              [value]="practiceData.id"
+            >
+              {{ practiceData.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Practice is </mat-error>
+        </mat-form-field>
+        <mat-icon
+          style="font-size: 17px; cursor: pointer"
+          (click)="unselectPracticeSearch()"
+          *ngIf="isEnablePracticeSearch"
+          >close</mat-icon
+        >
+        <mat-form-field appearance="legacy" *ngIf="userRole == 'RPM_ADMIN'">
+          <mat-label>Clinic</mat-label>
+          <mat-select
+            formControlName="clinicFilter"
+            (valueChange)="isEnableClinicFunc()"
+          >
+            <mat-option
+              *ngFor="let clinicData of clinicList"
+              [value]="clinicData.id"
+            >
+              {{ clinicData.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Clinic is </mat-error>
+        </mat-form-field>
+        <mat-icon
+          style="font-size: 17px; cursor: pointer"
+          (click)="unselectClinic()"
+          *ngIf="isEnableClinic"
+        >
+          close
+        </mat-icon>
+        <!-- <mat-form-field appearance="legacy">
+                    <mat-label>State</mat-label>
+                    <input matInput [formControl]="stateFilter" (keyup)="isEnableStateSearchFunc()" />
+                    <mat-error>State is </mat-error>
+                </mat-form-field>
+                <mat-icon style="font-size: 17px; cursor: pointer;" (click)="unselectStateSearch()"
+                    *ngIf="isEnableStateSearch">close</mat-icon> -->
+
+        <!-- <mat-form-field appearance="legacy">
+          <mat-label>City</mat-label>
+          <input
+            matInput
+            [formControl]="city_filter"
+            (keyup)="isEnableCitySearchFunc()"
+          />
+          <mat-error>City is required</mat-error>
+        </mat-form-field> -->
+        <mat-icon
+          style="font-size: 17px; cursor: pointer"
+          (click)="unselectClinicSearch()"
+          *ngIf="isEnableClinicSearch"
+          >close</mat-icon
+        >
+
+        <!-- <mat-form-field appearance="legacy" class="filterFieldWidth">
+					<mat-label>Status</mat-label>
+					<mat-select formControlName="statusFilter">
+
+						<mat-option *ngFor="let statusData of status" [value]="statusData">
+							{{ statusData }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field> -->
+        <button mat-icon-button class="rpm-search-button" (click)="onSearch()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </form>
+    </div>
+    <div class="rpm-module-table-container example-container mat-elevation-z8">
+      <mat-table #table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="name">
+          <mat-header-cell fxFlex="20%" *matHeaderCellDef>
+            Name
+          </mat-header-cell>
+          <mat-cell fxFlex="20%" *matCellDef="let element">
+            {{ element.name }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="branchName">
+          <mat-header-cell fxFlex="20%" *matHeaderCellDef>
+            Practice/Clinic
+          </mat-header-cell>
+          <mat-cell fxFlex="20%" *matCellDef="let element">
+            {{ element.hospitalName ? element.hospitalName : "" }} /
+            <br />
+            {{ element.branchName ? element.branchName : "" }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell fxFlex="20%" *matHeaderCellDef
+            >Email Id</mat-header-cell
+          >
+          <mat-cell fxFlex="20%" *matCellDef="let element">
+            {{ element.email }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="contactNo">
+          <mat-header-cell fxFlex="20%" *matHeaderCellDef
+            >Contact Number
+          </mat-header-cell>
+          <mat-cell fxFlex="20%" *matCellDef="let element">
+            <!-- {{
+              element.contactNo
+                ? (element.contactNo | mask: "(000) 000-0000")
+                : "N/A"
+            }} -->
+            {{ element.contactNo ? element.contactNo : "N/A" }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="address">
+          <mat-header-cell fxFlex="10%" *matHeaderCellDef>
+            Address
+          </mat-header-cell>
+
+          <mat-cell fxFlex="10%" *matCellDef="let element">
+            {{ element.address.addressLine }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="city">
+          <mat-header-cell fxFlex="10%" *matHeaderCellDef>
+            City
+          </mat-header-cell>
+
+          <mat-cell fxFlex="10%" *matCellDef="let element">
+            {{ element?.address?.city }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="state">
+          <mat-header-cell fxFlex="30%" *matHeaderCellDef>
+            State/Zip
+          </mat-header-cell>
+
+          <mat-cell fxFlex="30%" *matCellDef="let element">
+            {{ element?.address?.state }}/{{ element?.address?.zipCode }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <mat-header-cell fxFlex="8%" *matHeaderCellDef>
+            Status
+          </mat-header-cell>
+          <mat-cell fxFlex="8%" *matCellDef="let element" class="fontSm">
+            <mat-hint
+              style="cursor: pointer"
+              [matMenuTriggerFor]="menu"
+              #menuTrigger
+              [ngClass]="element.status == 'ACTIVE' ? 'active' : 'inactive'"
+            >
+              {{ element.status }}
+            </mat-hint>
+            <mat-icon
+              matSuffix
+              style="position: relative; top: -2px; cursor: pointer"
+              [matMenuTriggerFor]="menu"
+              #menuTrigger
+              >arrow_drop_down</mat-icon
+            >
+            <mat-menu #menu="matMenu" class="mat-menu-panel myMenu">
+              <div
+                (click)="statusChange(element.email, 'ACTIVE')"
+                style="padding-left: 30px; cursor: pointer"
+              >
+                ACTIVE
+              </div>
+              <mat-divider></mat-divider>
+              <div
+                (click)="statusChange(element.email, 'INACTIVE')"
+                style="padding-left: 30px; padding-top: 7px; cursor: pointer"
+              >
+                INACTIVE
+              </div>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell fxFlex="8%" *matHeaderCellDef>
+            Action
+          </mat-header-cell>
+
+          <mat-cell fxFlex="8%" *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openCaregiver(element)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div
+        class="noDataFoundText"
+        *ngIf="
+          !(dataSource.totalElemObservable | async) &&
+          messageSuccess !== undefined &&
+          !messageSuccess
+        "
+      >
+        No Records Found!
+        <!-- <div class="noDataFoundText" *ngIf="!(dataSource.totalElemObservable|async)">No Records Found! -->
+      </div>
+      <mat-paginator
+        [ngClass]="
+          (dataSource.totalElemObservable | async) < 10
+            ? 'hide-pagination'
+            : (dataSource.totalElemObservable | async) == undefined
+            ? 'hide-pagination'
+            : 'show-pagination'
+        "
+        [length]="dataSource.totalElemObservable | async"
+        [pageSizeOptions]="[10, 25, 100]"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

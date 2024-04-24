@@ -1,0 +1,37 @@
+.hide-pagination-element {
+    display: none;
+}
+
+.close-button {
+    cursor: pointer;
+}
+
+// .example-container.mat-elevation-z8 {
+//     overflow-x: auto;
+//     max-height: 1000px;
+//     height: 530px;
+//     margin-top: 55px;
+//     background: white;
+//     box-shadow: none;
+// }
+.rpm-module-table-container {
+    margin-top: 20px;
+}
+
+.status {
+    padding: 4px 10px;
+    width: auto;
+    height: 25px;
+    background: #82D795;
+    border-radius: 4px;
+}
+
+.assign {
+    padding: 6px 24px;
+    width: auto;
+    height: 29px;
+    background: #52B204;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+}

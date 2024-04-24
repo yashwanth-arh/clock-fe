@@ -1,0 +1,23 @@
+:host,
+#preview,
+video {
+  width: 100% !important;
+  height: 100% !important;
+  text-align: center;
+}
+
+
+@media only screen and (min-device-width: 1279px) and (max-device-width: 1280px) and (orientation: landscape) {
+  #preview {
+    position: relative;
+    top: -8vh;
+  }
+}
+
+@media only screen and (min-device-width: 1280px) and (max-device-width: 1280px) and (orientation: landscape) {
+  #preview {
+    position: relative;
+    top: -1vh;
+  }
+}
+

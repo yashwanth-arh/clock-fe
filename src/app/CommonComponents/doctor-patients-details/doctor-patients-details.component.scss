@@ -1,0 +1,2641 @@
+$primary-color: #006595;
+$warning-color: #f44336;
+$success-color: #4caf50;
+$alert-color: #ff8c00;
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.18);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.patientDetails {
+  // height: 115vh;
+  // overflow: auto;
+  max-height: 100%;
+  flex: 50%;
+  z-index: inherit;
+  // padding: 0 16px;
+
+  // margin-top: 4.8%;
+  .mean-blood-pressure-div {
+    position: relative;
+    // left: 5rem;
+    width: 12rem;
+  }
+
+  .map-view {
+    margin-top: 10px;
+  }
+
+  // padding-top: 13px;
+  .slider {
+    .sidenavIcon {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 4px;
+      border-radius: 7px;
+      height: 35px;
+      width: 35px !important;
+      cursor: pointer;
+      // position: relative;
+      // left: .4vw;
+    }
+
+    .filledsidenavIcon {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 4px;
+      border-radius: 7px;
+      height: 35px;
+      cursor: pointer;
+      background-color: #01cd74;
+      position: relative;
+      top: 1.5vh;
+      left: 5.5vh;
+    }
+
+    .icon-bg {
+      background-color: #e7f3fe;
+      width: 311px;
+      height: 57px;
+      position: relative;
+      left: -2.5vw;
+      cursor: pointer;
+    }
+
+    .icon-hbg:hover {
+      background-color: #e7f3fe;
+      width: 311px;
+      height: 57px;
+      position: relative;
+      left: -2.5vw;
+      cursor: pointer;
+
+      .sidenavIcon {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 4px;
+        border-radius: 7px;
+        height: 35px;
+        cursor: pointer;
+        // position: relative;
+        // left: 2.6vw;
+        // top: 1.5vh;
+      }
+
+      .label {
+        font-size: 16px;
+        line-height: 18px;
+        position: relative;
+        left: 2.5vw;
+        top: 2px;
+        cursor: pointer;
+      }
+    }
+
+    .iconList {
+      padding: 50px 34px 0px 34px;
+      position: relative;
+      left: 1px;
+
+      .label {
+        font-size: 16px;
+        line-height: 18px;
+        color: #424242;
+        position: relative;
+        top: 1px;
+        cursor: pointer;
+      }
+
+      .filledLabel {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 18px;
+        position: relative;
+        left: 2.5vw;
+        top: 2px;
+        color: #041f56;
+        cursor: pointer;
+      }
+
+      .name {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 18px;
+        color: #041f56;
+      }
+
+      // .arrow {
+      //     position: relative;
+      //     top: -1.8vh;
+      //     width: 8px;
+      // }
+      .hr-bar {
+        width: 23vw;
+        position: relative;
+        left: -6vh;
+        margin-top: -2px;
+        margin-bottom: -4px;
+      }
+    }
+
+    .rounded-circle {
+      width: 45px;
+      height: 45px;
+      border-radius: 50% !important;
+      background: #c4c4c4;
+      border: 2px solid #ffffff;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+      position: relative;
+      left: 3px;
+      cursor: pointer;
+    }
+  }
+
+  #main-container {
+    margin-top: 16px;
+  }
+
+  .example-container-observation.mat-elevation-z8 {
+    overflow-x: auto;
+    margin-top: 10px;
+    max-height: 600px;
+    overflow: auto;
+    height: 64vh;
+  }
+
+  tr.mat-row,
+  tr.mat-footer-row {
+    height: 85px;
+  }
+
+  .mat-table .mat-cell {
+    display: block;
+    // font-size: 1em;
+    text-align: right;
+    font-weight: bold;
+    height: 64px;
+    position: relative;
+    top: 2vh;
+  }
+
+  .mat-row {
+    border-radius: 8px;
+  }
+
+  mat-cell {
+    font-size: 16px;
+    color: #444444;
+
+    .symptom-icon {
+      width: 25px;
+      cursor: pointer;
+    }
+  }
+
+  // mat-header-cell {
+  //     font-size: 16px;
+  //     color: #787878;
+  // }
+  .mat-header-cell {
+    background-color: #e7f3fe;
+    font-size: 16px;
+    line-height: 19px;
+    color: #787878;
+    border-bottom: transparent;
+  }
+
+  mat-row cdk-row ng-star-inserted {
+    margin-bottom: 10px;
+  }
+
+  .bpTable {
+    position: relative;
+    left: -0.2vw;
+  }
+
+  table {
+    // margin-top: -2vh;
+    // height: 60vh;
+    background-color: transparent;
+    width: 100%;
+    // border-radius: 10px;
+    // border: 1px solid #2196f3 ;
+    padding: 10px;
+  }
+
+  pagination-controls {
+    font-size: 11px;
+  }
+
+  ::ng-deep .ngx-pagination .current {
+    border-radius: 50%;
+  }
+
+  .editable,
+  select {
+    padding-inline: 5px;
+    color: #343434;
+    font-weight: 700;
+    font-size: 16px;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .dryWtFeild {
+    width: 4vw;
+    height: 3.5vh;
+  }
+
+  .baseLineBp {
+    width: vw;
+    height: 3.5vh;
+  }
+
+  .editable {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    outline: none;
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: 1px solid #dddddd;
+  }
+
+  .editable:focus,
+  textarea:focus {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: 1px solid rgba(81, 203, 238, 1);
+  }
+
+  //   .mat-table {
+  //     border-collapse: separate !important;
+  //     border-spacing: 0 8px !important;
+  //   }
+  .icon-red {
+    border-left: 10px solid #f44336;
+  }
+
+  .icon-green {
+    border-left: 10px solid #4caf50;
+  }
+
+  .icon-orange {
+    border-left: 10px solid #ff8c00;
+  }
+
+  .xp-icon {
+    margin-top: -5px;
+    width: 30px;
+  }
+
+  .xp-value {
+    margin-top: 2px;
+    margin-left: 4px;
+  }
+
+  .readings {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  //   .date {
+  //     border-top-right-radius: 10px;
+  //     border-bottom-right-radius: 10px;
+  //   }
+  ::-webkit-scrollbar {
+    width: 4px;
+    overflow-y: scroll;
+    background: transparent;
+    scrollbar-width: thin !important;
+  }
+
+  ::-webkit-scrollbar {
+    height: 4px;
+    overflow-x: scroll;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #a1a1a1;
+    border-radius: 10px;
+  }
+
+  .sideNav {
+    // height: 91.5vh;
+    width: 93px;
+    height: 84vh;
+    background: linear-gradient(180deg, #0b8564 0%, #1c5ac4 100%);
+    box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 0px 40px 40px 0px;
+    margin-top: 10px;
+    z-index: 1000;
+
+    // border-top-right-radius: 30px;
+    // position: relative;
+    // top: -0.4vh;
+    // z-index: 10;
+    .sidenavIcon {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 4px;
+      border-radius: 7px;
+      height: 35px;
+      width: 35px;
+      cursor: pointer;
+      position: relative;
+      left: 3px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .filledsidenavIcon {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 4px;
+      border-radius: 7px;
+      height: 35px;
+      width: 35px;
+      cursor: pointer;
+      background-color: #01cd74;
+      position: relative;
+      left: 0.3vw;
+      // top: 1.5vh;
+    }
+
+    .icon-bg {
+      background-color: #e7f3fe;
+      width: 102px;
+      height: 57px;
+    }
+
+    .iconList {
+      padding: 33px 34px 0px 34px;
+      position: relative;
+      left: -8px;
+    }
+
+    .rounded-circle {
+      width: 45px;
+      height: 45px;
+      border-radius: 50% !important;
+      background: #c4c4c4;
+      border: 2px solid #ffffff;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+      position: relative;
+      left: 5px;
+      cursor: pointer;
+    }
+
+    .homeIcon {
+      border: 2px solid #d1d1d1;
+      padding: 4px;
+      border-radius: 7px;
+      height: 35px;
+      cursor: pointer;
+    }
+
+    .mediIcon img:last-child {
+      display: none;
+    }
+
+    .mediIcon:hover img:last-child {
+      display: block;
+    }
+
+    .mediIcon:hover img:first-child {
+      display: none;
+    }
+
+    .homePage {
+      position: relative;
+      left: 12px;
+      top: -3vh;
+    }
+
+    .homePage img:last-child {
+      display: none;
+    }
+
+    .homePage:hover img:last-child {
+      display: block;
+    }
+
+    .homePage:hover img:first-child {
+      display: none;
+    }
+
+    .dialysisIcon img:last-child {
+      display: none;
+    }
+
+    .dialysisIcon:hover img:last-child {
+      display: block;
+    }
+
+    .dialysisIcon:hover img:first-child {
+      display: none;
+    }
+
+    .obsIcon img:last-child {
+      display: none;
+    }
+
+    .obsIcon:hover img:last-child {
+      display: block;
+    }
+
+    .obsIcon:hover img:first-child {
+      display: none;
+    }
+
+    .vitalsIcon img:last-child {
+      display: none;
+    }
+
+    .vitalsIcon:hover img:last-child {
+      display: block;
+    }
+
+    .vitalsIcon:hover img:first-child {
+      display: none;
+    }
+
+    hr.line {
+      // border: 1px solid white;
+      background-color: white;
+      position: relative;
+      left: -2.5vw;
+      width: 5.7vw;
+    }
+  }
+
+  .close-note-icon {
+    position: relative;
+    left: 53vw;
+    cursor: pointer;
+    color: $primary-color;
+  }
+
+  .close-dialysis-icon {
+    position: relative;
+    left: 47vw;
+    cursor: pointer;
+    color: $primary-color;
+  }
+
+  .close-obs-icon {
+    position: relative;
+    left: 46vw;
+    cursor: pointer;
+    color: $primary-color;
+  }
+
+  .close-vital-icon {
+    position: relative;
+    left: 49vw;
+    cursor: pointer;
+    color: $primary-color;
+  }
+
+  .close-medication-icon {
+    position: relative;
+    left: 50vw;
+    cursor: pointer;
+    color: $primary-color;
+  }
+
+  .content-overlay {
+    opacity: 0.2;
+    background-color: black;
+  }
+
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:first-child {
+    color: white;
+    background-color: #006595;
+    border-top-left-radius: 0px !important;
+    // border-top-right-radius: 10px;
+    opacity: 1 !important;
+    // -moz-box-shadow: 0px -10px 5px #888;
+    // -webkit-box-shadow: 0px -10px 5px #888;
+    // box-shadow: 0 1rem 1.25rem 0 rgba(22, 75, 195, 0.5), 0 -0.25rem 1.5rem #2196f3 inset,
+    //     0 0.75rem 0.5rem rgba(255, 255, 255, 0.4) inset, 0 0.25rem 0.5rem 0 #2196f3 inset;
+  }
+
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:nth-child(2) {
+    color: white;
+    background-color: #006595;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    opacity: 1 !important;
+    // box-shadow: 0 1rem 1.25rem 0 rgba(22, 75, 195, 0.5), 0 -0.25rem 1.5rem #2196f3 inset,
+    //     0 0.75rem 0.5rem rgba(255, 255, 255, 0.4) inset, 0 0.25rem 0.5rem 0 #2196f3 inset;
+  }
+
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:nth-child(3) {
+    color: white;
+    background-color: #006595;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    opacity: 1 !important;
+    // box-shadow: 0 1rem 1.25rem 0 rgba(22, 75, 195, 0.5), 0 -0.25rem 1.5rem #2196f3 inset,
+    //     0 0.75rem 0.5rem rgba(255, 255, 255, 0.4) inset, 0 0.25rem 0.5rem 0 #2196f3 inset;
+  }
+
+  .patient-observations {
+    // margin-top: 1% !important;
+
+    mat-tab-group {
+      // margin-left: 18px;
+      background: #fff;
+    }
+
+    // margin-top: -44px;
+  }
+
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:nth-child(4) {
+    color: white;
+    background-color: #006595;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    opacity: 1 !important;
+  }
+
+  ::ng-deep .mat-ink-bar {
+    display: none !important;
+  }
+
+  .graphCard {
+    height: 81vh;
+    margin-top: 10px;
+    padding: 0px;
+    border-radius: 10px;
+  }
+
+  .piGraph {
+    height: 91vh;
+    width: 100%;
+    position: relative;
+    top: -20vh;
+  }
+
+  .totalCountTitle {
+    position: relative;
+    top: -7vh;
+    left: 1vh;
+  }
+
+  // .wtBp {
+  //     font-size: 2.1rem;
+  //     position: relative;
+  //     top: 2px;
+  //     background-color: #006595;
+  //     height: 5vh;
+  //     width: 2.3vw;
+  //     color: white;
+  //     border-radius: 15%;
+  //     border: 1px solid white;
+  // }
+  .wtTime {
+    height: 30vh;
+    position: relative;
+    top: -3vh;
+  }
+
+  .readings {
+    font-weight: 600;
+    color: #006595;
+  }
+
+  .next_dialysis_date {
+    font-weight: 600;
+  }
+
+  .md-sereen-action-btn {
+    background: #d9e3ef;
+    border: 1px solid #c2d3e7;
+    border-radius: 10px;
+    height: 60px;
+    position: relative;
+    left: 10px;
+    padding-right: 0;
+    margin-right: 10px;
+  }
+
+  .actionBtns {
+    position: relative;
+    top: 1.2vh;
+    left: -1.5vw;
+  }
+
+  .action_btn {
+    outline: none;
+    background-color: #006595;
+  }
+
+  .action_btn:hover {
+    background-color: rgb(120, 161, 238);
+  }
+
+  .gauge {
+    transform: rotate(-155deg);
+  }
+
+  .symptomsCard {
+    height: 32.5vh;
+  }
+
+  .weightCard {
+    // width: 345px;
+    height: 235px;
+
+    // border-radius: 10px;
+    mat-card-title {
+      font-weight: 500;
+      text-align: center;
+      font-size: medium;
+      color: black;
+      margin-bottom: 18px;
+      margin-left: 10px;
+      font-size: 20px;
+    }
+
+    mat-progress-spinner {
+      transform: rotate(-155deg);
+      margin-left: 30px;
+      margin-top: -10px;
+    }
+
+    p {
+      margin-bottom: 2px;
+      text-align: center;
+      font-weight: 300;
+    }
+
+    .showDate {
+      margin-left: -36px;
+      margin-top: -5px;
+      font-weight: 430;
+    }
+
+    .totalCount {
+      font-size: 10px;
+    }
+
+    h5 {
+      small {
+        color: $primary-color;
+      }
+    }
+  }
+
+  .spinner {
+    position: relative;
+    left: 40px;
+  }
+
+  .totalCount {
+    background-color: black;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    margin-top: -3px;
+    font-size: 10px;
+  }
+
+  .warn-spin {
+
+    &::ng-deep .mat-progress-spinner circle,
+    .mat-spinner circle {
+      stroke: $warning-color;
+    }
+
+    h2 {
+      // margin-bottom: -20px;
+      margin-top: 48px;
+
+      span {
+        color: $warning-color;
+      }
+    }
+  }
+
+  .alert-spin {
+
+    &::ng-deep .mat-progress-spinner circle,
+    .mat-spinner circle {
+      stroke: $alert-color;
+    }
+
+    h2 {
+      // margin-bottom: -20px;
+      margin-top: 48px;
+
+      span {
+        color: $alert-color;
+      }
+    }
+  }
+
+  .good-spin {
+
+    &::ng-deep .mat-progress-spinner circle,
+    .mat-spinner circle {
+      stroke: $success-color;
+    }
+
+    h2 {
+      // margin-bottom: -20px;
+      margin-top: 48px;
+
+      span {
+        color: $success-color;
+      }
+    }
+  }
+
+  .adherenceForm {
+    position: relative;
+    top: 1vh;
+    // margin-bottom: 3vh;
+  }
+
+  .adherenceBar {
+    height: 57vh;
+    width: 100%;
+    position: relative;
+    // top: -vh;
+  }
+
+  .searchDate {
+    position: relative;
+    // top: -3vh;
+  }
+
+  .red {
+    color: $warning-color;
+  }
+
+  .orange {
+    color: $alert-color;
+  }
+
+  .green {
+    color: $success-color;
+  }
+
+  .showDate {
+    margin-left: -36px;
+    margin-top: -5px;
+    font-weight: 430;
+  }
+
+  .comments-drawer {
+    left-border: 1px solid $primary-color;
+  }
+
+  .drawer {
+    position: fixed;
+    height: 100vh;
+    // margin-right: 1vw;
+    min-width: 65%;
+    border-radius: 20px 0px 0px 0px;
+    // border: 1px solid $primary-color;
+    max-width: 40%;
+    background: #f4f9fe;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .drawerHistory {
+    position: fixed;
+    height: 100vh;
+    // margin-right: 1vw;
+    min-width: 65%;
+    border-radius: 20px 0px 0px 0px;
+    // border: 1px solid $primary-color;
+    max-width: 40%;
+    background: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .example-container {
+    z-index: 1005;
+  }
+
+  ::ng-deep .mat-drawer-inner-container {
+    overflow: hidden;
+    background-color: #ECFFFA;
+  }
+
+  .drawer .header {
+    position: absolute;
+    // right: 0;
+    justify-content: space-between;
+    width: 100%;
+    height: 500px;
+  }
+
+  .drawer .contents {
+    padding: 16px;
+    background-color: #ECFFFA;
+  }
+
+  .patientDrawer {
+    position: fixed;
+    margin-top: 9.1vh;
+    height: 91vh;
+    margin-left: -2px;
+    min-width: 290px;
+    box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.05);
+    // width: 290px;
+    border-radius: 0px 16px 16px 0px;
+    // border: 1px solid $primary-color;
+    max-width: 10%;
+
+    // background-color: #f4f9fe;
+    .details {
+      position: relative;
+      bottom: 2vh;
+      background: linear-gradient(288.78deg, #0b8564 -16.87%, #1c5ac4 145.46%);
+
+      .name {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 18px;
+        color: #ffffff;
+        margin-top: -10px;
+      }
+
+      .arrow {
+        position: relative;
+        top: 6vh;
+        cursor: pointer;
+      }
+
+      .patient-icon {
+        padding: 50px 34px 0px 34px;
+        width: 82%;
+
+        .rounded-circle {
+          width: 45px;
+          height: 45px;
+          border-radius: 50% !important;
+          background: #c4c4c4;
+          border: 2px solid #ffffff;
+          box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+          position: relative;
+          left: 3px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .container {
+    z-index: 1005;
+  }
+
+  .patientDrawer .header {
+    position: absolute;
+    // right: 0;
+    justify-content: space-between;
+    width: 100%;
+    height: 500px;
+    z-index: 1000 !important;
+  }
+
+  .mat-drawer-container {
+    z-index: 1000 !important;
+  }
+
+  .patientDrawer .contents {
+    padding: 16px;
+  }
+
+  ::ng-deep .mat-drawer.mat-drawer-side {
+    z-index: 1000 !important;
+  }
+
+  .example-container {
+    margin-top: 10px;
+    max-height: 600px;
+    display: contents;
+    z-index: 1000;
+  }
+
+
+  // ::ng-deep .side-nav-icon {
+  //     background-color: blue;
+  //     color: white;
+  //     position: relative;
+  //     top: 40px;
+  //     left: -80px;
+  // }
+  .icons {
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .toolbar-heading {
+    background-color: #f4f9fe;
+  }
+
+  .rounded-circle {
+    border-radius: 50% !important;
+    border: 2px solid white;
+    position: relative;
+    bottom: 1vh;
+  }
+
+  .patientCard {
+    background-color: #ECFFFA;
+    color: #424242;
+    padding: 20px 25px;
+    font-size: 12px;
+
+    mat-icon {
+      font-size: 19px;
+    }
+  }
+
+  .materialIcon {
+    position: relative;
+    font-size: 30px;
+    top: 12px;
+  }
+
+  mat-expansion-panel-header {
+    height: 5vh;
+    font-size: 14px;
+  }
+
+  .cal-icon {
+    width: 30px;
+    position: relative;
+    left: -11.5vw;
+    top: 23px;
+  }
+
+  .nav-btns {
+    position: relative;
+    left: 0.5vw;
+    bottom: 60px;
+
+    img {
+      width: 40px;
+    }
+  }
+
+  .next-appt {
+    margin-top: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+  }
+
+  .headerContent {
+    position: relative;
+    top: 6px;
+    color: #27235e;
+    // font-size: 13px;
+  }
+
+  .completed-missed {
+    margin-top: 20px !important;
+  }
+
+  .chart-labels {
+    color: #27235e;
+    font-weight: 700;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .chart-labels-bp {
+    color: #27235e;
+    font-weight: 700;
+    text-align: center;
+    font-size: 16px;
+    position: relative;
+    top: -5vh;
+    left: 2vw;
+  }
+
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0px 0px 0px;
+  }
+
+  ::ng-deep .mat-tab-label:first-child {
+    border-left: none !important;
+  }
+
+  ::ng-deep .mat-tab-header {
+    border: 1px solid #d7d7ff !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    width: 100% !important;
+    height: 41px;
+
+    .mat-tab-label .mat-tab-label-content {
+      margin-bottom: 6px;
+    }
+  }
+
+  .bpt-dev {
+    width: 100% !important;
+  }
+
+  ::ng-deep .mat-tab-label {
+    border-left: 1.7px solid #d7d7ff !important;
+  }
+
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:first-child {
+    color: white;
+    background-color: #006595;
+    border-top-left-radius: 0px !important;
+    opacity: 1 !important;
+  }
+
+  ::ng-deep .mat-tab-body-content {
+    overflow: auto !important;
+  }
+
+  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active:nth-child(2) {
+    color: white;
+    background-color: #006595;
+    border-top-right-radius: 0px;
+    opacity: 1 !important;
+  }
+
+  .bg-card {
+    width: 100%;
+    // box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    // border-radius: 10px 10px 0px 0px;
+    height: 66vh;
+    position: relative;
+    top: 1.3vh;
+    // overflow-y: hidden;
+    // overflow-x: hidden;
+    padding-inline: 16px;
+    box-shadow: none;
+    overflow: auto;
+  }
+
+  .chart-card {
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    // border-radius: 10px 10px 0px 0px;
+    height: 66vh;
+    position: relative;
+    top: 1.3vh;
+    padding: 0 0px;
+  }
+
+  .date-width {
+    width: 300px;
+  }
+
+  .upperMiddleCard {
+    border-radius: 10px;
+    height: 78px;
+
+    .date-range {
+      height: 0px;
+      color: #343434;
+      font-weight: 700;
+      font-size: 16px;
+      position: relative;
+      top: -1vh;
+      width: 185px;
+    }
+
+    ::ng-deep .mat-icon-button {
+      outline: none;
+      height: 0px;
+      width: 0px;
+    }
+
+    .select-date {
+      color: #a1a1a1;
+      font-size: 14px;
+    }
+
+    .toogle-icon {
+      position: relative;
+      right: -18vw;
+      top: -1.5vh;
+      outline: none;
+    }
+
+    .patient-name {
+      font-weight: 700;
+      font-size: 16px;
+      color: #343434;
+    }
+
+    .patient-bio {
+      color: #5f6368;
+      font-size: 16px;
+    }
+
+    .obs-reading {
+      color: #343434;
+    }
+
+    .obs-title {
+      color: #424242;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .min-width {
+      min-width: 10vw !important;
+    }
+  }
+
+  .lowerMiddleCardBP {
+    width: 39%;
+    border-radius: 10px;
+    height: 78px;
+    margin-left: 13px;
+
+    .obs-reading {
+      color: #343434;
+      margin-left: 46px;
+      margin-top: -6px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+  }
+
+  .lowerMiddleCard {
+    border-radius: 10px;
+    height: 78px;
+    width: 57.7%;
+
+    .obs-reading {
+      color: #343434;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .obs-title {
+      color: #424242;
+      font-size: 14px;
+      font-weight: 700;
+      width: 5rem;
+    }
+
+    .min-width {
+      min-width: 17vw !important;
+    }
+
+    .dwt-mm {
+      position: relative;
+      left: -1.5vw;
+    }
+
+    .base-bp {
+      position: relative;
+      left: -6.4vw;
+    }
+
+    .cwt-mm {
+      position: relative;
+      left: -1.3vw;
+    }
+
+    .cbp-mm {
+      position: relative;
+      left: 2.9vw;
+    }
+
+    .view {
+      position: relative;
+      left: -2vw;
+    }
+
+    .first-content {
+      position: relative;
+      left: 0.5vw;
+      top: -0.5vh;
+    }
+
+    .second-content {
+      position: relative;
+      left: 2vw;
+      top: -0.5vh;
+    }
+
+    .last-content {
+      position: relative;
+      left: 10.46vw;
+      top: -0.5vh;
+    }
+
+    .thin-line {
+      height: 34px;
+      background-color: #f1f3ff;
+      position: relative;
+      top: 1.3vh;
+      opacity: 0.3;
+      left: 4rem;
+    }
+
+    .thick-line {
+      height: 60px;
+      background-color: #f1f3ff;
+      position: relative;
+      top: -0.8vh;
+      opacity: 0.4;
+      left: 2.5vw;
+    }
+
+    .sm-line {
+      position: relative;
+      left: -1.5vw;
+    }
+
+    .sm-btns {
+      position: relative;
+      left: 7px;
+      top: 1vh;
+    }
+  }
+
+  .textInputWidth {
+    font-size: 10px;
+    width: 21vw;
+    // margin-bottom: -2vh;
+  }
+
+  .rangeInput {
+    position: relative;
+    left: -1vw;
+    width: 11vw;
+    top: 1vh;
+  }
+
+  .bp-time {
+    position: relative;
+    top: 6vh;
+  }
+
+  .wt-time {
+    position: relative;
+    top: -4vh;
+  }
+}
+
+.bg-blue {
+  .observation {
+    width: 40px;
+    background-image: url("../../../assets/svg/DashboardIcons/Patient Details Blue.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+}
+
+.bg-white {
+  .observation {
+    width: 40px;
+    background-image: url("../../../assets/svg/DashboardIcons/Patient Details White.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+}
+
+::ng-deep .side-nav-icon {
+  background-color: #01cd74;
+  color: white;
+  position: relative;
+  top: 0px;
+}
+
+.comments-drawer {
+  overflow: hidden;
+}
+
+// ::ng-deep .myMenu {
+//     padding-left: 15px !important;
+//     width: 286px !important;
+//     height: 173px !important;
+//     position: relative;
+//     border-radius: 10px 10px 10px 10px;
+//     top: -7vh;
+// }
+
+::ng-deep .mat-expansion-panel-spacing {
+  margin: 0 !important;
+}
+
+.chart-container {
+  position: relative;
+  top: -1vh;
+}
+
+.middle-card {
+  height: 173px;
+}
+
+.upper-middle-content {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.upper-second-content {
+  border-radius: 10px;
+  height: 80px;
+  width: 30.7%;
+
+  .apt-mm {
+    position: relative;
+    left: -1.5vw;
+    top: 0.1vh;
+  }
+}
+
+.filled-box {
+  height: 10px;
+  width: 10px;
+  background-color: #1569a1;
+  margin-top: 5px;
+}
+
+.unfilled-box {
+  height: 10px;
+  width: 10px;
+  background-color: #dddddd;
+  margin-top: 5px;
+}
+
+.view-text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #424242;
+  margin-left: 10px;
+}
+
+.days-count {
+  margin-left: 20px;
+  color: #343434;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+:root {
+  background: #fff;
+}
+
+.procent-div {
+  display: flex;
+  justify-content: center;
+  margin-top: -92px;
+
+  span#procent {
+    // display: block;
+    // margin-top: -80px;
+    // margin-left: 65px;
+    font-size: 35px;
+    // transform: translate(-50%, -50%);
+    color: #1569a1;
+  }
+}
+
+span#procent::after {
+  content: "%";
+}
+
+.canvas-wrap {
+  // position: relative;
+  width: 300px;
+  height: 300px;
+  // top: -79px;
+  // left: -50px;
+}
+
+.bmi {
+  position: relative;
+  left: -3vw;
+}
+
+.bmi-mm {
+  position: relative;
+  left: 2.7vw;
+}
+
+.pulse-mm {
+  position: relative;
+  left: -1.5vw;
+}
+
+.mid-line {
+  position: relative;
+  left: 2vw;
+  top: -5px;
+}
+
+.wt-align {
+  position: relative;
+  left: -1vw;
+}
+
+.wt-reading {
+  position: relative;
+  left: 2.8vw;
+  top: -0.8vh;
+}
+
+.mn-bp {
+  position: relative;
+  left: -4.5vw;
+}
+
+.bp-sugar {
+  position: relative;
+  left: -4vw;
+}
+
+.pulse {
+  position: relative;
+  left: 4vw;
+}
+
+.rounded-zone-red {
+  background-color: #f44336;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  position: relative;
+  top: 5px;
+}
+
+.rounded-zone-orange {
+  background-color: #ff8c00;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  position: relative;
+  top: 5px;
+}
+
+.rounded-zone-green {
+  background-color: #4caf50;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  position: relative;
+  top: 5px;
+}
+
+@media only screen and (min-device-width: 1780px) and (max-device-width: 1792px) and (orientation: landscape) {
+  .date-width {
+    width: 19.5rem !important;
+  }
+
+  .patient-emr-date-tab {
+    margin-bottom: -0.6rem !important;
+  }
+}
+
+/* iPads (landscape) ----------- */
+
+// @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+
+//   /* STYLES GO HERE */
+//   .upper-second-content {
+//     position: relative;
+//     left: 7vw;
+//     top: 0vh;
+
+//     .apt-mm {
+//       position: relative;
+//       left: -1.5vw;
+//       top: 0.1vh;
+//     }
+//   }
+
+//   .patient-icon {
+//     width: 21vw !important;
+//   }
+
+//   .middle-card {
+//     margin-right: 2px;
+//     height: 147px !important;
+//     margin-left: -18px;
+//   }
+
+//   .upper-card {
+//     margin-bottom: -43px !important;
+//     max-height: 30% !important;
+//   }
+
+//   .patient-emr-date-div {
+//     max-width: 60% !important;
+//     margin-right: -7.3rem !important;
+//   }
+
+//   canvas {
+//     height: 125px;
+//     width: 125px;
+//   }
+
+//   span#procent {
+//     display: block;
+//     margin-top: 25px;
+//     margin-left: 75px;
+//     font-weight: 800;
+//     font-size: 30px !important;
+//     transform: translate(-50%, -50%);
+//   }
+
+//   .canvas-wrap {
+//     width: 130px;
+//     height: 130px;
+//     max-width: none !important;
+//     margin-right: 0 !important;
+//     padding-top: 0px;
+//     position: relative;
+//     top: -3px;
+//   }
+
+//   .patient-emr-date-tab {
+//     margin-bottom: -10px !important;
+//     max-height: 44% !important;
+//   }
+
+//   .upper-middle-content {
+//     max-height: 100% !important;
+//   }
+
+//   ::ng-deep .myMenu {
+//     padding-left: 15px !important;
+//     width: 286px !important;
+//     height: 80px !important;
+//     position: relative;
+//     border-radius: 0px 0px 10px 10px;
+//     top: -7vh;
+//   }
+
+//   ::ng-deep.mat-tab-label .mat-tab-label-content {
+//     font-size: 12px !important;
+//   }
+
+//   ::ng-deep .mat-tab-labels {
+//     width: 100% !important;
+//   }
+
+//   .patientDetails {
+//     .completed-missed {
+//       margin-left: 8px;
+//     }
+
+//     .md-sereen-action-btn {
+//       background: #d9e3ef;
+//       border: 1px solid #c2d3e7;
+//       border-radius: 10px;
+//       height: 147px;
+//       position: relative;
+//       left: 10px;
+//       padding-right: 0px;
+//       max-width: 23.8% !important;
+//       margin-right: 10px;
+//     }
+
+//     .nav-btns {
+//       position: relative;
+//       left: -13.5vw;
+//       top: 9px;
+//     }
+
+//     .ipad-action-btn {
+//       position: relative;
+//       top: 5px;
+//       left: -2rem;
+//     }
+
+//     .actionBtns {
+//       left: -0.1vw;
+//       padding-bottom: 23px;
+//       border-bottom: 1px solid #c8d7e9;
+//     }
+
+//     .chart-card {
+//       width: 99%;
+//       height: 54vh;
+//       overflow-y: hidden;
+//       top: -0.7vh;
+//     }
+
+//     ::ng-deep .mat-tab-header {
+//       border: 1px solid #d7d7ff !important;
+//       border-top-left-radius: 0px !important;
+//       border-top-right-radius: 0px !important;
+//       // width: 981px !important;
+//     }
+
+//     .drawer {
+//       border-radius: 15px 0px 0px 0px;
+//       min-width: 92%;
+//       margin-left: 7vw;
+//       margin-top: 0vh;
+//       height: 89vh;
+//     }
+
+//     .drawerHistory {
+//       min-width: 92%;
+//     }
+
+//     .dryWtFeild {
+//       position: relative;
+//       left: -6vw;
+//       top: -1vh;
+//     }
+
+//     .baseLineBp {
+//       height: 3.5vh;
+//       width: 8vw;
+//       position: relative;
+//       left: -4vw;
+//       top: -1vh;
+//     }
+
+//     .sideNav {
+//       height: 93vh;
+//       width: 93px;
+
+//       .filledsidenavIcon {
+//         position: relative;
+//         // left: 3.5vw;
+//       }
+
+//       .icon-bg {
+//         width: 101px;
+//       }
+
+//       .homePage {
+//         position: relative;
+//         left: 2px;
+//         top: -3vh;
+//       }
+
+//       .rounded-circle {
+//         left: 6px;
+//       }
+
+//       hr.line {
+//         width: 10vw;
+//         left: -5vw;
+//       }
+//     }
+
+//     .xp-icon {
+//       margin-top: -16px;
+//     }
+
+//     .slider .filledsidenavIcon {
+//       left: 3.5vh;
+//     }
+
+//     .patientDrawer {
+//       margin-left: -1vw;
+//       margin-top: 6vh;
+//       height: 81vh;
+//     }
+
+//     .sm-card {
+//       width: 514px;
+//     }
+
+//     .appointmentMd {
+//       position: relative;
+//       left: -9.7vw;
+//     }
+
+//     .second-content {
+//       position: relative;
+//       left: 1vw;
+//       top: -0.2vh;
+//     }
+
+//     .cbp {
+//       position: relative;
+//       left: -0.5vw !important;
+//     }
+
+//     .cbp-mm {
+//       position: relative;
+//       left: 3.2vw;
+//     }
+
+//     .cwt-mm {
+//       position: relative;
+//       left: -2.5vw;
+//     }
+
+//     mat-cell {
+//       font-size: 12px;
+
+//       .symptom-icon {
+//         width: 20px;
+//         cursor: pointer;
+//       }
+//     }
+
+//     mat-header-cell {
+//       font-size: 12px;
+//     }
+
+//     .sm-icon {
+//       width: 24px;
+//       position: relative;
+//       top: -0.5vh;
+//       left: 0.5vw;
+//     }
+
+//     .sm-icon-pulse {
+//       margin-right: 5px;
+//     }
+
+//     .patient-emr-tab {
+//       max-width: 50% !important;
+//       margin-right: 7.5rem !important;
+//     }
+
+//     .upperMiddleCard {
+//       height: 68px;
+//       width: 275px;
+
+//       .date-range {
+//         font-size: 12px;
+//         line-height: 15px;
+//         position: relative;
+//         top: -1vh;
+//       }
+
+//       .select-date {
+//         color: #a1a1a1;
+//         font-size: 12px;
+//         line-height: 17px;
+//       }
+
+//       .toogle-icon {
+//         right: -1vw;
+//       }
+
+//       .first-card {
+//         position: relative;
+//         top: -0.5vh;
+//       }
+
+//       .patient-name-div {
+//         margin-bottom: 3px !important;
+//       }
+
+//       .patient-name,
+//       .obs-reading {
+//         font-size: 12px;
+//       }
+
+//       .patient-bio {
+//         font-size: 12px;
+//         line-height: 17px;
+//       }
+
+//       .emr {
+//         width: 276px;
+//       }
+
+//       .obs-title {
+//         font-size: 14px;
+//         line-height: 17px;
+//         font-weight: 700;
+//       }
+
+//       .min-width {
+//         min-width: 17vw !important;
+//       }
+//     }
+
+//     .view-text {
+//       font-size: 12px;
+//       line-height: 17px;
+//     }
+
+//     .days-count {
+//       font-size: 12px;
+//       line-height: 17px;
+//     }
+
+//     .pulse {
+//       margin-right: 0vw !important;
+//     }
+
+//     .pulse-dev {
+//       margin-bottom: -2px !important;
+//     }
+
+//     .blood-pressure {
+//       margin-bottom: -2px !important;
+//     }
+
+//     .mean-blood-pressure-div {
+//       position: relative;
+//       left: 2rem;
+//       width: 12rem;
+//     }
+
+//     .mean-blood-pressure {
+//       margin-bottom: -2px !important;
+//     }
+
+//     .lowerMiddleCard {
+//       height: 68px;
+//       width: 465px;
+
+//       .obs-reading {
+//         font-size: 12px;
+//         margin-left: 10px !important;
+//       }
+
+//       .obs-title {
+//         font-size: 12px;
+//         line-height: 17px;
+//         font-weight: 700;
+//       }
+
+//       .m-bp {
+//         width: 101px;
+//       }
+
+//       .card-section {
+//         position: relative;
+//         left: -1vw;
+//       }
+
+//       .dwt-mm {
+//         position: relative;
+//         left: -8.3vw;
+//       }
+
+//       .base-bp {
+//         position: relative;
+//         left: -2.9vw;
+//       }
+
+//       .thick-line {
+//         top: -1.2vh;
+//       }
+
+//       .sm-line {
+//         left: -1vw;
+//       }
+
+//       .description {
+//         font-weight: 400;
+//         font-size: 12px;
+//         line-height: 14px;
+//         text-align: center;
+//         color: #444444;
+//         margin-top: 7px;
+//       }
+
+//       .actionBtns {
+//         left: 5vw;
+//         padding-left: 24px !important;
+
+//         img {
+//           position: relative !important;
+//           left: 2.5vw !important;
+//           margin-bottom: 10px;
+//         }
+//       }
+//     }
+
+//     .example-container-observation {
+//       position: relative;
+//       left: -2vw;
+//     }
+
+//     .mat-header-cell {
+//       font-size: 14px;
+//       line-height: 17px;
+//     }
+
+//     .map-view {
+//       width: 99%;
+//       height: 53vh;
+//       box-shadow: none;
+//       margin-top: 1px !important;
+//     }
+
+//     .bg-card {
+//       width: 99%;
+//       height: 53vh;
+//       top: -0.1vh;
+//       border-radius: 10px 10px;
+//     }
+
+//     .chart-labels {
+//       font-size: 12px;
+//       position: relative;
+//       top: 2vh;
+//     }
+
+//     .chart-labels-bp {
+//       font-size: 12px;
+//       position: relative;
+//       top: -1vh;
+//       left: 1vw;
+//     }
+
+//     .bp-time {
+//       position: relative;
+//       top: -2vh;
+//     }
+
+//     .wt-time {
+//       position: relative;
+//       top: -1vh;
+//     }
+
+//     .patientDrawer {
+//       min-width: 26%;
+//     }
+
+//     // .drawer {
+//     //     min-width: 92%;
+//     //     margin-left: 7vw;
+//     //     margin-top: 5vh;
+//     //     height: 81vh;
+//     // }
+//     ::ng-deep .ngx-pagination {
+//       margin-left: -71px;
+//       margin-bottom: 1rem;
+//       width: 41vw;
+//     }
+
+//     // .graphCard {
+//     //     height: 70vh;
+//     //     position: relative;
+//     //     top: -1.5vh;
+//     // }
+//     .piGraph {
+//       height: 77vh;
+//       // width: 100%;
+//       position: relative;
+//       top: -15vh;
+//     }
+
+//     .wtTime {
+//       height: 27vh;
+//       position: relative;
+//       top: -3vh;
+//     }
+
+//     .bpTime {
+//       height: 30vh;
+//       position: relative;
+//       top: -4vh;
+//     }
+
+//     .wtBp {
+//       width: 3.4vw;
+//     }
+
+//     .readingContainers {
+//       position: relative;
+//       left: 1vw;
+//     }
+
+//     .weightCard {
+//       mat-card-title {
+//         font-size: 16px;
+//       }
+
+//       .spinner {
+//         position: relative;
+//         left: 20px;
+//       }
+//     }
+
+//     .adherenceGraph {
+//       height: 47vh;
+
+//       .adherenceForm {
+//         position: relative;
+//         top: -1vh;
+//       }
+//     }
+
+//     .symptomsCard {
+//       height: 30.7vh;
+//     }
+
+//     .close-note-icon {
+//       left: 75vw;
+//     }
+
+//     .close-dialysis-icon {
+//       left: 66vw;
+//     }
+
+//     .close-obs-icon {
+//       left: 63vw;
+//     }
+
+//     .close-vital-icon {
+//       left: 68vw;
+//     }
+
+//     .close-medication-icon {
+//       left: 71vw;
+//     }
+//   }
+// }
+
+.chart-container {
+  position: relative;
+  top: -2.5vh;
+}
+
+.totalCountTitle {
+  left: 20vh;
+  top: -3vh;
+}
+
+.symptomsCard {
+  height: 30.7vh;
+}
+
+/* Desktops and laptops ----------- */
+
+// @media only screen and (min-width: 1224px) {
+//   /* STYLES GO HERE */
+// }
+
+/* Large screens ----------- */
+
+@media only screen and (min-width: 1670px) and (max-device-width: 1800px),
+screen and (min-height: 860px) and (max-height: 980px) {
+
+  /* STYLES GO HERE */
+  .middle-card {
+    height: 176px;
+  }
+
+  .map-view {
+    height: 65vh !important;
+    box-shadow: none;
+  }
+
+  .patientDetails {
+    .bg-card {
+      width: 100%;
+      height: 66vh;
+      position: relative;
+      top: 1vh;
+    }
+
+    ::ng-deep .mat-tab-header {
+      width: 100% !important;
+    }
+
+    .chart-card {
+      width: 100%;
+      height: 67vh;
+      top: 1vh;
+    }
+
+    .cal-icon {
+      left: -12.5vw;
+    }
+
+    .upperMiddleCard {
+      .patient-name {
+        font-size: 18px;
+        width: 15rem;
+      }
+
+      .select-date {
+        font-size: 16px;
+      }
+
+      .date-range {
+        width: 191px;
+      }
+    }
+
+    .lowerMiddleCard {
+      .obs-title {
+        font-size: 16px;
+        width: 7rem;
+      }
+    }
+
+    .date-width {
+      width: 19.7rem;
+    }
+
+    .patient-emr-date-tab {
+      max-height: 42% !important;
+    }
+
+    .actionBtns {
+      left: -3.5vw;
+    }
+  }
+}
+
+// @media only screen and (min-device-width: 1290px) and (max-device-width: 1440px) and (orientation: landscape) {
+//   .patientDetails .chart-card {
+//     width: 100%;
+//     position: relative;
+//     box-shadow: 0px 0px 10px rgb(0 0 0 / 10%);
+//     border-radius: 10px 10px 0px 0px;
+//     height: 66vh;
+//     position: relative;
+//     top: 1.3vh;
+//     padding: 0 0px;
+//   }
+// }
+// @media only screen and (min-device-width: 1279px) and (max-device-width: 1300px) and(min-device-height: 500px) and (max-device-height: 700px) and (orientation: landscape) {
+//   .pulse {
+//     position: relative;
+//     left: 3.2vw;
+//   }
+
+//   .upper-card {
+//     max-height: 46% !important;
+//     margin-bottom: -10px !important;
+//   }
+// }
+
+// @media only screen and (min-device-width: 1280px) and (max-device-width: 1280px) and (orientation: landscape) {
+//   .patientDetails .upper-card {
+//     max-height: 34% !important;
+//   }
+
+//   .procent-div {
+//     display: flex;
+//     justify-content: center;
+//     margin-top: -92px;
+//     margin-left: 28px;
+
+//     span#procent {
+//       // display: block;
+//       // margin-top: -80px;
+//       // margin-left: 65px;
+//       font-size: 35px;
+//       // transform: translate(-50%, -50%);
+//       color: #1569a1;
+//     }
+//   }
+
+//   .chart-card {
+//     width: 100% !important;
+//     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+//     // border-radius: 10px 10px 0px 0px;
+//     height: 382px !important;
+//     margin-top: -38px !important;
+//     padding: 0 0px;
+//   }
+
+//   .map-view {
+//     height: 448px;
+//     margin-top: -35px !important;
+//   }
+
+//   .bg-card {
+//     height: 400px !important;
+//     margin-top: -42px !important;
+//   }
+
+//   .scroll-content {
+//     overflow-y: scroll;
+//     position: relative;
+//     display: flex;
+
+//     left: 12px;
+//     overflow-x: auto;
+//   }
+
+//   .upper-second-content {
+//     position: relative;
+//     left: 6vw;
+//   }
+
+//   .patientDetails .cal-icon {
+//     width: 22px;
+//     position: relative;
+//     left: -14.5vw;
+//     top: -5px;
+//   }
+
+//   .patientDetails .date-width {
+//     width: 230px;
+//     margin-left: 30px;
+//   }
+
+//   .patientDetails .patient-emr-tab {
+//     max-width: 50% !important;
+//   }
+
+//   .patientDetails .patient-emr-date-tab {
+//     max-height: 38% !important;
+//   }
+
+//   .patientDetails .mean-blood-pressure-div {
+//     left: 2rem;
+//   }
+
+//   .patient-observations {
+//     margin-top: -44px;
+//   }
+
+//   .patientDetails .patient-emr-date-div {
+//     max-width: 48% !important;
+//   }
+
+//   .patientDetails .completed-missed {
+//     margin-left: 18px !important;
+//   }
+
+//   .patientDetails #main-container {
+//     margin-top: 16px;
+//     position: relative;
+//     left: 1.3vw;
+//   }
+
+//   .patientDetails .actionBtns {
+//     left: -1vw;
+//   }
+
+//   .patientDetails .nav-btns {
+//     left: 0.5vw;
+//   }
+
+//   // .patientDetails .lowerMiddleCard {
+//   //   width: 98.5%;
+//   // }
+
+//   .patientDetails .sm-card {
+//     width: 318px;
+//   }
+
+//   .patientDetails .bg-card {
+//     width: 99.7%;
+//   }
+
+//   .patientDetails .next-appt {
+//     width: 300px !important;
+//     margin-left: -64px;
+//   }
+
+//   .cbp {
+//     left: 0.5vw !important;
+//   }
+
+//   .wt-align {
+//     position: relative;
+//     left: -3vw;
+//   }
+
+//   .cbg {
+//     width: 140px;
+//   }
+
+//   .mbg {
+//     left: -1.7vw !important;
+//   }
+// }
+
+// @media only screen and (min-device-width: 768px) and (max-device-width: 1400px) and (orientation: landscape) {
+//   .observation-table {
+//     min-width: 60%;
+//   }
+
+//   .vital-history {
+//     min-width: 40%;
+//   }
+// }
+
+// @media only screen and (min-device-width: 1400px) and (max-device-width: 2100px) and (orientation: landscape) {
+//   .observation-table {
+//     min-width: 65%;
+//   }
+
+//   .vital-history {
+//     min-width: 35%;
+//   }
+// }
+
+// .vital-history{
+//   min-height: 750px;
+// }
+
+// @media only screen and (min-device-width: 1279px) and (max-device-width: 1280px) and(min-device-height: 500px) and (max-device-height: 700px) and (orientation: landscape) {
+//   .scroll-content {
+//     overflow-y: scroll;
+//     position: relative;
+//     display: flex;
+
+//     left: 12px;
+//     overflow-x: auto;
+//   }
+
+//   .upper-second-content {
+//     position: relative;
+//     left: 6vw;
+//   }
+
+//   .patientDetails .cal-icon {
+//     width: 22px;
+//     position: relative;
+//     left: -14.5vw;
+//     top: -5px;
+//   }
+
+//   .patientDetails .date-width {
+//     width: 230px;
+//     margin-left: 30px;
+//   }
+
+//   .patientDetails .patient-emr-tab {
+//     max-width: 50% !important;
+//   }
+
+//   .patientDetails .patient-emr-date-tab {
+//     max-height: 48% !important;
+//   }
+
+//   .patientDetails .patient-emr-date-div {
+//     max-width: 48% !important;
+//   }
+
+//   .patientDetails .completed-missed {
+//     margin-left: 18px !important;
+//   }
+
+//   .patientDetails #main-container {
+//     margin-top: 16px;
+//     position: relative;
+//     left: 1.3vw;
+//   }
+
+//   .patientDetails .actionBtns {
+//     left: -1vw;
+//   }
+
+//   .patientDetails .nav-btns {
+//     left: 0.5vw;
+//   }
+
+//   // .patientDetails .lowerMiddleCard {
+//   //   width: 98.5%;
+//   // }
+
+//   .patientDetails .sm-card {
+//     width: 318px;
+//   }
+
+//   .patientDetails .bg-card {
+//     width: 99.7%;
+//   }
+
+//   //   .patientDetails .chart-card {
+//   //     width: 1168px;
+//   //   }
+
+//   .patientDetails .next-appt {
+//     width: 300px !important;
+//     margin-left: -64px;
+//   }
+
+//   .patientDetails .upper-card {
+//     max-height: 50% !important;
+//     margin-bottom: 30px !important;
+//   }
+
+//   .cbp {
+//     left: 0.5vw !important;
+//   }
+
+//   .wt-align {
+//     position: relative;
+//     left: -3vw;
+//   }
+
+//   .cbg {
+//     width: 140px;
+//   }
+
+//   .mbg {
+//     left: -1.7vw !important;
+//   }
+// }
+
+// @media only screen and (min-device-width: 1000px) and (max-device-width: 1113px) and (orientation: landscape) {
+//   .scroll-content {
+//     overflow-y: scroll;
+//     position: relative;
+//     display: flex;
+
+//     left: 12px;
+//     overflow-x: auto;
+//   }
+
+//   .patientDetails .patient-name {
+//     font-weight: 700;
+//     font-size: 5px;
+//     color: #343434;
+//   }
+
+//   .upper-second-content {
+//     position: relative;
+//     left: 6vw;
+//   }
+
+//   .patientDetails .cal-icon {
+//     width: 22px;
+//     position: relative;
+//     left: -14.5vw;
+//     top: -5px;
+//   }
+
+//   .patientDetails .date-width {
+//     width: 230px;
+//     margin-left: 30px;
+//   }
+
+//   .patientDetails .patient-emr-tab {
+//     max-width: 50% !important;
+//   }
+
+//   .patientDetails .patient-emr-date-tab {
+//     max-height: 48% !important;
+//   }
+
+//   .patientDetails .patient-emr-date-div {
+//     max-width: 48% !important;
+//   }
+
+//   .patientDetails .completed-missed {
+//     margin-left: 18px !important;
+//   }
+
+//   .patientDetails #main-container {
+//     margin-top: 16px;
+//     position: relative;
+//     left: 1.3vw;
+//   }
+
+//   .patientDetails .actionBtns {
+//     left: -1vw;
+//   }
+
+//   .patientDetails .nav-btns {
+//     left: 0.5vw;
+//   }
+
+//   .patientDetails .lowerMiddleCard {
+//     width: 183.7% !important;
+//   }
+
+//   .patientDetails .sm-card {
+//     width: 318px;
+//   }
+
+//   .patientDetails .bg-card {
+//     width: 99.7%;
+//   }
+
+//   .patientDetails .chart-card {
+//     width: 1168px;
+//   }
+
+//   .patientDetails .next-appt {
+//     width: 300px !important;
+//     margin-left: -64px;
+//   }
+
+//   .patientDetails .upper-card {
+//     max-height: 50% !important;
+//     margin-bottom: 30px !important;
+//   }
+
+//   .cbp {
+//     left: 0.5vw !important;
+//   }
+
+//   .wt-align {
+//     position: relative;
+//     left: -3vw;
+//   }
+
+//   .cbg {
+//     width: 140px;
+//   }
+
+//   .mbg {
+//     left: -1.7vw !important;
+//   }
+// }
+
+// @media only screen and (min-device-width: 1366px) and (max-device-width: 1500px) and (orientation: landscape) {
+//   .patientDetails #main-container {
+//     margin-left: 16px;
+//   }
+
+//   .patient-emr-tab {
+//     max-width: 50% !important;
+//   }
+
+//   .patientDetails .lowerMiddleCard {
+//     width: 50% !important;
+//   }
+
+//   .canvas-wrap {
+//     margin-top: -7px;
+//   }
+
+//   .middle-card {
+//     height: 173px;
+//     margin-left: -40px !important;
+//   }
+
+//   .patientDetails .actionBtns {
+//     position: relative;
+//     top: 1.6vh;
+//     left: -1.5vw;
+//   }
+
+//   .patientDetails .map-view {
+//     margin-top: 0px !important;
+//     height: 95%;
+//   }
+
+//   .map-reading-view {
+//     display: block;
+//     position: relative;
+//     top: -12px;
+//   }
+
+//   .patientDetails {
+//     .lowerMiddleCardBP {
+//       width: 40%;
+//     }
+
+//     .patient-emr-date-tab {
+//       max-height: 47% !important;
+//     }
+
+//     .patient-emr-date-div {
+//       max-width: 57% !important;
+//     }
+
+//     .date-width {
+//       width: 18rem;
+//     }
+
+//     .chart-card {
+//       width: 1243px !important;
+//       position: relative;
+//       box-shadow: 0px 0px 10px rgb(0 0 0 / 10%);
+//       // border-radius: 10px 10px 0px 0px;
+//       height: 66vh;
+//       position: relative;
+//       top: 1.3vh;
+//       padding: 0 0px;
+//     }
+//   }
+
+//   .patientDetails .bg-card {
+//     width: 100% !important;
+//     height: 63vh;
+//     margin-top: -2vh;
+//   }
+// }
+
+.cbp {
+  position: relative;
+  left: 1.2vw;
+  width: 135px;
+}
+
+.mbg {
+  position: relative;
+  left: 0.4vw;
+}

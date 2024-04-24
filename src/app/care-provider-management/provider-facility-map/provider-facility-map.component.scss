@@ -1,0 +1,127 @@
+.mat-select-panel .mat-primary {
+  min-width: calc(100% + 23px);
+  position: relative;
+  left: 1.9vw;
+}
+
+.container {
+  height: 41vh;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.tick-icon {
+  position: relative;
+  bottom: 6px;
+  right: 10px;
+}
+
+.heading-left-section {
+  text-align: left;
+  width: 60%;
+  position: relative;
+  top: 5px;
+  margin-left: 12px;
+  color: #676767;
+  font-size: 14px;
+}
+
+.heading-right-section {
+  text-align: left;
+  width: 40%;
+  color: #676767;
+  font-size: 14px;
+  position: relative;
+  top: 5px;
+  margin-left: -40px;
+}
+
+.left-section {
+  width: 538px;
+  height: 376px;
+  background: #ffffff;
+  border: 1px solid #9c9eb5;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.right-section {
+  width: 390px;
+  height: 376px;
+  margin-top: 10px;
+  background: #ffffff;
+  border: 1px solid #9c9eb5;
+  border-radius: 4px;
+}
+
+.search-div {
+  padding: 10px;
+  border-radius: 3px 4px 0px 0px;
+  background: #F6F6F6;
+
+}
+
+.no-records {
+  display: flex;
+  justify-content: center;
+  margin-top: 16vh;
+}
+
+.global-search {
+  width: 33.6vw;
+  height: 37px;
+  // background: #d4e1f6;
+  // border: 1px solid #c2d2ec;
+  border-radius: 8px;
+  border: 1px solid #E3E3E3;
+  background: #FDFDFD;
+}
+
+.facility-names {
+  width: 33vw;
+  height: 37px;
+  border: 1px solid #c2ffe4;
+}
+
+.no-mapped {
+  display: flex;
+  justify-content: center;
+  margin-top: 22vh;
+}
+
+input {
+  padding: 10px;
+}
+
+.doc-name {
+  position: relative;
+  top: 8px;
+  left: 10px;
+}
+
+.add-action {
+  position: relative;
+  bottom: 8px;
+  right: 10px;
+  color: #52b204;
+  cursor: pointer;
+}
+
+.selected-facility-names {
+  width: 25.4vw;
+  height: 37px;
+  border: 1px solid #c2ffe4;
+}
+
+.un-map {
+  margin-right: 5px;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+@media only screen and (min-device-width: 1660px) and (max-device-width: 1800px) and (orientation: landscape) {
+  .facility-names{
+    width: 30vw;
+  }  
+  .container {
+    height: 33vh;}
+}

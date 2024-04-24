@@ -1,0 +1,90 @@
+<div class="doctorIdentity">
+  <!-- <app-navigation-bar (clickEvent)="addSpecialty()"></app-navigation-bar> -->
+  <div>
+    <div
+      class="example-container mat-elevation-z8"
+      [ngClass]="userRole === 'RPM_ADMIN' ? 'notAdmin' : ''"
+    >
+      <mat-table #table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Identity Type </mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            [title]="
+              element?.identityType && element?.identityType.length > 32
+                ? element?.identityType
+                : ''
+            "
+            >{{
+              element?.identityType.length > 32
+                ? (element?.identityType | slice : 0 : 32) + "..."
+                : element?.identityType
+            }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Status">
+          <mat-header-cell *matHeaderCellDef fxFlex="10%">
+            Status
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="10%">
+            <mat-hint
+              [ngClass]="
+                element.configurationStatus == 'ACTIVE' ? 'active' : 'inactive'
+              "
+              >{{
+                element.configurationStatus == "ACTIVE" ? "Active" : "Inactive"
+              }}
+            </mat-hint>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                class="eliBtn"
+                mat-menu-item
+                (click)="editDoctorIdentity(element)"
+              >
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button
+                class="eliBtn"
+                mat-menu-item
+                (click)="actionToggleChange(element)"
+              >
+                <span class="status">
+                  {{
+                    element?.configurationStatus === "ACTIVE"
+                      ? "INACTIVE"
+                      : "ACTIVE"
+                  }}</span
+                >
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <div class="noRecordsFound" *ngIf="length === 0">No Records Found!</div>
+      <mat-paginator
+        [ngClass]="length < 10 ? 'hide-pagination-element' : 'show-pagination'"
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>
